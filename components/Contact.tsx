@@ -63,7 +63,7 @@ export default function Contact() {
                     placeholder={field.placeholder}
                     value={(form as any)[field.key]}
                     onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                    className="w-full bg-[#DDBFA2] border border-[#A39276]/20 px-4 py-3.5 text-[#070301] text-sm placeholder-[#A39276] transition-all duration-300 focus:shadow-md"
+                    className="w-full bg-white border border-[#A39276]/20 px-4 py-3.5 text-[#070301] text-sm placeholder-[#A39276] transition-all duration-300 focus:shadow-md"
                     required
                   />
                 </div>
@@ -76,7 +76,7 @@ export default function Contact() {
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   rows={4}
-                  className="w-full bg-[#DDBFA2] border border-[#A39276]/20 px-4 py-3.5 text-[#070301] text-sm placeholder-[#A39276] resize-none transition-all duration-300 focus:shadow-md"
+                  className="w-full bg-white border border-[#A39276]/20 px-4 py-3.5 text-[#070301] text-sm placeholder-[#A39276] resize-none transition-all duration-300 focus:shadow-md"
                   required
                 />
               </div>
