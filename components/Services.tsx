@@ -25,12 +25,12 @@ const competencies = [
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-32 bg-[#DDBFA2]">
+    <section id="services" className="relative py-32 bg-[#F3EFE6]">
       <div className="gold-line w-full" />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-px bg-[#A39276]/40" />
-          <span className="text-[#6E6151] text-xs tracking-[0.3em] uppercase font-semibold">Core Competencies</span>
+          <div className="w-16 h-px bg-[#9A7A3F]/40" />
+          <span className="text-[#9A7A3F] text-xs tracking-[0.3em] uppercase font-semibold">Core Competencies</span>
         </div>
 
         <h2 className="font-serif text-4xl md:text-5xl text-[#111111] mb-16 max-w-xl font-bold">
@@ -40,11 +40,11 @@ export default function Services() {
         <div className="grid md:grid-cols-2 gap-8">
           {competencies.map((s, i) => (
             <div key={i} className="card-luxury p-10 group cursor-default">
-              <div className="text-[#A39276]/40 group-hover:text-[#6E6151] transition-colors duration-500 mb-6">
+              <div className="text-[#9A7A3F]/40 group-hover:text-[#9A7A3F] transition-colors duration-500 mb-6">
                 {s.icon}
               </div>
               <h3 className="font-serif text-xl text-[#111111] mb-3 font-semibold">{s.title}</h3>
-              <p className="text-[#726556] text-sm leading-relaxed font-light">{s.desc}</p>
+              <p className="text-[#6F6252] text-sm leading-relaxed font-light">{s.desc}</p>
             </div>
           ))}
         </div>

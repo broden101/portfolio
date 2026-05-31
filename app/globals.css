@@ -5,18 +5,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --background: #DDBFA2;
-  --surface: #E7DFC8;
-  --primary: #6E6151;
-  --primary-dark: #281F17;
-  --accent: #A39276;
-  --text: #070301;
-  --text-muted: #726556;
-  --gold: #A39276;
+  --background: #F3EFE6;
+  --surface: #E7DDCC;
+  --surface-soft: #D8C7AA;
+  --text: #17120C;
+  --text-muted: #6F6252;
+  --accent: #9A7A3F;
+  --accent-dark: #3A2C1A;
+  --border: #C8B89B;
   --black: #111111;
-  --border: rgba(163, 146, 118, 0.2);
-  --shadow: 0 4px 24px rgba(40, 31, 23, 0.08);
-  --shadow-lg: 0 12px 48px rgba(40, 31, 23, 0.12);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,7 +33,7 @@ body {
 .gold-line { height: 1px; background: linear-gradient(90deg, transparent, #111111 20%, var(--accent) 50%, #111111 80%, transparent); }
 
 .text-gold-gradient {
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--accent));
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent), #B8964A);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -45,13 +42,13 @@ body {
 .card-luxury {
   background: var(--surface);
   border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 24px rgba(23, 18, 12, 0.06);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-luxury:hover {
-  border-color: rgba(163, 146, 118, 0.4);
-  box-shadow: var(--shadow-lg);
+  border-color: rgba(154, 122, 63, 0.4);
+  box-shadow: 0 12px 48px rgba(23, 18, 12, 0.1);
   transform: translateY(-2px);
 }
 
@@ -72,5 +69,5 @@ body {
 input:focus, textarea:focus {
   outline: none;
   border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px rgba(163, 146, 118, 0.15);
+  box-shadow: 0 0 0 3px rgba(154, 122, 63, 0.15);
 }
