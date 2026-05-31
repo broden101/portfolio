@@ -25,26 +25,26 @@ const competencies = [
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-32 bg-[#F3EFE6]">
+    <section id="services" className="relative py-32 bg-[#0B0B0A]">
       <div className="gold-line w-full" />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-px bg-[#9A7A3F]/40" />
-          <span className="text-[#9A7A3F] text-xs tracking-[0.3em] uppercase font-semibold">Core Competencies</span>
+          <div className="w-16 h-px bg-[#C6A15B]/30" />
+          <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Core Competencies</span>
         </div>
 
-        <h2 className="font-serif text-4xl md:text-5xl text-[#111111] mb-16 max-w-xl font-bold">
-          What I <span className="text-gold-gradient">Bring</span>
+        <h2 className="font-['Cormorant_Garamond'] text-4xl md:text-5xl text-[#F4EFE6] mb-16 max-w-xl font-light">
+          What I <span className="text-gold-gradient font-medium">Bring</span>
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8">
           {competencies.map((s, i) => (
             <div key={i} className="card-luxury p-10 group cursor-default">
-              <div className="text-[#9A7A3F]/40 group-hover:text-[#9A7A3F] transition-colors duration-500 mb-6">
+              <div className="text-[#C6A15B]/20 group-hover:text-[#C6A15B] transition-colors duration-500 mb-6">
                 {s.icon}
               </div>
-              <h3 className="font-serif text-xl text-[#111111] mb-3 font-semibold">{s.title}</h3>
-              <p className="text-[#6F6252] text-sm leading-relaxed font-light">{s.desc}</p>
+              <h3 className="font-['Cormorant_Garamond'] text-xl text-[#F4EFE6] mb-3 font-medium">{s.title}</h3>
+              <p className="text-[#B8AA96] text-sm leading-relaxed font-light">{s.desc}</p>
             </div>
           ))}
         </div>

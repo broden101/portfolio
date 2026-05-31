@@ -14,21 +14,21 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-32 bg-[#F3EFE6]">
+    <section id="contact" className="relative py-32 bg-[#0B0B0A]">
       <div className="gold-line w-full" />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <div>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-px bg-[#9A7A3F]/40" />
-              <span className="text-[#9A7A3F] text-xs tracking-[0.3em] uppercase font-semibold">Contact</span>
+              <div className="w-16 h-px bg-[#C6A15B]/30" />
+              <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Contact</span>
             </div>
 
-            <h2 className="font-serif text-4xl md:text-5xl text-[#111111] mb-8 font-bold">
-              Let's <span className="text-gold-gradient">Connect</span>
+            <h2 className="font-['Cormorant_Garamond'] text-4xl md:text-5xl text-[#F4EFE6] mb-8 font-light">
+              Let's <span className="text-gold-gradient font-medium">Connect</span>
             </h2>
 
-            <p className="text-[#6F6252] text-base leading-relaxed font-light mb-12">
+            <p className="text-[#B8AA96] text-base leading-relaxed font-light mb-12">
               Interested in discussing investment strategies or need market research? Feel free to reach out through the form or contact details below.
             </p>
 
@@ -39,10 +39,10 @@ export default function Contact() {
                 { label: "Location", value: "Surabaya, Indonesia" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
-                  <div className="w-px h-5 bg-[#9A7A3F]/30 mt-0.5" />
+                  <div className="w-px h-5 bg-[#C6A15B]/20 mt-0.5" />
                   <div>
-                    <div className="text-[#9A7A3F] text-xs tracking-[0.2em] uppercase mb-1 font-medium">{item.label}</div>
-                    <div className="text-[#111111] text-sm font-medium">{item.value}</div>
+                    <div className="text-[#B8AA96]/50 text-xs tracking-[0.2em] uppercase mb-1">{item.label}</div>
+                    <div className="text-[#F4EFE6] text-sm">{item.value}</div>
                   </div>
                 </div>
               ))}
@@ -57,17 +57,34 @@ export default function Contact() {
                 { key: "phone", label: "Phone Number", type: "tel", placeholder: "+62" },
               ].map((field) => (
                 <div key={field.key}>
-                  <label className="block text-[#6F6252] text-xs tracking-[0.15em] uppercase mb-2 font-medium">{field.label}</label>
-                  <input type={field.type} placeholder={field.placeholder} value={(form as any)[field.key]} onChange={(e) => setForm({ ...form, [field.key]: e.target.value })} className="w-full bg-white border border-[#C8B89B] px-4 py-3.5 text-[#17120C] text-sm placeholder-[#C8B89B] transition-all duration-300 focus:shadow-md" required />
+                  <label className="block text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-2">{field.label}</label>
+                  <input
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    value={(form as any)[field.key]}
+                    onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
+                    className="w-full bg-[#0B0B0A] border border-[#2C261E] px-4 py-3.5 text-[#F4EFE6] text-sm placeholder-[#B8AA96]/30 transition-all duration-300"
+                    required
+                  />
                 </div>
               ))}
 
               <div>
-                <label className="block text-[#6F6252] text-xs tracking-[0.15em] uppercase mb-2 font-medium">Message</label>
-                <textarea placeholder="Tell me about your investment needs..." value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={4} className="w-full bg-white border border-[#C8B89B] px-4 py-3.5 text-[#17120C] text-sm placeholder-[#C8B89B] resize-none transition-all duration-300 focus:shadow-md" required />
+                <label className="block text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-2">Message</label>
+                <textarea
+                  placeholder="Tell me about your investment needs..."
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  rows={4}
+                  className="w-full bg-[#0B0B0A] border border-[#2C261E] px-4 py-3.5 text-[#F4EFE6] text-sm placeholder-[#B8AA96]/30 resize-none transition-all duration-300"
+                  required
+                />
               </div>
 
-              <button type="submit" className="w-full py-4 bg-[#111111] text-white text-xs tracking-[0.25em] uppercase font-semibold hover:bg-[#3A2C1A] transition-all duration-300 shadow-md hover:shadow-lg">
+              <button
+                type="submit"
+                className="w-full py-4 bg-[#C6A15B] text-[#0B0B0A] text-xs tracking-[0.25em] uppercase font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#C6A15B]"
+              >
                 {sent ? "✓ Message Sent" : "Send Message"}
               </button>
             </form>

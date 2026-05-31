@@ -2,14 +2,14 @@
 
 export default function Footer() {
   return (
-    <footer className="bg-[#E7DDCC] border-t border-[#9A7A3F]/15">
+    <footer className="bg-[#0B0B0A] border-t border-[#2C261E]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 border border-[#111111]/20 flex items-center justify-center">
-              <span className="text-[#111111] font-serif text-xs font-semibold">R</span>
+            <div className="w-7 h-7 border border-[#C6A15B]/30 flex items-center justify-center">
+              <span className="text-[#C6A15B] font-['Cormorant_Garamond'] text-xs font-semibold">R</span>
             </div>
-            <span className="font-serif text-sm tracking-widest text-[#6F6252] uppercase font-semibold">Raga Playbook</span>
+            <span className="font-['Cormorant_Garamond'] text-sm tracking-widest text-[#B8AA96] uppercase">Raga Playbook</span>
           </div>
 
           <div className="flex items-center gap-8">
@@ -19,13 +19,13 @@ export default function Footer() {
               { name: "GitHub", url: "https://github.com/broden101" },
               { name: "Email", url: "mailto:baguspolikarpus@gmail.com" },
             ].map((link) => (
-              <a key={link.name} href={link.url} className="text-[#9A7A3F] text-xs tracking-[0.15em] uppercase font-medium hover:text-[#3A2C1A] transition-colors">
+              <a key={link.name} href={link.url} className="text-[#B8AA96]/50 text-xs tracking-[0.15em] uppercase hover:text-[#C6A15B] transition-colors">
                 {link.name}
               </a>
             ))}
           </div>
 
-          <div className="text-[#9A7A3F]/60 text-xs tracking-wider">
+          <div className="text-[#B8AA96]/30 text-xs tracking-wider">
             © {new Date().getFullYear()} All Rights Reserved
           </div>
         </div>
