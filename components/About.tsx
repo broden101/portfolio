@@ -21,7 +21,7 @@ export default function About() {
               <div className="text-center">
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full border border-[#c9a84c]/20 flex items-center justify-center">
                   <span className="text-[#c9a84c]/40 text-2xl font-serif">
-                    NA
+                    RP
                   </span>
                 </div>
                 <span className="text-[#f5f0e8]/20 text-xs tracking-widest uppercase">

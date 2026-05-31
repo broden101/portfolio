@@ -28,7 +28,7 @@ export default function Hero() {
 
         {/* Name */}
         <h1 className="animate-fade-in animate-delay-1 opacity-0 font-serif text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight text-[#f5f0e8] mb-6">
-          Nama Anda
+          Raga Playbook
         </h1>
 
         {/* Tagline */}

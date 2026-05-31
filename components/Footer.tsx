@@ -8,10 +8,10 @@ export default function Footer() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="w-7 h-7 border border-[#c9a84c]/40 flex items-center justify-center">
-              <span className="text-[#c9a84c]/60 font-serif text-xs">P</span>
+              <span className="text-[#c9a84c]/60 font-serif text-xs">R</span>
             </div>
             <span className="font-serif text-sm tracking-widest text-[#f5f0e8]/40 uppercase">
-              Portfolio
+              Raga Playbook
             </span>
           </div>
 

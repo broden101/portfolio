@@ -33,11 +33,11 @@ export default function Navbar() {
           <a href="#" className="flex items-center gap-3">
             <div className="w-8 h-8 border border-[#c9a84c] flex items-center justify-center">
               <span className="text-[#c9a84c] font-serif text-sm font-semibold">
-                P
+                R
               </span>
             </div>
             <span className="font-serif text-lg tracking-widest text-[#f5f0e8] uppercase">
-              Portfolio
+              Raga Playbook
             </span>
           </a>
 
