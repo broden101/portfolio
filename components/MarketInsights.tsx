@@ -17,7 +17,7 @@ export default function MarketInsights() {
               <div className="w-16 h-px bg-[#A39276]/40" />
               <span className="text-[#6E6151] text-xs tracking-[0.3em] uppercase font-semibold">Market Insight</span>
             </div>
-            <h2 className="font-serif text-4xl md:text-5xl text-[#281F17] font-bold">
+            <h2 className="font-serif text-4xl md:text-5xl text-[#111111] font-bold">
               Wawasan <span className="text-gold-gradient">Pasar</span>
             </h2>
           </div>
@@ -31,7 +31,7 @@ export default function MarketInsights() {
                 <span className="w-1 h-1 rounded-full bg-[#A39276]/40" />
                 <span className="text-[#A39276] text-xs tracking-wider uppercase">{item.tag}</span>
               </div>
-              <h3 className="font-serif text-lg text-[#281F17] mb-3 font-semibold group-hover:text-[#6E6151] transition-colors duration-300">{item.title}</h3>
+              <h3 className="font-serif text-lg text-[#111111] mb-3 font-semibold group-hover:text-[#6E6151] transition-colors duration-300">{item.title}</h3>
               <p className="text-[#726556] text-sm leading-relaxed font-light flex-1">{item.excerpt}</p>
               <div className="mt-6 pt-6 border-t border-[#A39276]/15">
                 <span className="text-[#A39276] text-xs tracking-[0.2em] uppercase font-medium group-hover:text-[#6E6151] transition-colors">

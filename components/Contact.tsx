@@ -24,7 +24,7 @@ export default function Contact() {
               <span className="text-[#6E6151] text-xs tracking-[0.3em] uppercase font-semibold">Hubungi Saya</span>
             </div>
 
-            <h2 className="font-serif text-4xl md:text-5xl text-[#281F17] mb-8 font-bold">
+            <h2 className="font-serif text-4xl md:text-5xl text-[#111111] mb-8 font-bold">
               Mulai <span className="text-gold-gradient">Percakapan</span>
             </h2>
 
@@ -42,7 +42,7 @@ export default function Contact() {
                   <div className="w-px h-5 bg-[#A39276]/30 mt-0.5" />
                   <div>
                     <div className="text-[#A39276] text-xs tracking-[0.2em] uppercase mb-1 font-medium">{item.label}</div>
-                    <div className="text-[#281F17] text-sm font-medium">{item.value}</div>
+                    <div className="text-[#111111] text-sm font-medium">{item.value}</div>
                   </div>
                 </div>
               ))}
@@ -83,7 +83,7 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="w-full py-4 bg-[#6E6151] text-white text-xs tracking-[0.25em] uppercase font-semibold hover:bg-[#281F17] transition-all duration-300 shadow-md hover:shadow-lg"
+                className="w-full py-4 bg-[#111111] text-white text-xs tracking-[0.25em] uppercase font-semibold hover:bg-[#000000] transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 {sent ? "✓ Pesan Terkirim" : "Kirim Pesan"}
               </button>

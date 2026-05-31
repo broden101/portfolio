@@ -68,7 +68,7 @@ export default function ScreenerPage() {
           </div>
           <div className="flex items-center gap-3">
             {results.length > 0 && (
-              <button onClick={rescreen} className="px-5 py-2.5 border-2 border-[#6E6151]/30 text-[#6E6151] text-xs tracking-[0.15em] uppercase font-semibold hover:border-[#6E6151] hover:bg-[#A39276]/10 transition-all">
+              <button onClick={rescreen} className="px-5 py-2.5 border-2 border-[#111111]/30 text-[#111111] text-xs tracking-[0.15em] uppercase font-semibold hover:border-[#111111] hover:bg-[#111111]/5 transition-all">
                 Re-screen
               </button>
             )}
@@ -88,7 +88,7 @@ export default function ScreenerPage() {
         {results.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
-              { label: "Total", value: results.length, color: "text-[#281F17]" },
+              { label: "Total", value: results.length, color: "text-[#111111]" },
               { label: "Buy", value: buys, color: "text-[#6E6151]" },
               { label: "Watch", value: watches, color: "text-blue-700" },
               { label: "Filters", value: filters.filter((f) => f.enabled).length, color: "text-[#726556]" },
@@ -115,7 +115,7 @@ export default function ScreenerPage() {
                           {f.enabled && (<svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" /></svg>)}
                         </div>
                       </div>
-                      <span className="text-sm text-[#281F17] font-medium group-hover:text-[#6E6151] transition-colors">{f.name}</span>
+                      <span className="text-sm text-[#111111] font-medium group-hover:text-[#6E6151] transition-colors">{f.name}</span>
                     </label>
                     <p className="text-xs text-[#A39276] ml-7">{f.description}</p>
                     {f.enabled && Object.keys(f.params).length > 0 && (
@@ -152,7 +152,7 @@ export default function ScreenerPage() {
               ) : (
                 <>
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="font-serif text-xl text-[#281F17] font-bold">
+                    <h2 className="font-serif text-xl text-[#111111] font-bold">
                       Results <span className="text-[#726556] font-normal">({filtered.length})</span>
                     </h2>
                     {results.length > 0 && (<span className="text-xs text-[#A39276]">{filters.filter((f) => f.enabled).length} filters aktif</span>)}

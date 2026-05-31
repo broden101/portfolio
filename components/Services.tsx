@@ -33,7 +33,7 @@ export default function Services() {
           <span className="text-[#6E6151] text-xs tracking-[0.3em] uppercase font-semibold">Layanan</span>
         </div>
 
-        <h2 className="font-serif text-4xl md:text-5xl text-[#281F17] mb-16 max-w-xl font-bold">
+        <h2 className="font-serif text-4xl md:text-5xl text-[#111111] mb-16 max-w-xl font-bold">
           Solusi Investasi yang <span className="text-gold-gradient">Komprehensif</span>
         </h2>
 
@@ -43,7 +43,7 @@ export default function Services() {
               <div className="text-[#A39276]/40 group-hover:text-[#6E6151] transition-colors duration-500 mb-6">
                 {s.icon}
               </div>
-              <h3 className="font-serif text-xl text-[#281F17] mb-3 font-semibold">{s.title}</h3>
+              <h3 className="font-serif text-xl text-[#111111] mb-3 font-semibold">{s.title}</h3>
               <p className="text-[#726556] text-sm leading-relaxed font-light">{s.desc}</p>
             </div>
           ))}

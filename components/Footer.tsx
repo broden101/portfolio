@@ -6,8 +6,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 border border-[#A39276]/40 flex items-center justify-center">
-              <span className="text-[#6E6151] font-serif text-xs font-semibold">R</span>
+            <div className="w-7 h-7 border border-[#111111]/30 flex items-center justify-center">
+              <span className="text-[#111111] font-serif text-xs font-semibold">R</span>
             </div>
             <span className="font-serif text-sm tracking-widest text-[#726556] uppercase font-semibold">Raga Playbook</span>
           </div>

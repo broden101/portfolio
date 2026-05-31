@@ -12,7 +12,7 @@ export default function About() {
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <div className="relative">
-            <div className="aspect-[3/4] bg-[#DDBFA2] border border-[#A39276]/15 shadow-md flex items-center justify-center">
+            <div className="aspect-[3/4] bg-[#DDBFA2] border border-[#111111]/10 shadow-md flex items-center justify-center">
               <div className="text-center">
                 <div className="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-[#A39276]/25 flex items-center justify-center">
                   <span className="text-[#A39276]/50 text-3xl font-serif font-bold">RP</span>
@@ -20,11 +20,11 @@ export default function About() {
                 <span className="text-[#A39276] text-xs tracking-widest uppercase">Foto Profil</span>
               </div>
             </div>
-            <div className="absolute -bottom-3 -right-3 w-full h-full border border-[#A39276]/20 -z-10" />
+            <div className="absolute -bottom-3 -right-3 w-full h-full border border-[#111111]/15 -z-10" />
           </div>
 
           <div className="flex flex-col justify-center">
-            <h2 className="font-serif text-4xl md:text-5xl text-[#281F17] mb-8 leading-tight font-bold">
+            <h2 className="font-serif text-4xl md:text-5xl text-[#111111] mb-8 leading-tight font-bold">
               Profesional di Bidang<br />
               <span className="text-gold-gradient">Pasar Modal</span>
             </h2>
@@ -42,7 +42,7 @@ export default function About() {
                 { number: "IDR", label: "AUM Kelolaan" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div className="font-serif text-3xl md:text-4xl text-[#6E6151] mb-2 font-bold">{stat.number}</div>
+                  <div className="font-serif text-3xl md:text-4xl text-[#111111] mb-2 font-bold">{stat.number}</div>
                   <div className="text-[#A39276] text-xs tracking-wider uppercase font-medium">{stat.label}</div>
                 </div>
               ))}

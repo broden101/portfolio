@@ -15,7 +15,7 @@ export default function Hero() {
           </span>
         </div>
 
-        <h1 className="animate-fade-in animate-delay-1 opacity-0 font-serif text-6xl md:text-7xl lg:text-9xl font-bold tracking-tight text-[#281F17] mb-8">
+        <h1 className="animate-fade-in animate-delay-1 opacity-0 font-serif text-6xl md:text-7xl lg:text-9xl font-bold tracking-tight text-[#111111] mb-8">
           Raga Playbook
         </h1>
 
@@ -34,18 +34,18 @@ export default function Hero() {
         </div>
 
         <div className="animate-fade-in animate-delay-4 opacity-0 flex flex-col sm:flex-row items-center justify-center gap-5">
-          <a href="#contact" className="px-10 py-4 bg-[#6E6151] text-white text-xs tracking-[0.25em] uppercase font-semibold hover:bg-[#281F17] transition-all duration-300 shadow-md hover:shadow-lg">
+          <a href="#contact" className="px-10 py-4 bg-[#111111] text-white text-xs tracking-[0.25em] uppercase font-semibold hover:bg-[#000000] transition-all duration-300 shadow-md hover:shadow-lg">
             Contact Me
           </a>
-          <a href="#about" className="px-10 py-4 border-2 border-[#A39276]/40 text-[#6E6151] text-xs tracking-[0.25em] uppercase font-semibold hover:border-[#6E6151] hover:bg-[#A39276]/10 transition-all duration-300">
+          <a href="#about" className="px-10 py-4 border-2 border-[#111111]/30 text-[#111111] text-xs tracking-[0.25em] uppercase font-semibold hover:border-[#111111] hover:bg-[#A39276]/10 transition-all duration-300">
             Learn More
           </a>
         </div>
       </div>
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-[#6E6151]">Scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-[#6E6151] to-transparent" />
+        <span className="text-[10px] tracking-[0.3em] uppercase text-[#111111]">Scroll</span>
+        <div className="w-px h-8 bg-gradient-to-b from-[#111111] to-transparent" />
       </div>
     </section>
   );

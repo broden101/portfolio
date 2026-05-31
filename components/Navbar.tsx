@@ -21,12 +21,12 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#DDBFA2]/95 backdrop-blur-md border-b border-[#A39276]/20 shadow-sm" : "bg-transparent"}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#DDBFA2]/95 backdrop-blur-md border-b border-[#111111]/10 shadow-sm" : "bg-transparent"}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
           <a href="#" className="flex items-center gap-3">
-            <div className="w-8 h-8 border border-[#A39276] flex items-center justify-center">
-              <span className="text-[#A39276] font-serif text-sm font-semibold">R</span>
+            <div className="w-8 h-8 border border-[#111111] flex items-center justify-center">
+              <span className="text-[#111111] font-serif text-sm font-semibold">R</span>
             </div>
             <span className="font-serif text-lg tracking-widest text-[#070301] uppercase font-semibold">
               Raga Playbook
