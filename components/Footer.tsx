@@ -17,10 +17,10 @@ export default function Footer() {
 
           {/* Links */}
           <div className="flex items-center gap-8">
-            {["LinkedIn", "Instagram", "Email"].map((link) => (
+            {["LinkedIn", "Instagram", "GitHub", "Email"].map((link) => (
               <a
                 key={link}
-                href="#"
+                href={link === "LinkedIn" ? "https://id.linkedin.com/in/polikarpusraga" : link === "Instagram" ? "https://www.instagram.com/bagus.raga" : link === "GitHub" ? "https://github.com/broden101" : "mailto:baguspolikarpus@gmail.com"}
                 className="text-[#f5f0e8]/20 text-xs tracking-[0.15em] uppercase hover:text-[#c9a84c]/60 transition-colors"
               >
                 {link}

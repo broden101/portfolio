@@ -41,9 +41,9 @@ export default function Contact() {
             {/* Contact Info */}
             <div className="space-y-6">
               {[
-                { label: "Email", value: "nama@email.com" },
-                { label: "Telepon", value: "+62 812-XXXX-XXXX" },
-                { label: "Lokasi", value: "Jakarta, Indonesia" },
+                { label: "Email", value: "baguspolikarpus@gmail.com" },
+                { label: "Telepon", value: "+62 899 8866 735" },
+                { label: "Lokasi", value: "Pontianak, Indonesia" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
                   <div className="w-px h-5 bg-[#c9a84c]/30 mt-0.5" />
