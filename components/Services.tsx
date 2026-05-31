@@ -4,22 +4,22 @@ const competencies = [
   {
     icon: (<svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-4 4 4 5-5" /></svg>),
     title: "Equity Research",
-    desc: "Fundamental analysis, financial statement review, valuation, and investment thesis writing.",
+    desc: "Fundamental analysis, financial statement review, valuation, and investment thesis writing on IDX-listed companies.",
   },
   {
     icon: (<svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>),
     title: "Market Strategy",
-    desc: "Monitoring IHSG, sector rotation, foreign flow, rates, currency, and commodity trends.",
+    desc: "Monitoring macro indicators, interest rates, currency movement, commodity prices, foreign flow, and sector rotation.",
   },
   {
     icon: (<svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 3v18" /></svg>),
-    title: "Valuation & Modeling",
-    desc: "Relative valuation, DCF assumptions, PBV-ROE framework, PER, EV/EBITDA comparison.",
+    title: "Portfolio & Asset Allocation",
+    desc: "Understanding client risk profile, investment horizon, and asset class allocation across equities, bonds, mutual funds, and sukuk.",
   },
   {
     icon: (<svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" y1="22" x2="4" y2="15" /></svg>),
     title: "Data-Driven Screening",
-    desc: "Stock screening based on financial ratios, price momentum, liquidity, and valuation metrics.",
+    desc: "Using Excel, Python, and market data tools to screen stocks based on valuation, profitability, liquidity, and momentum.",
   },
 ];
 
@@ -40,7 +40,7 @@ export default function Services() {
         <div className="grid md:grid-cols-2 gap-8">
           {competencies.map((s, i) => (
             <div key={i} className="card-luxury p-10 group cursor-default">
-              <div className="text-[#C6A15B]/20 group-hover:text-[#C6A15B] transition-colors duration-500 mb-6">
+              <div className="text-[#C6A15B]/20 group-hover:text-[#C6A15B] transition-colors duration-300 mb-6">
                 {s.icon}
               </div>
               <h3 className="font-heading text-xl text-[#F4EFE6] mb-3 font-medium">{s.title}</h3>
