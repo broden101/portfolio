@@ -21,7 +21,7 @@ export default function Hero() {
       <div className="relative z-10 text-center px-6 max-w-4xl">
         {/* Pre-heading */}
         <div className="animate-fade-in opacity-0 mb-8">
-          <span className="text-[#c9a84c]/70 text-xs tracking-[0.4em] uppercase font-light">
+          <span className="text-[#c9a84c] text-xs tracking-[0.4em] uppercase font-light">
             Investment Research & Market Playbook
           </span>
         </div>
@@ -32,11 +32,11 @@ export default function Hero() {
         </h1>
 
         {/* Tagline */}
-        <p className="animate-fade-in animate-delay-2 opacity-0 text-[#f5f0e8]/40 text-base md:text-lg font-light tracking-wide max-w-2xl mx-auto leading-relaxed mb-4">
+        <p className="animate-fade-in animate-delay-2 opacity-0 text-[#f5f0e8]/65 text-base md:text-lg font-light tracking-wide max-w-2xl mx-auto leading-relaxed mb-4">
           Investment Research, Market Strategy & Equity Analysis
         </p>
 
-        <p className="animate-fade-in animate-delay-2 opacity-0 text-[#f5f0e8]/25 text-sm font-light tracking-wide max-w-xl mx-auto leading-relaxed">
+        <p className="animate-fade-in animate-delay-2 opacity-0 text-[#f5f0e8]/50 text-sm font-light tracking-wide max-w-xl mx-auto leading-relaxed">
           A personal portfolio showcasing equity research, market insights, valuation work, and data-driven investment thinking.
         </p>
 

@@ -41,7 +41,7 @@ export default function About() {
               <span className="text-gold-gradient">Pasar Modal</span>
             </h2>
 
-            <div className="space-y-5 text-[#f5f0e8]/50 text-sm leading-relaxed font-light">
+            <div className="space-y-5 text-[#f5f0e8]/70 text-sm leading-relaxed font-light">
               <p>
                 Dengan pengalaman bertahun-tahun di industri pasar modal, saya
                 membantu klien memahami dinamika investasi dan membangun portofolio
@@ -70,7 +70,7 @@ export default function About() {
                   <div className="font-serif text-2xl md:text-3xl text-[#c9a84c] mb-1">
                     {stat.number}
                   </div>
-                  <div className="text-[#f5f0e8]/30 text-xs tracking-wider uppercase">
+                  <div className="text-[#f5f0e8]/40 text-xs tracking-wider uppercase">
                     {stat.label}
                   </div>
                 </div>

@@ -32,7 +32,7 @@ export default function Contact() {
               Mulai <span className="text-gold-gradient">Percakapan</span>
             </h2>
 
-            <p className="text-[#f5f0e8]/40 text-sm leading-relaxed font-light mb-12">
+            <p className="text-[#f5f0e8]/65 text-sm leading-relaxed font-light mb-12">
               Tertarik untuk mendiskusikan strategi investasi atau membutuhkan
               riset pasar? Silakan hubungi saya melalui formulir atau kontak
               langsung di bawah ini.
@@ -51,7 +51,7 @@ export default function Contact() {
                     <div className="text-[#f5f0e8]/25 text-xs tracking-[0.2em] uppercase mb-1">
                       {item.label}
                     </div>
-                    <div className="text-[#f5f0e8]/70 text-sm">{item.value}</div>
+                    <div className="text-[#f5f0e8]/85 text-sm">{item.value}</div>
                   </div>
                 </div>
               ))}

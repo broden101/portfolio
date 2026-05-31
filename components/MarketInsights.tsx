@@ -66,7 +66,7 @@ export default function MarketInsights() {
                 {item.title}
               </h3>
 
-              <p className="text-[#f5f0e8]/35 text-sm leading-relaxed font-light flex-1">
+              <p className="text-[#f5f0e8]/60 text-sm leading-relaxed font-light flex-1">
                 {item.excerpt}
               </p>
 
