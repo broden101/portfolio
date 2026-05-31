@@ -17,68 +17,58 @@ export default function ScreenerPage() {
     setFilters(settings.defaultFilters);
     setUniverse(settings.universe === "CUSTOM" ? "IDX100" : settings.universe);
     const cached = getCachedResults();
-    if (cached.length > 0) {
-      setResults(cached as unknown as ScreenResult[]);
-    }
+    if (cached.length > 0) setResults(cached as unknown as ScreenResult[]);
     setLoaded(true);
   }, []);
 
   const toggleFilter = (id: string) => {
     setFilters((prev) => {
       const updated = prev.map((f) => f.id === id ? { ...f, enabled: !f.enabled } : f);
-      const settings = getSettings();
-      saveSettings({ ...settings, defaultFilters: updated });
+      saveSettings({ ...getSettings(), defaultFilters: updated });
       return updated;
     });
   };
 
   const updateParam = (filterId: string, param: string, value: number) => {
     setFilters((prev) => {
-      const updated = prev.map((f) =>
-        f.id === filterId ? { ...f, params: { ...f.params, [param]: value } } : f
-      );
-      const settings = getSettings();
-      saveSettings({ ...settings, defaultFilters: updated });
+      const updated = prev.map((f) => f.id === filterId ? { ...f, params: { ...f.params, [param]: value } } : f);
+      saveSettings({ ...getSettings(), defaultFilters: updated });
       return updated;
     });
   };
 
   const changeUniverse = (u: "IDX100" | "LQ45") => {
     setUniverse(u);
-    const settings = getSettings();
-    saveSettings({ ...settings, universe: u });
+    saveSettings({ ...getSettings(), universe: u });
   };
 
   const rescreen = async () => {
     if (results.length === 0) return;
     const { screenAll } = await import("@/lib/screener");
-    const rescreened = screenAll(results as unknown as import("@/lib/types").StockData[], filters);
-    setResults(rescreened);
+    setResults(screenAll(results as unknown as import("@/lib/types").StockData[], filters));
   };
 
   const [filterMode, setFilterMode] = useState<"all" | ScreenResult["action"]>("all");
   const filtered = filterMode === "all" ? results : results.filter((r) => r.action === filterMode);
-
   const buys = results.filter((r) => r.action === "BUY").length;
   const watches = results.filter((r) => r.action === "WATCH").length;
 
   return (
-    <div className="min-h-screen bg-[#faf7f2] pt-24 pb-20">
+    <div className="min-h-screen bg-[#FDFAF5] pt-24 pb-20">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Header */}
         <div className="flex items-center justify-between mb-10 flex-wrap gap-4">
           <div>
             <div className="flex items-center gap-4 mb-3">
-              <div className="w-8 h-px bg-[#b8922d]/40" />
-              <span className="text-[#b8922d] text-xs tracking-[0.3em] uppercase">IDX Screener</span>
+              <div className="w-10 h-px bg-[#8B7335]/40" />
+              <span className="text-[#8B7335] text-xs tracking-[0.3em] uppercase font-semibold">IDX Screener</span>
             </div>
-            <h1 className="font-serif text-3xl text-[#1a1a1a]">
+            <h1 className="font-serif text-4xl text-[#1C1917] font-bold">
               Stock <span className="text-gold-gradient">Screener</span>
             </h1>
           </div>
           <div className="flex items-center gap-3">
             {results.length > 0 && (
-              <button onClick={rescreen} className="px-4 py-2 border border-[#b8922d]/30 text-[#b8922d] text-xs tracking-[0.15em] uppercase hover:border-[#b8922d]/60 transition-colors">
+              <button onClick={rescreen} className="px-5 py-2.5 border-2 border-[#8B7335]/30 text-[#8B7335] text-xs tracking-[0.15em] uppercase font-semibold hover:border-[#8B7335] hover:bg-[#8B7335]/5 transition-all">
                 Re-screen
               </button>
             )}
@@ -86,76 +76,54 @@ export default function ScreenerPage() {
           </div>
         </div>
 
-        {/* Universe Toggle */}
         <div className="flex items-center gap-3 mb-8">
-          <span className="text-[#999999] text-xs tracking-wider uppercase">Universe:</span>
+          <span className="text-[#78716C] text-xs tracking-wider uppercase font-medium">Universe:</span>
           {(["IDX100", "LQ45"] as const).map((u) => (
-            <button
-              key={u}
-              onClick={() => changeUniverse(u)}
-              className={`px-4 py-1.5 text-xs tracking-[0.15em] uppercase transition-all ${
-                universe === u
-                  ? "bg-[#b8922d]/10 text-[#b8922d] border border-[#b8922d]/30"
-                  : "border border-[#d0c8b8] text-[#999999] hover:text-[#6b6b6b]"
-              }`}
-            >
+            <button key={u} onClick={() => changeUniverse(u)} className={`px-5 py-1.5 text-xs tracking-[0.15em] uppercase font-semibold transition-all ${universe === u ? "bg-[#8B7335]/10 text-[#8B7335] border border-[#8B7335]/30" : "border border-stone-200 text-[#A8A29E] hover:text-[#78716C]"}`}>
               {u}
             </button>
           ))}
         </div>
 
-        {/* Stats Bar */}
         {results.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
-              { label: "Total", value: results.length, color: "text-[#1a1a1a]" },
-              { label: "Buy", value: buys, color: "text-[#b8922d]" },
-              { label: "Watch", value: watches, color: "text-blue-600" },
-              { label: "Filters", value: filters.filter((f) => f.enabled).length, color: "text-[#6b6b6b]" },
+              { label: "Total", value: results.length, color: "text-[#1C1917]" },
+              { label: "Buy", value: buys, color: "text-[#8B7335]" },
+              { label: "Watch", value: watches, color: "text-blue-700" },
+              { label: "Filters", value: filters.filter((f) => f.enabled).length, color: "text-[#78716C]" },
             ].map((s) => (
-              <div key={s.label} className="bg-white border border-[#b8922d]/10 p-4 text-center">
-                <div className={`font-serif text-2xl ${s.color}`}>{s.value}</div>
-                <div className="text-[#999999] text-xs tracking-[0.2em] uppercase mt-1">{s.label}</div>
+              <div key={s.label} className="bg-white border border-[#8B7335]/10 p-5 text-center shadow-sm">
+                <div className={`font-serif text-3xl font-bold ${s.color}`}>{s.value}</div>
+                <div className="text-[#78716C] text-xs tracking-[0.2em] uppercase mt-1 font-medium">{s.label}</div>
               </div>
             ))}
           </div>
         )}
 
-        {/* Main Content */}
         <div className="grid lg:grid-cols-4 gap-8">
-          {/* Filters Sidebar */}
           <div className="space-y-6">
-            <div className="bg-white border border-[#b8922d]/10 p-6">
-              <h3 className="text-xs tracking-[0.2em] uppercase text-[#b8922d] mb-4">Filters</h3>
+            <div className="bg-white border border-[#8B7335]/10 p-6 shadow-sm">
+              <h3 className="text-xs tracking-[0.2em] uppercase text-[#8B7335] mb-5 font-semibold">Filters</h3>
               <div className="space-y-4">
                 {filters.map((f) => (
                   <div key={f.id} className="space-y-2">
                     <label className="flex items-center gap-3 cursor-pointer group">
                       <div className="relative">
                         <input type="checkbox" checked={f.enabled} onChange={() => toggleFilter(f.id)} className="sr-only peer" />
-                        <div className="w-4 h-4 border border-[#d0c8b8] peer-checked:bg-[#b8922d] peer-checked:border-[#b8922d] transition-all flex items-center justify-center">
-                          {f.enabled && (
-                            <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                              <path d="M5 13l4 4L19 7" />
-                            </svg>
-                          )}
+                        <div className="w-4 h-4 border-2 border-stone-300 peer-checked:bg-[#8B7335] peer-checked:border-[#8B7335] transition-all flex items-center justify-center">
+                          {f.enabled && (<svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" /></svg>)}
                         </div>
                       </div>
-                      <span className="text-sm text-[#555555] group-hover:text-[#1a1a1a] transition-colors">{f.name}</span>
+                      <span className="text-sm text-[#44403C] font-medium group-hover:text-[#1C1917] transition-colors">{f.name}</span>
                     </label>
-                    <p className="text-xs text-[#bbbbbb] ml-7">{f.description}</p>
+                    <p className="text-xs text-[#A8A29E] ml-7">{f.description}</p>
                     {f.enabled && Object.keys(f.params).length > 0 && (
                       <div className="ml-7 space-y-2 mt-2">
                         {Object.entries(f.params).map(([key, val]) => (
                           <div key={key} className="flex items-center gap-2">
-                            <label className="text-xs text-[#999999] w-24">{key.replace(/_/g, " ")}</label>
-                            <input
-                              type="number"
-                              value={val}
-                              onChange={(e) => updateParam(f.id, key, parseFloat(e.target.value) || 0)}
-                              className="w-20 bg-[#f5f0e8] border border-[#d0c8b8] px-2 py-1 text-xs text-[#333333] focus:border-[#b8922d] outline-none transition-colors"
-                              step="0.5"
-                            />
+                            <label className="text-xs text-[#78716C] w-24">{key.replace(/_/g, " ")}</label>
+                            <input type="number" value={val} onChange={(e) => updateParam(f.id, key, parseFloat(e.target.value) || 0)} className="w-20 bg-[#F7F2EA] border border-stone-200 px-2 py-1 text-xs text-[#44403C] focus:border-[#8B7335] outline-none transition-colors" step="0.5" />
                           </div>
                         ))}
                       </div>
@@ -165,19 +133,11 @@ export default function ScreenerPage() {
               </div>
             </div>
 
-            <div className="bg-white border border-[#b8922d]/10 p-6">
-              <h3 className="text-xs tracking-[0.2em] uppercase text-[#b8922d] mb-4">Signal</h3>
+            <div className="bg-white border border-[#8B7335]/10 p-6 shadow-sm">
+              <h3 className="text-xs tracking-[0.2em] uppercase text-[#8B7335] mb-5 font-semibold">Signal</h3>
               <div className="space-y-1">
                 {(["all", "BUY", "WATCH", "HOLD", "AVOID"] as const).map((mode) => (
-                  <button
-                    key={mode}
-                    onClick={() => setFilterMode(mode)}
-                    className={`w-full text-left px-3 py-2 text-sm transition-colors ${
-                      filterMode === mode
-                        ? "bg-[#b8922d]/10 text-[#b8922d]"
-                        : "text-[#999999] hover:text-[#555555]"
-                    }`}
-                  >
+                  <button key={mode} onClick={() => setFilterMode(mode)} className={`w-full text-left px-3 py-2 text-sm font-medium transition-colors ${filterMode === mode ? "bg-[#8B7335]/10 text-[#8B7335]" : "text-[#78716C] hover:text-[#44403C]"}`}>
                     {mode === "all" ? `Semua (${results.length})` : mode}
                   </button>
                 ))}
@@ -185,20 +145,17 @@ export default function ScreenerPage() {
             </div>
           </div>
 
-          {/* Results Table */}
           <div className="lg:col-span-3">
-            <div className="bg-white border border-[#b8922d]/10 p-6">
+            <div className="bg-white border border-[#8B7335]/10 p-6 shadow-sm">
               {!loaded ? (
-                <div className="text-center text-[#999999] py-12">Loading...</div>
+                <div className="text-center text-[#A8A29E] py-12">Loading...</div>
               ) : (
                 <>
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="font-serif text-lg text-[#1a1a1a]">
-                      Results <span className="text-[#999999]">({filtered.length})</span>
+                    <h2 className="font-serif text-xl text-[#1C1917] font-bold">
+                      Results <span className="text-[#78716C] font-normal">({filtered.length})</span>
                     </h2>
-                    {results.length > 0 && (
-                      <span className="text-xs text-[#bbbbbb]">{filters.filter((f) => f.enabled).length} filters aktif</span>
-                    )}
+                    {results.length > 0 && (<span className="text-xs text-[#A8A29E]">{filters.filter((f) => f.enabled).length} filters aktif</span>)}
                   </div>
                   <StockTable results={filtered} />
                 </>
