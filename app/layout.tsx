@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Raga Playbook | Equity Sales & Advisory",
+  title: "Raga Playbook | Investment Research & Market Strategy",
   description: "Professional equity sales and capital market advisory services",
 };
 

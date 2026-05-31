@@ -22,7 +22,7 @@ export default function Hero() {
         {/* Pre-heading */}
         <div className="animate-fade-in opacity-0 mb-8">
           <span className="text-[#c9a84c]/70 text-xs tracking-[0.4em] uppercase font-light">
-            Equity Sales & Capital Market Advisory
+            Investment Research & Market Playbook
           </span>
         </div>
 
@@ -33,8 +33,11 @@ export default function Hero() {
 
         {/* Tagline */}
         <p className="animate-fade-in animate-delay-2 opacity-0 text-[#f5f0e8]/40 text-base md:text-lg font-light tracking-wide max-w-2xl mx-auto leading-relaxed mb-4">
-          Membantu investor institusi dan individu mengambil keputusan investasi
-          yang tepat di pasar modal Indonesia
+          Investment Research, Market Strategy & Equity Analysis
+        </p>
+
+        <p className="animate-fade-in animate-delay-2 opacity-0 text-[#f5f0e8]/25 text-sm font-light tracking-wide max-w-xl mx-auto leading-relaxed">
+          A personal portfolio showcasing equity research, market insights, valuation work, and data-driven investment thinking.
         </p>
 
         {/* Gold divider */}
@@ -50,13 +53,13 @@ export default function Hero() {
             href="#contact"
             className="px-8 py-3.5 bg-[#c9a84c] text-[#0a0a0a] text-xs tracking-[0.2em] uppercase font-medium hover:bg-[#dfc06e] transition-all duration-300"
           >
-            Hubungi Saya
+            Contact Me
           </a>
           <a
             href="#about"
             className="px-8 py-3.5 border border-[#c9a84c]/30 text-[#c9a84c] text-xs tracking-[0.2em] uppercase font-light hover:border-[#c9a84c]/60 transition-all duration-300"
           >
-            Pelajari Lebih Lanjut
+            Learn More
           </a>
         </div>
       </div>
