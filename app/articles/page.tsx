@@ -12,6 +12,13 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "right-issue-2026",
+    date: "Mei 2026",
+    tag: "Corporate Action / Right Issue",
+    title: "Jadwal Right Issue 2026: 9 Emiten dengan Total Dana Puluhan Triliun",
+    excerpt: "MPPA Rp5,94T, BNBR Rp4,76T, IRSX Rp3,7T — ada yang sudah dapat jadwal efektif, ada yang masih menunggu OJK. Daftar lengkap beserta rasio dan harga tebus.",
+  },
+  {
     slug: "msci-value-mei-2026",
     date: "Mei 2026",
     tag: "MSCI / Index Rebalancing",
