@@ -36,7 +36,7 @@ export default function Contact() {
               {[
                 { label: "Email", value: "baguspolikarpus@gmail.com" },
                 { label: "Telepon", value: "+62 899 8866 735" },
-                { label: "Lokasi", value: "Pontianak, Indonesia" },
+                { label: "Lokasi", value: "Surabaya, Indonesia" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
                   <div className="w-px h-5 bg-[#A39276]/30 mt-0.5" />
