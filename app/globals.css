@@ -5,13 +5,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
-  --gold: #c9a84c;
-  --gold-light: #dfc06e;
-  --gold-dark: #a37e2c;
-  --black: #0a0a0a;
-  --black-light: #141414;
-  --black-card: #1a1a1a;
-  --cream: #f5f0e8;
+  --gold: #b8922d;
+  --gold-light: #c9a84c;
+  --gold-dark: #8a6914;
+  --bg: #faf7f2;
+  --bg-card: #ffffff;
+  --bg-section: #f5f0e8;
+  --text: #1a1a1a;
+  --text-muted: #6b6b6b;
+  --text-light: #999999;
+  --border: rgba(184, 146, 45, 0.15);
 }
 
 * {
@@ -25,8 +28,8 @@ html {
 }
 
 body {
-  background: var(--black);
-  color: var(--cream);
+  background: var(--bg);
+  color: var(--text);
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,69 +38,51 @@ body {
 
 ::selection {
   background: var(--gold);
-  color: var(--black);
+  color: #fff;
 }
 
-/* Gold shimmer line */
+/* Gold line */
 .gold-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
 }
 
-/* Subtle gold gradient text */
+/* Gold gradient text */
 .text-gold-gradient {
-  background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Card hover glow */
+/* Luxury card */
 .card-luxury {
-  background: var(--black-card);
-  border: 1px solid rgba(201, 168, 76, 0.1);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-luxury:hover {
-  border-color: rgba(201, 168, 76, 0.3);
-  box-shadow: 0 0 40px rgba(201, 168, 76, 0.05);
+  border-color: rgba(184, 146, 45, 0.35);
+  box-shadow: 0 8px 40px rgba(184, 146, 45, 0.06);
 }
 
-/* Fade in animation */
+/* Fade in */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fade-in {
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
+.animate-fade-in { animation: fadeInUp 0.8s ease-out forwards; }
 .animate-delay-1 { animation-delay: 0.2s; }
 .animate-delay-2 { animation-delay: 0.4s; }
 .animate-delay-3 { animation-delay: 0.6s; }
 .animate-delay-4 { animation-delay: 0.8s; }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--black);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--gold-dark);
-  border-radius: 3px;
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold-light); border-radius: 3px; }
 
 /* Input focus */
 input:focus, textarea:focus {

@@ -9,10 +9,10 @@ interface Props {
 
 function Badge({ action }: { action: ScreenResult["action"] }) {
   const colors: Record<string, string> = {
-    BUY: "bg-[#c9a84c]/15 text-[#c9a84c] border border-[#c9a84c]/30",
-    WATCH: "bg-blue-500/15 text-blue-400 border border-blue-400/30",
-    HOLD: "bg-[#f5f0e8]/10 text-[#f5f0e8]/50 border border-[#f5f0e8]/20",
-    AVOID: "bg-red-500/15 text-red-400 border border-red-400/30",
+    BUY: "bg-[#b8922d]/15 text-[#8a6914] border border-[#b8922d]/30",
+    WATCH: "bg-blue-500/10 text-blue-600 border border-blue-300/40",
+    HOLD: "bg-[#1a1a1a]/5 text-[#6b6b6b] border border-[#1a1a1a]/10",
+    AVOID: "bg-red-500/10 text-red-600 border border-red-300/40",
   };
   return (
     <span className={`px-2 py-0.5 text-xs font-medium tracking-wider uppercase ${colors[action]}`}>
@@ -22,20 +22,16 @@ function Badge({ action }: { action: ScreenResult["action"] }) {
 }
 
 function VolRatio({ vol, avg }: { vol: number; avg: number }) {
-  if (!avg || avg <= 0) return <span className="text-[#f5f0e8]/20">—</span>;
+  if (!avg || avg <= 0) return <span className="text-[#cccccc]">—</span>;
   const ratio = vol / avg;
   const icon = ratio >= 1.5 ? "🔥" : ratio >= 1 ? "✅" : ratio >= 0.5 ? "⚠️" : "💤";
-  return (
-    <span className="text-[#f5f0e8]/60">
-      {icon} {ratio.toFixed(1)}×
-    </span>
-  );
+  return <span className="text-[#6b6b6b]">{icon} {ratio.toFixed(1)}×</span>;
 }
 
 export function StockTable({ results, compact }: Props) {
   if (results.length === 0) {
     return (
-      <div className="text-center text-[#f5f0e8]/30 py-12 text-sm">
+      <div className="text-center text-[#999999] py-12 text-sm">
         Belum ada hasil. Jalankan screener untuk scan saham.
       </div>
     );
@@ -45,7 +41,7 @@ export function StockTable({ results, compact }: Props) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-[#c9a84c]/10 text-left text-xs tracking-[0.15em] uppercase text-[#f5f0e8]/30">
+          <tr className="border-b border-[#b8922d]/10 text-left text-xs tracking-[0.15em] uppercase text-[#999999]">
             <th className="pb-3 pr-4">Ticker</th>
             <th className="pb-3 pr-4">Signal</th>
             <th className="pb-3 pr-4 text-right">Harga</th>
@@ -64,61 +60,44 @@ export function StockTable({ results, compact }: Props) {
         </thead>
         <tbody>
           {results.map((r) => (
-            <tr
-              key={r.name}
-              className="border-b border-[#c9a84c]/5 hover:bg-[#c9a84c]/[0.03] transition-colors"
-            >
+            <tr key={r.name} className="border-b border-[#e8e0d0] hover:bg-[#b8922d]/[0.03] transition-colors">
               <td className="py-3 pr-4">
-                <span className="font-medium text-[#c9a84c]">{r.name}</span>
-                <div className="text-xs text-[#f5f0e8]/25 truncate max-w-[120px]">
-                  {r.desc}
-                </div>
+                <span className="font-medium text-[#b8922d]">{r.name}</span>
+                <div className="text-xs text-[#999999] truncate max-w-[120px]">{r.desc}</div>
               </td>
               <td className="py-3 pr-4">
                 <Badge action={r.action} />
-                <div className="text-xs text-[#f5f0e8]/20 mt-1">{r.status}</div>
+                <div className="text-xs text-[#bbbbbb] mt-1">{r.status}</div>
               </td>
-              <td className="py-3 pr-4 text-right font-mono text-[#f5f0e8]/70">
+              <td className="py-3 pr-4 text-right font-mono text-[#333333]">
                 {(r.close || 0).toLocaleString("id-ID")}
               </td>
               <td className="py-3 pr-4 text-right">
-                <span className={(r.change || 0) >= 0 ? "text-emerald-400" : "text-red-400"}>
-                  {(r.change || 0) >= 0 ? "+" : ""}
-                  {(r.change || 0).toFixed(2)}%
+                <span className={(r.change || 0) >= 0 ? "text-emerald-600" : "text-red-500"}>
+                  {(r.change || 0) >= 0 ? "+" : ""}{(r.change || 0).toFixed(2)}%
                 </span>
               </td>
-              <td className="py-3 pr-4 text-right text-[#f5f0e8]/40">
+              <td className="py-3 pr-4 text-right text-[#999999]">
                 {r.mcap ? `${(r.mcap / 1e12).toFixed(0)}T` : "—"}
               </td>
               {!compact && (
                 <>
+                  <td className="py-3 pr-4 text-right"><VolRatio vol={r.volume || 0} avg={r.avg_vol_10d || 0} /></td>
+                  <td className="py-3 pr-4 text-right text-[#999999] font-mono">{(r.vwap || 0).toLocaleString("id-ID")}</td>
                   <td className="py-3 pr-4 text-right">
-                    <VolRatio vol={r.volume || 0} avg={r.avg_vol_10d || 0} />
-                  </td>
-                  <td className="py-3 pr-4 text-right text-[#f5f0e8]/40 font-mono">
-                    {(r.vwap || 0).toLocaleString("id-ID")}
-                  </td>
-                  <td className="py-3 pr-4 text-right">
-                    <span className={(r.perf1m || 0) >= 0 ? "text-emerald-400" : "text-red-400"}>
-                      {(r.perf1m || 0) >= 0 ? "+" : ""}
-                      {(r.perf1m || 0).toFixed(1)}%
+                    <span className={(r.perf1m || 0) >= 0 ? "text-emerald-600" : "text-red-500"}>
+                      {(r.perf1m || 0) >= 0 ? "+" : ""}{(r.perf1m || 0).toFixed(1)}%
                     </span>
                   </td>
                   <td className="py-3 pr-4 text-right">
-                    <span className={(r.perf3m || 0) >= 0 ? "text-emerald-400" : "text-red-400"}>
-                      {(r.perf3m || 0) >= 0 ? "+" : ""}
-                      {(r.perf3m || 0).toFixed(1)}%
+                    <span className={(r.perf3m || 0) >= 0 ? "text-emerald-600" : "text-red-500"}>
+                      {(r.perf3m || 0) >= 0 ? "+" : ""}{(r.perf3m || 0).toFixed(1)}%
                     </span>
                   </td>
                   <td className="py-3 pr-4 text-right">
                     <div className="flex items-center justify-end gap-0.5">
                       {[...Array(10)].map((_, i) => (
-                        <div
-                          key={i}
-                          className={`w-1.5 h-3 rounded-sm ${
-                            i < r.trend_score ? "bg-[#c9a84c]" : "bg-[#f5f0e8]/8"
-                          }`}
-                        />
+                        <div key={i} className={`w-1.5 h-3 rounded-sm ${i < r.trend_score ? "bg-[#b8922d]" : "bg-[#e0dbd0]"}`} />
                       ))}
                     </div>
                   </td>

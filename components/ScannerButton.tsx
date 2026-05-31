@@ -63,7 +63,7 @@ export function ScannerButton({ onResults, onLoading }: Props) {
       <button
         onClick={runScan}
         disabled={loading}
-        className="px-6 py-2.5 bg-[#c9a84c] text-[#0a0a0a] text-xs tracking-[0.2em] uppercase font-medium hover:bg-[#dfc06e] transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
+        className="px-6 py-2.5 bg-[#b8922d] text-white text-xs tracking-[0.2em] uppercase font-medium hover:bg-[#a37e2c] transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
       >
         {loading ? (
           <span className="flex items-center gap-2">
@@ -77,7 +77,7 @@ export function ScannerButton({ onResults, onLoading }: Props) {
           "Run Screener"
         )}
       </button>
-      {error && <span className="text-sm text-red-400">{error}</span>}
+      {error && <span className="text-sm text-red-500">{error}</span>}
     </div>
   );
 }
