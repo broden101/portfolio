@@ -33,7 +33,7 @@ export default function Services() {
           <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Core Competencies</span>
         </div>
 
-        <h2 className="font-['Cormorant_Garamond'] text-4xl md:text-5xl text-[#F4EFE6] mb-16 max-w-xl font-light">
+        <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-16 max-w-xl font-light">
           What I <span className="text-gold-gradient font-medium">Bring</span>
         </h2>
 
@@ -43,7 +43,7 @@ export default function Services() {
               <div className="text-[#C6A15B]/20 group-hover:text-[#C6A15B] transition-colors duration-500 mb-6">
                 {s.icon}
               </div>
-              <h3 className="font-['Cormorant_Garamond'] text-xl text-[#F4EFE6] mb-3 font-medium">{s.title}</h3>
+              <h3 className="font-heading text-xl text-[#F4EFE6] mb-3 font-medium">{s.title}</h3>
               <p className="text-[#B8AA96] text-sm leading-relaxed font-light">{s.desc}</p>
             </div>
           ))}

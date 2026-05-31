@@ -14,7 +14,7 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 className="animate-fade-in animate-delay-1 opacity-0 font-['Cormorant_Garamond'] text-6xl md:text-7xl lg:text-9xl font-light tracking-tight text-[#F4EFE6] mb-8">
+          <h1 className="animate-fade-in animate-delay-1 opacity-0 font-heading text-6xl md:text-7xl lg:text-9xl font-light tracking-tight text-[#F4EFE6] mb-8">
             Raga Playbook
           </h1>
 

@@ -24,7 +24,7 @@ export default function Contact() {
               <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Contact</span>
             </div>
 
-            <h2 className="font-['Cormorant_Garamond'] text-4xl md:text-5xl text-[#F4EFE6] mb-8 font-light">
+            <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-8 font-light">
               Let's <span className="text-gold-gradient font-medium">Connect</span>
             </h2>
 

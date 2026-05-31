@@ -139,7 +139,7 @@ export default function OrderBookPage() {
       {/* Header */}
       <header className="mb-2 flex items-center justify-between bg-[#141210] border border-[#2C261E] px-4 py-2">
         <div className="flex items-center gap-3">
-          <h1 className="text-base font-semibold text-[#F4EFE6] font-['Cormorant_Garamond']">📈 OrderBook Backtest</h1>
+          <h1 className="text-base font-semibold text-[#F4EFE6] font-heading">📈 OrderBook Backtest</h1>
         </div>
         <nav className="flex gap-1 bg-[#0B0B0A] border border-[#2C261E] p-0.5">
           {([
@@ -163,7 +163,7 @@ export default function OrderBookPage() {
             <div className="border-b border-[#2C261E] p-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-lg font-bold text-[#F4EFE6] font-['Cormorant_Garamond']">Order Book</span>
+                  <span className="text-lg font-bold text-[#F4EFE6] font-heading">Order Book</span>
                   <span className="ml-2 text-xs text-[#B8AA96]/40">Real-time</span>
                 </div>
                 <div className="text-right">
@@ -235,7 +235,7 @@ export default function OrderBookPage() {
               <div className="border-b border-[#2C261E] p-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-lg font-bold text-[#F4EFE6] font-['Cormorant_Garamond']">Running Trade</span>
+                    <span className="text-lg font-bold text-[#F4EFE6] font-heading">Running Trade</span>
                     <span className="ml-2 text-xs text-[#B8AA96]/40">{Math.max(0, currentIdx + 1)} trades</span>
                   </div>
                   <div className="text-xs text-[#B8AA96]/40">{currentIdx + 1}/{trades.length}</div>

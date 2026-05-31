@@ -27,9 +27,9 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           <a href="#" className="flex items-center gap-3">
             <div className="w-8 h-8 border border-[#C6A15B]/50 flex items-center justify-center">
-              <span className="text-[#C6A15B] font-['Cormorant_Garamond'] text-sm font-semibold">R</span>
+              <span className="text-[#C6A15B] font-heading text-sm font-semibold">R</span>
             </div>
-            <span className="font-['Cormorant_Garamond'] text-lg tracking-widest text-[#F4EFE6] uppercase font-semibold">
+            <span className="font-heading text-lg tracking-widest text-[#F4EFE6] uppercase font-semibold">
               Raga Playbook
             </span>
           </a>

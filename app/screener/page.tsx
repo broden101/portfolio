@@ -62,7 +62,7 @@ export default function ScreenerPage() {
               <div className="w-10 h-px bg-[#C6A15B]/30" />
               <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">IDX Screener</span>
             </div>
-            <h1 className="font-['Cormorant_Garamond'] text-4xl text-[#F4EFE6] font-light">
+            <h1 className="font-heading text-4xl text-[#F4EFE6] font-light">
               Stock <span className="text-gold-gradient font-medium">Screener</span>
             </h1>
           </div>
@@ -94,7 +94,7 @@ export default function ScreenerPage() {
               { label: "Filters", value: filters.filter((f) => f.enabled).length, color: "text-[#B8AA96]" },
             ].map((s) => (
               <div key={s.label} className="card-luxury p-5 text-center">
-                <div className={`font-['Cormorant_Garamond'] text-3xl font-medium ${s.color}`}>{s.value}</div>
+                <div className={`font-heading text-3xl font-medium ${s.color}`}>{s.value}</div>
                 <div className="text-[#B8AA96]/40 text-xs tracking-[0.2em] uppercase mt-1">{s.label}</div>
               </div>
             ))}
@@ -152,7 +152,7 @@ export default function ScreenerPage() {
               ) : (
                 <>
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="font-['Cormorant_Garamond'] text-xl text-[#F4EFE6] font-medium">
+                    <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
                       Results <span className="text-[#B8AA96]/50 font-light">({filtered.length})</span>
                     </h2>
                     {results.length > 0 && (<span className="text-xs text-[#B8AA96]/30">{filters.filter((f) => f.enabled).length} active filters</span>)}

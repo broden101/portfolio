@@ -7,9 +7,9 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="w-7 h-7 border border-[#C6A15B]/30 flex items-center justify-center">
-              <span className="text-[#C6A15B] font-['Cormorant_Garamond'] text-xs font-semibold">R</span>
+              <span className="text-[#C6A15B] font-heading text-xs font-semibold">R</span>
             </div>
-            <span className="font-['Cormorant_Garamond'] text-sm tracking-widest text-[#B8AA96] uppercase">Raga Playbook</span>
+            <span className="font-heading text-sm tracking-widest text-[#B8AA96] uppercase">Raga Playbook</span>
           </div>
 
           <div className="flex items-center gap-8">

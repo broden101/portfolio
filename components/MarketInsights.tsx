@@ -17,7 +17,7 @@ export default function MarketInsights() {
               <div className="w-16 h-px bg-[#C6A15B]/30" />
               <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Market Insight</span>
             </div>
-            <h2 className="font-['Cormorant_Garamond'] text-4xl md:text-5xl text-[#F4EFE6] font-light">
+            <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light">
               Market <span className="text-gold-gradient font-medium">Insights</span>
             </h2>
           </div>
@@ -31,7 +31,7 @@ export default function MarketInsights() {
                 <span className="w-1 h-1 rounded-full bg-[#2C261E]" />
                 <span className="text-[#B8AA96]/50 text-xs tracking-wider uppercase">{item.tag}</span>
               </div>
-              <h3 className="font-['Cormorant_Garamond'] text-lg text-[#F4EFE6] mb-3 font-medium group-hover:text-[#C6A15B] transition-colors duration-300">{item.title}</h3>
+              <h3 className="font-heading text-lg text-[#F4EFE6] mb-3 font-medium group-hover:text-[#C6A15B] transition-colors duration-300">{item.title}</h3>
               <p className="text-[#B8AA96] text-sm leading-relaxed font-light flex-1">{item.excerpt}</p>
               <div className="mt-6 pt-6 border-t border-[#2C261E]">
                 <span className="text-[#C6A15B]/50 text-xs tracking-[0.2em] uppercase group-hover:text-[#C6A15B] transition-colors">

@@ -15,7 +15,7 @@ export default function About() {
             <div className="aspect-[3/4] bg-[#141210] border border-[#2C261E] flex items-center justify-center">
               <div className="text-center">
                 <div className="w-24 h-24 mx-auto mb-4 rounded-full border border-[#2C261E] flex items-center justify-center">
-                  <span className="text-[#C6A15B]/30 text-3xl font-['Cormorant_Garamond'] font-bold">RP</span>
+                  <span className="text-[#C6A15B]/30 text-3xl font-heading font-bold">RP</span>
                 </div>
                 <span className="text-[#B8AA96]/40 text-xs tracking-widest uppercase">Profile Photo</span>
               </div>
@@ -24,7 +24,7 @@ export default function About() {
           </div>
 
           <div className="flex flex-col justify-center">
-            <h2 className="font-['Cormorant_Garamond'] text-4xl md:text-5xl text-[#F4EFE6] mb-8 leading-tight font-light">
+            <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-8 leading-tight font-light">
               Aspiring Investment<br />
               <span className="text-gold-gradient font-medium">Professional</span>
             </h2>
@@ -41,7 +41,7 @@ export default function About() {
                 { number: "IDX", label: "IDX Focus" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div className="font-['Cormorant_Garamond'] text-3xl md:text-4xl text-[#C6A15B] mb-2 font-medium">{stat.number}</div>
+                  <div className="font-heading text-3xl md:text-4xl text-[#C6A15B] mb-2 font-medium">{stat.number}</div>
                   <div className="text-[#B8AA96]/60 text-xs tracking-wider uppercase">{stat.label}</div>
                 </div>
               ))}
