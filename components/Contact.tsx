@@ -46,6 +46,17 @@ export default function Contact() {
                   </div>
                 </div>
               ))}
+
+              <div className="pt-4">
+                <a
+                  href="/cv-raga-playbook.pdf"
+                  download
+                  className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#C6A15B] text-[#0B0B0A] text-xs tracking-[0.2em] uppercase font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#C6A15B]"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+                  Download CV
+                </a>
+              </div>
             </div>
           </div>
 
