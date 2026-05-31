@@ -8,16 +8,16 @@ const insights = [
 
 export default function MarketInsights() {
   return (
-    <section id="market" className="relative py-32 bg-[#F7F2EA]">
+    <section id="market" className="relative py-32 bg-[#E7DFC8]">
       <div className="gold-line w-full" />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center justify-between mb-16 flex-wrap gap-4">
           <div>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-px bg-[#8B7335]/40" />
-              <span className="text-[#8B7335] text-xs tracking-[0.3em] uppercase font-semibold">Market Insight</span>
+              <div className="w-16 h-px bg-[#A39276]/40" />
+              <span className="text-[#6E6151] text-xs tracking-[0.3em] uppercase font-semibold">Market Insight</span>
             </div>
-            <h2 className="font-serif text-4xl md:text-5xl text-[#1C1917] font-bold">
+            <h2 className="font-serif text-4xl md:text-5xl text-[#281F17] font-bold">
               Wawasan <span className="text-gold-gradient">Pasar</span>
             </h2>
           </div>
@@ -27,14 +27,14 @@ export default function MarketInsights() {
           {insights.map((item, i) => (
             <article key={i} className="card-luxury p-8 group cursor-pointer flex flex-col">
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-[#8B7335] text-xs tracking-wider font-semibold">{item.date}</span>
-                <span className="w-1 h-1 rounded-full bg-[#8B7335]/30" />
-                <span className="text-[#A8A29E] text-xs tracking-wider uppercase">{item.tag}</span>
+                <span className="text-[#6E6151] text-xs tracking-wider font-semibold">{item.date}</span>
+                <span className="w-1 h-1 rounded-full bg-[#A39276]/40" />
+                <span className="text-[#A39276] text-xs tracking-wider uppercase">{item.tag}</span>
               </div>
-              <h3 className="font-serif text-lg text-[#1C1917] mb-3 font-semibold group-hover:text-[#8B7335] transition-colors duration-300">{item.title}</h3>
-              <p className="text-[#78716C] text-sm leading-relaxed font-light flex-1">{item.excerpt}</p>
-              <div className="mt-6 pt-6 border-t border-[#8B7335]/10">
-                <span className="text-[#8B7335]/50 text-xs tracking-[0.2em] uppercase font-medium group-hover:text-[#8B7335] transition-colors">
+              <h3 className="font-serif text-lg text-[#281F17] mb-3 font-semibold group-hover:text-[#6E6151] transition-colors duration-300">{item.title}</h3>
+              <p className="text-[#726556] text-sm leading-relaxed font-light flex-1">{item.excerpt}</p>
+              <div className="mt-6 pt-6 border-t border-[#A39276]/15">
+                <span className="text-[#A39276] text-xs tracking-[0.2em] uppercase font-medium group-hover:text-[#6E6151] transition-colors">
                   Baca Selengkapnya →
                 </span>
               </div>

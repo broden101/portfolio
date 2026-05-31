@@ -25,26 +25,26 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-32 bg-[#FDFAF5]">
+    <section id="services" className="relative py-32 bg-[#DDBFA2]">
       <div className="gold-line w-full" />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-px bg-[#8B7335]/40" />
-          <span className="text-[#8B7335] text-xs tracking-[0.3em] uppercase font-semibold">Layanan</span>
+          <div className="w-16 h-px bg-[#A39276]/40" />
+          <span className="text-[#6E6151] text-xs tracking-[0.3em] uppercase font-semibold">Layanan</span>
         </div>
 
-        <h2 className="font-serif text-4xl md:text-5xl text-[#1C1917] mb-16 max-w-xl font-bold">
+        <h2 className="font-serif text-4xl md:text-5xl text-[#281F17] mb-16 max-w-xl font-bold">
           Solusi Investasi yang <span className="text-gold-gradient">Komprehensif</span>
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8">
           {services.map((s, i) => (
             <div key={i} className="card-luxury p-10 group cursor-default">
-              <div className="text-[#8B7335]/30 group-hover:text-[#8B7335] transition-colors duration-500 mb-6">
+              <div className="text-[#A39276]/40 group-hover:text-[#6E6151] transition-colors duration-500 mb-6">
                 {s.icon}
               </div>
-              <h3 className="font-serif text-xl text-[#1C1917] mb-3 font-semibold">{s.title}</h3>
-              <p className="text-[#78716C] text-sm leading-relaxed font-light">{s.desc}</p>
+              <h3 className="font-serif text-xl text-[#281F17] mb-3 font-semibold">{s.title}</h3>
+              <p className="text-[#726556] text-sm leading-relaxed font-light">{s.desc}</p>
             </div>
           ))}
         </div>

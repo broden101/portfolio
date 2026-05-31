@@ -36,7 +36,7 @@ export function ScannerButton({ onResults, onLoading }: Props) {
 
   return (
     <div className="flex items-center gap-3">
-      <button onClick={runScan} disabled={loading} className="px-7 py-3 bg-[#8B7335] text-white text-xs tracking-[0.2em] uppercase font-semibold hover:bg-[#6B5A28] transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed shadow-md hover:shadow-lg">
+      <button onClick={runScan} disabled={loading} className="px-7 py-3 bg-[#6E6151] text-white text-xs tracking-[0.2em] uppercase font-semibold hover:bg-[#281F17] transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed shadow-md hover:shadow-lg">
         {loading ? (
           <span className="flex items-center gap-2">
             <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>

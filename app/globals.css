@@ -5,27 +5,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --gold: #8B7335;
-  --gold-light: #A8914A;
-  --gold-dark: #6B5A28;
-  --gold-muted: #C4A96A;
-  --bg: #FDFAF5;
-  --bg-alt: #F7F2EA;
-  --bg-card: #FFFFFF;
-  --text: #1C1917;
-  --text-secondary: #44403C;
-  --text-muted: #78716C;
-  --text-light: #A8A29E;
-  --border: rgba(139, 115, 53, 0.12);
-  --shadow: 0 4px 24px rgba(28, 25, 23, 0.06);
-  --shadow-lg: 0 12px 48px rgba(28, 25, 23, 0.08);
+  --background: #DDBFA2;
+  --surface: #E7DFC8;
+  --primary: #6E6151;
+  --primary-dark: #281F17;
+  --accent: #A39276;
+  --text: #070301;
+  --text-muted: #726556;
+  --gold: #A39276;
+  --border: rgba(163, 146, 118, 0.2);
+  --shadow: 0 4px 24px rgba(40, 31, 23, 0.08);
+  --shadow-lg: 0 12px 48px rgba(40, 31, 23, 0.12);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
+  background: var(--background);
   color: var(--text);
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -33,26 +30,26 @@ body {
   overflow-x: hidden;
 }
 
-::selection { background: var(--gold); color: #fff; }
+::selection { background: var(--accent); color: #fff; }
 
-.gold-line { height: 1px; background: linear-gradient(90deg, transparent, var(--gold-muted), transparent); }
+.gold-line { height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
 
 .text-gold-gradient {
-  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .card-luxury {
-  background: var(--bg-card);
+  background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-luxury:hover {
-  border-color: rgba(139, 115, 53, 0.25);
+  border-color: rgba(163, 146, 118, 0.4);
   box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
 }
@@ -68,7 +65,11 @@ body {
 .animate-delay-4 { animation-delay: 0.8s; }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--gold-muted); border-radius: 3px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
-input:focus, textarea:focus { outline: none; border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(139, 115, 53, 0.08); }
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(163, 146, 118, 0.15);
+}
