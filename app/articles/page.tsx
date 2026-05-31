@@ -12,6 +12,13 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "msci-value-mei-2026",
+    date: "Mei 2026",
+    tag: "MSCI / Index Rebalancing",
+    title: "MSCI Value Mei 2026: Lebih Ramping, BMRI Jadi Bobot Terbesar Gantikan BBRI",
+    excerpt: "MSCI memangkas konstituen dari 10 menjadi 7 saham. BBCA, CPIN, dan TPIA keluar. BMRI menggantikan BBRI sebagai bobot terbesar. Dividend yield rata-rata 8,7%.",
+  },
+  {
     slug: "ftse-russell-juni-2026",
     date: "Juni 2026",
     tag: "IHSG",
