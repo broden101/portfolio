@@ -18,7 +18,7 @@ const navLinks: NavLink[] = [
     href: "#",
     children: [
       { label: "IDX Screener", href: "/screener" },
-      { label: "Tradebook", href: "/tradebook" },
+      { label: "Backtest Running Trade", href: "/tradebook" },
       { label: "Rights Issue Calculator", href: "/calculator" },
       { label: "Dividend Tracker", href: "/dividend" },
     ],
