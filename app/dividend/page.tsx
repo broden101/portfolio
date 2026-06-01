@@ -224,11 +224,12 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
               <th className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium">#</th>
               {([
                 ["ticker", "Stock"],
+                ["price", "Price"],
                 ["sector", "Sector"],
                 ["totalDividends", "Total Div (Rp)"],
-                ["dividendCount", "Payments"],
+                ["latestFinalDPS", "Final DPS"],
+                ["finalYield", "Final Yield %"],
                 ["yearsOfHistory", "Years"],
-                ["avgDividendPerYear", "Avg/Yr (Rp)"],
                 ["latestDividend", "Latest Ex-Date"],
               ] as [keyof DividendStock, string][]).map(([key, label]) => (
                 <th key={key} className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium cursor-pointer hover:text-[#C6A15B] transition-colors select-none whitespace-nowrap" onClick={() => handleSort(key)}>
@@ -247,15 +248,26 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
                     <div className="text-[10px] text-[#B8AA96]/40 mt-0.5 max-w-[180px] truncate">{stock.companyName}</div>
                   </div>
                 </td>
+                <td className="py-3 px-2 font-mono text-[#F4EFE6]">{stock.price ? `Rp${stock.price.toLocaleString()}` : '—'}</td>
                 <td className="py-3 px-2 text-[#B8AA96]">{stock.sector}</td>
                 <td className="py-3 px-2 font-mono font-semibold text-[#F4EFE6]">{stock.totalDividends.toLocaleString()}</td>
-                <td className="py-3 px-2 font-mono text-[#B8AA96]">{stock.dividendCount}</td>
+                <td className="py-3 px-2 font-mono text-[#F4EFE6]">{stock.latestFinalDPS ? `Rp${stock.latestFinalDPS.toLocaleString(undefined, {maximumFractionDigits: 2})}` : '—'}</td>
+                <td className="py-3 px-2">
+                  {stock.finalYield != null ? (
+                    <span className={`font-mono font-semibold ${
+                      stock.finalYield >= 8 ? 'text-emerald-400' :
+                      stock.finalYield >= 4 ? 'text-[#C6A15B]' :
+                      'text-[#B8AA96]'
+                    }`}>{stock.finalYield.toFixed(2)}%</span>
+                  ) : (
+                    <span className="text-[#B8AA96]/30">—</span>
+                  )}
+                </td>
                 <td className="py-3 px-2">
                   <span className={`font-mono ${stock.yearsOfHistory >= 15 ? "text-[#C6A15B]" : stock.yearsOfHistory >= 10 ? "text-emerald-400" : "text-[#B8AA96]"}`}>
                     {stock.yearsOfHistory}
                   </span>
                 </td>
-                <td className="py-3 px-2 font-mono text-[#F4EFE6]">{stock.avgDividendPerYear.toLocaleString()}</td>
                 <td className="py-3 px-2">
                   {stock.latestDividend?.date ? (
                     <div>

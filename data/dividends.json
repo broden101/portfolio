@@ -290,7 +290,11 @@
         "type": "final"
       }
     ],
-    "rank": 1
+    "rank": 1,
+    "price": 22100,
+    "latestFinalDPS": 992.0,
+    "latestFinalDate": "2026-04-28",
+    "finalYield": 4.49
   },
   {
     "ticker": "GGRM",
@@ -478,7 +482,11 @@
         "type": "final"
       }
     ],
-    "rank": 2
+    "rank": 2,
+    "price": 17000,
+    "latestFinalDPS": 500.0,
+    "latestFinalDate": "2025-07-07",
+    "finalYield": 2.94
   },
   {
     "ticker": "UNTR",
@@ -806,7 +814,11 @@
         "type": "final"
       }
     ],
-    "rank": 3
+    "rank": 3,
+    "price": 22925,
+    "latestFinalDPS": 1096.0,
+    "latestFinalDate": "2026-04-27",
+    "finalYield": 4.78
   },
   {
     "ticker": "GEMS",
@@ -1078,7 +1090,11 @@
         "type": "final"
       }
     ],
-    "rank": 4
+    "rank": 4,
+    "price": 7525,
+    "latestFinalDPS": 237.95,
+    "latestFinalDate": "2026-06-02",
+    "finalYield": 3.16
   },
   {
     "ticker": "ASII",
@@ -1427,7 +1443,11 @@
         "type": "final"
       }
     ],
-    "rank": 5
+    "rank": 5,
+    "price": 5000,
+    "latestFinalDPS": 292.0,
+    "latestFinalDate": "2026-05-05",
+    "finalYield": 5.84
   },
   {
     "ticker": "PTBA",
@@ -1643,7 +1663,11 @@
         "type": "final"
       }
     ],
-    "rank": 6
+    "rank": 6,
+    "price": 2780,
+    "latestFinalDPS": 332.44,
+    "latestFinalDate": "2025-06-23",
+    "finalYield": 11.96
   },
   {
     "ticker": "SMGR",
@@ -1831,7 +1855,11 @@
         "type": "final"
       }
     ],
-    "rank": 7
+    "rank": 7,
+    "price": 1690,
+    "latestFinalDPS": 28.33,
+    "latestFinalDate": "2026-05-21",
+    "finalYield": 1.68
   },
   {
     "ticker": "LPPF",
@@ -1956,7 +1984,11 @@
         "type": "final"
       }
     ],
-    "rank": 8
+    "rank": 8,
+    "price": 1600,
+    "latestFinalDPS": 250.0,
+    "latestFinalDate": "2026-04-24",
+    "finalYield": 15.62
   },
   {
     "ticker": "ADRO",
@@ -2228,7 +2260,11 @@
         "type": "final"
       }
     ],
-    "rank": 9
+    "rank": 9,
+    "price": 2300,
+    "latestFinalDPS": 118.26,
+    "latestFinalDate": "2026-04-28",
+    "finalYield": 5.14
   },
   {
     "ticker": "INDF",
@@ -2437,7 +2473,11 @@
         "type": "final"
       }
     ],
-    "rank": 10
+    "rank": 10,
+    "price": 6925,
+    "latestFinalDPS": 280.0,
+    "latestFinalDate": "2025-07-02",
+    "finalYield": 4.04
   },
   {
     "ticker": "UNVR",
@@ -2793,7 +2833,11 @@
         "type": "final"
       }
     ],
-    "rank": 11
+    "rank": 11,
+    "price": 1710,
+    "latestFinalDPS": 47.0,
+    "latestFinalDate": "2025-06-16",
+    "finalYield": 2.75
   },
   {
     "ticker": "ICBP",
@@ -2932,7 +2976,11 @@
         "type": "final"
       }
     ],
-    "rank": 12
+    "rank": 12,
+    "price": 7100,
+    "latestFinalDPS": 250.0,
+    "latestFinalDate": "2025-07-02",
+    "finalYield": 3.52
   },
   {
     "ticker": "BYAN",
@@ -3050,7 +3098,11 @@
         "type": "final"
       }
     ],
-    "rank": 13
+    "rank": 13,
+    "price": 9825,
+    "latestFinalDPS": 194.84,
+    "latestFinalDate": "2025-07-07",
+    "finalYield": 1.98
   },
   {
     "ticker": "BBRI",
@@ -3280,7 +3332,11 @@
         "type": "final"
       }
     ],
-    "rank": 14
+    "rank": 14,
+    "price": 2950,
+    "latestFinalDPS": 209.0,
+    "latestFinalDate": "2026-04-21",
+    "finalYield": 7.08
   },
   {
     "ticker": "BBNI",
@@ -3475,7 +3531,11 @@
         "type": "final"
       }
     ],
-    "rank": 15
+    "rank": 15,
+    "price": 3700,
+    "latestFinalDPS": 349.413365,
+    "latestFinalDate": "2026-03-25",
+    "finalYield": 9.44
   },
   {
     "ticker": "PGAS",
@@ -3684,7 +3744,11 @@
         "type": "final"
       }
     ],
-    "rank": 16
+    "rank": 16,
+    "price": 1825,
+    "latestFinalDPS": 125.61,
+    "latestFinalDate": "2025-06-05",
+    "finalYield": 6.88
   },
   {
     "ticker": "TLKM",
@@ -3907,7 +3971,11 @@
         "type": "final"
       }
     ],
-    "rank": 17
+    "rank": 17,
+    "price": 3030,
+    "latestFinalDPS": 212.47,
+    "latestFinalDate": "2025-06-11",
+    "finalYield": 7.01
   },
   {
     "ticker": "BBCA",
@@ -4249,7 +4317,11 @@
         "type": "final"
       }
     ],
-    "rank": 18
+    "rank": 18,
+    "price": 5700,
+    "latestFinalDPS": 281.0,
+    "latestFinalDate": "2026-03-30",
+    "finalYield": 4.93
   },
   {
     "ticker": "AUTO",
@@ -4584,7 +4656,11 @@
         "type": "final"
       }
     ],
-    "rank": 19
+    "rank": 19,
+    "price": 2530,
+    "latestFinalDPS": 170.0,
+    "latestFinalDate": "2026-04-28",
+    "finalYield": 6.72
   },
   {
     "ticker": "MPMX",
@@ -4702,7 +4778,11 @@
         "type": "final"
       }
     ],
-    "rank": 20
+    "rank": 20,
+    "price": 1135,
+    "latestFinalDPS": 170.0,
+    "latestFinalDate": "2026-06-09",
+    "finalYield": 14.98
   },
   {
     "ticker": "HMSP",
@@ -5037,7 +5117,11 @@
         "type": "final"
       }
     ],
-    "rank": 21
+    "rank": 21,
+    "price": 695,
+    "latestFinalDPS": 56.3,
+    "latestFinalDate": "2026-05-29",
+    "finalYield": 8.1
   },
   {
     "ticker": "TSPC",
@@ -5260,7 +5344,11 @@
         "type": "final"
       }
     ],
-    "rank": 22
+    "rank": 22,
+    "price": 2370,
+    "latestFinalDPS": 100.0,
+    "latestFinalDate": "2025-06-05",
+    "finalYield": 4.22
   },
   {
     "ticker": "JSMR",
@@ -5413,7 +5501,11 @@
         "type": "final"
       }
     ],
-    "rank": 23
+    "rank": 23,
+    "price": 3010,
+    "latestFinalDPS": 156.23,
+    "latestFinalDate": "2026-06-03",
+    "finalYield": 5.19
   },
   {
     "ticker": "MLPT",
@@ -5559,7 +5651,11 @@
         "type": "final"
       }
     ],
-    "rank": 24
+    "rank": 24,
+    "price": 19000,
+    "latestFinalDPS": 80.0,
+    "latestFinalDate": "2026-05-11",
+    "finalYield": 0.42
   },
   {
     "ticker": "CPIN",
@@ -5726,7 +5822,11 @@
         "type": "final"
       }
     ],
-    "rank": 25
+    "rank": 25,
+    "price": 4270,
+    "latestFinalDPS": 180.0,
+    "latestFinalDate": "2026-06-03",
+    "finalYield": 4.22
   },
   {
     "ticker": "INCO",
@@ -5886,7 +5986,11 @@
         "type": "final"
       }
     ],
-    "rank": 26
+    "rank": 26,
+    "price": 4730,
+    "latestFinalDPS": 53.4,
+    "latestFinalDate": "2025-05-27",
+    "finalYield": 1.13
   },
   {
     "ticker": "SMSM",
@@ -6361,7 +6465,11 @@
         "type": "final"
       }
     ],
-    "rank": 27
+    "rank": 27,
+    "price": 1705,
+    "latestFinalDPS": 40.0,
+    "latestFinalDate": "2025-06-12",
+    "finalYield": 2.35
   },
   {
     "ticker": "ANTM",
@@ -6507,7 +6615,11 @@
         "type": "final"
       }
     ],
-    "rank": 28
+    "rank": 28,
+    "price": 2900,
+    "latestFinalDPS": 151.77,
+    "latestFinalDate": "2025-06-23",
+    "finalYield": 5.23
   },
   {
     "ticker": "ISAT",
@@ -6660,7 +6772,11 @@
         "type": "final"
       }
     ],
-    "rank": 29
+    "rank": 29,
+    "price": 2160,
+    "latestFinalDPS": 111.0,
+    "latestFinalDate": "2026-05-18",
+    "finalYield": 5.14
   },
   {
     "ticker": "EXCL",
@@ -6778,7 +6894,11 @@
         "type": "final"
       }
     ],
-    "rank": 30
+    "rank": 30,
+    "price": 2830,
+    "latestFinalDPS": 85.7,
+    "latestFinalDate": "2025-04-14",
+    "finalYield": 3.03
   },
   {
     "ticker": "JPFA",
@@ -6924,7 +7044,11 @@
         "type": "final"
       }
     ],
-    "rank": 31
+    "rank": 31,
+    "price": 2450,
+    "latestFinalDPS": 140.0,
+    "latestFinalDate": "2026-05-11",
+    "finalYield": 5.71
   },
   {
     "ticker": "PJAA",
@@ -7084,7 +7208,11 @@
         "type": "final"
       }
     ],
-    "rank": 32
+    "rank": 32,
+    "price": 480,
+    "latestFinalDPS": 26.0,
+    "latestFinalDate": "2026-04-23",
+    "finalYield": 5.42
   },
   {
     "ticker": "RALS",
@@ -7258,7 +7386,11 @@
         "type": "final"
       }
     ],
-    "rank": 33
+    "rank": 33,
+    "price": 380,
+    "latestFinalDPS": 50.0,
+    "latestFinalDate": "2026-05-22",
+    "finalYield": 13.16
   },
   {
     "ticker": "AKRA",
@@ -7565,7 +7697,11 @@
         "type": "final"
       }
     ],
-    "rank": 34
+    "rank": 34,
+    "price": 1235,
+    "latestFinalDPS": 50.0,
+    "latestFinalDate": "2026-05-07",
+    "finalYield": 4.05
   },
   {
     "ticker": "TINS",
@@ -7753,7 +7889,11 @@
         "type": "final"
       }
     ],
-    "rank": 35
+    "rank": 35,
+    "price": 3210,
+    "latestFinalDPS": 63.73,
+    "latestFinalDate": "2025-06-23",
+    "finalYield": 1.99
   },
   {
     "ticker": "BIRD",
@@ -7850,7 +7990,11 @@
         "type": "final"
       }
     ],
-    "rank": 36
+    "rank": 36,
+    "price": 1555,
+    "latestFinalDPS": 120.0,
+    "latestFinalDate": "2025-07-01",
+    "finalYield": 7.72
   },
   {
     "ticker": "INKP",
@@ -7961,7 +8105,11 @@
         "type": "final"
       }
     ],
-    "rank": 37
+    "rank": 37,
+    "price": 7675,
+    "latestFinalDPS": 50.0,
+    "latestFinalDate": "2025-06-25",
+    "finalYield": 0.65
   },
   {
     "ticker": "ROTI",
@@ -8100,7 +8248,11 @@
         "type": "final"
       }
     ],
-    "rank": 38
+    "rank": 38,
+    "price": 530,
+    "latestFinalDPS": 80.04,
+    "latestFinalDate": "2026-04-16",
+    "finalYield": 15.1
   },
   {
     "ticker": "TBLA",
@@ -8358,7 +8510,11 @@
         "type": "final"
       }
     ],
-    "rank": 39
+    "rank": 39,
+    "price": 630,
+    "latestFinalDPS": 12.0,
+    "latestFinalDate": "2025-06-19",
+    "finalYield": 1.9
   },
   {
     "ticker": "AADI",
@@ -8388,7 +8544,11 @@
         "type": "interim"
       }
     ],
-    "rank": 40
+    "rank": 40,
+    "price": 8400,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
   },
   {
     "ticker": "KLBF",
@@ -8576,7 +8736,11 @@
         "type": "final"
       }
     ],
-    "rank": 41
+    "rank": 41,
+    "price": 770,
+    "latestFinalDPS": 20.0,
+    "latestFinalDate": "2026-06-04",
+    "finalYield": 2.6
   },
   {
     "ticker": "ULTJ",
@@ -8701,7 +8865,11 @@
         "type": "final"
       }
     ],
-    "rank": 42
+    "rank": 42,
+    "price": 1520,
+    "latestFinalDPS": 130.0,
+    "latestFinalDate": "2026-05-04",
+    "finalYield": 8.55
   },
   {
     "ticker": "TBIG",
@@ -8840,7 +9008,11 @@
         "type": "final"
       }
     ],
-    "rank": 43
+    "rank": 43,
+    "price": 1525,
+    "latestFinalDPS": 23.73,
+    "latestFinalDate": "2025-06-19",
+    "finalYield": 1.56
   },
   {
     "ticker": "SRTG",
@@ -8951,7 +9123,11 @@
         "type": "final"
       }
     ],
-    "rank": 44
+    "rank": 44,
+    "price": 1560,
+    "latestFinalDPS": 103.3,
+    "latestFinalDate": "2026-05-29",
+    "finalYield": 6.62
   },
   {
     "ticker": "ARNA",
@@ -9118,7 +9294,11 @@
         "type": "final"
       }
     ],
-    "rank": 45
+    "rank": 45,
+    "price": 446,
+    "latestFinalDPS": 45.0,
+    "latestFinalDate": "2026-04-17",
+    "finalYield": 10.09
   },
   {
     "ticker": "MNCN",
@@ -9250,7 +9430,11 @@
         "type": "final"
       }
     ],
-    "rank": 46
+    "rank": 46,
+    "price": 212,
+    "latestFinalDPS": 5.0,
+    "latestFinalDate": "2023-07-11",
+    "finalYield": 2.36
   },
   {
     "ticker": "NRCA",
@@ -9368,7 +9552,11 @@
         "type": "final"
       }
     ],
-    "rank": 47
+    "rank": 47,
+    "price": 490,
+    "latestFinalDPS": 40.0,
+    "latestFinalDate": "2026-06-05",
+    "finalYield": 8.16
   },
   {
     "ticker": "HRUM",
@@ -9458,7 +9646,11 @@
         "type": "final"
       }
     ],
-    "rank": 48
+    "rank": 48,
+    "price": 790,
+    "latestFinalDPS": 15.02,
+    "latestFinalDate": "2022-06-15",
+    "finalYield": 1.9
   },
   {
     "ticker": "SIDO",
@@ -9632,7 +9824,11 @@
         "type": "final"
       }
     ],
-    "rank": 49
+    "rank": 49,
+    "price": 384,
+    "latestFinalDPS": 15.0,
+    "latestFinalDate": "2026-04-20",
+    "finalYield": 3.91
   },
   {
     "ticker": "MIKA",
@@ -9729,7 +9925,11 @@
         "type": "final"
       }
     ],
-    "rank": 50
+    "rank": 50,
+    "price": 1620,
+    "latestFinalDPS": 43.0,
+    "latestFinalDate": "2025-06-17",
+    "finalYield": 2.65
   },
   {
     "ticker": "ACES",
@@ -9882,7 +10082,11 @@
         "type": "final"
       }
     ],
-    "rank": 51
+    "rank": 51,
+    "price": 348,
+    "latestFinalDPS": 33.87,
+    "latestFinalDate": "2025-06-26",
+    "finalYield": 9.73
   },
   {
     "ticker": "ELSA",
@@ -10035,7 +10239,11 @@
         "type": "final"
       }
     ],
-    "rank": 52
+    "rank": 52,
+    "price": 610,
+    "latestFinalDPS": 39.11,
+    "latestFinalDate": "2025-06-04",
+    "finalYield": 6.41
   },
   {
     "ticker": "MEDC",
@@ -10223,7 +10431,11 @@
         "type": "final"
       }
     ],
-    "rank": 53
+    "rank": 53,
+    "price": 1205,
+    "latestFinalDPS": 25.0,
+    "latestFinalDate": "2025-06-16",
+    "finalYield": 2.07
   },
   {
     "ticker": "DMAS",
@@ -10362,7 +10574,11 @@
         "type": "final"
       }
     ],
-    "rank": 54
+    "rank": 54,
+    "price": 156,
+    "latestFinalDPS": 29.0,
+    "latestFinalDate": "2025-05-08",
+    "finalYield": 18.59
   },
   {
     "ticker": "TOWR",
@@ -10522,7 +10738,11 @@
         "type": "final"
       }
     ],
-    "rank": 55
+    "rank": 55,
+    "price": 380,
+    "latestFinalDPS": 6.89,
+    "latestFinalDate": "2026-06-03",
+    "finalYield": 1.81
   },
   {
     "ticker": "TOTO",
@@ -10815,7 +11035,11 @@
         "type": "final"
       }
     ],
-    "rank": 56
+    "rank": 56,
+    "price": 246,
+    "latestFinalDPS": 12.0,
+    "latestFinalDate": "2025-06-17",
+    "finalYield": 4.88
   },
   {
     "ticker": "SCMA",
@@ -11094,7 +11318,11 @@
         "type": "final"
       }
     ],
-    "rank": 57
+    "rank": 57,
+    "price": 226,
+    "latestFinalDPS": 12.0,
+    "latestFinalDate": "2026-06-04",
+    "finalYield": 5.31
   },
   {
     "ticker": "EMTK",
@@ -11268,7 +11496,11 @@
         "type": "final"
       }
     ],
-    "rank": 58
+    "rank": 58,
+    "price": 615,
+    "latestFinalDPS": 5.0,
+    "latestFinalDate": "2026-06-04",
+    "finalYield": 0.81
   },
   {
     "ticker": "CTRA",
@@ -11414,7 +11646,11 @@
         "type": "final"
       }
     ],
-    "rank": 59
+    "rank": 59,
+    "price": 645,
+    "latestFinalDPS": 24.0,
+    "latestFinalDate": "2025-06-26",
+    "finalYield": 3.72
   },
   {
     "ticker": "AMRT",
@@ -11574,7 +11810,11 @@
         "type": "final"
       }
     ],
-    "rank": 60
+    "rank": 60,
+    "price": 1150,
+    "latestFinalDPS": 34.11,
+    "latestFinalDate": "2025-06-04",
+    "finalYield": 2.97
   },
   {
     "ticker": "SMRA",
@@ -11748,7 +11988,11 @@
         "type": "final"
       }
     ],
-    "rank": 61
+    "rank": 61,
+    "price": 286,
+    "latestFinalDPS": 9.0,
+    "latestFinalDate": "2025-06-23",
+    "finalYield": 3.15
   },
   {
     "ticker": "TPIA",
@@ -11936,7 +12180,11 @@
         "type": "final"
       }
     ],
-    "rank": 62
+    "rank": 62,
+    "price": 1785,
+    "latestFinalDPS": 6.07,
+    "latestFinalDate": "2026-05-26",
+    "finalYield": 0.34
   },
   {
     "ticker": "DAAZ",
@@ -11966,7 +12214,11 @@
         "type": "final"
       }
     ],
-    "rank": 63
+    "rank": 63,
+    "price": 1520,
+    "latestFinalDPS": 125.0,
+    "latestFinalDate": "2025-06-12",
+    "finalYield": 8.22
   },
   {
     "ticker": "BSDE",
@@ -12056,7 +12308,11 @@
         "type": "final"
       }
     ],
-    "rank": 64
+    "rank": 64,
+    "price": 630,
+    "latestFinalDPS": 5.0,
+    "latestFinalDate": "2017-06-12",
+    "finalYield": 0.79
   },
   {
     "ticker": "PWON",
@@ -12167,7 +12423,11 @@
         "type": "final"
       }
     ],
-    "rank": 65
+    "rank": 65,
+    "price": 290,
+    "latestFinalDPS": 13.0,
+    "latestFinalDate": "2025-07-07",
+    "finalYield": 4.48
   },
   {
     "ticker": "ESSA",
@@ -12221,7 +12481,11 @@
         "type": "final"
       }
     ],
-    "rank": 66
+    "rank": 66,
+    "price": 670,
+    "latestFinalDPS": 10.0,
+    "latestFinalDate": "2025-04-28",
+    "finalYield": 1.49
   },
   {
     "ticker": "MAPI",
@@ -12353,7 +12617,11 @@
         "type": "final"
       }
     ],
-    "rank": 67
+    "rank": 67,
+    "price": 1495,
+    "latestFinalDPS": 10.0,
+    "latestFinalDate": "2025-07-09",
+    "finalYield": 0.67
   },
   {
     "ticker": "LPKR",
@@ -12457,7 +12725,11 @@
         "type": "final"
       }
     ],
-    "rank": 68
+    "rank": 68,
+    "price": 69,
+    "latestFinalDPS": 2.14263,
+    "latestFinalDate": "2018-06-22",
+    "finalYield": 3.11
   },
   {
     "ticker": "INTA",
@@ -12540,7 +12812,11 @@
         "type": "final"
       }
     ],
-    "rank": 69
+    "rank": 69,
+    "price": 74,
+    "latestFinalDPS": 18.95192,
+    "latestFinalDate": "2012-07-13",
+    "finalYield": 25.61
   },
   {
     "ticker": "AGII",
@@ -12609,7 +12885,11 @@
         "type": "final"
       }
     ],
-    "rank": 70
+    "rank": 70,
+    "price": 2740,
+    "latestFinalDPS": 8.56,
+    "latestFinalDate": "2025-06-24",
+    "finalYield": 0.31
   },
   {
     "ticker": "DILD",
@@ -12685,7 +12965,11 @@
         "type": "final"
       }
     ],
-    "rank": 71
+    "rank": 71,
+    "price": 120,
+    "latestFinalDPS": 2.0,
+    "latestFinalDate": "2019-05-24",
+    "finalYield": 1.67
   },
   {
     "ticker": "FILM",
@@ -12723,7 +13007,11 @@
         "type": "final"
       }
     ],
-    "rank": 72
+    "rank": 72,
+    "price": 2150,
+    "latestFinalDPS": 25.0,
+    "latestFinalDate": "2024-07-09",
+    "finalYield": 1.16
   },
   {
     "ticker": "CLEO",
@@ -12792,7 +13080,11 @@
         "type": "final"
       }
     ],
-    "rank": 73
+    "rank": 73,
+    "price": 388,
+    "latestFinalDPS": 5.0,
+    "latestFinalDate": "2025-06-10",
+    "finalYield": 1.29
   },
   {
     "ticker": "BRPT",
@@ -12861,7 +13153,11 @@
         "type": "final"
       }
     ],
-    "rank": 74
+    "rank": 74,
+    "price": 1940,
+    "latestFinalDPS": 0.873,
+    "latestFinalDate": "2024-06-27",
+    "finalYield": 0.04
   },
   {
     "ticker": "BREN",
@@ -12907,7 +13203,11 @@
         "type": "final"
       }
     ],
-    "rank": 75
+    "rank": 75,
+    "price": 3300,
+    "latestFinalDPS": 2.03362,
+    "latestFinalDate": "2024-06-07",
+    "finalYield": 0.06
   },
   {
     "ticker": "KIJA",
@@ -12976,7 +13276,11 @@
         "type": "final"
       }
     ],
-    "rank": 76
+    "rank": 76,
+    "price": 124,
+    "latestFinalDPS": 1.77,
+    "latestFinalDate": "2025-07-07",
+    "finalYield": 1.43
   },
   {
     "ticker": "PPRO",
@@ -13038,7 +13342,11 @@
         "type": "final"
       }
     ],
-    "rank": 77
+    "rank": 77,
+    "price": 15,
+    "latestFinalDPS": 0.56,
+    "latestFinalDate": "2020-06-12",
+    "finalYield": 3.73
   },
   {
     "ticker": "CUAN",
@@ -13068,7 +13376,11 @@
         "type": "final"
       }
     ],
-    "rank": 78
+    "rank": 78,
+    "price": 630,
+    "latestFinalDPS": 2.93,
+    "latestFinalDate": "2025-04-30",
+    "finalYield": 0.47
   },
   {
     "ticker": "BBYB",
@@ -13122,6 +13434,10 @@
         "type": "final"
       }
     ],
-    "rank": 79
+    "rank": 79,
+    "price": 260,
+    "latestFinalDPS": 0.20778,
+    "latestFinalDate": "2021-04-12",
+    "finalYield": 0.08
   }
 ]

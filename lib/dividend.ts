@@ -24,6 +24,10 @@ export interface DividendStock {
   fiscalYears: string[];
   allDividends: DividendEntry[];
   rank: number;
+  price?: number;
+  latestFinalDPS?: number;
+  latestFinalDate?: string;
+  finalYield?: number | null;
 }
 
 export interface DividendEvent {
