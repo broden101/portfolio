@@ -28,7 +28,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B0B0A] border-b border-[#2C261E]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
-          <a href="#" className="flex items-center gap-3">
+          <a href="/" className="flex items-center gap-3">
             <div className="w-8 h-8 border border-[#C6A15B]/50 flex items-center justify-center">
               <span className="text-[#C6A15B] font-heading text-sm font-semibold">R</span>
             </div>
