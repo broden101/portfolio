@@ -8,6 +8,7 @@ const navLinks = [
   { label: "Screener", href: "/screener" },
   { label: "Tradebook", href: "/tradebook" },
   { label: "Calculator", href: "/calculator" },
+  { label: "Dividend", href: "/dividend" },
   { label: "Market Insight", href: "#market" },
   { label: "Articles", href: "/articles" },
   { label: "Contact", href: "#contact" },
