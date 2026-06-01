@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function RightsIssuePage() {
   const [avgPrice, setAvgPrice] = useState("");
@@ -76,6 +78,7 @@ export default function RightsIssuePage() {
 
   return (
     <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+      <Navbar />
       <div className="max-w-5xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="mb-10">
@@ -203,6 +206,7 @@ export default function RightsIssuePage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
