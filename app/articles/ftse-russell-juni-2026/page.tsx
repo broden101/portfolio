@@ -1,8 +1,11 @@
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function ArticlePage() {
   return (
     <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+      <Navbar />
       <article className="max-w-3xl mx-auto px-6 lg:px-12">
         {/* Back link */}
         <Link href="/articles" className="inline-flex items-center gap-2 text-[#B8AA96]/50 text-xs tracking-wider uppercase hover:text-[#C6A15B] transition-colors mb-10">

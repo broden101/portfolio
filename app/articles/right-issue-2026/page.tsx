@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title:
@@ -132,6 +134,7 @@ function StatusBadge({ status }: { status: string }) {
 export default function ArticlePage() {
   return (
     <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+      <Navbar />
       <article className="max-w-3xl mx-auto px-6 lg:px-12">
         {/* Back link */}
         <Link

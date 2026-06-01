@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import {
   parseCSV,
   buildOrderBook,
@@ -135,7 +137,9 @@ export default function OrderBookPage() {
   const totalVal = levels.reduce((s, l) => s + (l.bidVol + l.offerVol) * l.price, 0);
 
   return (
-    <div className="flex h-screen flex-col bg-[#0B0B0A] text-[#F4EFE6] px-2 py-2 overflow-hidden font-['Inter']">
+    <div className="flex h-screen flex-col bg-[#0B0B0A] text-[#F4EFE6] overflow-hidden font-['Inter']">
+      <Navbar />
+      <div className="flex-1 flex flex-col px-2 py-2 overflow-hidden">
       {/* Header */}
       <header className="mb-2 flex items-center justify-between bg-[#141210] border border-[#2C261E] px-4 py-2">
         <div className="flex items-center gap-3">
@@ -406,6 +410,7 @@ export default function OrderBookPage() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

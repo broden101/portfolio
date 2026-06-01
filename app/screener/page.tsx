@@ -5,6 +5,8 @@ import { ScannerButton } from "@/components/ScannerButton";
 import { StockTable } from "@/components/StockTable";
 import { getSettings, saveSettings, getCachedResults } from "@/lib/storage";
 import type { ScreenResult, FilterConfig } from "@/lib/types";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function ScreenerPage() {
   const [results, setResults] = useState<ScreenResult[]>([]);
@@ -55,6 +57,7 @@ export default function ScreenerPage() {
 
   return (
     <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+      <Navbar />
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between mb-10 flex-wrap gap-4">
           <div>
@@ -164,6 +167,7 @@ export default function ScreenerPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
