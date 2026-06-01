@@ -297,198 +297,6 @@
     "finalYield": 4.49
   },
   {
-    "ticker": "GGRM",
-    "companyName": "PT Gudang Garam Tbk",
-    "sector": "Consumer Defensive",
-    "industry": "Tobacco",
-    "ipoDate": "2001-06-07",
-    "totalDividends": 24910.0,
-    "dividendCount": 23,
-    "latestDividend": {
-      "date": "2025-07-07",
-      "amount": 500.0,
-      "type": "final",
-      "paymentDate": "2025-07-23"
-    },
-    "yearsOfHistory": 22,
-    "avgDividendPerYear": 1132.27,
-    "fiscalYears": [
-      "2024",
-      "2022",
-      "2021",
-      "2020",
-      "2018"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-07-07",
-        "amount": 500.0,
-        "paymentDate": "2025-07-23",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-07-10",
-        "amount": 1200.0,
-        "paymentDate": "2023-07-18",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-07-11",
-        "amount": 2250.0,
-        "paymentDate": "2022-07-28",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-07-19",
-        "amount": 2600.0,
-        "paymentDate": "2021-07-29",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-07-05",
-        "amount": 2600.0,
-        "paymentDate": "2019-07-25",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-07-04",
-        "amount": 2600.0,
-        "paymentDate": "2018-07-26",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-07-04",
-        "amount": 2600.0,
-        "paymentDate": "2017-07-19",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-06-29",
-        "amount": 2600.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-07-06",
-        "amount": 800.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-08-07",
-        "amount": 800.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-07-23",
-        "amount": 680.0,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-07-31",
-        "amount": 1000.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-07-26",
-        "amount": 880.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "interim"
-      },
-      {
-        "exDate": "2011-03-22",
-        "amount": 400.0,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-07-14",
-        "amount": 650.0,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-07-15",
-        "amount": 350.0,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-07-16",
-        "amount": 250.0,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      },
-      {
-        "exDate": "2007-07-24",
-        "amount": 250.0,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-07-24",
-        "amount": 500.0,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      },
-      {
-        "exDate": "2005-07-22",
-        "amount": 500.0,
-        "paymentDate": "",
-        "fiscalYear": "2004",
-        "type": "final"
-      },
-      {
-        "exDate": "2004-07-19",
-        "amount": 300.0,
-        "paymentDate": "",
-        "fiscalYear": "2003",
-        "type": "final"
-      },
-      {
-        "exDate": "2003-06-30",
-        "amount": 300.0,
-        "paymentDate": "",
-        "fiscalYear": "2002",
-        "type": "final"
-      },
-      {
-        "exDate": "2002-07-03",
-        "amount": 300.0,
-        "paymentDate": "",
-        "fiscalYear": "2001",
-        "type": "final"
-      }
-    ],
-    "rank": 2,
-    "price": 17000,
-    "latestFinalDPS": 500.0,
-    "latestFinalDate": "2025-07-07",
-    "finalYield": 2.94
-  },
-  {
     "ticker": "UNTR",
     "companyName": "PT United Tractors Tbk",
     "sector": "Basic Materials",
@@ -814,287 +622,11 @@
         "type": "final"
       }
     ],
-    "rank": 3,
+    "rank": 2,
     "price": 22925,
     "latestFinalDPS": 1096.0,
     "latestFinalDate": "2026-04-27",
     "finalYield": 4.78
-  },
-  {
-    "ticker": "GEMS",
-    "companyName": "PT Golden Energy Mines Tbk",
-    "sector": "Energy",
-    "industry": "Coal",
-    "ipoDate": "2011-11-17",
-    "totalDividends": 6043.03,
-    "dividendCount": 35,
-    "latestDividend": {
-      "date": "2026-06-02",
-      "amount": 237.95,
-      "type": "final",
-      "paymentDate": "2026-06-11"
-    },
-    "yearsOfHistory": 14,
-    "avgDividendPerYear": 431.64,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-06-02",
-        "amount": 237.95,
-        "paymentDate": "2026-06-11",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-06-13",
-        "amount": 277.0,
-        "paymentDate": "2025-06-24",
-        "fiscalYear": "2025",
-        "type": "interim"
-      },
-      {
-        "exDate": "2025-05-26",
-        "amount": 309.15,
-        "paymentDate": "2025-06-05",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-12-09",
-        "amount": 243.73,
-        "paymentDate": "2024-12-17",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-09-03",
-        "amount": 397.26999,
-        "paymentDate": "2024-09-13",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-06-11",
-        "amount": 410.42001,
-        "paymentDate": "2024-06-25",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-05-29",
-        "amount": 232.21001,
-        "paymentDate": "2024-06-07",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-12-14",
-        "amount": 237.52,
-        "paymentDate": "2023-12-22",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-09-01",
-        "amount": 846.92999,
-        "paymentDate": "2023-09-12",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-11-08",
-        "amount": 265.13001,
-        "paymentDate": "2022-11-17",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-09-12",
-        "amount": 505.75,
-        "paymentDate": "2022-09-21",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-06-10",
-        "amount": 297.39002,
-        "paymentDate": "2022-06-21",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-06-06",
-        "amount": 62.3,
-        "paymentDate": "2022-06-15",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-01-07",
-        "amount": 265.89999,
-        "paymentDate": "2022-01-18",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-11-25",
-        "amount": 145.28,
-        "paymentDate": "2021-12-07",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-08-18",
-        "amount": 146.28999,
-        "paymentDate": "2021-08-31",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-05-20",
-        "amount": 184.0,
-        "paymentDate": "2021-05-28",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-04-26",
-        "amount": 186.05,
-        "paymentDate": "2021-05-04",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-01-06",
-        "amount": 72.84,
-        "paymentDate": "2021-01-15",
-        "fiscalYear": "2020",
-        "type": "interim"
-      },
-      {
-        "exDate": "2020-12-14",
-        "amount": 48.2,
-        "paymentDate": "2020-12-22",
-        "fiscalYear": "2020",
-        "type": "interim"
-      },
-      {
-        "exDate": "2020-08-26",
-        "amount": 132.60001,
-        "paymentDate": "2020-09-02",
-        "fiscalYear": "2019",
-        "type": "interim"
-      },
-      {
-        "exDate": "2019-07-09",
-        "amount": 55.4,
-        "paymentDate": "2019-07-19",
-        "fiscalYear": "2019",
-        "type": "interim"
-      },
-      {
-        "exDate": "2019-01-02",
-        "amount": 37.03,
-        "paymentDate": "2019-01-10",
-        "fiscalYear": "2018",
-        "type": "interim"
-      },
-      {
-        "exDate": "2018-05-22",
-        "amount": 47.8,
-        "paymentDate": "2018-05-31",
-        "fiscalYear": "2018",
-        "type": "interim"
-      },
-      {
-        "exDate": "2018-05-14",
-        "amount": 94.76,
-        "paymentDate": "2018-05-22",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-12-27",
-        "amount": 138.44,
-        "paymentDate": "2018-01-12",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-08-08",
-        "amount": 33.973,
-        "paymentDate": "2017-08-16",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-06-07",
-        "amount": 33.9,
-        "paymentDate": "2017-06-20",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-11-21",
-        "amount": 29.5,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-07-27",
-        "amount": 6.805,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-29",
-        "amount": 3.4,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "interim"
-      },
-      {
-        "exDate": "2015-04-14",
-        "amount": 3.36,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-05-30",
-        "amount": 31.5,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-12-07",
-        "amount": 17.5,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "interim"
-      },
-      {
-        "exDate": "2012-07-23",
-        "amount": 5.75,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      }
-    ],
-    "rank": 4,
-    "price": 7525,
-    "latestFinalDPS": 237.95,
-    "latestFinalDate": "2026-06-02",
-    "finalYield": 3.16
   },
   {
     "ticker": "ASII",
@@ -1443,7 +975,7 @@
         "type": "final"
       }
     ],
-    "rank": 5,
+    "rank": 3,
     "price": 5000,
     "latestFinalDPS": 292.0,
     "latestFinalDate": "2026-05-05",
@@ -1663,7 +1195,7 @@
         "type": "final"
       }
     ],
-    "rank": 6,
+    "rank": 4,
     "price": 2780,
     "latestFinalDPS": 332.44,
     "latestFinalDate": "2025-06-23",
@@ -1855,140 +1387,11 @@
         "type": "final"
       }
     ],
-    "rank": 7,
+    "rank": 5,
     "price": 1690,
     "latestFinalDPS": 28.33,
     "latestFinalDate": "2026-05-21",
     "finalYield": 1.68
-  },
-  {
-    "ticker": "LPPF",
-    "companyName": "PT Matahari Department Store Tbk",
-    "sector": "Consumer Cyclical",
-    "industry": "Department Stores",
-    "ipoDate": "2005-10-17",
-    "totalDividends": 3823.35,
-    "dividendCount": 14,
-    "latestDividend": {
-      "date": "2026-04-24",
-      "amount": 250.0,
-      "type": "final",
-      "paymentDate": "2026-05-04"
-    },
-    "yearsOfHistory": 14,
-    "avgDividendPerYear": 273.1,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-04-24",
-        "amount": 250.0,
-        "paymentDate": "2026-05-04",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-04-22",
-        "amount": 300.0,
-        "paymentDate": "2025-04-29",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-04-22",
-        "amount": 200.0,
-        "paymentDate": "2024-04-29",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-04-10",
-        "amount": 525.0,
-        "paymentDate": "2023-04-17",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-04-14",
-        "amount": 250.0,
-        "paymentDate": "2022-04-28",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-11-11",
-        "amount": 100.0,
-        "paymentDate": "2021-12-02",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-05-08",
-        "amount": 333.19733,
-        "paymentDate": "2019-05-29",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-05-08",
-        "amount": 457.5,
-        "paymentDate": "2018-05-30",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-05-05",
-        "amount": 484.60001,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-06-03",
-        "amount": 427.29999,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-08",
-        "amount": 291.79999,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-06-12",
-        "amount": 157.7,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-08-23",
-        "amount": 14.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "interim"
-      },
-      {
-        "exDate": "2011-06-13",
-        "amount": 32.25,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      }
-    ],
-    "rank": 8,
-    "price": 1600,
-    "latestFinalDPS": 250.0,
-    "latestFinalDate": "2026-04-24",
-    "finalYield": 15.62
   },
   {
     "ticker": "ADRO",
@@ -2260,7 +1663,7 @@
         "type": "final"
       }
     ],
-    "rank": 9,
+    "rank": 6,
     "price": 2300,
     "latestFinalDPS": 118.26,
     "latestFinalDate": "2026-04-28",
@@ -2473,7 +1876,7 @@
         "type": "final"
       }
     ],
-    "rank": 10,
+    "rank": 7,
     "price": 6925,
     "latestFinalDPS": 280.0,
     "latestFinalDate": "2025-07-02",
@@ -2833,7 +2236,7 @@
         "type": "final"
       }
     ],
-    "rank": 11,
+    "rank": 8,
     "price": 1710,
     "latestFinalDPS": 47.0,
     "latestFinalDate": "2025-06-16",
@@ -2976,133 +2379,11 @@
         "type": "final"
       }
     ],
-    "rank": 12,
+    "rank": 9,
     "price": 7100,
     "latestFinalDPS": 250.0,
     "latestFinalDate": "2025-07-02",
     "finalYield": 3.52
-  },
-  {
-    "ticker": "BYAN",
-    "companyName": "PT Bayan Resources Tbk",
-    "sector": "Energy",
-    "industry": "Coal",
-    "ipoDate": "2008-08-12",
-    "totalDividends": 2354.19,
-    "dividendCount": 13,
-    "latestDividend": {
-      "date": "2025-07-07",
-      "amount": 194.84,
-      "type": "final",
-      "paymentDate": "2025-07-23"
-    },
-    "yearsOfHistory": 10,
-    "avgDividendPerYear": 235.42,
-    "fiscalYears": [
-      "2024",
-      "2023",
-      "2022",
-      "2021",
-      "2020"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-07-07",
-        "amount": 194.84,
-        "paymentDate": "2025-07-23",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-12-18",
-        "amount": 144.9,
-        "paymentDate": "2025-01-08",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-07-08",
-        "amount": 146.385,
-        "paymentDate": "2024-07-24",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-12-18",
-        "amount": 232.74001,
-        "paymentDate": "2024-01-05",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-05-09",
-        "amount": 354.168,
-        "paymentDate": "2023-05-23",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-12-20",
-        "amount": 468.23999,
-        "paymentDate": "2023-01-05",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-05-30",
-        "amount": 436.32002,
-        "paymentDate": "2022-06-15",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-05-31",
-        "amount": 128.628,
-        "paymentDate": "2021-06-15",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-09-04",
-        "amount": 29.508,
-        "paymentDate": "2020-09-22",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-06-28",
-        "amount": 127.053,
-        "paymentDate": "2019-07-17",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-06-08",
-        "amount": 63.405,
-        "paymentDate": "2018-06-29",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-06-26",
-        "amount": 20.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-06-27",
-        "amount": 8.0,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      }
-    ],
-    "rank": 13,
-    "price": 9825,
-    "latestFinalDPS": 194.84,
-    "latestFinalDate": "2025-07-07",
-    "finalYield": 1.98
   },
   {
     "ticker": "BBRI",
@@ -3332,7 +2613,7 @@
         "type": "final"
       }
     ],
-    "rank": 14,
+    "rank": 10,
     "price": 2950,
     "latestFinalDPS": 209.0,
     "latestFinalDate": "2026-04-21",
@@ -3531,7 +2812,7 @@
         "type": "final"
       }
     ],
-    "rank": 15,
+    "rank": 11,
     "price": 3700,
     "latestFinalDPS": 349.413365,
     "latestFinalDate": "2026-03-25",
@@ -3744,7 +3025,7 @@
         "type": "final"
       }
     ],
-    "rank": 16,
+    "rank": 12,
     "price": 1825,
     "latestFinalDPS": 125.61,
     "latestFinalDate": "2025-06-05",
@@ -3971,7 +3252,7 @@
         "type": "final"
       }
     ],
-    "rank": 17,
+    "rank": 13,
     "price": 3030,
     "latestFinalDPS": 212.47,
     "latestFinalDate": "2025-06-11",
@@ -4317,472 +3598,11 @@
         "type": "final"
       }
     ],
-    "rank": 18,
+    "rank": 14,
     "price": 5700,
     "latestFinalDPS": 281.0,
     "latestFinalDate": "2026-03-30",
     "finalYield": 4.93
-  },
-  {
-    "ticker": "AUTO",
-    "companyName": "PT Astra Otoparts Tbk",
-    "sector": "Consumer Cyclical",
-    "industry": "Auto - Parts",
-    "ipoDate": "2000-12-14",
-    "totalDividends": 1769.82,
-    "dividendCount": 44,
-    "latestDividend": {
-      "date": "2026-04-28",
-      "amount": 170.0,
-      "type": "final",
-      "paymentDate": "2026-05-18"
-    },
-    "yearsOfHistory": 25,
-    "avgDividendPerYear": 70.79,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-04-28",
-        "amount": 170.0,
-        "paymentDate": "2026-05-18",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-10-15",
-        "amount": 59.0,
-        "paymentDate": "2025-10-24",
-        "fiscalYear": "2025",
-        "type": "interim"
-      },
-      {
-        "exDate": "2025-05-09",
-        "amount": 133.0,
-        "paymentDate": "2025-05-28",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-10-15",
-        "amount": 57.0,
-        "paymentDate": "2024-10-24",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-05-08",
-        "amount": 132.0,
-        "paymentDate": "2024-05-22",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-10-13",
-        "amount": 40.0,
-        "paymentDate": "2023-10-24",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-04-27",
-        "amount": 88.0,
-        "paymentDate": "2023-05-11",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-10-14",
-        "amount": 22.0,
-        "paymentDate": "2022-10-24",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-04-22",
-        "amount": 40.0,
-        "paymentDate": "2022-05-12",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-10-12",
-        "amount": 11.0,
-        "paymentDate": "2021-10-22",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-04-21",
-        "amount": 15.5,
-        "paymentDate": "2021-05-11",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-06-18",
-        "amount": 42.0,
-        "paymentDate": "2020-07-09",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-10-09",
-        "amount": 19.0,
-        "paymentDate": "2019-10-23",
-        "fiscalYear": "2019",
-        "type": "interim"
-      },
-      {
-        "exDate": "2019-04-24",
-        "amount": 36.0,
-        "paymentDate": "2019-05-09",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-10-08",
-        "amount": 15.0,
-        "paymentDate": "2018-10-22",
-        "fiscalYear": "2018",
-        "type": "interim"
-      },
-      {
-        "exDate": "2018-04-23",
-        "amount": 33.0,
-        "paymentDate": "2018-05-11",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-10-09",
-        "amount": 13.0,
-        "paymentDate": "2017-10-20",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-04-25",
-        "amount": 26.0,
-        "paymentDate": "2017-05-12",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-04-21",
-        "amount": 26.0,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-10-03",
-        "amount": 9.0,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-04-29",
-        "amount": 17.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-10-01",
-        "amount": 10.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "interim"
-      },
-      {
-        "exDate": "2015-04-28",
-        "amount": 48.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-10-10",
-        "amount": 24.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "interim"
-      },
-      {
-        "exDate": "2014-05-22",
-        "amount": 61.5,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-10-03",
-        "amount": 22.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "interim"
-      },
-      {
-        "exDate": "2013-05-15",
-        "amount": 87.0,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-05-10",
-        "amount": 71.92306,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-10-28",
-        "amount": 28.76922,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "interim"
-      },
-      {
-        "exDate": "2011-05-24",
-        "amount": 83.23895,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-10-27",
-        "amount": 30.30358,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "interim"
-      },
-      {
-        "exDate": "2010-06-15",
-        "amount": 91.67793,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-11-03",
-        "amount": 23.01538,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "interim"
-      },
-      {
-        "exDate": "2009-06-04",
-        "amount": 34.33127,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-10-24",
-        "amount": 22.0564,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "interim"
-      },
-      {
-        "exDate": "2008-06-10",
-        "amount": 39.31794,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      },
-      {
-        "exDate": "2007-10-24",
-        "amount": 5.75385,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "interim"
-      },
-      {
-        "exDate": "2007-06-13",
-        "amount": 11.50769,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-11-10",
-        "amount": 2.87692,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "interim"
-      },
-      {
-        "exDate": "2006-06-07",
-        "amount": 19.17948,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      },
-      {
-        "exDate": "2005-06-08",
-        "amount": 11.50769,
-        "paymentDate": "",
-        "fiscalYear": "2004",
-        "type": "final"
-      },
-      {
-        "exDate": "2004-06-14",
-        "amount": 9.58974,
-        "paymentDate": "",
-        "fiscalYear": "2003",
-        "type": "final"
-      },
-      {
-        "exDate": "2003-06-12",
-        "amount": 16.30256,
-        "paymentDate": "",
-        "fiscalYear": "2002",
-        "type": "final"
-      },
-      {
-        "exDate": "2002-07-12",
-        "amount": 12.46666,
-        "paymentDate": "",
-        "fiscalYear": "2001",
-        "type": "final"
-      }
-    ],
-    "rank": 19,
-    "price": 2530,
-    "latestFinalDPS": 170.0,
-    "latestFinalDate": "2026-04-28",
-    "finalYield": 6.72
-  },
-  {
-    "ticker": "MPMX",
-    "companyName": "PT Mitra Pinasthika Mustika Tbk",
-    "sector": "Consumer Cyclical",
-    "industry": "Auto - Dealerships",
-    "ipoDate": "2013-05-29",
-    "totalDividends": 1569.0,
-    "dividendCount": 13,
-    "latestDividend": {
-      "date": "2026-06-09",
-      "amount": 170.0,
-      "type": "final",
-      "paymentDate": "2026-06-25"
-    },
-    "yearsOfHistory": 12,
-    "avgDividendPerYear": 130.75,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-06-09",
-        "amount": 170.0,
-        "paymentDate": "2026-06-25",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-06-11",
-        "amount": 120.0,
-        "paymentDate": "2025-06-26",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-06-07",
-        "amount": 115.0,
-        "paymentDate": "2024-06-28",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-06-06",
-        "amount": 135.0,
-        "paymentDate": "2023-06-23",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-05-30",
-        "amount": 180.0,
-        "paymentDate": "2022-05-31",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-06-08",
-        "amount": 115.0,
-        "paymentDate": "2021-06-25",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-06-02",
-        "amount": 90.0,
-        "paymentDate": "2020-06-17",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-06-13",
-        "amount": 480.0,
-        "paymentDate": "2019-06-28",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-11-03",
-        "amount": 105.0,
-        "paymentDate": "2017-11-29",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-05-30",
-        "amount": 25.0,
-        "paymentDate": "2017-06-20",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-11-24",
-        "amount": 10.0,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-06-08",
-        "amount": 17.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-01",
-        "amount": 7.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      }
-    ],
-    "rank": 20,
-    "price": 1135,
-    "latestFinalDPS": 170.0,
-    "latestFinalDate": "2026-06-09",
-    "finalYield": 14.98
   },
   {
     "ticker": "HMSP",
@@ -5117,238 +3937,11 @@
         "type": "final"
       }
     ],
-    "rank": 21,
+    "rank": 15,
     "price": 695,
     "latestFinalDPS": 56.3,
     "latestFinalDate": "2026-05-29",
     "finalYield": 8.1
-  },
-  {
-    "ticker": "TSPC",
-    "companyName": "PT Tempo Scan Pacific Tbk",
-    "sector": "Healthcare",
-    "industry": "Drug Manufacturers - Specialty & Generic",
-    "ipoDate": "2005-09-29",
-    "totalDividends": 1384.0,
-    "dividendCount": 28,
-    "latestDividend": {
-      "date": "2025-11-10",
-      "amount": 100.0,
-      "type": "interim",
-      "paymentDate": "2025-11-25"
-    },
-    "yearsOfHistory": 21,
-    "avgDividendPerYear": 65.9,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-11-10",
-        "amount": 100.0,
-        "paymentDate": "2025-11-25",
-        "fiscalYear": "2025",
-        "type": "interim"
-      },
-      {
-        "exDate": "2025-06-05",
-        "amount": 100.0,
-        "paymentDate": "2025-06-26",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-12-03",
-        "amount": 25.0,
-        "paymentDate": "2024-12-19",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-07-03",
-        "amount": 75.0,
-        "paymentDate": "2024-07-19",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-11-10",
-        "amount": 50.0,
-        "paymentDate": "2023-11-29",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-06-13",
-        "amount": 100.0,
-        "paymentDate": "2023-07-03",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-12-19",
-        "amount": 25.0,
-        "paymentDate": "2022-12-23",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-06-10",
-        "amount": 50.0,
-        "paymentDate": "2022-07-01",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-12-01",
-        "amount": 20.0,
-        "paymentDate": "2021-12-22",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-07-06",
-        "amount": 60.0,
-        "paymentDate": "2021-07-13",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-07-09",
-        "amount": 50.0,
-        "paymentDate": "2020-07-30",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-06-11",
-        "amount": 40.0,
-        "paymentDate": "2019-06-26",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-06-22",
-        "amount": 40.0,
-        "paymentDate": "2018-07-06",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-06-13",
-        "amount": 50.0,
-        "paymentDate": "2017-07-07",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-06-29",
-        "amount": 50.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-11",
-        "amount": 64.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-07-25",
-        "amount": 75.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-07-08",
-        "amount": 75.0,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-07-13",
-        "amount": 75.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-08-04",
-        "amount": 40.0,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-11-05",
-        "amount": 30.0,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "interim"
-      },
-      {
-        "exDate": "2010-09-03",
-        "amount": 35.0,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-09-01",
-        "amount": 25.0,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "interim"
-      },
-      {
-        "exDate": "2009-06-23",
-        "amount": 15.0,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-09-11",
-        "amount": 35.0,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "interim"
-      },
-      {
-        "exDate": "2008-07-29",
-        "amount": 25.0,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      },
-      {
-        "exDate": "2007-05-24",
-        "amount": 25.0,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-07-24",
-        "amount": 30.0,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      }
-    ],
-    "rank": 22,
-    "price": 2370,
-    "latestFinalDPS": 100.0,
-    "latestFinalDate": "2025-06-05",
-    "finalYield": 4.22
   },
   {
     "ticker": "JSMR",
@@ -5501,161 +4094,11 @@
         "type": "final"
       }
     ],
-    "rank": 23,
+    "rank": 16,
     "price": 3010,
     "latestFinalDPS": 156.23,
     "latestFinalDate": "2026-06-03",
     "finalYield": 5.19
-  },
-  {
-    "ticker": "MLPT",
-    "companyName": "PT Multipolar Technology Tbk",
-    "sector": "Technology",
-    "industry": "Information Technology Services",
-    "ipoDate": "2013-07-08",
-    "totalDividends": 1273.81,
-    "dividendCount": 17,
-    "latestDividend": {
-      "date": "2026-05-11",
-      "amount": 80.0,
-      "type": "final",
-      "paymentDate": "2026-06-03"
-    },
-    "yearsOfHistory": 13,
-    "avgDividendPerYear": 97.99,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-05-11",
-        "amount": 80.0,
-        "paymentDate": "2026-06-03",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-11-07",
-        "amount": 53.5,
-        "paymentDate": "2025-11-26",
-        "fiscalYear": "2025",
-        "type": "interim"
-      },
-      {
-        "exDate": "2025-05-15",
-        "amount": 86.0,
-        "paymentDate": "2025-06-05",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-08-22",
-        "amount": 110.0,
-        "paymentDate": "2024-09-06",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-05-07",
-        "amount": 107.0,
-        "paymentDate": "2024-05-28",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-05-05",
-        "amount": 181.0,
-        "paymentDate": "2023-05-26",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-09-15",
-        "amount": 155.0,
-        "paymentDate": "2022-09-23",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-05-23",
-        "amount": 45.0,
-        "paymentDate": "2022-06-10",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-01-12",
-        "amount": 90.0,
-        "paymentDate": "2022-01-26",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-05-11",
-        "amount": 115.0,
-        "paymentDate": "2021-05-31",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-06-11",
-        "amount": 133.0,
-        "paymentDate": "2020-06-22",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-05-08",
-        "amount": 42.5,
-        "paymentDate": "2019-05-29",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-05-08",
-        "amount": 30.0,
-        "paymentDate": "2018-05-31",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-05-08",
-        "amount": 31.5,
-        "paymentDate": "2017-05-31",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-04-08",
-        "amount": 7.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-05",
-        "amount": 5.71,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-05-06",
-        "amount": 1.6,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      }
-    ],
-    "rank": 24,
-    "price": 19000,
-    "latestFinalDPS": 80.0,
-    "latestFinalDate": "2026-05-11",
-    "finalYield": 0.42
   },
   {
     "ticker": "CPIN",
@@ -5822,7 +4265,7 @@
         "type": "final"
       }
     ],
-    "rank": 25,
+    "rank": 17,
     "price": 4270,
     "latestFinalDPS": 180.0,
     "latestFinalDate": "2026-06-03",
@@ -5986,490 +4429,11 @@
         "type": "final"
       }
     ],
-    "rank": 26,
+    "rank": 18,
     "price": 4730,
     "latestFinalDPS": 53.4,
     "latestFinalDate": "2025-05-27",
     "finalYield": 1.13
-  },
-  {
-    "ticker": "SMSM",
-    "companyName": "PT Selamat Sempurna Tbk",
-    "sector": "Consumer Cyclical",
-    "industry": "Auto - Parts",
-    "ipoDate": "2002-01-07",
-    "totalDividends": 1039.0,
-    "dividendCount": 64,
-    "latestDividend": {
-      "date": "2026-05-11",
-      "amount": 25.0,
-      "type": "interim",
-      "paymentDate": "2026-05-26"
-    },
-    "yearsOfHistory": 22,
-    "avgDividendPerYear": 47.23,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-05-11",
-        "amount": 25.0,
-        "paymentDate": "2026-05-26",
-        "fiscalYear": "2025",
-        "type": "interim"
-      },
-      {
-        "exDate": "2025-11-10",
-        "amount": 40.0,
-        "paymentDate": "2025-11-25",
-        "fiscalYear": "2025",
-        "type": "interim"
-      },
-      {
-        "exDate": "2025-08-07",
-        "amount": 35.0,
-        "paymentDate": "2025-08-26",
-        "fiscalYear": "2025",
-        "type": "interim"
-      },
-      {
-        "exDate": "2025-06-12",
-        "amount": 40.0,
-        "paymentDate": "2025-06-24",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-05-09",
-        "amount": 25.0,
-        "paymentDate": "2025-05-27",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-11-08",
-        "amount": 35.0,
-        "paymentDate": "2024-11-21",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-08-08",
-        "amount": 35.0,
-        "paymentDate": "2024-08-21",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-07-02",
-        "amount": 40.0,
-        "paymentDate": "2024-07-16",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-05-13",
-        "amount": 25.0,
-        "paymentDate": "2024-05-28",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-11-06",
-        "amount": 30.0,
-        "paymentDate": "2023-11-22",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-08-08",
-        "amount": 25.0,
-        "paymentDate": "2023-08-23",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-05-30",
-        "amount": 25.0,
-        "paymentDate": "2023-06-14",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-05-11",
-        "amount": 25.0,
-        "paymentDate": "2023-05-24",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-11-10",
-        "amount": 25.0,
-        "paymentDate": "2022-11-23",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-09-07",
-        "amount": 25.0,
-        "paymentDate": "2022-09-21",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-08-08",
-        "amount": 20.0,
-        "paymentDate": "2022-08-23",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-05-19",
-        "amount": 15.0,
-        "paymentDate": "2022-05-31",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-11-10",
-        "amount": 20.0,
-        "paymentDate": "2021-11-23",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-08-12",
-        "amount": 20.0,
-        "paymentDate": "2021-08-25",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-06-29",
-        "amount": 20.0,
-        "paymentDate": "2021-07-15",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-06-10",
-        "amount": 10.0,
-        "paymentDate": "2021-06-24",
-        "fiscalYear": "2020",
-        "type": "interim"
-      },
-      {
-        "exDate": "2020-12-02",
-        "amount": 20.0,
-        "paymentDate": "2020-12-22",
-        "fiscalYear": "2020",
-        "type": "interim"
-      },
-      {
-        "exDate": "2020-09-07",
-        "amount": 15.0,
-        "paymentDate": "2020-09-24",
-        "fiscalYear": "2020",
-        "type": "interim"
-      },
-      {
-        "exDate": "2020-08-05",
-        "amount": 19.0,
-        "paymentDate": "2020-08-25",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-07-07",
-        "amount": 5.0,
-        "paymentDate": "2020-07-21",
-        "fiscalYear": "2019",
-        "type": "interim"
-      },
-      {
-        "exDate": "2019-11-11",
-        "amount": 15.0,
-        "paymentDate": "2019-11-22",
-        "fiscalYear": "2019",
-        "type": "interim"
-      },
-      {
-        "exDate": "2019-08-09",
-        "amount": 15.0,
-        "paymentDate": "2019-08-23",
-        "fiscalYear": "2019",
-        "type": "interim"
-      },
-      {
-        "exDate": "2019-06-12",
-        "amount": 10.0,
-        "paymentDate": "2019-06-25",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-05-14",
-        "amount": 18.0,
-        "paymentDate": "2019-05-24",
-        "fiscalYear": "2018",
-        "type": "interim"
-      },
-      {
-        "exDate": "2018-11-07",
-        "amount": 15.0,
-        "paymentDate": "2018-11-23",
-        "fiscalYear": "2018",
-        "type": "interim"
-      },
-      {
-        "exDate": "2018-08-08",
-        "amount": 15.0,
-        "paymentDate": "2018-08-28",
-        "fiscalYear": "2018",
-        "type": "interim"
-      },
-      {
-        "exDate": "2018-05-23",
-        "amount": 12.0,
-        "paymentDate": "2018-06-08",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-05-09",
-        "amount": 10.0,
-        "paymentDate": "2018-05-25",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-11-08",
-        "amount": 15.0,
-        "paymentDate": "2017-11-24",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-08-07",
-        "amount": 15.0,
-        "paymentDate": "2017-08-24",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-05-12",
-        "amount": 10.0,
-        "paymentDate": "2017-05-30",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-11-10",
-        "amount": 15.0,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-08-04",
-        "amount": 12.5,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-06-08",
-        "amount": 12.5,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-05-04",
-        "amount": 8.75,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-11-27",
-        "amount": 12.5,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "interim"
-      },
-      {
-        "exDate": "2015-10-01",
-        "amount": 12.5,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "interim"
-      },
-      {
-        "exDate": "2015-06-26",
-        "amount": 6.25,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-11-25",
-        "amount": 15.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "interim"
-      },
-      {
-        "exDate": "2014-09-24",
-        "amount": 10.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "interim"
-      },
-      {
-        "exDate": "2014-06-27",
-        "amount": 13.75,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-11-25",
-        "amount": 15.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "interim"
-      },
-      {
-        "exDate": "2013-10-01",
-        "amount": 6.25,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-12-04",
-        "amount": 7.5,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "interim"
-      },
-      {
-        "exDate": "2012-09-05",
-        "amount": 12.5,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "interim"
-      },
-      {
-        "exDate": "2012-07-02",
-        "amount": 12.5,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-11-18",
-        "amount": 12.5,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "interim"
-      },
-      {
-        "exDate": "2011-07-21",
-        "amount": 7.5,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-12-13",
-        "amount": 6.25,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "interim"
-      },
-      {
-        "exDate": "2010-08-20",
-        "amount": 10.0,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "interim"
-      },
-      {
-        "exDate": "2010-06-16",
-        "amount": 6.25,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-11-12",
-        "amount": 6.25,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "interim"
-      },
-      {
-        "exDate": "2009-08-20",
-        "amount": 10.0,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "interim"
-      },
-      {
-        "exDate": "2009-06-10",
-        "amount": 15.0,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-06-17",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      },
-      {
-        "exDate": "2007-11-06",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "interim"
-      },
-      {
-        "exDate": "2007-07-23",
-        "amount": 3.75,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-08-24",
-        "amount": 3.75,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      },
-      {
-        "exDate": "2005-12-02",
-        "amount": 6.25,
-        "paymentDate": "",
-        "fiscalYear": "2004",
-        "type": "final"
-      }
-    ],
-    "rank": 27,
-    "price": 1705,
-    "latestFinalDPS": 40.0,
-    "latestFinalDate": "2025-06-12",
-    "finalYield": 2.35
   },
   {
     "ticker": "ANTM",
@@ -6615,7 +4579,7 @@
         "type": "final"
       }
     ],
-    "rank": 28,
+    "rank": 19,
     "price": 2900,
     "latestFinalDPS": 151.77,
     "latestFinalDate": "2025-06-23",
@@ -6772,7 +4736,7 @@
         "type": "final"
       }
     ],
-    "rank": 29,
+    "rank": 20,
     "price": 2160,
     "latestFinalDPS": 111.0,
     "latestFinalDate": "2026-05-18",
@@ -6894,7 +4858,7 @@
         "type": "final"
       }
     ],
-    "rank": 30,
+    "rank": 21,
     "price": 2830,
     "latestFinalDPS": 85.7,
     "latestFinalDate": "2025-04-14",
@@ -7044,353 +5008,11 @@
         "type": "final"
       }
     ],
-    "rank": 31,
+    "rank": 22,
     "price": 2450,
     "latestFinalDPS": 140.0,
     "latestFinalDate": "2026-05-11",
     "finalYield": 5.71
-  },
-  {
-    "ticker": "PJAA",
-    "companyName": "PT Pembangunan Jaya Ancol Tbk",
-    "sector": "Consumer Cyclical",
-    "industry": "Leisure",
-    "ipoDate": "2004-07-02",
-    "totalDividends": 770.12,
-    "dividendCount": 19,
-    "latestDividend": {
-      "date": "2026-04-23",
-      "amount": 26.0,
-      "type": "final",
-      "paymentDate": "2026-05-13"
-    },
-    "yearsOfHistory": 19,
-    "avgDividendPerYear": 40.53,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2018"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-04-23",
-        "amount": 26.0,
-        "paymentDate": "2026-05-13",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-05-07",
-        "amount": 24.0,
-        "paymentDate": "2025-05-28",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-03-05",
-        "amount": 32.0,
-        "paymentDate": "2024-03-28",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-05-30",
-        "amount": 29.0,
-        "paymentDate": "2023-06-22",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-07-01",
-        "amount": 53.0,
-        "paymentDate": "2019-07-24",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-05-22",
-        "amount": 52.0,
-        "paymentDate": "2018-06-08",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-06-05",
-        "amount": 31.0,
-        "paymentDate": "2017-06-22",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-07-01",
-        "amount": 69.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-16",
-        "amount": 65.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-06-19",
-        "amount": 53.4,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-06-27",
-        "amount": 49.5,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-06-05",
-        "amount": 45.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-07-01",
-        "amount": 41.5,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-06-01",
-        "amount": 40.0,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-06-15",
-        "amount": 37.35,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-07-02",
-        "amount": 35.2,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      },
-      {
-        "exDate": "2007-07-02",
-        "amount": 31.5,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-05-22",
-        "amount": 30.5,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      },
-      {
-        "exDate": "2005-05-17",
-        "amount": 25.175,
-        "paymentDate": "",
-        "fiscalYear": "2004",
-        "type": "final"
-      }
-    ],
-    "rank": 32,
-    "price": 480,
-    "latestFinalDPS": 26.0,
-    "latestFinalDate": "2026-04-23",
-    "finalYield": 5.42
-  },
-  {
-    "ticker": "RALS",
-    "companyName": "PT Ramayana Lestari Sentosa Tbk",
-    "sector": "Consumer Cyclical",
-    "industry": "Department Stores",
-    "ipoDate": "2004-10-22",
-    "totalDividends": 754.0,
-    "dividendCount": 21,
-    "latestDividend": {
-      "date": "2026-05-22",
-      "amount": 50.0,
-      "type": "final",
-      "paymentDate": "2026-06-12"
-    },
-    "yearsOfHistory": 21,
-    "avgDividendPerYear": 35.9,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-05-22",
-        "amount": 50.0,
-        "paymentDate": "2026-06-12",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-05-22",
-        "amount": 60.0,
-        "paymentDate": "2025-06-13",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-05-30",
-        "amount": 50.0,
-        "paymentDate": "2024-06-20",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-06-06",
-        "amount": 50.0,
-        "paymentDate": "2023-06-23",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-06-02",
-        "amount": 30.0,
-        "paymentDate": "2022-06-23",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-08-28",
-        "amount": 50.0,
-        "paymentDate": "2020-09-18",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-06-12",
-        "amount": 50.0,
-        "paymentDate": "2019-06-27",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-06-06",
-        "amount": 40.0,
-        "paymentDate": "2018-06-29",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-05-24",
-        "amount": 36.0,
-        "paymentDate": "2017-06-16",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-05-30",
-        "amount": 30.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-09",
-        "amount": 27.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-06-18",
-        "amount": 30.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-07-02",
-        "amount": 30.0,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-06-18",
-        "amount": 30.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-06-20",
-        "amount": 30.0,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-06-21",
-        "amount": 25.0,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-06-22",
-        "amount": 31.0,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-06-23",
-        "amount": 31.0,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      },
-      {
-        "exDate": "2007-06-22",
-        "amount": 22.0,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-07-17",
-        "amount": 22.0,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      },
-      {
-        "exDate": "2005-07-11",
-        "amount": 30.0,
-        "paymentDate": "",
-        "fiscalYear": "2004",
-        "type": "final"
-      }
-    ],
-    "rank": 33,
-    "price": 380,
-    "latestFinalDPS": 50.0,
-    "latestFinalDate": "2026-05-22",
-    "finalYield": 13.16
   },
   {
     "ticker": "AKRA",
@@ -7697,7 +5319,7 @@
         "type": "final"
       }
     ],
-    "rank": 34,
+    "rank": 23,
     "price": 1235,
     "latestFinalDPS": 50.0,
     "latestFinalDate": "2026-05-07",
@@ -7889,112 +5511,11 @@
         "type": "final"
       }
     ],
-    "rank": 35,
+    "rank": 24,
     "price": 3210,
     "latestFinalDPS": 63.73,
     "latestFinalDate": "2025-06-23",
     "finalYield": 1.99
-  },
-  {
-    "ticker": "BIRD",
-    "companyName": "PT Blue Bird Tbk",
-    "sector": "Industrials",
-    "industry": "Railroads",
-    "ipoDate": "2014-11-05",
-    "totalDividends": 672.83,
-    "dividendCount": 10,
-    "latestDividend": {
-      "date": "2025-07-01",
-      "amount": 120.0,
-      "type": "final",
-      "paymentDate": "2025-07-11"
-    },
-    "yearsOfHistory": 10,
-    "avgDividendPerYear": 67.28,
-    "fiscalYears": [
-      "2024",
-      "2023",
-      "2022",
-      "2021",
-      "2020"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-07-01",
-        "amount": 120.0,
-        "paymentDate": "2025-07-11",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-06-26",
-        "amount": 91.0,
-        "paymentDate": "2024-07-12",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-07-06",
-        "amount": 72.0,
-        "paymentDate": "2023-07-21",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-07-04",
-        "amount": 60.0,
-        "paymentDate": "2022-07-22",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-09-07",
-        "amount": 36.0,
-        "paymentDate": "2021-09-24",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-06-10",
-        "amount": 73.0,
-        "paymentDate": "2019-06-21",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-06-05",
-        "amount": 51.0,
-        "paymentDate": "2018-06-27",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-06-19",
-        "amount": 61.0,
-        "paymentDate": "2017-07-13",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-06-10",
-        "amount": 66.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-12",
-        "amount": 42.83,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      }
-    ],
-    "rank": 36,
-    "price": 1555,
-    "latestFinalDPS": 120.0,
-    "latestFinalDate": "2025-07-01",
-    "finalYield": 7.72
   },
   {
     "ticker": "INKP",
@@ -8105,416 +5626,11 @@
         "type": "final"
       }
     ],
-    "rank": 37,
+    "rank": 25,
     "price": 7675,
     "latestFinalDPS": 50.0,
     "latestFinalDate": "2025-06-25",
     "finalYield": 0.65
-  },
-  {
-    "ticker": "ROTI",
-    "companyName": "PT Nippon Indosari Corpindo Tbk",
-    "sector": "Consumer Defensive",
-    "industry": "Packaged Foods",
-    "ipoDate": "2010-06-28",
-    "totalDividends": 554.73,
-    "dividendCount": 16,
-    "latestDividend": {
-      "date": "2026-04-16",
-      "amount": 80.04,
-      "type": "final",
-      "paymentDate": "2026-04-24"
-    },
-    "yearsOfHistory": 16,
-    "avgDividendPerYear": 34.67,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-04-16",
-        "amount": 80.04,
-        "paymentDate": "2026-04-24",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-04-17",
-        "amount": 79.44,
-        "paymentDate": "2025-04-28",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-04-22",
-        "amount": 87.67,
-        "paymentDate": "2024-04-26",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-04-17",
-        "amount": 106.55,
-        "paymentDate": "2023-04-28",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-04-22",
-        "amount": 60.2,
-        "paymentDate": "2022-05-09",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-05-19",
-        "amount": 48.49,
-        "paymentDate": "2021-06-03",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-07-16",
-        "amount": 25.73,
-        "paymentDate": "2020-07-27",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-05-17",
-        "amount": 9.78,
-        "paymentDate": "2019-05-31",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-05-21",
-        "amount": 5.82,
-        "paymentDate": "2018-06-08",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-05-24",
-        "amount": 13.73,
-        "paymentDate": "2017-06-09",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-05-27",
-        "amount": 10.61,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-08",
-        "amount": 5.53,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-05-20",
-        "amount": 3.12,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-03-28",
-        "amount": 7.366,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-05-22",
-        "amount": 5.726,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-04-20",
-        "amount": 4.928,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      }
-    ],
-    "rank": 38,
-    "price": 530,
-    "latestFinalDPS": 80.04,
-    "latestFinalDate": "2026-04-16",
-    "finalYield": 15.1
-  },
-  {
-    "ticker": "TBLA",
-    "companyName": "PT Tunas Baru Lampung Tbk",
-    "sector": "Consumer Defensive",
-    "industry": "Packaged Foods",
-    "ipoDate": "2001-10-31",
-    "totalDividends": 541.1,
-    "dividendCount": 33,
-    "latestDividend": {
-      "date": "2025-06-19",
-      "amount": 12.0,
-      "type": "final",
-      "paymentDate": "2025-07-09"
-    },
-    "yearsOfHistory": 22,
-    "avgDividendPerYear": 24.6,
-    "fiscalYears": [
-      "2024",
-      "2023",
-      "2022",
-      "2021",
-      "2020"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-06-19",
-        "amount": 12.0,
-        "paymentDate": "2025-07-09",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-11-13",
-        "amount": 35.0,
-        "paymentDate": "2024-12-04",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-06-25",
-        "amount": 40.0,
-        "paymentDate": "2024-07-10",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-05-24",
-        "amount": 20.0,
-        "paymentDate": "2023-06-14",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-12-12",
-        "amount": 39.47761,
-        "paymentDate": "2022-12-21",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-07-11",
-        "amount": 49.34702,
-        "paymentDate": "2022-08-02",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-08-10",
-        "amount": 24.67351,
-        "paymentDate": "2021-09-02",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-08-28",
-        "amount": 24.67351,
-        "paymentDate": "2020-09-16",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-07-02",
-        "amount": 24.67351,
-        "paymentDate": "2019-07-16",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-06-05",
-        "amount": 44.41231,
-        "paymentDate": "2018-06-26",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-12-27",
-        "amount": 29.60821,
-        "paymentDate": "2018-01-10",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-06-14",
-        "amount": 29.60821,
-        "paymentDate": "2017-07-07",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-08-11",
-        "amount": 19.73881,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-06-20",
-        "amount": 3.94776,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-09-28",
-        "amount": 7.89552,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "interim"
-      },
-      {
-        "exDate": "2015-06-15",
-        "amount": 14.8041,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-08-29",
-        "amount": 11.84328,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-09-27",
-        "amount": 6.90858,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "interim"
-      },
-      {
-        "exDate": "2013-07-03",
-        "amount": 2.96082,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-11-29",
-        "amount": 11.84328,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "interim"
-      },
-      {
-        "exDate": "2012-07-06",
-        "amount": 6.41511,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-09-29",
-        "amount": 19.73881,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "interim"
-      },
-      {
-        "exDate": "2011-06-14",
-        "amount": 7.59944,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-11-29",
-        "amount": 7.89552,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "interim"
-      },
-      {
-        "exDate": "2010-06-16",
-        "amount": 1.97388,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-11-23",
-        "amount": 7.89552,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-09-09",
-        "amount": 17.13329,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "interim"
-      },
-      {
-        "exDate": "2008-07-11",
-        "amount": 3.17795,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      },
-      {
-        "exDate": "2007-11-30",
-        "amount": 3.73063,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "interim"
-      },
-      {
-        "exDate": "2007-07-19",
-        "amount": 3.44442,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-07-21",
-        "amount": 0.77968,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      },
-      {
-        "exDate": "2005-07-18",
-        "amount": 2.96082,
-        "paymentDate": "",
-        "fiscalYear": "2004",
-        "type": "final"
-      },
-      {
-        "exDate": "2004-07-20",
-        "amount": 4.9347,
-        "paymentDate": "",
-        "fiscalYear": "2003",
-        "type": "final"
-      }
-    ],
-    "rank": 39,
-    "price": 630,
-    "latestFinalDPS": 12.0,
-    "latestFinalDate": "2025-06-19",
-    "finalYield": 1.9
   },
   {
     "ticker": "AADI",
@@ -8544,7 +5660,7 @@
         "type": "interim"
       }
     ],
-    "rank": 40,
+    "rank": 26,
     "price": 8400,
     "latestFinalDPS": 0,
     "latestFinalDate": "",
@@ -8736,827 +5852,11 @@
         "type": "final"
       }
     ],
-    "rank": 41,
+    "rank": 27,
     "price": 770,
     "latestFinalDPS": 20.0,
     "latestFinalDate": "2026-06-04",
     "finalYield": 2.6
-  },
-  {
-    "ticker": "ULTJ",
-    "companyName": "PT Ultrajaya Milk Industry & Trading Company Tbk",
-    "sector": "Consumer Defensive",
-    "industry": "Packaged Foods",
-    "ipoDate": "2005-09-29",
-    "totalDividends": 403.5,
-    "dividendCount": 14,
-    "latestDividend": {
-      "date": "2026-05-04",
-      "amount": 130.0,
-      "type": "final",
-      "paymentDate": "2026-05-22"
-    },
-    "yearsOfHistory": 14,
-    "avgDividendPerYear": 28.82,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-05-04",
-        "amount": 130.0,
-        "paymentDate": "2026-05-22",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-05-15",
-        "amount": 45.0,
-        "paymentDate": "2025-05-28",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-06-28",
-        "amount": 40.0,
-        "paymentDate": "2024-07-19",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-07-03",
-        "amount": 30.0,
-        "paymentDate": "2023-07-21",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-08-04",
-        "amount": 25.0,
-        "paymentDate": "2022-08-26",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-09-01",
-        "amount": 85.0,
-        "paymentDate": "2021-09-23",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-09-03",
-        "amount": 12.0,
-        "paymentDate": "2020-09-24",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-07-08",
-        "amount": 12.0,
-        "paymentDate": "2019-07-26",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-07-09",
-        "amount": 10.0,
-        "paymentDate": "2018-08-01",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-07-10",
-        "amount": 6.5,
-        "paymentDate": "2017-07-21",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-07-21",
-        "amount": 3.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-07-20",
-        "amount": 2.5,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-07-22",
-        "amount": 1.25,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-07-18",
-        "amount": 1.25,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      }
-    ],
-    "rank": 42,
-    "price": 1520,
-    "latestFinalDPS": 130.0,
-    "latestFinalDate": "2026-05-04",
-    "finalYield": 8.55
-  },
-  {
-    "ticker": "TBIG",
-    "companyName": "PT Tower Bersama Infrastructure Tbk",
-    "sector": "Communication Services",
-    "industry": "Telecommunications Services",
-    "ipoDate": "2010-10-26",
-    "totalDividends": 381.82,
-    "dividendCount": 16,
-    "latestDividend": {
-      "date": "2025-06-19",
-      "amount": 23.73,
-      "type": "final",
-      "paymentDate": "2025-07-10"
-    },
-    "yearsOfHistory": 13,
-    "avgDividendPerYear": 29.37,
-    "fiscalYears": [
-      "2024",
-      "2023",
-      "2022",
-      "2021",
-      "2020"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-06-19",
-        "amount": 23.73,
-        "paymentDate": "2025-07-10",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-12-12",
-        "amount": 25.0,
-        "paymentDate": "2024-12-27",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-06-10",
-        "amount": 30.20404,
-        "paymentDate": "2024-07-03",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-12-13",
-        "amount": 25.0,
-        "paymentDate": "2023-12-27",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-06-13",
-        "amount": 35.3455,
-        "paymentDate": "2023-07-05",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-06-03",
-        "amount": 36.0,
-        "paymentDate": "2022-06-22",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-04-09",
-        "amount": 32.0,
-        "paymentDate": "2021-04-29",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-06-02",
-        "amount": 28.0,
-        "paymentDate": "2020-06-19",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-05-31",
-        "amount": 27.7379,
-        "paymentDate": "2019-06-21",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-05-08",
-        "amount": 33.82152,
-        "paymentDate": "2018-05-24",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-05-26",
-        "amount": 29.90664,
-        "paymentDate": "2017-06-13",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-08-25",
-        "amount": 14.45975,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-05-19",
-        "amount": 11.41479,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-06-04",
-        "amount": 12.2,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-09-19",
-        "amount": 12.0,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-06-13",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      }
-    ],
-    "rank": 43,
-    "price": 1525,
-    "latestFinalDPS": 23.73,
-    "latestFinalDate": "2025-06-19",
-    "finalYield": 1.56
-  },
-  {
-    "ticker": "SRTG",
-    "companyName": "PT Saratoga Investama Sedaya Tbk",
-    "sector": "Financial Services",
-    "industry": "Asset Management",
-    "ipoDate": "2013-06-26",
-    "totalDividends": 380.85,
-    "dividendCount": 12,
-    "latestDividend": {
-      "date": "2026-05-29",
-      "amount": 103.3,
-      "type": "final",
-      "paymentDate": "2026-06-12"
-    },
-    "yearsOfHistory": 11,
-    "avgDividendPerYear": 34.62,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-05-29",
-        "amount": 103.3,
-        "paymentDate": "2026-06-12",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-07-07",
-        "amount": 14.75,
-        "paymentDate": "2025-07-23",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-05-29",
-        "amount": 22.0,
-        "paymentDate": "2024-06-14",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-05-25",
-        "amount": 75.0,
-        "paymentDate": "2023-06-14",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-05-10",
-        "amount": 60.0,
-        "paymentDate": "2022-05-13",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-05-07",
-        "amount": 22.0,
-        "paymentDate": "2021-05-28",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-06-26",
-        "amount": 11.0,
-        "paymentDate": "2020-07-15",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-06-10",
-        "amount": 22.0,
-        "paymentDate": "2019-06-20",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-07-04",
-        "amount": 14.8,
-        "paymentDate": "2018-07-27",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-05-05",
-        "amount": 17.4,
-        "paymentDate": "2017-05-26",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-11-30",
-        "amount": 12.2,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-06-23",
-        "amount": 6.4,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      }
-    ],
-    "rank": 44,
-    "price": 1560,
-    "latestFinalDPS": 103.3,
-    "latestFinalDate": "2026-05-29",
-    "finalYield": 6.62
-  },
-  {
-    "ticker": "ARNA",
-    "companyName": "PT Arwana Citramulia Tbk",
-    "sector": "Industrials",
-    "industry": "Construction",
-    "ipoDate": "2005-10-17",
-    "totalDividends": 372.19,
-    "dividendCount": 20,
-    "latestDividend": {
-      "date": "2026-04-17",
-      "amount": 45.0,
-      "type": "final",
-      "paymentDate": "2026-04-28"
-    },
-    "yearsOfHistory": 20,
-    "avgDividendPerYear": 18.61,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-04-17",
-        "amount": 45.0,
-        "paymentDate": "2026-04-28",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-04-17",
-        "amount": 43.0,
-        "paymentDate": "2025-04-29",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-04-17",
-        "amount": 43.0,
-        "paymentDate": "2024-04-26",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-03-20",
-        "amount": 55.0,
-        "paymentDate": "2023-03-29",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-03-17",
-        "amount": 45.0,
-        "paymentDate": "2022-03-29",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-03-18",
-        "amount": 30.0,
-        "paymentDate": "2021-04-06",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-03-12",
-        "amount": 22.0,
-        "paymentDate": "2020-03-24",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-03-13",
-        "amount": 16.0,
-        "paymentDate": "2019-03-28",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-04-06",
-        "amount": 12.0,
-        "paymentDate": "2018-04-24",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-06-15",
-        "amount": 5.0,
-        "paymentDate": "2017-07-05",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-05-09",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-08",
-        "amount": 12.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-06-10",
-        "amount": 16.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-06-03",
-        "amount": 10.0,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-06-12",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-06-01",
-        "amount": 3.75,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-07-29",
-        "amount": 1.75,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-07-22",
-        "amount": 0.625,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-06-19",
-        "amount": 0.625,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-05-23",
-        "amount": 1.4375,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      }
-    ],
-    "rank": 45,
-    "price": 446,
-    "latestFinalDPS": 45.0,
-    "latestFinalDate": "2026-04-17",
-    "finalYield": 10.09
-  },
-  {
-    "ticker": "MNCN",
-    "companyName": "PT. Media Nusantara Citra Tbk",
-    "sector": "Communication Services",
-    "industry": "Advertising Agencies",
-    "ipoDate": "2007-06-22",
-    "totalDividends": 372.0,
-    "dividendCount": 15,
-    "latestDividend": {
-      "date": "2023-07-11",
-      "amount": 5.0,
-      "type": "final",
-      "paymentDate": "2023-08-03"
-    },
-    "yearsOfHistory": 14,
-    "avgDividendPerYear": 26.57,
-    "fiscalYears": [
-      "2022",
-      "2020",
-      "2018",
-      "2017",
-      "2016"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2023-07-11",
-        "amount": 5.0,
-        "paymentDate": "2023-08-03",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-09-09",
-        "amount": 8.0,
-        "paymentDate": "2021-09-28",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-07-03",
-        "amount": 15.0,
-        "paymentDate": "2019-07-26",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-07-04",
-        "amount": 15.0,
-        "paymentDate": "2018-07-25",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-07-10",
-        "amount": 42.0,
-        "paymentDate": "2017-08-02",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-05-12",
-        "amount": 42.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-05-28",
-        "amount": 63.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-10-15",
-        "amount": 35.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-12-27",
-        "amount": 25.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "interim"
-      },
-      {
-        "exDate": "2013-09-09",
-        "amount": 55.0,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-06-25",
-        "amount": 35.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-11-30",
-        "amount": 15.0,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-11-30",
-        "amount": 7.0,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-10-05",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-12-02",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      }
-    ],
-    "rank": 46,
-    "price": 212,
-    "latestFinalDPS": 5.0,
-    "latestFinalDate": "2023-07-11",
-    "finalYield": 2.36
-  },
-  {
-    "ticker": "NRCA",
-    "companyName": "PT Nusa Raya Cipta Tbk",
-    "sector": "Industrials",
-    "industry": "Engineering & Construction",
-    "ipoDate": "2013-06-27",
-    "totalDividends": 362.42,
-    "dividendCount": 13,
-    "latestDividend": {
-      "date": "2026-06-05",
-      "amount": 40.0,
-      "type": "final",
-      "paymentDate": "2026-06-23"
-    },
-    "yearsOfHistory": 13,
-    "avgDividendPerYear": 27.88,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2026-06-05",
-        "amount": 40.0,
-        "paymentDate": "2026-06-23",
-        "fiscalYear": "2025",
-        "type": "final"
-      },
-      {
-        "exDate": "2025-06-05",
-        "amount": 22.0,
-        "paymentDate": "2025-06-24",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-05-27",
-        "amount": 29.0,
-        "paymentDate": "2024-06-11",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-06-08",
-        "amount": 42.0,
-        "paymentDate": "2023-06-23",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-06-02",
-        "amount": 15.0,
-        "paymentDate": "2022-06-17",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-06-09",
-        "amount": 15.0,
-        "paymentDate": "2021-06-24",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-07-17",
-        "amount": 25.0,
-        "paymentDate": "2020-08-04",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-05-13",
-        "amount": 30.0,
-        "paymentDate": "2019-05-28",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-05-14",
-        "amount": 40.0,
-        "paymentDate": "2018-05-31",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-05-16",
-        "amount": 30.0,
-        "paymentDate": "2017-06-07",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-06-08",
-        "amount": 16.38,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-05-07",
-        "amount": 30.04,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-05-21",
-        "amount": 28.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      }
-    ],
-    "rank": 47,
-    "price": 490,
-    "latestFinalDPS": 40.0,
-    "latestFinalDate": "2026-06-05",
-    "finalYield": 8.16
   },
   {
     "ticker": "HRUM",
@@ -9646,7 +5946,7 @@
         "type": "final"
       }
     ],
-    "rank": 48,
+    "rank": 28,
     "price": 790,
     "latestFinalDPS": 15.02,
     "latestFinalDate": "2022-06-15",
@@ -9824,7 +6124,7 @@
         "type": "final"
       }
     ],
-    "rank": 49,
+    "rank": 29,
     "price": 384,
     "latestFinalDPS": 15.0,
     "latestFinalDate": "2026-04-20",
@@ -9925,7 +6225,7 @@
         "type": "final"
       }
     ],
-    "rank": 50,
+    "rank": 30,
     "price": 1620,
     "latestFinalDPS": 43.0,
     "latestFinalDate": "2025-06-17",
@@ -10082,7 +6382,7 @@
         "type": "final"
       }
     ],
-    "rank": 51,
+    "rank": 31,
     "price": 348,
     "latestFinalDPS": 33.87,
     "latestFinalDate": "2025-06-26",
@@ -10239,7 +6539,7 @@
         "type": "final"
       }
     ],
-    "rank": 52,
+    "rank": 32,
     "price": 610,
     "latestFinalDPS": 39.11,
     "latestFinalDate": "2025-06-04",
@@ -10431,154 +6731,11 @@
         "type": "final"
       }
     ],
-    "rank": 53,
+    "rank": 33,
     "price": 1205,
     "latestFinalDPS": 25.0,
     "latestFinalDate": "2025-06-16",
     "finalYield": 2.07
-  },
-  {
-    "ticker": "DMAS",
-    "companyName": "PT Puradelta Lestari Tbk",
-    "sector": "Real Estate",
-    "industry": "Real Estate - Development",
-    "ipoDate": "2015-05-29",
-    "totalDividends": 226.0,
-    "dividendCount": 16,
-    "latestDividend": {
-      "date": "2025-05-08",
-      "amount": 29.0,
-      "type": "final",
-      "paymentDate": "2025-05-20"
-    },
-    "yearsOfHistory": 11,
-    "avgDividendPerYear": 20.55,
-    "fiscalYears": [
-      "2024",
-      "2023",
-      "2022",
-      "2021",
-      "2020"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-05-08",
-        "amount": 29.0,
-        "paymentDate": "2025-05-20",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-12-11",
-        "amount": 12.0,
-        "paymentDate": "2023-12-28",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-07-03",
-        "amount": 10.0,
-        "paymentDate": "2023-07-14",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-11-08",
-        "amount": 15.0,
-        "paymentDate": "2022-11-25",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-06-15",
-        "amount": 2.5,
-        "paymentDate": "2022-06-30",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-12-10",
-        "amount": 12.0,
-        "paymentDate": "2021-12-23",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-05-21",
-        "amount": 6.5,
-        "paymentDate": "2021-06-08",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-12-03",
-        "amount": 25.0,
-        "paymentDate": "2020-12-18",
-        "fiscalYear": "2020",
-        "type": "interim"
-      },
-      {
-        "exDate": "2020-04-24",
-        "amount": 21.0,
-        "paymentDate": "2020-05-12",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-12-04",
-        "amount": 21.0,
-        "paymentDate": "2019-12-18",
-        "fiscalYear": "2019",
-        "type": "interim"
-      },
-      {
-        "exDate": "2019-05-03",
-        "amount": 21.0,
-        "paymentDate": "2019-05-16",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-05-02",
-        "amount": 6.5,
-        "paymentDate": "2018-05-24",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-11-24",
-        "amount": 6.5,
-        "paymentDate": "2017-12-13",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-05-31",
-        "amount": 15.0,
-        "paymentDate": "2017-06-22",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-05-19",
-        "amount": 11.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-11-06",
-        "amount": 12.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      }
-    ],
-    "rank": 54,
-    "price": 156,
-    "latestFinalDPS": 29.0,
-    "latestFinalDate": "2025-05-08",
-    "finalYield": 18.59
   },
   {
     "ticker": "TOWR",
@@ -10738,308 +6895,11 @@
         "type": "final"
       }
     ],
-    "rank": 55,
+    "rank": 34,
     "price": 380,
     "latestFinalDPS": 6.89,
     "latestFinalDate": "2026-06-03",
     "finalYield": 1.81
-  },
-  {
-    "ticker": "TOTO",
-    "companyName": "PT Surya Toto Indonesia Tbk",
-    "sector": "Industrials",
-    "industry": "Construction",
-    "ipoDate": "2003-04-08",
-    "totalDividends": 211.36,
-    "dividendCount": 38,
-    "latestDividend": {
-      "date": "2025-11-26",
-      "amount": 10.0,
-      "type": "interim",
-      "paymentDate": "2025-12-16"
-    },
-    "yearsOfHistory": 24,
-    "avgDividendPerYear": 8.81,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2022",
-      "2021"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-11-26",
-        "amount": 10.0,
-        "paymentDate": "2025-12-16",
-        "fiscalYear": "2025",
-        "type": "interim"
-      },
-      {
-        "exDate": "2025-06-17",
-        "amount": 12.0,
-        "paymentDate": "2025-07-01",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-11-22",
-        "amount": 12.0,
-        "paymentDate": "2024-12-12",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-06-12",
-        "amount": 9.0,
-        "paymentDate": "2024-06-28",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-11-23",
-        "amount": 9.0,
-        "paymentDate": "2023-12-14",
-        "fiscalYear": "2023",
-        "type": "interim"
-      },
-      {
-        "exDate": "2023-06-08",
-        "amount": 10.0,
-        "paymentDate": "2023-06-16",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-11-30",
-        "amount": 10.0,
-        "paymentDate": "2022-12-12",
-        "fiscalYear": "2022",
-        "type": "interim"
-      },
-      {
-        "exDate": "2022-06-06",
-        "amount": 7.0,
-        "paymentDate": "2022-06-22",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-12-02",
-        "amount": 5.0,
-        "paymentDate": "2021-12-15",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-06-07",
-        "amount": 5.0,
-        "paymentDate": "2021-06-16",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2020-08-12",
-        "amount": 3.0,
-        "paymentDate": "2020-08-26",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-11-18",
-        "amount": 3.0,
-        "paymentDate": "2019-12-10",
-        "fiscalYear": "2019",
-        "type": "interim"
-      },
-      {
-        "exDate": "2019-06-10",
-        "amount": 8.0,
-        "paymentDate": "2019-06-21",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-11-16",
-        "amount": 10.0,
-        "paymentDate": "2018-12-12",
-        "fiscalYear": "2018",
-        "type": "interim"
-      },
-      {
-        "exDate": "2018-06-20",
-        "amount": 8.0,
-        "paymentDate": "2018-07-05",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-11-28",
-        "amount": 5.0,
-        "paymentDate": "2017-12-21",
-        "fiscalYear": "2017",
-        "type": "interim"
-      },
-      {
-        "exDate": "2017-06-14",
-        "amount": 3.0,
-        "paymentDate": "2017-07-06",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-11-22",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2016",
-        "type": "interim"
-      },
-      {
-        "exDate": "2016-06-14",
-        "amount": 7.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-12-04",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "interim"
-      },
-      {
-        "exDate": "2015-05-22",
-        "amount": 6.98526,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-12-10",
-        "amount": 4.98947,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "interim"
-      },
-      {
-        "exDate": "2014-06-24",
-        "amount": 4.98947,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-12-23",
-        "amount": 4.98947,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "interim"
-      },
-      {
-        "exDate": "2013-07-01",
-        "amount": 4.98947,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-12-21",
-        "amount": 4.98947,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "interim"
-      },
-      {
-        "exDate": "2012-06-25",
-        "amount": 4.98947,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-12-21",
-        "amount": 4.98947,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "interim"
-      },
-      {
-        "exDate": "2011-07-04",
-        "amount": 3.99158,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-12-20",
-        "amount": 3.49263,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "interim"
-      },
-      {
-        "exDate": "2010-06-28",
-        "amount": 5.98737,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-07-13",
-        "amount": 1.74632,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2008-07-08",
-        "amount": 1.74632,
-        "paymentDate": "",
-        "fiscalYear": "2007",
-        "type": "final"
-      },
-      {
-        "exDate": "2007-06-29",
-        "amount": 1.99579,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-06-23",
-        "amount": 1.49684,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      },
-      {
-        "exDate": "2005-07-01",
-        "amount": 0.99789,
-        "paymentDate": "",
-        "fiscalYear": "2004",
-        "type": "final"
-      },
-      {
-        "exDate": "2004-07-02",
-        "amount": 0.99789,
-        "paymentDate": "",
-        "fiscalYear": "2003",
-        "type": "final"
-      },
-      {
-        "exDate": "2003-07-02",
-        "amount": 0.99789,
-        "paymentDate": "",
-        "fiscalYear": "2002",
-        "type": "final"
-      }
-    ],
-    "rank": 56,
-    "price": 246,
-    "latestFinalDPS": 12.0,
-    "latestFinalDate": "2025-06-17",
-    "finalYield": 4.88
   },
   {
     "ticker": "SCMA",
@@ -11318,7 +7178,7 @@
         "type": "final"
       }
     ],
-    "rank": 57,
+    "rank": 35,
     "price": 226,
     "latestFinalDPS": 12.0,
     "latestFinalDate": "2026-06-04",
@@ -11496,7 +7356,7 @@
         "type": "final"
       }
     ],
-    "rank": 58,
+    "rank": 36,
     "price": 615,
     "latestFinalDPS": 5.0,
     "latestFinalDate": "2026-06-04",
@@ -11646,7 +7506,7 @@
         "type": "final"
       }
     ],
-    "rank": 59,
+    "rank": 37,
     "price": 645,
     "latestFinalDPS": 24.0,
     "latestFinalDate": "2025-06-26",
@@ -11810,7 +7670,7 @@
         "type": "final"
       }
     ],
-    "rank": 60,
+    "rank": 38,
     "price": 1150,
     "latestFinalDPS": 34.11,
     "latestFinalDate": "2025-06-04",
@@ -11988,7 +7848,7 @@
         "type": "final"
       }
     ],
-    "rank": 61,
+    "rank": 39,
     "price": 286,
     "latestFinalDPS": 9.0,
     "latestFinalDate": "2025-06-23",
@@ -12180,45 +8040,11 @@
         "type": "final"
       }
     ],
-    "rank": 62,
+    "rank": 40,
     "price": 1785,
     "latestFinalDPS": 6.07,
     "latestFinalDate": "2026-05-26",
     "finalYield": 0.34
-  },
-  {
-    "ticker": "DAAZ",
-    "companyName": "PT DAAZ Tbk",
-    "sector": "Basic Materials",
-    "industry": "Basic Materials",
-    "ipoDate": "",
-    "totalDividends": 125.0,
-    "dividendCount": 1,
-    "latestDividend": {
-      "date": "2025-06-12",
-      "amount": 125.0,
-      "type": "final",
-      "paymentDate": "2025-07-03"
-    },
-    "yearsOfHistory": 1,
-    "avgDividendPerYear": 125.0,
-    "fiscalYears": [
-      "2024"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-06-12",
-        "amount": 125.0,
-        "paymentDate": "2025-07-03",
-        "fiscalYear": "2024",
-        "type": "final"
-      }
-    ],
-    "rank": 63,
-    "price": 1520,
-    "latestFinalDPS": 125.0,
-    "latestFinalDate": "2025-06-12",
-    "finalYield": 8.22
   },
   {
     "ticker": "BSDE",
@@ -12308,7 +8134,7 @@
         "type": "final"
       }
     ],
-    "rank": 64,
+    "rank": 41,
     "price": 630,
     "latestFinalDPS": 5.0,
     "latestFinalDate": "2017-06-12",
@@ -12423,7 +8249,7 @@
         "type": "final"
       }
     ],
-    "rank": 65,
+    "rank": 42,
     "price": 290,
     "latestFinalDPS": 13.0,
     "latestFinalDate": "2025-07-07",
@@ -12481,7 +8307,7 @@
         "type": "final"
       }
     ],
-    "rank": 66,
+    "rank": 43,
     "price": 670,
     "latestFinalDPS": 10.0,
     "latestFinalDate": "2025-04-28",
@@ -12617,359 +8443,11 @@
         "type": "final"
       }
     ],
-    "rank": 67,
+    "rank": 44,
     "price": 1495,
     "latestFinalDPS": 10.0,
     "latestFinalDate": "2025-07-09",
     "finalYield": 0.67
-  },
-  {
-    "ticker": "LPKR",
-    "companyName": "PT Lippo Karawaci Tbk",
-    "sector": "Real Estate",
-    "industry": "Real Estate - Services",
-    "ipoDate": "2005-09-29",
-    "totalDividends": 56.45,
-    "dividendCount": 11,
-    "latestDividend": {
-      "date": "2018-06-22",
-      "amount": 2.14263,
-      "type": "final",
-      "paymentDate": "2018-07-06"
-    },
-    "yearsOfHistory": 11,
-    "avgDividendPerYear": 5.13,
-    "fiscalYears": [
-      "2017",
-      "2016",
-      "2015",
-      "2014",
-      "2013"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2018-06-22",
-        "amount": 2.14263,
-        "paymentDate": "2018-07-06",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-04-03",
-        "amount": 1.53952,
-        "paymentDate": "2017-04-21",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-04-04",
-        "amount": 2.77749,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-22",
-        "amount": 13.23671,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-12-03",
-        "amount": 11.14963,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-12-02",
-        "amount": 9.40378,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-08-28",
-        "amount": 6.18189,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-10-06",
-        "amount": 3.43615,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-11-12",
-        "amount": 2.17277,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2007-12-05",
-        "amount": 1.3942,
-        "paymentDate": "",
-        "fiscalYear": "2006",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-12-04",
-        "amount": 3.01472,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      }
-    ],
-    "rank": 68,
-    "price": 69,
-    "latestFinalDPS": 2.14263,
-    "latestFinalDate": "2018-06-22",
-    "finalYield": 3.11
-  },
-  {
-    "ticker": "INTA",
-    "companyName": "PT Intraco Penta Tbk",
-    "sector": "Industrials",
-    "industry": "Industrial - Distribution",
-    "ipoDate": "2000-11-07",
-    "totalDividends": 45.09,
-    "dividendCount": 8,
-    "latestDividend": {
-      "date": "2012-07-13",
-      "amount": 18.95192,
-      "type": "final",
-      "paymentDate": ""
-    },
-    "yearsOfHistory": 8,
-    "avgDividendPerYear": 5.64,
-    "fiscalYears": [
-      "2011",
-      "2010",
-      "2009",
-      "2008",
-      "2005"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2012-07-13",
-        "amount": 18.95192,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      },
-      {
-        "exDate": "2011-05-10",
-        "amount": 9.43384,
-        "paymentDate": "",
-        "fiscalYear": "2010",
-        "type": "final"
-      },
-      {
-        "exDate": "2010-06-03",
-        "amount": 5.05385,
-        "paymentDate": "",
-        "fiscalYear": "2009",
-        "type": "final"
-      },
-      {
-        "exDate": "2009-06-19",
-        "amount": 3.36923,
-        "paymentDate": "",
-        "fiscalYear": "2008",
-        "type": "final"
-      },
-      {
-        "exDate": "2006-07-21",
-        "amount": 2.77961,
-        "paymentDate": "",
-        "fiscalYear": "2005",
-        "type": "final"
-      },
-      {
-        "exDate": "2005-06-30",
-        "amount": 2.52692,
-        "paymentDate": "",
-        "fiscalYear": "2004",
-        "type": "final"
-      },
-      {
-        "exDate": "2002-07-17",
-        "amount": 1.34769,
-        "paymentDate": "",
-        "fiscalYear": "2001",
-        "type": "final"
-      },
-      {
-        "exDate": "2001-07-27",
-        "amount": 1.62902,
-        "paymentDate": "",
-        "fiscalYear": "2000",
-        "type": "final"
-      }
-    ],
-    "rank": 69,
-    "price": 74,
-    "latestFinalDPS": 18.95192,
-    "latestFinalDate": "2012-07-13",
-    "finalYield": 25.61
-  },
-  {
-    "ticker": "AGII",
-    "companyName": "PT Samator Indo Gas Tbk",
-    "sector": "Basic Materials",
-    "industry": "Chemicals",
-    "ipoDate": "2016-09-28",
-    "totalDividends": 40.68,
-    "dividendCount": 6,
-    "latestDividend": {
-      "date": "2025-06-24",
-      "amount": 8.56,
-      "type": "final",
-      "paymentDate": "2025-07-17"
-    },
-    "yearsOfHistory": 6,
-    "avgDividendPerYear": 6.78,
-    "fiscalYears": [
-      "2024",
-      "2023",
-      "2022",
-      "2021",
-      "2020"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-06-24",
-        "amount": 8.56,
-        "paymentDate": "2025-07-17",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-07-03",
-        "amount": 10.8,
-        "paymentDate": "2024-07-26",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-06-13",
-        "amount": 4.86,
-        "paymentDate": "2023-07-06",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-08-05",
-        "amount": 10.063,
-        "paymentDate": "2022-08-26",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-08-10",
-        "amount": 3.15,
-        "paymentDate": "2021-08-27",
-        "fiscalYear": "2020",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-06-21",
-        "amount": 3.25,
-        "paymentDate": "2019-07-11",
-        "fiscalYear": "2018",
-        "type": "final"
-      }
-    ],
-    "rank": 70,
-    "price": 2740,
-    "latestFinalDPS": 8.56,
-    "latestFinalDate": "2025-06-24",
-    "finalYield": 0.31
-  },
-  {
-    "ticker": "DILD",
-    "companyName": "PT Intiland Development Tbk",
-    "sector": "Real Estate",
-    "industry": "Real Estate - Development",
-    "ipoDate": "2002-03-25",
-    "totalDividends": 38.0,
-    "dividendCount": 7,
-    "latestDividend": {
-      "date": "2019-05-24",
-      "amount": 2.0,
-      "type": "final",
-      "paymentDate": "2019-06-14"
-    },
-    "yearsOfHistory": 7,
-    "avgDividendPerYear": 5.43,
-    "fiscalYears": [
-      "2018",
-      "2016",
-      "2015",
-      "2014",
-      "2013"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2019-05-24",
-        "amount": 2.0,
-        "paymentDate": "2019-06-14",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-05-29",
-        "amount": 5.0,
-        "paymentDate": "2017-06-20",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-07-12",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-17",
-        "amount": 10.0,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-07-11",
-        "amount": 8.0,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      },
-      {
-        "exDate": "2013-07-30",
-        "amount": 5.0,
-        "paymentDate": "",
-        "fiscalYear": "2012",
-        "type": "final"
-      },
-      {
-        "exDate": "2012-07-19",
-        "amount": 3.0,
-        "paymentDate": "",
-        "fiscalYear": "2011",
-        "type": "final"
-      }
-    ],
-    "rank": 71,
-    "price": 120,
-    "latestFinalDPS": 2.0,
-    "latestFinalDate": "2019-05-24",
-    "finalYield": 1.67
   },
   {
     "ticker": "FILM",
@@ -13007,84 +8485,11 @@
         "type": "final"
       }
     ],
-    "rank": 72,
+    "rank": 45,
     "price": 2150,
     "latestFinalDPS": 25.0,
     "latestFinalDate": "2024-07-09",
     "finalYield": 1.16
-  },
-  {
-    "ticker": "CLEO",
-    "companyName": "PT Sariguna Primatirta Tbk",
-    "sector": "Consumer Defensive",
-    "industry": "Beverages - Non-Alcoholic",
-    "ipoDate": "2017-05-05",
-    "totalDividends": 17.7,
-    "dividendCount": 6,
-    "latestDividend": {
-      "date": "2025-06-10",
-      "amount": 5.0,
-      "type": "final",
-      "paymentDate": "2025-06-26"
-    },
-    "yearsOfHistory": 5,
-    "avgDividendPerYear": 3.54,
-    "fiscalYears": [
-      "2024",
-      "2023",
-      "2022",
-      "2021",
-      "2020"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-06-10",
-        "amount": 5.0,
-        "paymentDate": "2025-06-26",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-06-10",
-        "amount": 5.05,
-        "paymentDate": "2024-06-28",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2023-06-13",
-        "amount": 1.65,
-        "paymentDate": "2023-06-27",
-        "fiscalYear": "2022",
-        "type": "final"
-      },
-      {
-        "exDate": "2022-06-10",
-        "amount": 1.0,
-        "paymentDate": "2022-06-30",
-        "fiscalYear": "2021",
-        "type": "final"
-      },
-      {
-        "exDate": "2021-12-03",
-        "amount": 2.5,
-        "paymentDate": "2021-12-20",
-        "fiscalYear": "2021",
-        "type": "interim"
-      },
-      {
-        "exDate": "2021-05-31",
-        "amount": 2.5,
-        "paymentDate": "2021-06-17",
-        "fiscalYear": "2020",
-        "type": "final"
-      }
-    ],
-    "rank": 73,
-    "price": 388,
-    "latestFinalDPS": 5.0,
-    "latestFinalDate": "2025-06-10",
-    "finalYield": 1.29
   },
   {
     "ticker": "BRPT",
@@ -13153,7 +8558,7 @@
         "type": "final"
       }
     ],
-    "rank": 74,
+    "rank": 46,
     "price": 1940,
     "latestFinalDPS": 0.873,
     "latestFinalDate": "2024-06-27",
@@ -13203,7 +8608,7 @@
         "type": "final"
       }
     ],
-    "rank": 75,
+    "rank": 47,
     "price": 3300,
     "latestFinalDPS": 2.03362,
     "latestFinalDate": "2024-06-07",
@@ -13276,77 +8681,11 @@
         "type": "final"
       }
     ],
-    "rank": 76,
+    "rank": 48,
     "price": 124,
     "latestFinalDPS": 1.77,
     "latestFinalDate": "2025-07-07",
     "finalYield": 1.43
-  },
-  {
-    "ticker": "PPRO",
-    "companyName": "PT Pembangunan Perumahan Properti Tbk",
-    "sector": "Real Estate",
-    "industry": "Real Estate - Development",
-    "ipoDate": "2015-05-19",
-    "totalDividends": 5.9,
-    "dividendCount": 5,
-    "latestDividend": {
-      "date": "2020-06-12",
-      "amount": 0.56,
-      "type": "final",
-      "paymentDate": "2020-07-03"
-    },
-    "yearsOfHistory": 5,
-    "avgDividendPerYear": 1.18,
-    "fiscalYears": [
-      "2019",
-      "2018",
-      "2017",
-      "2016",
-      "2015"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2020-06-12",
-        "amount": 0.56,
-        "paymentDate": "2020-07-03",
-        "fiscalYear": "2019",
-        "type": "final"
-      },
-      {
-        "exDate": "2019-04-22",
-        "amount": 1.53,
-        "paymentDate": "2019-05-10",
-        "fiscalYear": "2018",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-04-25",
-        "amount": 1.44,
-        "paymentDate": "2018-05-17",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-03-16",
-        "amount": 1.29918,
-        "paymentDate": "2017-04-05",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-04-28",
-        "amount": 1.06682,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      }
-    ],
-    "rank": 77,
-    "price": 15,
-    "latestFinalDPS": 0.56,
-    "latestFinalDate": "2020-06-12",
-    "finalYield": 3.73
   },
   {
     "ticker": "CUAN",
@@ -13376,7 +8715,7 @@
         "type": "final"
       }
     ],
-    "rank": 78,
+    "rank": 49,
     "price": 630,
     "latestFinalDPS": 2.93,
     "latestFinalDate": "2025-04-30",
@@ -13434,10 +8773,910 @@
         "type": "final"
       }
     ],
-    "rank": 79,
+    "rank": 50,
     "price": 260,
     "latestFinalDPS": 0.20778,
     "latestFinalDate": "2021-04-12",
     "finalYield": 0.08
+  },
+  {
+    "ticker": "ADMR",
+    "companyName": "PT Adaro Minerals Indonesia Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 51,
+    "price": 1530,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "AMMN",
+    "companyName": "PT Amman Mineral Internasional Tbk",
+    "sector": "Basic Materials",
+    "industry": "Basic Materials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 52,
+    "price": 3300,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "ARCI",
+    "companyName": "PT Archi Indonesia Tbk",
+    "sector": "Basic Materials",
+    "industry": "Basic Materials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 53,
+    "price": 1215,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "ARTO",
+    "companyName": "PT Bank Jago Tbk",
+    "sector": "Financials",
+    "industry": "Financials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 54,
+    "price": 1180,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BBTN",
+    "companyName": "PT Bank Tabungan Negara Tbk",
+    "sector": "Financials",
+    "industry": "Financials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 55,
+    "price": 1270,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BKSL",
+    "companyName": "PT Sentul City Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 56,
+    "price": 75,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BMRI",
+    "companyName": "PT BMRI Tbk",
+    "sector": "Unknown",
+    "industry": "Unknown",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 57,
+    "price": 4080,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BRIS",
+    "companyName": "PT Bank Syariah Indonesia Tbk",
+    "sector": "Financials",
+    "industry": "Financials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 58,
+    "price": 1980,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BRMS",
+    "companyName": "PT Bumi Resources Minerals Tbk",
+    "sector": "Basic Materials",
+    "industry": "Basic Materials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 59,
+    "price": 595,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BTPS",
+    "companyName": "PT Bank BTPN Syariah Tbk",
+    "sector": "Financials",
+    "industry": "Financials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 60,
+    "price": 930,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BUKA",
+    "companyName": "PT Bukalapak.com Tbk",
+    "sector": "Technology",
+    "industry": "Technology",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 61,
+    "price": 122,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BULL",
+    "companyName": "PT Buana Lintas Lautan Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 62,
+    "price": 386,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BUMI",
+    "companyName": "PT BUMI Tbk",
+    "sector": "Unknown",
+    "industry": "Unknown",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 63,
+    "price": 168,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "BUVA",
+    "companyName": "PT Bukit Asam Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 64,
+    "price": 760,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "CBDK",
+    "companyName": "PT Bank KB Bukopin Tbk",
+    "sector": "Financials",
+    "industry": "Financials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 65,
+    "price": 3850,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "CMRY",
+    "companyName": "PT Cisarua Mountain Dairy Tbk",
+    "sector": "Consumer Non-Cyclicals",
+    "industry": "Consumer Non-Cyclicals",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 66,
+    "price": 4830,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "DEWA",
+    "companyName": "PT Darma Henwa Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 67,
+    "price": 334,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "DSNG",
+    "companyName": "PT Dharma Samudera Fishing Industries Tbk",
+    "sector": "Consumer Non-Cyclicals",
+    "industry": "Consumer Non-Cyclicals",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 68,
+    "price": 1190,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "DSSA",
+    "companyName": "PT Dian Swastatika Sentosa Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 69,
+    "price": 492,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "ENRG",
+    "companyName": "PT Energi Mega Persada Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 70,
+    "price": 1350,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "ERAA",
+    "companyName": "PT Erajaya Swasembada Tbk",
+    "sector": "Consumer Non-Cyclicals",
+    "industry": "Consumer Non-Cyclicals",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 71,
+    "price": 374,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "GOTO",
+    "companyName": "PT GoTo Gojek Tokopedia Tbk",
+    "sector": "Technology",
+    "industry": "Technology",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 72,
+    "price": 50,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "HEAL",
+    "companyName": "PT Medikaloka Hermina Tbk",
+    "sector": "Healthcare",
+    "industry": "Healthcare",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 73,
+    "price": 945,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "HRTA",
+    "companyName": "PT Hartadinata Abadi Tbk",
+    "sector": "Consumer Non-Cyclicals",
+    "industry": "Consumer Non-Cyclicals",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 74,
+    "price": 2490,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "IMPC",
+    "companyName": "PT Impack Pratama Industri Tbk",
+    "sector": "Industrials",
+    "industry": "Industrials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 75,
+    "price": 1825,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "INDY",
+    "companyName": "PT Indika Energy Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 76,
+    "price": 2280,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "INET",
+    "companyName": "PT Sinergi Inti Andalan Prima Tbk",
+    "sector": "Technology",
+    "industry": "Technology",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 77,
+    "price": 232,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "INTP",
+    "companyName": "PT Indocement Tunggal Prakarsa Tbk",
+    "sector": "Industrials",
+    "industry": "Industrials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 78,
+    "price": 4900,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "KPIG",
+    "companyName": "PT MNC Land Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 79,
+    "price": 94,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "MAPA",
+    "companyName": "PT MAP Aktif Adiperkasa Tbk",
+    "sector": "Consumer Non-Cyclicals",
+    "industry": "Consumer Non-Cyclicals",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 80,
+    "price": 640,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "MBMA",
+    "companyName": "PT Merdeka Battery Materials Tbk",
+    "sector": "Basic Materials",
+    "industry": "Basic Materials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 81,
+    "price": 478,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "MDKA",
+    "companyName": "PT Merdeka Copper Gold Tbk",
+    "sector": "Basic Materials",
+    "industry": "Basic Materials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 82,
+    "price": 2590,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "MTEL",
+    "companyName": "PT Dayamitra Telekomunikasi Tbk",
+    "sector": "Infrastructures",
+    "industry": "Infrastructures",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 83,
+    "price": 520,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "MYOR",
+    "companyName": "PT Mayora Indah Tbk",
+    "sector": "Consumer Non-Cyclicals",
+    "industry": "Consumer Non-Cyclicals",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 84,
+    "price": 1840,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "NCKL",
+    "companyName": "PT Trimegah Bangun Persada Tbk",
+    "sector": "Basic Materials",
+    "industry": "Basic Materials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 85,
+    "price": 890,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "PANI",
+    "companyName": "PT Pantai Indah Kapuk Dua Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 86,
+    "price": 7375,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "PGEO",
+    "companyName": "PT Pertamina Geothermal Energy Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 87,
+    "price": 895,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "PNLF",
+    "companyName": "PT Panin Financial Tbk",
+    "sector": "Financials",
+    "industry": "Financials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 88,
+    "price": 238,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "PSAB",
+    "companyName": "PT J Resources Asia Pasifik Tbk",
+    "sector": "Basic Materials",
+    "industry": "Basic Materials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 89,
+    "price": 476,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "PTRO",
+    "companyName": "PT Petrosea Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 90,
+    "price": 4670,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "RAJA",
+    "companyName": "PT Rukun Raharja Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 91,
+    "price": 3740,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "RATU",
+    "companyName": "PT Raharja Energi Cepu Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 92,
+    "price": 5300,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "SGER",
+    "companyName": "PT Sumber Global Energy Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 93,
+    "price": 302,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "SMIL",
+    "companyName": "PT Sarana Mitra Luas Tbk",
+    "sector": "Industrials",
+    "industry": "Industrials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 94,
+    "price": 258,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "SSIA",
+    "companyName": "PT Surya Semesta Internusa Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 95,
+    "price": 1675,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "TAPG",
+    "companyName": "PT Triputra Agro Persada Tbk",
+    "sector": "Consumer Non-Cyclicals",
+    "industry": "Consumer Non-Cyclicals",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 96,
+    "price": 1520,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "TCPI",
+    "companyName": "PT Transcoal Pacific Tbk",
+    "sector": "Industrials",
+    "industry": "Industrials",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 97,
+    "price": 10850,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "TOBA",
+    "companyName": "PT Toba Bara Sejahtera Tbk",
+    "sector": "Energy",
+    "industry": "Energy",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 98,
+    "price": 430,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "WIFI",
+    "companyName": "PT Solusi Sinergi Digital Tbk",
+    "sector": "Technology",
+    "industry": "Technology",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 99,
+    "price": 2050,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
+  },
+  {
+    "ticker": "WIRG",
+    "companyName": "PT WIR Asia Tbk",
+    "sector": "Technology",
+    "industry": "Technology",
+    "totalDividends": 0,
+    "dividendCount": 0,
+    "yearsOfHistory": 0,
+    "avgDividendPerYear": 0,
+    "latestDividend": null,
+    "fiscalYears": [],
+    "allDividends": [],
+    "rank": 100,
+    "price": 61,
+    "latestFinalDPS": 0,
+    "latestFinalDate": "",
+    "finalYield": null
   }
 ]
