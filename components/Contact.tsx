@@ -25,7 +25,7 @@ export default function Contact() {
             </div>
 
             <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-8 font-light">
-              Let's <span className="text-gold-gradient font-medium">Connect</span>
+              Get in <span className="text-gold-gradient font-medium">Touch</span>
             </h2>
 
             <p className="text-[#B8AA96] text-base leading-relaxed font-light mb-12">
