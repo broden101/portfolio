@@ -226,7 +226,6 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
                 ["ticker", "Stock"],
                 ["price", "Price"],
                 ["sector", "Sector"],
-                ["totalDividends", "Total Div (Rp)"],
                 ["latestFinalDPS", "Final DPS"],
                 ["finalYield", "Final Yield %"],
                 ["yearsOfHistory", "Years"],
@@ -250,7 +249,6 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
                 </td>
                 <td className="py-3 px-2 font-mono text-[#F4EFE6]">{stock.price ? `Rp${stock.price.toLocaleString()}` : '—'}</td>
                 <td className="py-3 px-2 text-[#B8AA96]">{stock.sector}</td>
-                <td className="py-3 px-2 font-mono font-semibold text-[#F4EFE6]">{stock.totalDividends.toLocaleString()}</td>
                 <td className="py-3 px-2 font-mono text-[#F4EFE6]">{stock.latestFinalDPS ? `Rp${stock.latestFinalDPS.toLocaleString(undefined, {maximumFractionDigits: 2})}` : '—'}</td>
                 <td className="py-3 px-2">
                   {stock.finalYield != null ? (
