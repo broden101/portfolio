@@ -1,3 +1,11 @@
+export interface DividendEntry {
+  exDate: string;
+  amount: number;
+  paymentDate: string;
+  fiscalYear: string;
+  type: string; // "final", "interim"
+}
+
 export interface DividendStock {
   ticker: string;
   companyName: string;
@@ -14,6 +22,7 @@ export interface DividendStock {
     paymentDate: string;
   };
   fiscalYears: string[];
+  allDividends: DividendEntry[];
   rank: number;
 }
 
@@ -23,15 +32,13 @@ export interface DividendEvent {
   type: "EX_DATE" | "PAY_DATE" | "CUM_DATE";
   date: string;
   dps: number;
-  yield: number;
+  divType: string; // "final" or "interim"
 }
 
-// Data will be loaded from JSON
 let dividendStocksData: DividendStock[] = [];
 
 export async function loadDividendData(): Promise<DividendStock[]> {
   if (dividendStocksData.length > 0) return dividendStocksData;
-
   try {
     const res = await fetch("/api/dividends");
     if (!res.ok) throw new Error("Failed to fetch");
@@ -43,49 +50,51 @@ export async function loadDividendData(): Promise<DividendStock[]> {
   }
 }
 
-export function getDividendEvents(stocks: DividendStock[], year: number): DividendEvent[] {
+export function getDividendEvents(stocks: DividendStock[]): DividendEvent[] {
   const events: DividendEvent[] = [];
 
   stocks.forEach((stock) => {
-    if (!stock.latestDividend?.date) return;
+    if (!stock.allDividends?.length) return;
 
-    const exDate = new Date(stock.latestDividend.date);
-    // Project to requested year
-    const exDateAdj = `${year}-${String(exDate.getMonth() + 1).padStart(2, "0")}-${String(exDate.getDate()).padStart(2, "0")}`;
+    stock.allDividends.forEach((div) => {
+      if (!div.exDate) return;
 
-    events.push({
-      ticker: stock.ticker + ".JK",
-      name: stock.companyName,
-      type: "EX_DATE",
-      date: exDateAdj,
-      dps: stock.latestDividend.amount,
-      yield: 0,
-    });
-
-    // Cum-date (2 days before)
-    const cumDate = new Date(exDate);
-    cumDate.setDate(cumDate.getDate() - 2);
-    events.push({
-      ticker: stock.ticker + ".JK",
-      name: stock.companyName,
-      type: "CUM_DATE",
-      date: `${year}-${String(cumDate.getMonth() + 1).padStart(2, "0")}-${String(cumDate.getDate()).padStart(2, "0")}`,
-      dps: stock.latestDividend.amount,
-      yield: 0,
-    });
-
-    // Payment date
-    if (stock.latestDividend.paymentDate) {
-      const payDate = new Date(stock.latestDividend.paymentDate);
+      // EX_DATE
       events.push({
-        ticker: stock.ticker + ".JK",
+        ticker: stock.ticker,
         name: stock.companyName,
-        type: "PAY_DATE",
-        date: `${year}-${String(payDate.getMonth() + 1).padStart(2, "0")}-${String(payDate.getDate()).padStart(2, "0")}`,
-        dps: stock.latestDividend.amount,
-        yield: 0,
+        type: "EX_DATE",
+        date: div.exDate,
+        dps: div.amount,
+        divType: div.type,
       });
-    }
+
+      // CUM_DATE (2 business days before ex-date, simplified as -2 calendar days)
+      const exDate = new Date(div.exDate);
+      const cumDate = new Date(exDate);
+      cumDate.setDate(cumDate.getDate() - 2);
+      const cumStr = cumDate.toISOString().split("T")[0];
+      events.push({
+        ticker: stock.ticker,
+        name: stock.companyName,
+        type: "CUM_DATE",
+        date: cumStr,
+        dps: div.amount,
+        divType: div.type,
+      });
+
+      // PAY_DATE
+      if (div.paymentDate) {
+        events.push({
+          ticker: stock.ticker,
+          name: stock.companyName,
+          type: "PAY_DATE",
+          date: div.paymentDate,
+          dps: div.amount,
+          divType: div.type,
+        });
+      }
+    });
   });
 
   return events.sort((a, b) => a.date.localeCompare(b.date));

@@ -58,9 +58,10 @@ function CalendarDay({ day, events }: { day: number; events: DividendEvent[] }) 
             const c = EVENT_COLORS[ev.type];
             return (
               <div key={i} className={`flex items-center gap-2 px-2 py-1.5 rounded text-xs ${c.bg} ${c.text}`}>
-                <span className="font-mono font-semibold">{ev.ticker.replace(".JK", "")}</span>
+                <span className="font-mono font-semibold">{ev.ticker}</span>
                 <span className="text-[#B8AA96]/50">•</span>
                 <span>{ev.type.replace("_", " ")}</span>
+                {ev.divType && <span className="px-1 py-0.5 rounded text-[9px] bg-[#C6A15B]/10 text-[#C6A15B] border border-[#C6A15B]/20">{ev.divType}</span>}
                 <span className="ml-auto font-mono">Rp{ev.dps.toLocaleString()}</span>
               </div>
             );
@@ -72,10 +73,11 @@ function CalendarDay({ day, events }: { day: number; events: DividendEvent[] }) 
 }
 
 function DividendCalendar({ stocks }: { stocks: DividendStock[] }) {
-  const [year] = useState(2026);
-  const [month, setMonth] = useState(0);
+  const now = new Date();
+  const [year, setYear] = useState(now.getFullYear());
+  const [month, setMonth] = useState(now.getMonth());
 
-  const allEvents = useMemo(() => getDividendEvents(stocks, year), [stocks, year]);
+  const allEvents = useMemo(() => getDividendEvents(stocks), [stocks]);
   const events = useMemo(() => getEventsForMonth(allEvents, year, month + 1), [allEvents, year, month]);
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDay = new Date(year, month, 1).getDay();
@@ -95,9 +97,9 @@ function DividendCalendar({ stocks }: { stocks: DividendStock[] }) {
           <p className="text-xs text-[#B8AA96]/50 mt-1">Based on latest dividend history from panendividen.com</p>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => setMonth((m) => (m === 0 ? 11 : m - 1))} className="w-8 h-8 flex items-center justify-center border border-[#2C261E] text-[#B8AA96] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all">‹</button>
+          <button onClick={() => { if (month === 0) { setMonth(11); setYear(y => y - 1); } else setMonth(m => m - 1); }} className="w-8 h-8 flex items-center justify-center border border-[#2C261E] text-[#B8AA96] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all">‹</button>
           <span className="text-sm text-[#F4EFE6] font-medium min-w-[140px] text-center">{MONTHS[month]} {year}</span>
-          <button onClick={() => setMonth((m) => (m === 11 ? 0 : m + 1))} className="w-8 h-8 flex items-center justify-center border border-[#2C261E] text-[#B8AA96] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all">›</button>
+          <button onClick={() => { if (month === 11) { setMonth(0); setYear(y => y + 1); } else setMonth(m => m + 1); }} className="w-8 h-8 flex items-center justify-center border border-[#2C261E] text-[#B8AA96] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all">›</button>
         </div>
       </div>
 
@@ -133,8 +135,9 @@ function DividendCalendar({ stocks }: { stocks: DividendStock[] }) {
               return (
                 <div key={i} className={`flex items-center justify-between px-3 py-2 rounded ${c.bg}`}>
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-sm font-semibold text-[#F4EFE6]">{ev.ticker.replace(".JK", "")}</span>
+                    <span className="font-mono text-sm font-semibold text-[#F4EFE6]">{ev.ticker}</span>
                     <span className={`text-xs px-2 py-0.5 rounded ${c.text} ${c.bg} border ${c.border}`}>{ev.type.replace("_", " ")}</span>
+                    {ev.divType && <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#C6A15B]/10 text-[#C6A15B] border border-[#C6A15B]/20">{ev.divType}</span>}
                   </div>
                   <div className="flex items-center gap-4 text-xs">
                     <span className="text-[#B8AA96]">{ev.date}</span>
