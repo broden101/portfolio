@@ -1,0 +1,1958 @@
+[
+  {
+    "ticker": "ITMG",
+    "companyName": "PT Indo Tambangraya Megah Tbk",
+    "sector": "Energy",
+    "industry": "Coal",
+    "ipoDate": "2007-12-18",
+    "totalDividends": 50359.74,
+    "dividendCount": 38,
+    "latestDividend": {
+      "date": "2026-04-28",
+      "amount": 992.0,
+      "type": "final",
+      "paymentDate": "2026-05-19"
+    },
+    "yearsOfHistory": 19,
+    "avgDividendPerYear": 2650.51,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 1
+  },
+  {
+    "ticker": "GGRM",
+    "companyName": "PT Gudang Garam Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Tobacco",
+    "ipoDate": "2001-06-07",
+    "totalDividends": 24910.0,
+    "dividendCount": 23,
+    "latestDividend": {
+      "date": "2025-07-07",
+      "amount": 500.0,
+      "type": "final",
+      "paymentDate": "2025-07-23"
+    },
+    "yearsOfHistory": 22,
+    "avgDividendPerYear": 1132.27,
+    "fiscalYears": [
+      "2024",
+      "2022",
+      "2021",
+      "2020",
+      "2018"
+    ],
+    "rank": 2
+  },
+  {
+    "ticker": "UNTR",
+    "companyName": "PT United Tractors Tbk",
+    "sector": "Basic Materials",
+    "industry": "Industrial Materials",
+    "ipoDate": "2000-09-05",
+    "totalDividends": 23645.29,
+    "dividendCount": 43,
+    "latestDividend": {
+      "date": "2026-04-27",
+      "amount": 1096.0,
+      "type": "final",
+      "paymentDate": "2026-05-18"
+    },
+    "yearsOfHistory": 23,
+    "avgDividendPerYear": 1028.06,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 3
+  },
+  {
+    "ticker": "GEMS",
+    "companyName": "PT Golden Energy Mines Tbk",
+    "sector": "Energy",
+    "industry": "Coal",
+    "ipoDate": "2011-11-17",
+    "totalDividends": 6043.03,
+    "dividendCount": 35,
+    "latestDividend": {
+      "date": "2026-06-02",
+      "amount": 237.95,
+      "type": "final",
+      "paymentDate": "2026-06-11"
+    },
+    "yearsOfHistory": 14,
+    "avgDividendPerYear": 431.64,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 4
+  },
+  {
+    "ticker": "ASII",
+    "companyName": "PT Astra International Tbk",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto - Parts",
+    "ipoDate": "2000-10-17",
+    "totalDividends": 4682.53,
+    "dividendCount": 46,
+    "latestDividend": {
+      "date": "2026-05-05",
+      "amount": 292.0,
+      "type": "final",
+      "paymentDate": "2026-05-25"
+    },
+    "yearsOfHistory": 24,
+    "avgDividendPerYear": 195.11,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 5
+  },
+  {
+    "ticker": "PTBA",
+    "companyName": "PT Bukit Asam Tbk",
+    "sector": "Energy",
+    "industry": "Coal",
+    "ipoDate": "2002-12-23",
+    "totalDividends": 4547.78,
+    "dividendCount": 27,
+    "latestDividend": {
+      "date": "2025-06-23",
+      "amount": 332.44,
+      "type": "final",
+      "paymentDate": "2025-07-11"
+    },
+    "yearsOfHistory": 23,
+    "avgDividendPerYear": 197.73,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 6
+  },
+  {
+    "ticker": "SMGR",
+    "companyName": "PT Semen Indonesia (Persero) Tbk",
+    "sector": "Basic Materials",
+    "industry": "Construction Materials",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 4412.45,
+    "dividendCount": 23,
+    "latestDividend": {
+      "date": "2026-05-21",
+      "amount": 28.33,
+      "type": "final",
+      "paymentDate": "2026-06-11"
+    },
+    "yearsOfHistory": 21,
+    "avgDividendPerYear": 210.12,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 7
+  },
+  {
+    "ticker": "LPPF",
+    "companyName": "PT Matahari Department Store Tbk",
+    "sector": "Consumer Cyclical",
+    "industry": "Department Stores",
+    "ipoDate": "2005-10-17",
+    "totalDividends": 3823.35,
+    "dividendCount": 14,
+    "latestDividend": {
+      "date": "2026-04-24",
+      "amount": 250.0,
+      "type": "final",
+      "paymentDate": "2026-05-04"
+    },
+    "yearsOfHistory": 14,
+    "avgDividendPerYear": 273.1,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 8
+  },
+  {
+    "ticker": "ADRO",
+    "companyName": "PT Alamtri Resources Indonesia Tbk",
+    "sector": "Energy",
+    "industry": "Coal",
+    "ipoDate": "2008-07-16",
+    "totalDividends": 3785.18,
+    "dividendCount": 35,
+    "latestDividend": {
+      "date": "2026-04-28",
+      "amount": 118.26,
+      "type": "final",
+      "paymentDate": "2026-05-08"
+    },
+    "yearsOfHistory": 18,
+    "avgDividendPerYear": 210.29,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 9
+  },
+  {
+    "ticker": "INDF",
+    "companyName": "PT Indofood Sukses Makmur Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Packaged Foods",
+    "ipoDate": "2000-10-02",
+    "totalDividends": 3704.5,
+    "dividendCount": 26,
+    "latestDividend": {
+      "date": "2025-07-02",
+      "amount": 280.0,
+      "type": "final",
+      "paymentDate": "2025-07-23"
+    },
+    "yearsOfHistory": 25,
+    "avgDividendPerYear": 148.18,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 10
+  },
+  {
+    "ticker": "UNVR",
+    "companyName": "PT Unilever Indonesia Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Household & Personal Products",
+    "ipoDate": "2003-09-03",
+    "totalDividends": 2693.8,
+    "dividendCount": 47,
+    "latestDividend": {
+      "date": "2025-12-15",
+      "amount": 87.0,
+      "type": "interim",
+      "paymentDate": "2025-12-30"
+    },
+    "yearsOfHistory": 24,
+    "avgDividendPerYear": 112.24,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 11
+  },
+  {
+    "ticker": "ICBP",
+    "companyName": "PT Indofood CBP Sukses Makmur Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Packaged Foods",
+    "ipoDate": "2000-10-02",
+    "totalDividends": 2363.5,
+    "dividendCount": 16,
+    "latestDividend": {
+      "date": "2025-07-02",
+      "amount": 250.0,
+      "type": "final",
+      "paymentDate": "2025-07-22"
+    },
+    "yearsOfHistory": 15,
+    "avgDividendPerYear": 157.57,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 12
+  },
+  {
+    "ticker": "BYAN",
+    "companyName": "PT Bayan Resources Tbk",
+    "sector": "Energy",
+    "industry": "Coal",
+    "ipoDate": "2008-08-12",
+    "totalDividends": 2354.19,
+    "dividendCount": 13,
+    "latestDividend": {
+      "date": "2025-07-07",
+      "amount": 194.84,
+      "type": "final",
+      "paymentDate": "2025-07-23"
+    },
+    "yearsOfHistory": 10,
+    "avgDividendPerYear": 235.42,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 13
+  },
+  {
+    "ticker": "BBRI",
+    "companyName": "PT Bank Rakyat Indonesia (Persero) Tbk",
+    "sector": "Financial Services",
+    "industry": "Banks - Regional",
+    "ipoDate": "2003-11-10",
+    "totalDividends": 2346.84,
+    "dividendCount": 29,
+    "latestDividend": {
+      "date": "2026-04-21",
+      "amount": 209.0,
+      "type": "final",
+      "paymentDate": "2026-05-08"
+    },
+    "yearsOfHistory": 23,
+    "avgDividendPerYear": 102.04,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 14
+  },
+  {
+    "ticker": "BBNI",
+    "companyName": "PT Bank Negara Indonesia (Persero) Tbk",
+    "sector": "Financial Services",
+    "industry": "Banks - Regional",
+    "ipoDate": "2003-12-23",
+    "totalDividends": 2232.29,
+    "dividendCount": 24,
+    "latestDividend": {
+      "date": "2026-03-25",
+      "amount": 349.413365,
+      "type": "final",
+      "paymentDate": "2026-04-07"
+    },
+    "yearsOfHistory": 23,
+    "avgDividendPerYear": 97.06,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 15
+  },
+  {
+    "ticker": "PGAS",
+    "companyName": "PT Perusahaan Gas Negara Tbk",
+    "sector": "Utilities",
+    "industry": "Regulated Gas",
+    "ipoDate": "2003-12-15",
+    "totalDividends": 2180.59,
+    "dividendCount": 26,
+    "latestDividend": {
+      "date": "2025-06-05",
+      "amount": 125.61,
+      "type": "final",
+      "paymentDate": "2026-06-24"
+    },
+    "yearsOfHistory": 22,
+    "avgDividendPerYear": 99.12,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 16
+  },
+  {
+    "ticker": "TLKM",
+    "companyName": "Perusahaan Perseroan (Persero) PT Telekomunikasi Indonesia Tbk",
+    "sector": "Communication Services",
+    "industry": "Telecommunications Services",
+    "ipoDate": "2004-09-28",
+    "totalDividends": 2090.74,
+    "dividendCount": 28,
+    "latestDividend": {
+      "date": "2025-06-11",
+      "amount": 212.47,
+      "type": "final",
+      "paymentDate": "2025-06-20"
+    },
+    "yearsOfHistory": 22,
+    "avgDividendPerYear": 95.03,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 17
+  },
+  {
+    "ticker": "BBCA",
+    "companyName": "PT Bank Central Asia Tbk",
+    "sector": "Financial Services",
+    "industry": "Banks - Regional",
+    "ipoDate": "2004-06-08",
+    "totalDividends": 1912.4,
+    "dividendCount": 45,
+    "latestDividend": {
+      "date": "2026-03-30",
+      "amount": 281.0,
+      "type": "final",
+      "paymentDate": "2026-04-08"
+    },
+    "yearsOfHistory": 23,
+    "avgDividendPerYear": 83.15,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 18
+  },
+  {
+    "ticker": "AUTO",
+    "companyName": "PT Astra Otoparts Tbk",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto - Parts",
+    "ipoDate": "2000-12-14",
+    "totalDividends": 1769.82,
+    "dividendCount": 44,
+    "latestDividend": {
+      "date": "2026-04-28",
+      "amount": 170.0,
+      "type": "final",
+      "paymentDate": "2026-05-18"
+    },
+    "yearsOfHistory": 25,
+    "avgDividendPerYear": 70.79,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 19
+  },
+  {
+    "ticker": "MPMX",
+    "companyName": "PT Mitra Pinasthika Mustika Tbk",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto - Dealerships",
+    "ipoDate": "2013-05-29",
+    "totalDividends": 1569.0,
+    "dividendCount": 13,
+    "latestDividend": {
+      "date": "2026-06-09",
+      "amount": 170.0,
+      "type": "final",
+      "paymentDate": "2026-06-25"
+    },
+    "yearsOfHistory": 12,
+    "avgDividendPerYear": 130.75,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 20
+  },
+  {
+    "ticker": "HMSP",
+    "companyName": "PT Hanjaya Mandala Sampoerna Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Tobacco",
+    "ipoDate": "2001-09-25",
+    "totalDividends": 1491.92,
+    "dividendCount": 44,
+    "latestDividend": {
+      "date": "2026-05-29",
+      "amount": 56.3,
+      "type": "final",
+      "paymentDate": "2026-06-19"
+    },
+    "yearsOfHistory": 25,
+    "avgDividendPerYear": 59.68,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 21
+  },
+  {
+    "ticker": "TSPC",
+    "companyName": "PT Tempo Scan Pacific Tbk",
+    "sector": "Healthcare",
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 1384.0,
+    "dividendCount": 28,
+    "latestDividend": {
+      "date": "2025-11-10",
+      "amount": 100.0,
+      "type": "interim",
+      "paymentDate": "2025-11-25"
+    },
+    "yearsOfHistory": 21,
+    "avgDividendPerYear": 65.9,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 22
+  },
+  {
+    "ticker": "JSMR",
+    "companyName": "PT Jasa Marga (Persero) Tbk",
+    "sector": "Industrials",
+    "industry": "Engineering & Construction",
+    "ipoDate": "2007-11-12",
+    "totalDividends": 1329.84,
+    "dividendCount": 18,
+    "latestDividend": {
+      "date": "2026-06-03",
+      "amount": 156.23,
+      "type": "final",
+      "paymentDate": "2026-06-19"
+    },
+    "yearsOfHistory": 17,
+    "avgDividendPerYear": 78.23,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2019"
+    ],
+    "rank": 23
+  },
+  {
+    "ticker": "MLPT",
+    "companyName": "PT Multipolar Technology Tbk",
+    "sector": "Technology",
+    "industry": "Information Technology Services",
+    "ipoDate": "2013-07-08",
+    "totalDividends": 1273.81,
+    "dividendCount": 17,
+    "latestDividend": {
+      "date": "2026-05-11",
+      "amount": 80.0,
+      "type": "final",
+      "paymentDate": "2026-06-03"
+    },
+    "yearsOfHistory": 13,
+    "avgDividendPerYear": 97.99,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 24
+  },
+  {
+    "ticker": "CPIN",
+    "companyName": "PT Charoen Pokphand Indonesia Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Agricultural Farm Products",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 1232.92,
+    "dividendCount": 20,
+    "latestDividend": {
+      "date": "2026-06-03",
+      "amount": 180.0,
+      "type": "final",
+      "paymentDate": "2026-06-12"
+    },
+    "yearsOfHistory": 19,
+    "avgDividendPerYear": 64.89,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 25
+  },
+  {
+    "ticker": "INCO",
+    "companyName": "PT Vale Indonesia Tbk",
+    "sector": "Basic Materials",
+    "industry": "Industrial Materials",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 1180.11,
+    "dividendCount": 19,
+    "latestDividend": {
+      "date": "2025-05-27",
+      "amount": 53.4,
+      "type": "final",
+      "paymentDate": "2025-06-16"
+    },
+    "yearsOfHistory": 13,
+    "avgDividendPerYear": 90.78,
+    "fiscalYears": [
+      "2024",
+      "2022",
+      "2020",
+      "2013",
+      "2012"
+    ],
+    "rank": 26
+  },
+  {
+    "ticker": "SMSM",
+    "companyName": "PT Selamat Sempurna Tbk",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto - Parts",
+    "ipoDate": "2002-01-07",
+    "totalDividends": 1039.0,
+    "dividendCount": 64,
+    "latestDividend": {
+      "date": "2026-05-11",
+      "amount": 25.0,
+      "type": "interim",
+      "paymentDate": "2026-05-26"
+    },
+    "yearsOfHistory": 22,
+    "avgDividendPerYear": 47.23,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 27
+  },
+  {
+    "ticker": "ANTM",
+    "companyName": "PT Aneka Tambang Tbk",
+    "sector": "Basic Materials",
+    "industry": "Industrial Materials",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 946.15,
+    "dividendCount": 17,
+    "latestDividend": {
+      "date": "2025-06-23",
+      "amount": 151.77,
+      "type": "final",
+      "paymentDate": "2025-07-11"
+    },
+    "yearsOfHistory": 17,
+    "avgDividendPerYear": 55.66,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 28
+  },
+  {
+    "ticker": "ISAT",
+    "companyName": "PT Indosat Ooredoo Hutchison Tbk",
+    "sector": "Communication Services",
+    "industry": "Telecommunications Services",
+    "ipoDate": "2004-03-18",
+    "totalDividends": 943.01,
+    "dividendCount": 18,
+    "latestDividend": {
+      "date": "2026-05-18",
+      "amount": 111.0,
+      "type": "final",
+      "paymentDate": "2026-06-05"
+    },
+    "yearsOfHistory": 18,
+    "avgDividendPerYear": 52.39,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 29
+  },
+  {
+    "ticker": "EXCL",
+    "companyName": "PT XLSMART Telecom Sejahtera Tbk",
+    "sector": "Communication Services",
+    "industry": "Telecommunications Services",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 895.57,
+    "dividendCount": 13,
+    "latestDividend": {
+      "date": "2025-12-02",
+      "amount": 159.0,
+      "type": "interim",
+      "paymentDate": "2025-12-11"
+    },
+    "yearsOfHistory": 13,
+    "avgDividendPerYear": 68.89,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 30
+  },
+  {
+    "ticker": "JPFA",
+    "companyName": "PT Japfa Comfeed Indonesia Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Agricultural Farm Products",
+    "ipoDate": "2001-01-31",
+    "totalDividends": 784.0,
+    "dividendCount": 17,
+    "latestDividend": {
+      "date": "2026-05-11",
+      "amount": 140.0,
+      "type": "final",
+      "paymentDate": "2026-05-19"
+    },
+    "yearsOfHistory": 15,
+    "avgDividendPerYear": 52.27,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 31
+  },
+  {
+    "ticker": "PJAA",
+    "companyName": "PT Pembangunan Jaya Ancol Tbk",
+    "sector": "Consumer Cyclical",
+    "industry": "Leisure",
+    "ipoDate": "2004-07-02",
+    "totalDividends": 770.12,
+    "dividendCount": 19,
+    "latestDividend": {
+      "date": "2026-04-23",
+      "amount": 26.0,
+      "type": "final",
+      "paymentDate": "2026-05-13"
+    },
+    "yearsOfHistory": 19,
+    "avgDividendPerYear": 40.53,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2018"
+    ],
+    "rank": 32
+  },
+  {
+    "ticker": "RALS",
+    "companyName": "PT Ramayana Lestari Sentosa Tbk",
+    "sector": "Consumer Cyclical",
+    "industry": "Department Stores",
+    "ipoDate": "2004-10-22",
+    "totalDividends": 754.0,
+    "dividendCount": 21,
+    "latestDividend": {
+      "date": "2026-05-22",
+      "amount": 50.0,
+      "type": "final",
+      "paymentDate": "2026-06-12"
+    },
+    "yearsOfHistory": 21,
+    "avgDividendPerYear": 35.9,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 33
+  },
+  {
+    "ticker": "AKRA",
+    "companyName": "PT AKR Corporindo Tbk",
+    "sector": "Energy",
+    "industry": "Oil & Gas Refining & Marketing",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 750.4,
+    "dividendCount": 40,
+    "latestDividend": {
+      "date": "2026-05-07",
+      "amount": 50.0,
+      "type": "final",
+      "paymentDate": "2026-05-21"
+    },
+    "yearsOfHistory": 21,
+    "avgDividendPerYear": 35.73,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 34
+  },
+  {
+    "ticker": "TINS",
+    "companyName": "PT TIMAH Tbk",
+    "sector": "Basic Materials",
+    "industry": "Industrial Materials",
+    "ipoDate": "2001-03-14",
+    "totalDividends": 727.52,
+    "dividendCount": 23,
+    "latestDividend": {
+      "date": "2025-06-23",
+      "amount": 63.73,
+      "type": "final",
+      "paymentDate": "2025-07-1"
+    },
+    "yearsOfHistory": 22,
+    "avgDividendPerYear": 33.07,
+    "fiscalYears": [
+      "2024",
+      "2022",
+      "2021",
+      "2018",
+      "2017"
+    ],
+    "rank": 35
+  },
+  {
+    "ticker": "BIRD",
+    "companyName": "PT Blue Bird Tbk",
+    "sector": "Industrials",
+    "industry": "Railroads",
+    "ipoDate": "2014-11-05",
+    "totalDividends": 672.83,
+    "dividendCount": 10,
+    "latestDividend": {
+      "date": "2025-07-01",
+      "amount": 120.0,
+      "type": "final",
+      "paymentDate": "2025-07-11"
+    },
+    "yearsOfHistory": 10,
+    "avgDividendPerYear": 67.28,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 36
+  },
+  {
+    "ticker": "INKP",
+    "companyName": "PT Indah Kiat Pulp & Paper Tbk",
+    "sector": "Basic Materials",
+    "industry": "Paper, Lumber & Forest Products",
+    "ipoDate": "2000-12-14",
+    "totalDividends": 605.0,
+    "dividendCount": 12,
+    "latestDividend": {
+      "date": "2025-06-25",
+      "amount": 50.0,
+      "type": "final",
+      "paymentDate": "2025-07-18"
+    },
+    "yearsOfHistory": 12,
+    "avgDividendPerYear": 50.42,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 37
+  },
+  {
+    "ticker": "ROTI",
+    "companyName": "PT Nippon Indosari Corpindo Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Packaged Foods",
+    "ipoDate": "2010-06-28",
+    "totalDividends": 554.73,
+    "dividendCount": 16,
+    "latestDividend": {
+      "date": "2026-04-16",
+      "amount": 80.04,
+      "type": "final",
+      "paymentDate": "2026-04-24"
+    },
+    "yearsOfHistory": 16,
+    "avgDividendPerYear": 34.67,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 38
+  },
+  {
+    "ticker": "TBLA",
+    "companyName": "PT Tunas Baru Lampung Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Packaged Foods",
+    "ipoDate": "2001-10-31",
+    "totalDividends": 541.1,
+    "dividendCount": 33,
+    "latestDividend": {
+      "date": "2025-06-19",
+      "amount": 12.0,
+      "type": "final",
+      "paymentDate": "2025-07-09"
+    },
+    "yearsOfHistory": 22,
+    "avgDividendPerYear": 24.6,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 39
+  },
+  {
+    "ticker": "AADI",
+    "companyName": "PT Adaro Andalan Indonesia",
+    "sector": "Energy",
+    "industry": "Coal",
+    "ipoDate": " other management consulting activities",
+    "totalDividends": 536.38,
+    "dividendCount": 1,
+    "latestDividend": {
+      "date": "2025-11-18",
+      "amount": 536.38,
+      "type": "interim",
+      "paymentDate": "2025-11-27"
+    },
+    "yearsOfHistory": 1,
+    "avgDividendPerYear": 536.38,
+    "fiscalYears": [
+      "2025"
+    ],
+    "rank": 40
+  },
+  {
+    "ticker": "KLBF",
+    "companyName": "PT Kalbe Farma Tbk.",
+    "sector": "Healthcare",
+    "industry": "Drug Manufacturers - General",
+    "ipoDate": "2003-12-15",
+    "totalDividends": 406.3,
+    "dividendCount": 23,
+    "latestDividend": {
+      "date": "2026-06-04",
+      "amount": 20.0,
+      "type": "final",
+      "paymentDate": "2026-06-24"
+    },
+    "yearsOfHistory": 22,
+    "avgDividendPerYear": 18.47,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 41
+  },
+  {
+    "ticker": "ULTJ",
+    "companyName": "PT Ultrajaya Milk Industry & Trading Company Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Packaged Foods",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 403.5,
+    "dividendCount": 14,
+    "latestDividend": {
+      "date": "2026-05-04",
+      "amount": 130.0,
+      "type": "final",
+      "paymentDate": "2026-05-22"
+    },
+    "yearsOfHistory": 14,
+    "avgDividendPerYear": 28.82,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 42
+  },
+  {
+    "ticker": "TBIG",
+    "companyName": "PT Tower Bersama Infrastructure Tbk",
+    "sector": "Communication Services",
+    "industry": "Telecommunications Services",
+    "ipoDate": "2010-10-26",
+    "totalDividends": 381.82,
+    "dividendCount": 16,
+    "latestDividend": {
+      "date": "2025-06-19",
+      "amount": 23.73,
+      "type": "final",
+      "paymentDate": "2025-07-10"
+    },
+    "yearsOfHistory": 13,
+    "avgDividendPerYear": 29.37,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 43
+  },
+  {
+    "ticker": "SRTG",
+    "companyName": "PT Saratoga Investama Sedaya Tbk",
+    "sector": "Financial Services",
+    "industry": "Asset Management",
+    "ipoDate": "2013-06-26",
+    "totalDividends": 380.85,
+    "dividendCount": 12,
+    "latestDividend": {
+      "date": "2026-05-29",
+      "amount": 103.3,
+      "type": "final",
+      "paymentDate": "2026-06-12"
+    },
+    "yearsOfHistory": 11,
+    "avgDividendPerYear": 34.62,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 44
+  },
+  {
+    "ticker": "ARNA",
+    "companyName": "PT Arwana Citramulia Tbk",
+    "sector": "Industrials",
+    "industry": "Construction",
+    "ipoDate": "2005-10-17",
+    "totalDividends": 372.19,
+    "dividendCount": 20,
+    "latestDividend": {
+      "date": "2026-04-17",
+      "amount": 45.0,
+      "type": "final",
+      "paymentDate": "2026-04-28"
+    },
+    "yearsOfHistory": 20,
+    "avgDividendPerYear": 18.61,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 45
+  },
+  {
+    "ticker": "MNCN",
+    "companyName": "PT. Media Nusantara Citra Tbk",
+    "sector": "Communication Services",
+    "industry": "Advertising Agencies",
+    "ipoDate": "2007-06-22",
+    "totalDividends": 372.0,
+    "dividendCount": 15,
+    "latestDividend": {
+      "date": "2023-07-11",
+      "amount": 5.0,
+      "type": "final",
+      "paymentDate": "2023-08-03"
+    },
+    "yearsOfHistory": 14,
+    "avgDividendPerYear": 26.57,
+    "fiscalYears": [
+      "2022",
+      "2020",
+      "2018",
+      "2017",
+      "2016"
+    ],
+    "rank": 46
+  },
+  {
+    "ticker": "NRCA",
+    "companyName": "PT Nusa Raya Cipta Tbk",
+    "sector": "Industrials",
+    "industry": "Engineering & Construction",
+    "ipoDate": "2013-06-27",
+    "totalDividends": 362.42,
+    "dividendCount": 13,
+    "latestDividend": {
+      "date": "2026-06-05",
+      "amount": 40.0,
+      "type": "final",
+      "paymentDate": "2026-06-23"
+    },
+    "yearsOfHistory": 13,
+    "avgDividendPerYear": 27.88,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 47
+  },
+  {
+    "ticker": "HRUM",
+    "companyName": "PT Harum Energy Tbk",
+    "sector": "Energy",
+    "industry": "Coal",
+    "ipoDate": "2010-10-06",
+    "totalDividends": 352.76,
+    "dividendCount": 9,
+    "latestDividend": {
+      "date": "2022-12-14",
+      "amount": 75.1,
+      "type": "interim",
+      "paymentDate": "2023-01-03"
+    },
+    "yearsOfHistory": 9,
+    "avgDividendPerYear": 39.2,
+    "fiscalYears": [
+      "2022",
+      "2021",
+      "2020",
+      "2018",
+      "2017"
+    ],
+    "rank": 48
+  },
+  {
+    "ticker": "SIDO",
+    "companyName": "PT Industri Jamu dan Farmasi Sido Muncul Tbk",
+    "sector": "Healthcare",
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "ipoDate": "2013-12-18",
+    "totalDividends": 329.91,
+    "dividendCount": 21,
+    "latestDividend": {
+      "date": "2026-04-20",
+      "amount": 15.0,
+      "type": "final",
+      "paymentDate": "2026-05-07"
+    },
+    "yearsOfHistory": 13,
+    "avgDividendPerYear": 25.38,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 49
+  },
+  {
+    "ticker": "MIKA",
+    "companyName": "PT Mitra Keluarga Karyasehat Tbk",
+    "sector": "Healthcare",
+    "industry": "Medical - Care Facilities",
+    "ipoDate": "2015-03-24",
+    "totalDividends": 304.0,
+    "dividendCount": 10,
+    "latestDividend": {
+      "date": "2025-06-17",
+      "amount": 43.0,
+      "type": "final",
+      "paymentDate": "2025-07-04"
+    },
+    "yearsOfHistory": 10,
+    "avgDividendPerYear": 30.4,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 50
+  },
+  {
+    "ticker": "ACES",
+    "companyName": "PT Aspirasi Hidup Indonesia Tbk",
+    "sector": "Consumer Cyclical",
+    "industry": "Specialty Retail",
+    "ipoDate": "2007-11-06",
+    "totalDividends": 293.91,
+    "dividendCount": 18,
+    "latestDividend": {
+      "date": "2025-06-26",
+      "amount": 33.87,
+      "type": "final",
+      "paymentDate": "2025-07-17"
+    },
+    "yearsOfHistory": 18,
+    "avgDividendPerYear": 16.33,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 51
+  },
+  {
+    "ticker": "ELSA",
+    "companyName": "PT Elnusa Tbk",
+    "sector": "Energy",
+    "industry": "Oil & Gas Equipment & Services",
+    "ipoDate": "2008-02-06",
+    "totalDividends": 243.9,
+    "dividendCount": 18,
+    "latestDividend": {
+      "date": "2025-06-04",
+      "amount": 39.11,
+      "type": "final",
+      "paymentDate": "2025-06-20"
+    },
+    "yearsOfHistory": 17,
+    "avgDividendPerYear": 14.35,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 52
+  },
+  {
+    "ticker": "MEDC",
+    "companyName": "PT Medco Energi Internasional Tbk",
+    "sector": "Energy",
+    "industry": "Oil & Gas Exploration & Production",
+    "ipoDate": "2000-06-06",
+    "totalDividends": 233.62,
+    "dividendCount": 23,
+    "latestDividend": {
+      "date": "2025-11-11",
+      "amount": 28.45,
+      "type": "interim",
+      "paymentDate": "2025-11-28"
+    },
+    "yearsOfHistory": 20,
+    "avgDividendPerYear": 11.68,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 53
+  },
+  {
+    "ticker": "DMAS",
+    "companyName": "PT Puradelta Lestari Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate - Development",
+    "ipoDate": "2015-05-29",
+    "totalDividends": 226.0,
+    "dividendCount": 16,
+    "latestDividend": {
+      "date": "2025-05-08",
+      "amount": 29.0,
+      "type": "final",
+      "paymentDate": "2025-05-20"
+    },
+    "yearsOfHistory": 11,
+    "avgDividendPerYear": 20.55,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 54
+  },
+  {
+    "ticker": "TOWR",
+    "companyName": "PT Sarana Menara Nusantara Tbk.",
+    "sector": "Communication Services",
+    "industry": "Telecommunications Services",
+    "ipoDate": "2010-03-08",
+    "totalDividends": 214.68,
+    "dividendCount": 19,
+    "latestDividend": {
+      "date": "2026-06-03",
+      "amount": 6.89,
+      "type": "final",
+      "paymentDate": "2026-06-19"
+    },
+    "yearsOfHistory": 10,
+    "avgDividendPerYear": 21.47,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 55
+  },
+  {
+    "ticker": "TOTO",
+    "companyName": "PT Surya Toto Indonesia Tbk",
+    "sector": "Industrials",
+    "industry": "Construction",
+    "ipoDate": "2003-04-08",
+    "totalDividends": 211.36,
+    "dividendCount": 38,
+    "latestDividend": {
+      "date": "2025-11-26",
+      "amount": 10.0,
+      "type": "interim",
+      "paymentDate": "2025-12-16"
+    },
+    "yearsOfHistory": 24,
+    "avgDividendPerYear": 8.81,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 56
+  },
+  {
+    "ticker": "SCMA",
+    "companyName": "PT Surya Citra Media Tbk",
+    "sector": "Communication Services",
+    "industry": "Broadcasting",
+    "ipoDate": "2002-07-16",
+    "totalDividends": 203.65,
+    "dividendCount": 36,
+    "latestDividend": {
+      "date": "2026-06-04",
+      "amount": 12.0,
+      "type": "final",
+      "paymentDate": "2026-06-18"
+    },
+    "yearsOfHistory": 24,
+    "avgDividendPerYear": 8.49,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 57
+  },
+  {
+    "ticker": "EMTK",
+    "companyName": "PT Elang Mahkota Teknologi Tbk",
+    "sector": "Communication Services",
+    "industry": "Broadcasting",
+    "ipoDate": "2010-01-12",
+    "totalDividends": 182.06,
+    "dividendCount": 21,
+    "latestDividend": {
+      "date": "2026-06-04",
+      "amount": 5.0,
+      "type": "final",
+      "paymentDate": "2026-06-19"
+    },
+    "yearsOfHistory": 14,
+    "avgDividendPerYear": 13.0,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 58
+  },
+  {
+    "ticker": "CTRA",
+    "companyName": "PT Ciputra Development Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate - Development",
+    "ipoDate": "2000-11-01",
+    "totalDividends": 176.07,
+    "dividendCount": 17,
+    "latestDividend": {
+      "date": "2025-06-26",
+      "amount": 24.0,
+      "type": "final",
+      "paymentDate": "2025-07-18"
+    },
+    "yearsOfHistory": 15,
+    "avgDividendPerYear": 11.74,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 59
+  },
+  {
+    "ticker": "AMRT",
+    "companyName": "PT Sumber Alfaria Trijaya Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Grocery Stores",
+    "ipoDate": "2009-01-15",
+    "totalDividends": 175.16,
+    "dividendCount": 19,
+    "latestDividend": {
+      "date": "2025-06-04",
+      "amount": 34.11,
+      "type": "final",
+      "paymentDate": "2025-06-18"
+    },
+    "yearsOfHistory": 17,
+    "avgDividendPerYear": 10.3,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 60
+  },
+  {
+    "ticker": "SMRA",
+    "companyName": "PT Summarecon Agung Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate - Development",
+    "ipoDate": "2002-08-13",
+    "totalDividends": 152.71,
+    "dividendCount": 21,
+    "latestDividend": {
+      "date": "2025-06-23",
+      "amount": 9.0,
+      "type": "final",
+      "paymentDate": "2025-07-11"
+    },
+    "yearsOfHistory": 21,
+    "avgDividendPerYear": 7.27,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2018"
+    ],
+    "rank": 61
+  },
+  {
+    "ticker": "TPIA",
+    "companyName": "PT. Chandra Asri Petrochemical Tbk",
+    "sector": "Basic Materials",
+    "industry": "Chemicals - Specialty",
+    "ipoDate": "2002-08-23",
+    "totalDividends": 136.63,
+    "dividendCount": 23,
+    "latestDividend": {
+      "date": "2026-05-26",
+      "amount": 6.07,
+      "type": "final",
+      "paymentDate": "2026-06-17"
+    },
+    "yearsOfHistory": 17,
+    "avgDividendPerYear": 8.04,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 62
+  },
+  {
+    "ticker": "DAAZ",
+    "companyName": "PT DAAZ Tbk",
+    "sector": "Unknown",
+    "industry": "Unknown",
+    "ipoDate": "",
+    "totalDividends": 125.0,
+    "dividendCount": 1,
+    "latestDividend": {
+      "date": "2025-06-12",
+      "amount": 125.0,
+      "type": "final",
+      "paymentDate": "2025-07-03"
+    },
+    "yearsOfHistory": 1,
+    "avgDividendPerYear": 125.0,
+    "fiscalYears": [
+      "2024"
+    ],
+    "rank": 63
+  },
+  {
+    "ticker": "BSDE",
+    "companyName": "PT Bumi Serpong Damai Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate - Development",
+    "ipoDate": "2008-06-06",
+    "totalDividends": 80.28,
+    "dividendCount": 9,
+    "latestDividend": {
+      "date": "2017-06-12",
+      "amount": 5.0,
+      "type": "final",
+      "paymentDate": "2017-07-06"
+    },
+    "yearsOfHistory": 9,
+    "avgDividendPerYear": 8.92,
+    "fiscalYears": [
+      "2016",
+      "2015",
+      "2014",
+      "2013",
+      "2012"
+    ],
+    "rank": 64
+  },
+  {
+    "ticker": "PWON",
+    "companyName": "PT Pakuwon Jati Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate - Diversified",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 68.45,
+    "dividendCount": 12,
+    "latestDividend": {
+      "date": "2025-07-07",
+      "amount": 13.0,
+      "type": "final",
+      "paymentDate": "2025-07-30"
+    },
+    "yearsOfHistory": 12,
+    "avgDividendPerYear": 5.7,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2018"
+    ],
+    "rank": 65
+  },
+  {
+    "ticker": "ESSA",
+    "companyName": "PT ESSA Industries Indonesia Tbk",
+    "sector": "Energy",
+    "industry": "Oil & Gas Refining & Marketing",
+    "ipoDate": "2012-02-01",
+    "totalDividends": 65.0,
+    "dividendCount": 4,
+    "latestDividend": {
+      "date": "2025-04-28",
+      "amount": 10.0,
+      "type": "final",
+      "paymentDate": "2025-05-16"
+    },
+    "yearsOfHistory": 4,
+    "avgDividendPerYear": 16.25,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "rank": 66
+  },
+  {
+    "ticker": "MAPI",
+    "companyName": "PT. Mitra Adiperkasa Tbk",
+    "sector": "Consumer Cyclical",
+    "industry": "Department Stores",
+    "ipoDate": "2004-11-10",
+    "totalDividends": 60.92,
+    "dividendCount": 15,
+    "latestDividend": {
+      "date": "2025-07-09",
+      "amount": 10.0,
+      "type": "final",
+      "paymentDate": "2025-08-01"
+    },
+    "yearsOfHistory": 15,
+    "avgDividendPerYear": 4.06,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2018",
+      "2017"
+    ],
+    "rank": 67
+  },
+  {
+    "ticker": "LPKR",
+    "companyName": "PT Lippo Karawaci Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate - Services",
+    "ipoDate": "2005-09-29",
+    "totalDividends": 56.45,
+    "dividendCount": 11,
+    "latestDividend": {
+      "date": "2018-06-22",
+      "amount": 2.14263,
+      "type": "final",
+      "paymentDate": "2018-07-06"
+    },
+    "yearsOfHistory": 11,
+    "avgDividendPerYear": 5.13,
+    "fiscalYears": [
+      "2017",
+      "2016",
+      "2015",
+      "2014",
+      "2013"
+    ],
+    "rank": 68
+  },
+  {
+    "ticker": "INTA",
+    "companyName": "PT Intraco Penta Tbk",
+    "sector": "Industrials",
+    "industry": "Industrial - Distribution",
+    "ipoDate": "2000-11-07",
+    "totalDividends": 45.09,
+    "dividendCount": 8,
+    "latestDividend": {
+      "date": "2012-07-13",
+      "amount": 18.95192,
+      "type": "final",
+      "paymentDate": ""
+    },
+    "yearsOfHistory": 8,
+    "avgDividendPerYear": 5.64,
+    "fiscalYears": [
+      "2011",
+      "2010",
+      "2009",
+      "2008",
+      "2005"
+    ],
+    "rank": 69
+  },
+  {
+    "ticker": "AGII",
+    "companyName": "PT Samator Indo Gas Tbk",
+    "sector": "Basic Materials",
+    "industry": "Chemicals",
+    "ipoDate": "2016-09-28",
+    "totalDividends": 40.68,
+    "dividendCount": 6,
+    "latestDividend": {
+      "date": "2025-06-24",
+      "amount": 8.56,
+      "type": "final",
+      "paymentDate": "2025-07-17"
+    },
+    "yearsOfHistory": 6,
+    "avgDividendPerYear": 6.78,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 70
+  },
+  {
+    "ticker": "DILD",
+    "companyName": "PT Intiland Development Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate - Development",
+    "ipoDate": "2002-03-25",
+    "totalDividends": 38.0,
+    "dividendCount": 7,
+    "latestDividend": {
+      "date": "2019-05-24",
+      "amount": 2.0,
+      "type": "final",
+      "paymentDate": "2019-06-14"
+    },
+    "yearsOfHistory": 7,
+    "avgDividendPerYear": 5.43,
+    "fiscalYears": [
+      "2018",
+      "2016",
+      "2015",
+      "2014",
+      "2013"
+    ],
+    "rank": 71
+  },
+  {
+    "ticker": "FILM",
+    "companyName": "PT.MD Entertainment Tbk",
+    "sector": "Communication Services",
+    "industry": "Entertainment",
+    "ipoDate": "2018-08-07",
+    "totalDividends": 36.0,
+    "dividendCount": 2,
+    "latestDividend": {
+      "date": "2024-07-09",
+      "amount": 25.0,
+      "type": "final",
+      "paymentDate": "2024-08-01"
+    },
+    "yearsOfHistory": 2,
+    "avgDividendPerYear": 18.0,
+    "fiscalYears": [
+      "2023",
+      "2020"
+    ],
+    "rank": 72
+  },
+  {
+    "ticker": "CLEO",
+    "companyName": "PT Sariguna Primatirta Tbk",
+    "sector": "Consumer Defensive",
+    "industry": "Beverages - Non-Alcoholic",
+    "ipoDate": "2017-05-05",
+    "totalDividends": 17.7,
+    "dividendCount": 6,
+    "latestDividend": {
+      "date": "2025-06-10",
+      "amount": 5.0,
+      "type": "final",
+      "paymentDate": "2025-06-26"
+    },
+    "yearsOfHistory": 5,
+    "avgDividendPerYear": 3.54,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ],
+    "rank": 73
+  },
+  {
+    "ticker": "BRPT",
+    "companyName": "PT Barito Pacific Tbk",
+    "sector": "Basic Materials",
+    "industry": "Chemicals",
+    "ipoDate": "2002-06-26",
+    "totalDividends": 15.96,
+    "dividendCount": 6,
+    "latestDividend": {
+      "date": "2024-06-27",
+      "amount": 0.873,
+      "type": "final",
+      "paymentDate": "2024-07-19"
+    },
+    "yearsOfHistory": 6,
+    "avgDividendPerYear": 2.66,
+    "fiscalYears": [
+      "2023",
+      "2022",
+      "2021",
+      "2020",
+      "2018"
+    ],
+    "rank": 74
+  },
+  {
+    "ticker": "BREN",
+    "companyName": "PT Barito Renewables Energy Tbk",
+    "sector": "Utilities",
+    "industry": "Renewable Utilities",
+    "ipoDate": "2023-10-09",
+    "totalDividends": 9.73,
+    "dividendCount": 3,
+    "latestDividend": {
+      "date": "2024-12-12",
+      "amount": 3.78334,
+      "type": "interim",
+      "paymentDate": "2024-12-20"
+    },
+    "yearsOfHistory": 3,
+    "avgDividendPerYear": 3.24,
+    "fiscalYears": [
+      "2024",
+      "2023",
+      "2022"
+    ],
+    "rank": 75
+  },
+  {
+    "ticker": "KIJA",
+    "companyName": "PT Kawasan Industri Jababeka Tbk",
+    "sector": "Industrials",
+    "industry": "Conglomerates",
+    "ipoDate": "2001-09-25",
+    "totalDividends": 6.42,
+    "dividendCount": 6,
+    "latestDividend": {
+      "date": "2025-07-07",
+      "amount": 1.77,
+      "type": "final",
+      "paymentDate": "2025-07-29"
+    },
+    "yearsOfHistory": 6,
+    "avgDividendPerYear": 1.07,
+    "fiscalYears": [
+      "2024",
+      "2016",
+      "2014",
+      "2013",
+      "2012"
+    ],
+    "rank": 76
+  },
+  {
+    "ticker": "PPRO",
+    "companyName": "PT Pembangunan Perumahan Properti Tbk",
+    "sector": "Real Estate",
+    "industry": "Real Estate - Development",
+    "ipoDate": "2015-05-19",
+    "totalDividends": 5.9,
+    "dividendCount": 5,
+    "latestDividend": {
+      "date": "2020-06-12",
+      "amount": 0.56,
+      "type": "final",
+      "paymentDate": "2020-07-03"
+    },
+    "yearsOfHistory": 5,
+    "avgDividendPerYear": 1.18,
+    "fiscalYears": [
+      "2019",
+      "2018",
+      "2017",
+      "2016",
+      "2015"
+    ],
+    "rank": 77
+  },
+  {
+    "ticker": "CUAN",
+    "companyName": "PT Petrindo Jaya Kreasi Tbk",
+    "sector": "Basic Materials",
+    "industry": "Industrial Materials",
+    "ipoDate": "2023-03-08",
+    "totalDividends": 2.93,
+    "dividendCount": 1,
+    "latestDividend": {
+      "date": "2025-04-30",
+      "amount": 2.93,
+      "type": "final",
+      "paymentDate": "2025-05-22"
+    },
+    "yearsOfHistory": 1,
+    "avgDividendPerYear": 2.93,
+    "fiscalYears": [
+      "2024"
+    ],
+    "rank": 78
+  },
+  {
+    "ticker": "BBYB",
+    "companyName": "PT Bank Neo Commerce Tbk",
+    "sector": "Financial Services",
+    "industry": "Banks - Regional",
+    "ipoDate": "2015-01-13",
+    "totalDividends": 2.68,
+    "dividendCount": 4,
+    "latestDividend": {
+      "date": "2021-04-12",
+      "amount": 0.20778,
+      "type": "final",
+      "paymentDate": "2021-05-05"
+    },
+    "yearsOfHistory": 4,
+    "avgDividendPerYear": 0.67,
+    "fiscalYears": [
+      "2020",
+      "2019",
+      "2017",
+      "2015"
+    ],
+    "rank": 79
+  }
+]
