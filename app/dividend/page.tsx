@@ -169,7 +169,11 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
       const q = search.toLowerCase();
       result = result.filter((s) => s.ticker.toLowerCase().includes(q) || s.companyName.toLowerCase().includes(q));
     }
-    return sortStocks(result, sortBy, sortDir);
+    result = sortStocks(result, sortBy, sortDir);
+    // Always push zero-yield stocks to bottom
+    const zeroYield = result.filter((s) => (s.dividendYield ?? s.finalYield ?? 0) === 0);
+    const hasYield = result.filter((s) => (s.dividendYield ?? s.finalYield ?? 0) > 0);
+    return [...hasYield, ...zeroYield];
   }, [stocks, sectorFilter, search, sortBy, sortDir]);
 
   const handleSort = (col: keyof DividendStock) => {
