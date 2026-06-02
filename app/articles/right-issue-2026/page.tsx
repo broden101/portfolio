@@ -33,7 +33,7 @@ const rightsIssueData = [
   {
     ticker: "CBRE",
     status: "Ditunda",
-    effective: "Menunggu OJK",
+    effective: "Menunggu Emiten",
     dana: "Rp1,91 T",
     rasio: "90:253",
     harga: "Rp100–150",
@@ -43,7 +43,7 @@ const rightsIssueData = [
   {
     ticker: "IRSX",
     status: "Ditunda",
-    effective: "Menunggu OJK",
+    effective: "Menunggu Emiten",
     dana: "Rp3,7 T",
     rasio: "1:2",
     harga: "Rp300",
@@ -53,7 +53,7 @@ const rightsIssueData = [
   {
     ticker: "ELPI",
     status: "Ditunda",
-    effective: "Menunggu OJK",
+    effective: "Menunggu Emiten",
     dana: "Rp739 M",
     rasio: "200:57",
     harga: "Rp350",
@@ -63,7 +63,7 @@ const rightsIssueData = [
   {
     ticker: "PADI",
     status: "Ditunda",
-    effective: "Menunggu OJK",
+    effective: "Menunggu Emiten",
     dana: "Rp113 M",
     rasio: "5:1",
     harga: "Rp50",
@@ -163,7 +163,7 @@ export default function ArticlePage() {
 
           <p className="text-[#B8AA96] text-lg leading-relaxed font-light">
             Mulai dari Rp5,94T (MPPA) hingga Rp113M (PADI) — ada yang sudah
-            mendapat tanggal efektif, ada yang masih menunggu OJK. Berikut
+            mendapat tanggal efektif, ada yang masih menunggu emiten. Berikut
             daftar lengkap right issue yang perlu Anda pantau di semester 2
             2026.
           </p>
