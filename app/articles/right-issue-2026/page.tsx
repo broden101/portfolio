@@ -255,7 +255,7 @@ export default function ArticlePage() {
           {/* Pending OJK */}
           <div>
             <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4 mb-6">
-              ⏳ Masih Menunggu OJK
+              ⏳ Masih Menunggu Emiten
             </h2>
 
             <div className="space-y-4">
