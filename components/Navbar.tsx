@@ -11,7 +11,7 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { label: "Profile", href: "/#about" },
   { label: "Research", href: "/articles" },
-  { label: "Market Playbook", href: "/screener" },
+  { label: "Market Playbook", href: "/playbook" },
   { label: "Valuation Lab", href: "/calculator" },
   {
     label: "Tools",
@@ -50,17 +50,19 @@ function DropdownLink({ link }: { link: NavLink }) {
         </svg>
       </button>
       {open && (
-        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 bg-[#0B0B0A] border border-[#2C261E] shadow-xl shadow-black/50 py-2">
-          {link.children?.map((child) => (
-            <a
-              key={child.href}
-              href={child.href}
-              onClick={() => setOpen(false)}
-              className="block px-4 py-2.5 text-[#B8AA96] text-[11px] tracking-[0.15em] uppercase font-medium hover:text-[#C6A15B] hover:bg-[#C6A15B]/5 transition-colors"
-            >
-              {child.label}
-            </a>
-          ))}
+        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-52">
+          <div className="bg-[#0B0B0A] border border-[#2C261E] shadow-xl shadow-black/50 py-2">
+            {link.children?.map((child) => (
+              <a
+                key={child.href}
+                href={child.href}
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2.5 text-[#B8AA96] text-[11px] tracking-[0.15em] uppercase font-medium hover:text-[#C6A15B] hover:bg-[#C6A15B]/5 transition-colors"
+              >
+                {child.label}
+              </a>
+            ))}
+          </div>
         </div>
       )}
     </div>

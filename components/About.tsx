@@ -12,13 +12,12 @@ export default function About() {
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <div className="relative">
-            <div className="aspect-[3/4] bg-[#141210] border border-[#2C261E] flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-24 h-24 mx-auto mb-4 rounded-full border border-[#2C261E] flex items-center justify-center">
-                  <span className="text-[#C6A15B]/30 text-3xl font-heading font-bold">RP</span>
-                </div>
-                <span className="text-[#B8AA96]/40 text-xs tracking-widest uppercase">Profile Photo</span>
-              </div>
+            <div className="aspect-[3/4] bg-[#141210] border border-[#2C261E] overflow-hidden">
+              <img
+                src="/profile.jpg"
+                alt="Polikarpus Raga"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="absolute -bottom-3 -right-3 w-full h-full border border-[#2C261E]/50 -z-10" />
           </div>

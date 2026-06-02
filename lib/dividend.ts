@@ -28,6 +28,9 @@ export interface DividendStock {
   latestFinalDPS?: number;
   latestFinalDate?: string;
   finalYield?: number | null;
+  latestFYDPS?: number;
+  latestFYDate?: string;
+  dividendYield?: number | null;
 }
 
 export interface DividendEvent {

@@ -14,6 +14,13 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "ihsg-q1-2026",
+    date: "Maret 2026",
+    tag: "IHSG / Makro",
+    title: "IHSG Q1 2026: Fear Driven Selling, APBN Tertekan, dan Rupiah di Persimpangan",
+    excerpt: "IHSG terperosok -19,68% dari ATH. Outflow Rp 6,71T dalam dua gelombang. Kombinasi isu MSCI, rating kredit, geopolitik Iran, kondisi APBN, dan pelemahan rupiah menciptakan zona bearish.",
+  },
+  {
     slug: "right-issue-2026",
     date: "Mei 2026",
     tag: "Corporate Action / Right Issue",

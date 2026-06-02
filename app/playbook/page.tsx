@@ -5,10 +5,10 @@ import Footer from "@/components/Footer";
 
 const tools = [
   {
-    title: "PBV-ROE Banking Valuation",
-    desc: "Fair value framework for Indonesian banks — BMRI, BBRI, BBCA — using PBV vs ROE regression and premium/discount analysis.",
-    tags: ["BMRI", "BBRI", "BBCA", "PBV", "ROE"],
-    href: "/calculator/pbv-roe",
+    title: "IHSG Macro Dashboard",
+    desc: "Macro indicators, foreign flow, sector rotation, and market regime assessment for IHSG.",
+    tags: ["IHSG", "Macro", "Foreign Flow", "Sector Rotation"],
+    href: "/playbook/ihsg",
     ready: true,
     icon: (
       <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -18,24 +18,9 @@ const tools = [
     ),
   },
   {
-    title: "Peer Valuation Comparator",
-    desc: "Side-by-side valuation of companies within the same sector — multiples, margins, growth, and efficiency metrics.",
-    tags: ["PER", "PBV", "EV/EBITDA", "Peer Group"],
-    href: "#",
-    ready: false,
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <rect x="3" y="3" width="7" height="7" />
-        <rect x="14" y="3" width="7" height="7" />
-        <rect x="3" y="14" width="7" height="7" />
-        <rect x="14" y="14" width="7" height="7" />
-      </svg>
-    ),
-  },
-  {
-    title: "Simple DCF Model",
-    desc: "Discounted Cash Flow with editable assumptions — revenue growth, margin, WACC, terminal growth — for intrinsic value estimation.",
-    tags: ["FCFF", "WACC", "Terminal Value", "Growth"],
+    title: "Sector Rotation Framework",
+    desc: "Track which sectors are leading, lagging, and rotating based on economic cycle phases.",
+    tags: ["Sectors", "Rotation", "Cycle", "Momentum"],
     href: "#",
     ready: false,
     icon: (
@@ -46,46 +31,37 @@ const tools = [
     ),
   },
   {
-    title: "Sensitivity Analysis",
-    desc: "Two-variable sensitivity table — see how changes in key assumptions affect valuation output.",
-    tags: ["WACC", "Growth Rate", "Scenario", "Matrix"],
+    title: "Commodity Watch",
+    desc: "Monitor CPO, coal, nickel, gold, and oil prices — key drivers for IDX-listed commodity stocks.",
+    tags: ["CPO", "Coal", "Nickel", "Gold", "Oil"],
     href: "#",
     ready: false,
     icon: (
       <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" />
+        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
       </svg>
     ),
   },
   {
-    title: "Valuation Case Studies",
-    desc: "Walkthrough of real valuation analyses on IDX-listed companies — methodology, assumptions, and conclusion.",
-    tags: ["Case Study", "IDX", "Research", "Analysis"],
+    title: "Weekly Market Outlook",
+    desc: "Weekly recap and forward-looking analysis — key events, data releases, and market sentiment.",
+    tags: ["Weekly", "Outlook", "Events", "Sentiment"],
     href: "#",
     ready: false,
     icon: (
       <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Rights Issue Calculator",
-    desc: "Hitung harga teoritis, HMETD value, dan skenario partisipasi rights issue.",
-    tags: ["Rights Issue", "HMETD", "Theo Price", "P&L"],
-    href: "/calculator/rights-issue",
-    ready: true,
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <rect x="2" y="5" width="20" height="14" rx="2" />
-        <path d="M2 10h20" />
+        <rect x="3" y="4" width="18" height="18" rx="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
       </svg>
     ),
   },
 ];
 
-export default function ValuationLabPage() {
+export default function PlaybookHubPage() {
   return (
     <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
       <Navbar />
@@ -94,18 +70,18 @@ export default function ValuationLabPage() {
         <div className="mb-14">
           <div className="flex items-center gap-4 mb-3">
             <div className="w-10 h-px bg-[#C6A15B]/30" />
-            <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Valuation Lab</span>
+            <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Market Playbook</span>
           </div>
           <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light mb-3">
-            Valuation <span className="text-gold-gradient font-medium">Frameworks</span>
+            Market <span className="text-gold-gradient font-medium">Playbook</span>
           </h1>
           <p className="text-[#B8AA96]/60 text-sm font-light max-w-xl">
-            Interactive valuation tools for Indonesian capital markets. Analyze, compare, and estimate fair value.
+            Macro dashboard, sector rotation, commodity watch, and weekly outlook — reading the Indonesian market.
           </p>
         </div>
 
         {/* Tool Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {tools.map((tool) => (
             <a
               key={tool.title}
