@@ -14,6 +14,13 @@ interface Article {
 
 const articles: Article[] = [
   {
+    slug: "robot-actuator-supply-chain",
+    date: "Juni 2026",
+    tag: "Robotics / Supply Chain",
+    title: "Who Builds the Actuator? Inside the Global Supply Chain of Every Robot Joint",
+    excerpt: "A single robot joint depends on specialized components from at least five countries. No single nation can produce a complete actuator alone. The picks-and-shovels play for the humanoid robot revolution.",
+  },
+  {
     slug: "ihsg-q1-2026",
     date: "Maret 2026",
     tag: "IHSG / Makro",
