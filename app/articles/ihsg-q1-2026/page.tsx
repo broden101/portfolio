@@ -15,19 +15,19 @@ export default function ArticlePage() {
         {/* Header */}
         <header className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-[#C6A15B] text-xs tracking-wider">Maret 2026</span>
+            <span className="text-[#C6A15B] text-xs tracking-wider">March 2026</span>
             <span className="w-1 h-1 rounded-full bg-[#2C261E]" />
-            <span className="text-[#B8AA96]/50 text-xs tracking-wider uppercase">IHSG / Makro</span>
+            <span className="text-[#B8AA96]/50 text-xs tracking-wider uppercase">IHSG / Macro</span>
           </div>
 
           <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] leading-tight font-light mb-6">
-            IHSG Q1 2026: Fear Driven Selling, APBN Tertekan, dan Rupiah di Persimpangan
+            IHSG Q1 2026: Fear Driven Selling, Fiscal Pressure, and Rupiah at a Crossroads
           </h1>
 
           <p className="text-[#B8AA96] text-lg leading-relaxed font-light">
-            IHSG terperosok ke zona bearish dengan koreksi nyaris 20% dari all-time high. Kombinasi isu MSCI,
-            tekanan rating kredit, dan eskalasi geopolitik menciptakan fase jual panik. Bagaimana kondisi APBN,
-            politik dalam negeri, dan nilai tukar rupiah merespons tekanan ini?
+            IHSG plunged into bearish territory with a nearly 20% correction from its all-time high. The combination of MSCI issues,
+            credit rating pressure, and geopolitical escalation created a panic selling phase. How did the state budget,
+            domestic politics, and the rupiah exchange rate respond to this pressure?
           </p>
         </header>
 
@@ -36,308 +36,308 @@ export default function ArticlePage() {
         {/* Content */}
         <div className="space-y-8 text-[#B8AA96] text-base leading-relaxed font-light">
 
-          {/* ─── BAGIAN 1: DATA ─── */}
-          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">IHSG dalam Angka</h2>
+          {/* ─── SECTION 1: DATA ─── */}
+          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">IHSG in Numbers</h2>
 
           <p>
-            Memasuki kuartal pertama 2026, IHSG mengalami tekanan jual yang signifikan. Dalam dua gelombang koreksi besar, indeks kehilangan hampir seperlima nilainya dari level tertinggi sepanjang masa (ATH).
+            Entering the first quarter of 2026, IHSG experienced significant selling pressure. In two major correction waves, the index lost nearly one-fifth of its value from its all-time high (ATH).
           </p>
 
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b-2 border-[#C6A15B]/20 text-left text-xs tracking-[0.15em] uppercase text-[#B8AA96]/60">
-                  <th className="pb-3 pr-4 font-medium">Periode</th>
-                  <th className="pb-3 pr-4 font-medium">Net Sell Asing</th>
-                  <th className="pb-3 pr-4 font-medium">Level IHSG</th>
-                  <th className="pb-3 font-medium">Koreksi (vs ATH)</th>
+                  <th className="pb-3 pr-4 font-medium">Period</th>
+                  <th className="pb-3 pr-4 font-medium">Foreign Net Sell</th>
+                  <th className="pb-3 pr-4 font-medium">IHSG Level</th>
+                  <th className="pb-3 font-medium">Correction (vs ATH)</th>
                 </tr>
               </thead>
               <tbody className="text-[#F4EFE6]">
                 <tr className="border-b border-[#2C261E]/50">
-                  <td className="py-4 pr-4 font-semibold">Akhir Januari 2026</td>
-                  <td className="py-4 pr-4 text-red-400">Rp 5,11 triliun</td>
+                  <td className="py-4 pr-4 font-semibold">End of January 2026</td>
+                  <td className="py-4 pr-4 text-red-400">Rp 5.11 trillion</td>
                   <td className="py-4 pr-4">7.481</td>
-                  <td className="py-4 text-red-400">-18,10%</td>
+                  <td className="py-4 text-red-400">-18.10%</td>
                 </tr>
                 <tr className="border-b border-[#2C261E]/50">
-                  <td className="py-4 pr-4 font-semibold">Akhir Februari — Awal Maret 2026</td>
-                  <td className="py-4 pr-4 text-red-400">Rp 1,6 triliun</td>
+                  <td className="py-4 pr-4 font-semibold">End of February — Early March 2026</td>
+                  <td className="py-4 pr-4 text-red-400">Rp 1.6 trillion</td>
                   <td className="py-4 pr-4">7.337</td>
-                  <td className="py-4 text-red-400">-19,68%</td>
+                  <td className="py-4 text-red-400">-19.68%</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <div className="card-luxury p-6 bg-[#0B0B0A] border border-red-400/20">
-            <p className="text-[#F4EFE6] font-medium">Total outflow asing dalam dua gelombang: Rp 6,71 triliun</p>
-            <p className="text-[#B8AA96]/60 text-sm mt-2">Koreksi -19,68% dari ATH menempatkan IHSG di ambang zona bear market (definisi umum: -20%).</p>
+            <p className="text-[#F4EFE6] font-medium">Total foreign outflow across two waves: Rp 6.71 trillion</p>
+            <p className="text-[#B8AA96]/60 text-sm mt-2">A -19.68% correction from ATH places IHSG on the edge of bear market territory (common definition: -20%).</p>
           </div>
 
-          {/* ─── BAGIAN 2: DRIVER ─── */}
-          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Tiga Tekanan Utama</h2>
+          {/* ─── SECTION 2: DRIVERS ─── */}
+          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Three Key Pressures</h2>
 
           <p>
-            Infografis terkini mengidentifikasi tiga isu utama yang memicu <em>fear driven selling</em> di pasar saham Indonesia. Ketiganya saling memperkuat dan berdampak sistemik terhadap persepsi risiko investor.
+            Recent infographics identify three major issues triggering <em>fear driven selling</em> in the Indonesian stock market. All three reinforce each other and have a systemic impact on investor risk perception.
           </p>
 
           <div className="space-y-6">
             <div className="card-luxury p-6 border-l-4 border-l-blue-500">
-              <h3 className="font-heading text-lg text-[#F4EFE6] font-medium mb-2">1. Isu MSCI — Risiko Downgrade ke Frontier Market</h3>
+              <h3 className="font-heading text-lg text-[#F4EFE6] font-medium mb-2">1. MSCI Issue — Downgrade Risk to Frontier Market</h3>
               <p>
-                Kekhawatiran terhadap <strong className="text-[#F4EFE6]">investability </strong>pasar modal Indonesia meningkat. Freeze perubahan indeks dan potensi penurunan status dari <em>emerging market</em> ke <em>frontier market</em> menjadi perhatian utama investor global. Jika ini terjadi, Indonesia akan keluar dari indeks MSCI Emerging Markets — yang berarti <strong className="text-[#F4EFE6]">arus dana keluar jangka panjang</strong> dari fund manager global yang melacak indeks tersebut.
+                Concerns over the <strong className="text-[#F4EFE6]">investability </strong>of Indonesia's capital market have intensified. An index change freeze and the potential downgrade from <em>emerging market</em> to <em>frontier market</em> status are key concerns for global investors. If this occurs, Indonesia would exit the MSCI Emerging Markets index — meaning <strong className="text-[#F4EFE6]">long-term capital outflows</strong> from global fund managers tracking that index.
               </p>
               <p className="mt-3 text-sm text-[#B8AA96]/60">
-                Risiko ini langsung mempengaruhi <strong className="text-[#C6A15B]">risk premium</strong> pasar Indonesia. Semakin tinggi probabilitas downgrade, semakin besar diskon yang diminta investor untuk memegang aset Indonesia.
+                This risk directly affects the <strong className="text-[#C6A15B]">risk premium</strong> of the Indonesian market. The higher the probability of a downgrade, the greater the discount investors demand for holding Indonesian assets.
               </p>
             </div>
 
             <div className="card-luxury p-6 border-l-4 border-l-red-500">
-              <h3 className="font-heading text-lg text-[#F4EFE6] font-medium mb-2">2. Outlook Kredit — Moody's & Fitch</h3>
+              <h3 className="font-heading text-lg text-[#F4EFE6] font-medium mb-2">2. Credit Outlook — Moody's & Fitch</h3>
               <p>
-                Lembaga pemeringkat internasional <strong className="text-[#F4EFE6]">Moody's </strong>dan <strong className="text-[#F4EFE6]">Fitch </strong>menambah kekhawatiran investor terhadap kredibilitas kebijakan dan kondisi fiskal Indonesia. Meski peringkat Indonesia saat ini masih di <em>investment grade</em> (Baa2/BBB), prospek (<em>outlook</em>) yang negatif dapat memicu penurunan peringkat jika tidak ada perbaikan fundamental.
+                International rating agencies <strong className="text-[#F4EFE6]">Moody's </strong>and <strong className="text-[#F4EFE6]">Fitch </strong>have added to investor concerns over policy credibility and Indonesia's fiscal conditions. Although Indonesia's current rating remains <em>investment grade</em> (Baa2/BBB), a negative <em>outlook</em> could trigger a downgrade if fundamental improvements are not achieved.
               </p>
               <p className="mt-3 text-sm text-[#B8AA96]/60">
-                Rating outlook yang negatif berarti biaya utang (<em>yield</em>) pemerintah naik, yang pada gilirannya menekan APBN dan mengurangi ruang fiskal.
+                A negative rating outlook means government debt costs (<em>yields</em>) rise, which in turn pressures the state budget and reduces fiscal space.
               </p>
             </div>
 
             <div className="card-luxury p-6 border-l-4 border-l-yellow-500">
-              <h3 className="font-heading text-lg text-[#F4EFE6] font-medium mb-2">3. Eskalasi Konflik Iran — Minyak & Selat Hormuz</h3>
+              <h3 className="font-heading text-lg text-[#F4EFE6] font-medium mb-2">3. Iran Conflict Escalation — Oil & Strait of Hormuz</h3>
               <p>
-                Ketegangan geopolitik di Timur Tengah meningkat. Konflik Iran yang melibatkan Selat Hormuz — jalur transit <strong className="text-[#F4EFE6]">20-25% pasokan minyak dunia</strong> — mendorong kenaikan harga minyak global. Harga Brent yang sempat stabil di bawah $70 kembali merangkak naik ke level $82-85.
+                Geopolitical tensions in the Middle East have escalated. The Iran conflict involving the Strait of Hormuz — a transit route for <strong className="text-[#F4EFE6]">20-25% of global oil supply</strong> — has driven global oil prices higher. Brent crude, which had stabilized below $70, has climbed back to the $82-85 range.
               </p>
               <p className="mt-3 text-sm text-[#B8AA96]/60">
-                Bagi Indonesia, kenaikan harga minyak berarti: (1) <strong className="text-red-400">subsidi energi membengkak</strong>, (2) <strong className="text-red-400">defisit APBN melebar</strong>, (3) <strong className="text-red-400">tekanan inflasi impor</strong>, dan (4) <strong className="text-red-400">current account deficit</strong> meningkat.
+                For Indonesia, rising oil prices mean: (1) <strong className="text-red-400">ballooning energy subsidies</strong>, (2) <strong className="text-red-400">widening fiscal deficit</strong>, (3) <strong className="text-red-400">import inflation pressure</strong>, and (4) <strong className="text-red-400">rising current account deficit</strong>.
               </p>
             </div>
           </div>
 
-          {/* ─── BAGIAN 3: APBN & FISKAL ─── */}
-          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Dampak ke APBN dan Kebijakan Fiskal</h2>
+          {/* ─── SECTION 3: FISCAL & BUDGET ─── */}
+          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Impact on the State Budget and Fiscal Policy</h2>
 
           <p>
-            Tiga tekanan di atas berdampak langsung pada <strong className="text-[#F4EFE6]">APBN 2026</strong>. Pemerintah menganggarkan defisit sekitar <strong className="text-[#C6A15B]">2,5-2,8% dari PDB</strong> dalam asumsi makro awal tahun. Namun, kondisi aktual menunjukkan tekanan fiskal yang lebih besar dari perkiraan.
+            The three pressures above directly impact the <strong className="text-[#F4EFE6]">2026 State Budget</strong>. The government budgeted a deficit of approximately <strong className="text-[#C6A15B]">2.5-2.8% of GDP</strong> in its initial macro assumptions. However, actual conditions indicate greater fiscal pressure than anticipated.
           </p>
 
           <div className="card-luxury p-6 space-y-4">
-            <h3 className="font-heading text-lg text-[#F4EFE6] font-medium">Saluran Tekanan Fiskal</h3>
+            <h3 className="font-heading text-lg text-[#F4EFE6] font-medium">Channels of Fiscal Pressure</h3>
 
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Subsidi energi membengkak</strong> — Setiap kenaikan ICP (Indonesia Crude Price) sebesar $5/barel menambah beban subsidi rata-rata Rp 15-20 triliun per tahun. Jika harga minyak bertahan di atas $80, realisasi subsidi bisa melampaui pagu anggaran.
+                <strong className="text-[#F4EFE6]">Ballooning energy subsidies</strong> — Every $5/barrel increase in ICP (Indonesia Crude Price) adds an average subsidy burden of Rp 15-20 trillion per year. If oil prices remain above $80, subsidy realization could exceed the budget ceiling.
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Penerimaan pajak melambat</strong> — Ekonomi yang melambat tekanan kenaikan minyak dan pelemahan rupiah menekan sektor korporasi, yang berimbas pada setoran PPh dan PPN di bawah target.
+                <strong className="text-[#F4EFE6]">Slowing tax revenue</strong> — A decelerating economy, combined with rising oil prices and a weakening rupiah, pressures the corporate sector, resulting in income tax and VAT collections falling below target.
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Biaya utang naik</strong> — Imbal hasil SUN tenor 10 tahun yang naik 50-100 bps sepanjang Q1 2026 membuat <em>yield</em> yang harus dibayar pemerintah untuk penerbitan utang baru semakin mahal.
+                <strong className="text-[#F4EFE6]">Rising debt costs</strong> — The 10-year government bond yield rising 50-100 bps throughout Q1 2026 makes the <em>yields</em> the government must pay for new debt issuance increasingly expensive.
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Ruang fiskal menyempit</strong> — Pemerintah menghadapi <em>trilemma</em>: (a) menjaga subsidi agar daya beli tidak anjlok, (b) mengendalikan defisit agar tidak melampaui 3% PDB, dan (c) tetap membiayai program prioritas (IKN, Makan Bergizi Gratis, infrastruktur).
+                <strong className="text-[#F4EFE6]">Narrowing fiscal space</strong> — The government faces a <em>trilemma</em>: (a) maintaining subsidies to prevent a collapse in purchasing power, (b) controlling the deficit to stay within 3% of GDP, and (c) continuing to fund priority programs (Nusantara Capital, Free Nutritious Meals, infrastructure).
               </div>
             </div>
           </div>
 
           <p>
-            Opsi kebijakan yang tersedia terbatas: <strong className="text-[#C6A15B]">realokasi belanja</strong>, <strong className="text-[#C6A15B]">penerbitan SBN </strong>di tengah imbal hasil yang tinggi, atau <strong className="text-[#C6A15B]">kombinasi keduanya</strong> — yang semuanya berpotensi menambah tekanan pada likuiditas perbankan dan suku bunga.
+            Available policy options are limited: <strong className="text-[#C6A15B]">spending reallocation</strong>, <strong className="text-[#C6A15B]">government bond issuance </strong>amid high yields, or a <strong className="text-[#C6A15B]">combination of both</strong> — all of which risk adding pressure to banking liquidity and interest rates.
           </p>
 
-          {/* ─── BAGIAN 4: POLITIK ─── */}
-          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Faktor Politik — Ketidakpastian dan Transisi</h2>
+          {/* ─── SECTION 4: POLITICS ─── */}
+          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Political Factors — Uncertainty and Transition</h2>
 
           <p>
-            Faktor politik domestik turut berkontribusi terhadap persepsi risiko investor. Setelah pemilu 2024 dan transisi kepemimpinan yang melahirkan koalisi baru, pasar masih mencermati konsistensi kebijakan dan arah ekonomi jangka panjang.
+            Domestic political factors also contribute to investor risk perception. Following the 2024 elections and the leadership transition that produced a new coalition, the market continues to monitor policy consistency and the direction of long-term economic strategy.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="card-luxury p-6">
-              <h3 className="font-heading text-base text-[#F4EFE6] font-medium mb-3">Dampak Langsung</h3>
+              <h3 className="font-heading text-base text-[#F4EFE6] font-medium mb-3">Direct Impact</h3>
               <ul className="space-y-2 text-sm">
                 <li className="flex gap-2">
                   <span className="text-[#C6A15B]">→</span>
-                  <span>Debat publik soal keberlanjutan program flagship (IKN, Makan Bergizi Gratis) menciptakan ketidakpastian fiskal</span>
+                  <span>Public debate over the sustainability of flagship programs (Nusantara Capital, Free Nutritious Meals) creates fiscal uncertainty</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-[#C6A15B]">→</span>
-                  <span>Persepsi risiko institusi (<em>institutional risk</em>) meningkat di mata investor asing — tercermin dari premi CDS Indonesia yang melebar</span>
+                  <span>Institutional risk perception has increased in the eyes of foreign investors — reflected in the widening Indonesia CDS spread</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-[#C6A15B]">→</span>
-                  <span>Kekhawatiran intervensi kebijakan yang tidak lazim mempengaruhi investor institusional global</span>
+                  <span>Concerns over unconventional policy interventions affect global institutional investors</span>
                 </li>
               </ul>
             </div>
 
             <div className="card-luxury p-6">
-              <h3 className="font-heading text-base text-[#F4EFE6] font-medium mb-3">Risiko-risiko Politik</h3>
+              <h3 className="font-heading text-base text-[#F4EFE6] font-medium mb-3">Political Risks</h3>
               <ul className="space-y-2 text-sm">
                 <li className="flex gap-2">
                   <span className="text-[#C6A15B]">→</span>
-                  <span>Momentum reformasi dan <em>policy credibility</em> menjadi sorotan Moody's dan Fitch</span>
+                  <span>Reform momentum and <em>policy credibility</em> are under scrutiny from Moody's and Fitch</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-[#C6A15B]">→</span>
-                  <span>Fragmentasi koalisi: gesekan antara fraksi pendukung kebijakan populis vs fiskal konservatif</span>
+                  <span>Coalition fragmentation: friction between factions supporting populist vs. fiscally conservative policies</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-[#C6A15B]">→</span>
-                  <span>Persepsi <em>democratic backsliding</em> di kalangan investor asing — memicu risk premium yang lebih tinggi</span>
+                  <span>Perception of <em>democratic backsliding</em> among foreign investors — triggering higher risk premiums</span>
                 </li>
               </ul>
             </div>
           </div>
 
           <p>
-            Meski demikian, Indonesia memiliki keunggulan demografis dan SDA yang tetap menjadi pertimbangan utama alokasi asing. Risiko politik yang tinggi tercermin di harga saat ini (IHSG di dekat 7.300-an) — artinya <strong className="text-[#F4EFE6]">sebagian risiko sudah terdiskon</strong>.
+            Nevertheless, Indonesia retains demographic advantages and natural resources that remain key considerations for foreign allocation. High political risk is already reflected in current prices (IHSG near the 7,300 level) — meaning <strong className="text-[#F4EFE6]">some of the risk is already priced in</strong>.
           </p>
 
-          {/* ─── BAGIAN 5: RUPIAH ─── */}
-          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Rupiah: Antara Tarik-Menarik Eksternal dan Fundamental Domestik</h2>
+          {/* ─── SECTION 5: RUPIAH ─── */}
+          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Rupiah: Between External Pull and Domestic Fundamentals</h2>
 
           <p>
-            Rupiah bergerak melemah sepanjang Q1 2026, menembus level psikologis <strong className="text-[#F4EFE6]">Rp 16.300-16.500 per USD</strong>. Pelemahan ini memperparah tekanan di pasar saham dan menjadi umpan balik negatif (<em>feedback loop</em>) antara pasar SBN dan pasar saham.
+            The rupiah weakened throughout Q1 2026, breaking through the psychological level of <strong className="text-[#F4EFE6]">Rp 16,300-16,500 per USD</strong>. This depreciation intensified pressure in the stock market and created a negative <em>feedback loop</em> between the bond market and the equity market.
           </p>
 
           <div className="card-luxury p-6 space-y-4">
-            <h3 className="font-heading text-lg text-[#F4EFE6] font-medium">Tekanan pada Rupiah</h3>
+            <h3 className="font-heading text-lg text-[#F4EFE6] font-medium">Pressures on the Rupiah</h3>
 
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Dollar Index (DXY) menguat</strong> — Data ekonomi AS yang resilient dan The Fed yang <em>hawkish</em> menahan suku bunga tinggi lebih lama. DXY bertahan di 104-106.
+                <strong className="text-[#F4EFE6]">Dollar Index (DXY) strengthening</strong> — Resilient US economic data and a <em>hawkish</em> Federal Reserve keeping interest rates higher for longer. DXY holding at 104-106.
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Current account deficit (CAD) melebar</strong> — Importasi migas naik seiring kenaikan ICP, sementara ekspor komoditas (CPO, batubara, nikel) mulai terkoreksi harga. CAD diperkirakan melebar ke kisaran 1,5-2% dari PDB.
+                <strong className="text-[#F4EFE6]">Widening current account deficit (CAD)</strong> — Oil and gas imports rising alongside ICP increases, while commodity export prices (CPO, coal, nickel) have begun to correct. CAD is expected to widen to the 1.5-2% of GDP range.
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Capital outflow</strong> — Asing melepas kepemilikan SUN dan ekuitas secara simultan, menekan neraca pembayaran dan cadangan devisa Bank Indonesia.
+                <strong className="text-[#F4EFE6]">Capital outflow</strong> — Foreign investors are simultaneously selling government bonds and equities, pressuring the balance of payments and Bank Indonesia's foreign exchange reserves.
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Term of Trade (ToT) memburuk</strong> — Harga barang jadi yang diimpor naik sementara harga komoditas ekspor mulai datar. Ini kompresi margin pendapatan nasional.
+                <strong className="text-[#F4EFE6]">Deteriorating Terms of Trade (ToT)</strong> — Imported finished goods prices are rising while export commodity prices are flattening. This compresses national income margins.
               </div>
             </div>
           </div>
 
           <div className="card-luxury p-6 border-l-4 border-l-[#C6A15B] bg-[#0B0B0A]">
             <p className="text-sm">
-              <strong className="text-[#F4EFE6]">Trilema Kebijakan BI:</strong> Bank Indonesia menghadapi pilihan sulit antara (1) menaikkan suku bunga untuk menstabilkan rupiah — memperlambat ekonomi, (2) mempertahankan BI Rate untuk mendorong pertumbuhan — rupiah tertekan, atau (3) intervensi pasar valas — cadangan devisa terkuras.
+              <strong className="text-[#F4EFE6]">Bank Indonesia Policy Trilemma:</strong> Bank Indonesia faces a difficult choice between (1) raising interest rates to stabilize the rupiah — slowing the economy, (2) holding the BI Rate to support growth — with the rupiah under pressure, or (3) intervening in the forex market — depleting foreign exchange reserves.
             </p>
             <p className="text-sm mt-3 text-[#B8AA96]/60">
-              Hingga saat ini, BI memilih jalur <em>stabilitas</em>: BI Rate dipertahankan di 5,75% (<em>hold</em> sejak Februari 2025) dengan intervensi ganda di pasar spot dan DNDF.
+              To date, BI has chosen the path of <em>stability</em>: the BI Rate is held at 5.75% (<em>hold</em> since February 2025) with dual intervention in the spot and DNDF markets.
             </p>
           </div>
 
-          {/* ─── BAGIAN 6: IMPLIKASI STRATEGIS ─── */}
-          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Implikasi Investasi dan Strategi Portofolio</h2>
+          {/* ─── SECTION 6: STRATEGIC IMPLICATIONS ─── */}
+          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Investment Implications and Portfolio Strategy</h2>
 
           <p>
-            Kombinasi tekanan di atas menempatkan IHSG dalam fase <strong className="text-[#C6A15B]">bearish jangka pendek</strong> namun menarik dari sisi <strong className="text-[#C6A15B]">valuasi jangka panjang</strong>. Di level 7.300-an, IHSG diperdagangkan pada PER sekitar 13-14x (rata-rata historis 15-17x).
+            The combination of pressures above places IHSG in a <strong className="text-[#C6A15B]">short-term bearish phase</strong> yet attractive from a <strong className="text-[#C6A15B]">long-term valuation perspective</strong>. At the 7,300 level, IHSG trades at a P/E ratio of approximately 13-14x (historical average 15-17x).
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="card-luxury p-6 border border-emerald-400/20">
-              <h3 className="font-heading text-base text-emerald-400 font-medium mb-3">Sektor yang Berpeluang</h3>
+              <h3 className="font-heading text-base text-emerald-400 font-medium mb-3">Sectors with Upside Potential</h3>
               <ul className="space-y-2 text-sm">
                 <li className="flex gap-2">
                   <span className="text-emerald-400">→</span>
-                  <span><strong className="text-[#F4EFE6]">Perbankan big caps</strong> (BBCA, BBRI, BMRI) — net interest margin cenderung stabil di lingkungan suku bunga tinggi</span>
+                  <span><strong className="text-[#F4EFE6]">Big cap banking</strong> (BBCA, BBRI, BMRI) — net interest margins tend to remain stable in a high-rate environment</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-emerald-400">→</span>
-                  <span><strong className="text-[#F4EFE6]">Energi & migas</strong> — diuntungkan kenaikan harga minyak (ADRO, PTBA, MEDC)</span>
+                  <span><strong className="text-[#F4EFE6]">Energy & oil/gas</strong> — benefiting from rising oil prices (ADRO, PTBA, MEDC)</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-emerald-400">→</span>
-                  <span><strong className="text-[#F4EFE6]">Defensif</strong> — consumer staples, telekomunikasi (TLKM, ICBP, UNVR) — sektor dengan permintaan inelastis</span>
+                  <span><strong className="text-[#F4EFE6]">Defensives</strong> — consumer staples, telecommunications (TLKM, ICBP, UNVR) — sectors with inelastic demand</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-emerald-400">→</span>
-                  <span><strong className="text-[#F4EFE6]">Exportir komoditas</strong> — diuntungkan pelemahan rupiah (kecuali harga komoditas turun)</span>
+                  <span><strong className="text-[#F4EFE6]">Commodity exporters</strong> — benefiting from rupiah weakness (unless commodity prices decline)</span>
                 </li>
               </ul>
             </div>
 
             <div className="card-luxury p-6 border border-red-400/20">
-              <h3 className="font-heading text-base text-red-400 font-medium mb-3">Sektor yang Perlu Diwaspadai</h3>
+              <h3 className="font-heading text-base text-red-400 font-medium mb-3">Sectors to Watch Closely</h3>
               <ul className="space-y-2 text-sm">
                 <li className="flex gap-2">
                   <span className="text-red-400">→</span>
-                  <span><strong className="text-[#F4EFE6]">Importir bahan baku</strong> — margin tertekan pelemahan rupiah (kimia, consumer dengan kandungan impor tinggi)</span>
+                  <span><strong className="text-[#F4EFE6]">Raw material importers</strong> — margins pressured by rupiah weakness (chemicals, consumer with high import content)</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-red-400">→</span>
-                  <span><strong className="text-[#F4EFE6]">Properti</strong> — sensitif suku bunga dan daya beli yang menurun</span>
+                  <span><strong className="text-[#F4EFE6]">Property</strong> — sensitive to interest rates and declining purchasing power</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-red-400">→</span>
-                  <span><strong className="text-[#F4EFE6]">Teknologi</strong> — valuasi tinggi, sensitif terhadap risk premium dan outflow asing</span>
+                  <span><strong className="text-[#F4EFE6]">Technology</strong> — high valuations, sensitive to risk premiums and foreign outflows</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-red-400">→</span>
-                  <span><strong className="text-[#F4EFE6]">Small caps</strong> — likuiditas rendah, paling terpukul saat risk-off</span>
+                  <span><strong className="text-[#F4EFE6]">Small caps</strong> — low liquidity, hardest hit during risk-off sentiment</span>
                 </li>
               </ul>
             </div>
           </div>
 
-          {/* ─── BAGIAN 7: KESIMPULAN ─── */}
-          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Kesimpulan</h2>
+          {/* ─── SECTION 7: CONCLUSION ─── */}
+          <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4">Conclusion</h2>
 
           <p>
-            IHSG memasuki fase <em>fear driven selling</em> akibat kombinasi tiga isu besar — risiko MSCI, tekanan rating, dan geopolitik minyak — yang diperparah oleh kondisi fiskal yang ketat, politik yang belum stabil, dan rupiah yang melemah. Outflow asing Rp 6,71 triliun dalam dua gelombang menunjukkan tingkat kepanikan yang jarang terlihat.
+            IHSG entered a <em>fear driven selling</em> phase driven by a combination of three major issues — MSCI risk, rating pressure, and oil-related geopolitics — compounded by tight fiscal conditions, unstable politics, and a weakening rupiah. Foreign outflows of Rp 6.71 trillion across two waves reflect a level of panic rarely seen.
           </p>
 
           <div className="card-luxury p-6 space-y-3">
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#C6A15B] mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Short-term bearish</strong> — Level 7.250 (MA50) dan 7.000 (MA200) menjadi support kunci. Jika tembus 7.000, potensi turun ke 6.800-6.500 terbuka.
+                <strong className="text-[#F4EFE6]">Short-term bearish</strong> — Levels 7,250 (MA50) and 7,000 (MA200) serve as key support. If 7,000 breaks, a drop to 6,800-6,500 becomes possible.
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#C6A15B] mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Medium-term attractive</strong> — Valuasi IHSG sudah murah (PER 13-14x). Investor dengan horizon 1-2 tahun bisa mulai akumulasi bertahap di big caps defensif dan perbankan.
+                <strong className="text-[#F4EFE6]">Medium-term attractive</strong> — IHSG valuations are already cheap (P/E 13-14x). Investors with a 1-2 year horizon can begin gradual accumulation in defensive big caps and banking.
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#C6A15B] mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Katalis positif yang perlu dipantau:</strong> Penurunan inflasi AS yang memicu pivot The Fed, stabilitas politik domestik, dan perbaikan <em>current account</em> dari hilirisasi.
+                <strong className="text-[#F4EFE6]">Positive catalysts to monitor:</strong> Declining US inflation triggering a Fed pivot, domestic political stability, and current account improvement from downstream industrialization.
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-[#C6A15B] mt-2 flex-shrink-0" />
               <div>
-                <strong className="text-[#F4EFE6]">Risiko downside:</strong> Eskalasi konflik Iran (minyak $90+), downgrade peringkat investasi Indonesia, atau MSCI demote ke frontier market.
+                <strong className="text-[#F4EFE6]">Downside risks:</strong> Iran conflict escalation (oil at $90+), downgrade of Indonesia's investment rating, or MSCI demotion to frontier market.
               </div>
             </div>
           </div>
 
           <div className="card-luxury p-6 border-l-4 border-l-[#C6A15B]">
             <p className="text-sm italic text-[#B8AA96]/80">
-              Disclaimer: Artikel ini bersifat informatif dan merupakan hasil analisis independen. Tidak ada afiliasi dengan pihak-pihak yang disebutkan. Selalu lakukan riset dan konsultasi dengan profesional keuangan sebelum mengambil keputusan investasi.
+              Disclaimer: This article is for informational purposes and is the result of independent analysis. There is no affiliation with any parties mentioned. Always conduct your own research and consult with a financial professional before making investment decisions.
             </p>
           </div>
         </div>
