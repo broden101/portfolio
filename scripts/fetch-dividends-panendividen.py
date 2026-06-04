@@ -137,52 +137,36 @@ def fetch_dividend_csv(ticker):
 
 
 def fetch_prices_tradersaham(tickers):
-    """Fetch current prices from tradersaham broker-profiler/history API."""
-    api_key = load_api_key()
-    refresh_token = load_refresh_token()
+    """Fetch current prices from TradingView scanner (batch, no auth needed)."""
+    import urllib.request
 
-    if not api_key or not refresh_token:
-        print("  ⚠ No tradersaham credentials, skipping price fetch", file=sys.stderr)
-        return {}
+    TV_SCANNER = "https://scanner.tradingview.com/indonesia/scan"
+    symbols = [f"IDX:{t}" for t in tickers]
 
-    access_token = get_access_token(api_key, refresh_token)
-    if not access_token:
-        print("  ⚠ Could not get access token", file=sys.stderr)
-        return {}
+    print(f"💰 Fetching prices for {len(tickers)} stocks from TradingView...")
 
-    headers = {
-        "Authorization": f"Bearer {access_token}",
-        "Origin": "https://www.tradersaham.com",
-        "Referer": "https://www.tradersaham.com/broker-flow",
-    }
+    payload = json.dumps({
+        "columns": ["name", "close"],
+        "symbols": {"tickers": symbols},
+        "range": [0, len(symbols)],
+    }).encode()
 
-    from datetime import timedelta
-    end_date = datetime.now().strftime("%Y-%m-%d")
-    start_date = (datetime.now() - timedelta(days=10)).strftime("%Y-%m-%d")
+    req = urllib.request.Request(TV_SCANNER, data=payload, headers={
+        "User-Agent": "Mozilla/5.0",
+        "Content-Type": "application/json",
+    })
 
     prices = {}
-    print(f"💰 Fetching prices for {len(tickers)} stocks...")
-
-    for i, ticker in enumerate(tickers):
-        try:
-            resp = requests.get(
-                f"{TRADERSAHAM_API}/api/market-insight/broker-profiler/history",
-                headers=headers,
-                params={"stock_code": ticker, "start_date": start_date, "end_date": end_date, "broker_codes": "RX"},
-                timeout=10,
-            )
-            if resp.status_code == 200:
-                data = resp.json()
-                ohlc = data.get("ohlc", [])
-                if ohlc:
-                    # Last close = 4th element in [O, H, L, C]
-                    close = ohlc[-1][3] if len(ohlc[-1]) >= 4 else ohlc[-1][-1]
-                    prices[ticker] = float(close)
-            if (i + 1) % 20 == 0:
-                print(f"  ... {i+1}/{len(tickers)}")
-                time.sleep(0.3)
-        except Exception:
-            continue
+    try:
+        resp = urllib.request.urlopen(req, timeout=30)
+        data = json.loads(resp.read())
+        for row in data.get("data", []):
+            d = row.get("d", [])
+            if len(d) >= 2 and d[1] is not None:
+                ticker = d[0].replace("IDX:", "")
+                prices[ticker] = float(d[1])
+    except Exception as e:
+        print(f"  ❌ TradingView error: {e}", file=sys.stderr)
 
     print(f"  ✓ Got {len(prices)} prices")
     return prices
