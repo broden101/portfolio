@@ -22,16 +22,16 @@ import requests
 KOMPAS_100 = [
     "AADI", "ACES", "ADMR", "ADRO", "AGII", "AKRA", "AMMN", "AMRT", "ANTM",
     "ARCI", "ARTO", "ASII", "ASSA", "BBCA", "BBNI", "BBRI", "BBTN", "BBYB",
-    "BKSL", "BMRI", "BMTR", "BREN", "BRIS", "BRMS", "BRPT", "BSDE", "BTPS",
-    "BUKA", "BULL", "BUMI", "BUVA", "CBDK", "CMRY", "CPIN", "CTRA", "CUAN",
-    "DEWA", "DSNG", "DSSA", "ELSA", "EMTK", "ENRG", "ERAA", "ESSA", "EXCL",
-    "FILM", "GOTO", "HEAL", "HMSP", "HRTA", "HRUM", "ICBP", "IMPC", "INCO",
-    "INDF", "INDY", "INET", "INKP", "INTP", "ISAT", "ITMG", "JPFA", "JSMR",
-    "KIJA", "KLBF", "KPIG", "MAPA", "MAPI", "MBMA", "MDKA", "MEDC", "MIKA",
-    "MTEL", "MYOR", "NCKL", "PANI", "PGAS", "PGEO", "PNLF", "PSAB", "PTBA",
-    "PTRO", "PWON", "RAJA", "RATU", "SCMA", "SGER", "SIDO", "SMGR", "SMIL",
-    "SMRA", "SSIA", "TAPG", "TCPI", "TINS", "TLKM", "TOBA", "TOWR", "TPIA",
-    "UNTR", "UNVR", "WIFI", "WIRG",
+    "BFIN", "BJBR", "BJTM", "BKSL", "BMRI", "BMTR", "BREN", "BRIS", "BRMS",
+    "BRPT", "BSDE", "BTPS", "BUKA", "BULL", "BUMI", "BUVA", "CBDK", "CMRY",
+    "CPIN", "CTRA", "CUAN", "DEWA", "DMAS", "DSNG", "DSSA", "ELSA", "EMTK",
+    "ENRG", "ERAA", "ESSA", "EXCL", "FILM", "GOTO", "HEAL", "HMSP", "HRTA",
+    "HRUM", "ICBP", "IMPC", "INCO", "INDF", "INDY", "INET", "INKP", "INTP",
+    "ISAT", "ITMG", "JPFA", "JSMR", "KIJA", "KLBF", "KPIG", "MAPA", "MAPI",
+    "MBMA", "MDKA", "MEDC", "MIKA", "MPMX", "MTEL", "MYOR", "NCKL", "PANI",
+    "PGAS", "PGEO", "PNLF", "PSAB", "PTBA", "PTRO", "PWON", "RAJA", "RATU",
+    "SCMA", "SGER", "SIDO", "SMGR", "SMIL", "SMRA", "SSIA", "TAPG", "TCPI",
+    "TINS", "TLKM", "TOBA", "TOWR", "TPIA", "UNTR", "UNVR", "WIFI", "WIRG",
 ]
 
 PANENDIVIDEN_BASE = "https://raw.githubusercontent.com/mitbal/daguerreo-data/main/jkse"
