@@ -154,7 +154,7 @@ function DividendCalendar({ stocks }: { stocks: DividendStock[] }) {
 }
 
 function StockPicker({ stocks }: { stocks: DividendStock[] }) {
-  const [sortBy, setSortBy] = useState<keyof DividendStock>("totalDividends");
+  const [sortBy, setSortBy] = useState<keyof DividendStock>("dividendYield");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [sectorFilter, setSectorFilter] = useState<string>("ALL");
   const [search, setSearch] = useState("");
@@ -211,7 +211,7 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
         {[
           { label: "Stocks", value: filtered.length, color: "text-[#F4EFE6]" },
           { label: "Avg History", value: `${(filtered.reduce((a, s) => a + s.yearsOfHistory, 0) / filtered.length || 0).toFixed(0)} yrs`, color: "text-[#C6A15B]" },
-          { label: "Top Total Div", value: `Rp ${formatRp(Math.max(...filtered.map((s) => s.totalDividends)))}`, color: "text-emerald-400" },
+          { label: "Top Yield", value: `${Math.max(...filtered.map((s) => s.dividendYield || 0)).toFixed(1)}%`, color: "text-emerald-400" },
           { label: "Sectors", value: sectors.length, color: "text-blue-400" },
         ].map((s) => (
           <div key={s.label} className="bg-[#0B0B0A] border border-[#2C261E] p-4 text-center">
