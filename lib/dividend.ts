@@ -31,6 +31,14 @@ export interface DividendStock {
   latestFYDPS?: number;
   latestFYDate?: string;
   dividendYield?: number | null;
+  // Live price fields
+  livePrice?: number;
+  liveChange?: number;
+}
+
+export interface LivePrice {
+  price: number;
+  change: number;
 }
 
 export interface DividendEvent {
@@ -55,6 +63,35 @@ export async function loadDividendData(): Promise<DividendStock[]> {
   } catch {
     return [];
   }
+}
+
+export async function fetchLivePrices(): Promise<{ prices: Record<string, LivePrice>; timestamp: string }> {
+  try {
+    const res = await fetch("/api/dividends/prices");
+    if (!res.ok) throw new Error("Failed to fetch prices");
+    return await res.json();
+  } catch {
+    return { prices: {}, timestamp: new Date().toISOString() };
+  }
+}
+
+export function mergeLivePrices(stocks: DividendStock[], prices: Record<string, LivePrice>): DividendStock[] {
+  return stocks.map((stock) => {
+    const live = prices[stock.ticker];
+    if (!live) return stock;
+
+    const latestFYDPS = stock.latestFYDPS ?? 0;
+    const dividendYield = live.price > 0 && latestFYDPS > 0
+      ? Math.round((latestFYDPS / live.price) * 10000) / 100
+      : stock.dividendYield;
+
+    return {
+      ...stock,
+      livePrice: live.price,
+      liveChange: live.change,
+      dividendYield,
+    };
+  });
 }
 
 export function getDividendEvents(stocks: DividendStock[]): DividendEvent[] {

@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
   loadDividendData,
+  fetchLivePrices,
+  mergeLivePrices,
   getDividendEvents,
   getEventsForMonth,
   getSectors,
@@ -153,7 +155,7 @@ function DividendCalendar({ stocks }: { stocks: DividendStock[] }) {
   );
 }
 
-function StockPicker({ stocks }: { stocks: DividendStock[] }) {
+function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpdated: string | null }) {
   const [sortBy, setSortBy] = useState<keyof DividendStock>("dividendYield");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [sectorFilter, setSectorFilter] = useState<string>("ALL");
@@ -186,9 +188,13 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
     return <span className="text-[#C6A15B] ml-1">{sortDir === "asc" ? "↑" : "↓"}</span>;
   };
 
-  const formatRp = (n: number) => {
-    if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
-    return n.toFixed(0);
+  const formatTime = (iso: string) => {
+    try {
+      const d = new Date(iso);
+      return d.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    } catch {
+      return "";
+    }
   };
 
   return (
@@ -196,7 +202,10 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
       <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
         <div>
           <h3 className="font-heading text-xl text-[#F4EFE6] font-medium">Kompas 100 Dividend Stocks</h3>
-          <p className="text-xs text-[#B8AA96]/50 mt-1">Data sourced from panendividen.com — ranked by total historical dividends</p>
+          <p className="text-xs text-[#B8AA96]/50 mt-1">
+            Live prices from TradingView • Auto-refresh every 60s
+            {lastUpdated && <span className="ml-2 text-emerald-400/70">● {formatTime(lastUpdated)}</span>}
+          </p>
         </div>
         <div className="flex items-center gap-3">
           <input type="text" placeholder="Search ticker/name..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-48 bg-[#0B0B0A] border border-[#2C261E] px-3 py-2 text-xs text-[#F4EFE6] placeholder-[#B8AA96]/30" />
@@ -242,42 +251,58 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
             </tr>
           </thead>
           <tbody>
-            {filtered.map((stock, i) => (
-              <tr key={stock.ticker} className="border-b border-[#2C261E]/50 hover:bg-[#C6A15B]/5 transition-colors group cursor-pointer" onClick={() => setExpandedStock(expandedStock === stock.ticker ? null : stock.ticker)}>
-                <td className="py-3 px-2 text-[#B8AA96]/30">{i + 1}</td>
-                <td className="py-3 px-2">
-                  <div>
-                    <span className="font-mono font-semibold text-[#F4EFE6] group-hover:text-[#C6A15B] transition-colors">{stock.ticker}</span>
-                    <div className="text-[10px] text-[#B8AA96]/40 mt-0.5 max-w-[180px] truncate">{stock.companyName}</div>
-                  </div>
-                </td>
-                <td className="py-3 px-2 font-mono text-[#F4EFE6]">{stock.price ? `Rp${stock.price.toLocaleString()}` : '—'}</td>
-                <td className="py-3 px-2 text-[#B8AA96]">{stock.sector}</td>
-                <td className="py-3 px-2 font-mono text-[#F4EFE6]">Rp{Number(stock.latestFYDPS ?? stock.latestFinalDPS ?? 0).toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
-                <td className="py-3 px-2">
-                  <span className={`font-mono font-semibold ${
-                    (stock.dividendYield ?? stock.finalYield ?? 0) >= 8 ? 'text-emerald-400' :
-                    (stock.dividendYield ?? stock.finalYield ?? 0) >= 4 ? 'text-[#C6A15B]' :
-                    'text-[#B8AA96]'
-                  }`}>{(stock.dividendYield ?? stock.finalYield ?? 0).toFixed(2)}%</span>
-                </td>
-                <td className="py-3 px-2">
-                  <span className={`font-mono ${stock.yearsOfHistory >= 15 ? "text-[#C6A15B]" : stock.yearsOfHistory >= 10 ? "text-emerald-400" : "text-[#B8AA96]"}`}>
-                    {stock.yearsOfHistory}
-                  </span>
-                </td>
-                <td className="py-3 px-2">
-                  {stock.latestDividend?.date ? (
+            {filtered.map((stock, i) => {
+              const displayPrice = stock.livePrice ?? stock.price;
+              const change = stock.liveChange;
+              const isUp = change != null && change >= 0;
+              const isDown = change != null && change < 0;
+
+              return (
+                <tr key={stock.ticker} className="border-b border-[#2C261E]/50 hover:bg-[#C6A15B]/5 transition-colors group cursor-pointer" onClick={() => setExpandedStock(expandedStock === stock.ticker ? null : stock.ticker)}>
+                  <td className="py-3 px-2 text-[#B8AA96]/30">{i + 1}</td>
+                  <td className="py-3 px-2">
                     <div>
-                      <div className="font-mono text-[#B8AA96]/70">{stock.latestDividend.date}</div>
-                      <div className="text-[10px] text-emerald-400 font-mono">Rp{stock.latestDividend.amount.toLocaleString()}</div>
+                      <span className="font-mono font-semibold text-[#F4EFE6] group-hover:text-[#C6A15B] transition-colors">{stock.ticker}</span>
+                      <div className="text-[10px] text-[#B8AA96]/40 mt-0.5 max-w-[180px] truncate">{stock.companyName}</div>
                     </div>
-                  ) : (
-                    <span className="text-[#B8AA96]/30">—</span>
-                  )}
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className="py-3 px-2">
+                    <div className="font-mono text-[#F4EFE6]">
+                      {displayPrice ? `Rp${displayPrice.toLocaleString()}` : '—'}
+                    </div>
+                    {change != null && (
+                      <div className={`text-[10px] font-mono ${isUp ? "text-emerald-400" : isDown ? "text-red-400" : "text-[#B8AA96]/40"}`}>
+                        {isUp ? "▲" : "▼"} {change >= 0 ? "+" : ""}{change.toFixed(2)}%
+                      </div>
+                    )}
+                  </td>
+                  <td className="py-3 px-2 text-[#B8AA96]">{stock.sector}</td>
+                  <td className="py-3 px-2 font-mono text-[#F4EFE6]">Rp{Number(stock.latestFYDPS ?? stock.latestFinalDPS ?? 0).toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
+                  <td className="py-3 px-2">
+                    <span className={`font-mono font-semibold ${
+                      (stock.dividendYield ?? stock.finalYield ?? 0) >= 8 ? 'text-emerald-400' :
+                      (stock.dividendYield ?? stock.finalYield ?? 0) >= 4 ? 'text-[#C6A15B]' :
+                      'text-[#B8AA96]'
+                    }`}>{(stock.dividendYield ?? stock.finalYield ?? 0).toFixed(2)}%</span>
+                  </td>
+                  <td className="py-3 px-2">
+                    <span className={`font-mono ${stock.yearsOfHistory >= 15 ? "text-[#C6A15B]" : stock.yearsOfHistory >= 10 ? "text-emerald-400" : "text-[#B8AA96]"}`}>
+                      {stock.yearsOfHistory}
+                    </span>
+                  </td>
+                  <td className="py-3 px-2">
+                    {stock.latestDividend?.date ? (
+                      <div>
+                        <div className="font-mono text-[#B8AA96]/70">{stock.latestDividend.date}</div>
+                        <div className="text-[10px] text-emerald-400 font-mono">Rp{stock.latestDividend.amount.toLocaleString()}</div>
+                      </div>
+                    ) : (
+                      <span className="text-[#B8AA96]/30">—</span>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -330,13 +355,37 @@ function StockPicker({ stocks }: { stocks: DividendStock[] }) {
 export default function DividendPage() {
   const [stocks, setStocks] = useState<DividendStock[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const refreshPrices = useCallback(async (baseStocks: DividendStock[]) => {
+    const { prices, timestamp } = await fetchLivePrices();
+    if (Object.keys(prices).length > 0) {
+      setStocks(mergeLivePrices(baseStocks, prices));
+      setLastUpdated(timestamp);
+    }
+  }, []);
 
   useEffect(() => {
-    loadDividendData().then((data) => {
+    let mounted = true;
+
+    loadDividendData().then(async (data) => {
+      if (!mounted) return;
       setStocks(data);
       setLoading(false);
+
+      // Fetch live prices immediately
+      await refreshPrices(data);
+
+      // Auto-refresh every 60s
+      intervalRef.current = setInterval(() => refreshPrices(data), 60_000);
     });
-  }, []);
+
+    return () => {
+      mounted = false;
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [refreshPrices]);
 
   return (
     <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
@@ -351,7 +400,7 @@ export default function DividendPage() {
             Dividend <span className="text-gold-gradient font-medium">Tracker</span>
           </h1>
           <p className="text-[#B8AA96]/60 text-sm mt-2 max-w-xl">
-            Dividend history for Kompas 100 stocks, sourced from panendividen.com. Track ex-dates, compare total payouts, and identify consistent dividend payers.
+            Dividend history for Kompas 100 stocks, sourced from panendividen.com. Track ex-dates, compare total payouts, and identify consistent dividend payers. Prices update live from TradingView.
           </p>
         </div>
 
@@ -366,7 +415,7 @@ export default function DividendPage() {
         ) : (
           <>
             <div className="mb-8"><DividendCalendar stocks={stocks} /></div>
-            <StockPicker stocks={stocks} />
+            <StockPicker stocks={stocks} lastUpdated={lastUpdated} />
           </>
         )}
       </div>
