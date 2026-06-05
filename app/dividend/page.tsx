@@ -159,6 +159,7 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
   const [sortBy, setSortBy] = useState<keyof DividendStock>("dividendYield");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [sectorFilter, setSectorFilter] = useState<string>("ALL");
+  const [shariahOnly, setShariahOnly] = useState(false);
   const [search, setSearch] = useState("");
   const [expandedStock, setExpandedStock] = useState<string | null>(null);
 
@@ -166,6 +167,7 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
 
   const filtered = useMemo(() => {
     let result = [...stocks];
+    if (shariahOnly) result = result.filter((s) => s.shariah !== false);
     if (sectorFilter !== "ALL") result = result.filter((s) => s.sector === sectorFilter);
     if (search) {
       const q = search.toLowerCase();
@@ -213,6 +215,16 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
             <option value="ALL">All Sectors</option>
             {sectors.map((s) => (<option key={s} value={s}>{s}</option>))}
           </select>
+          <button
+            onClick={() => setShariahOnly(!shariahOnly)}
+            className={`px-3 py-2 text-xs border transition-all ${
+              shariahOnly
+                ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400"
+                : "bg-transparent border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B] hover:text-[#C6A15B]"
+            }`}
+          >
+            ☪ Syariah
+          </button>
         </div>
       </div>
 
@@ -262,7 +274,12 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
                   <td className="py-3 px-2 text-[#B8AA96]/30">{i + 1}</td>
                   <td className="py-3 px-2">
                     <div>
-                      <span className="font-mono font-semibold text-[#F4EFE6] group-hover:text-[#C6A15B] transition-colors">{stock.ticker}</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono font-semibold text-[#F4EFE6] group-hover:text-[#C6A15B] transition-colors">{stock.ticker}</span>
+                        {stock.shariah !== false && (
+                          <span className="text-[9px] px-1 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">☪</span>
+                        )}
+                      </div>
                       <div className="text-[10px] text-[#B8AA96]/40 mt-0.5 max-w-[180px] truncate">{stock.companyName}</div>
                     </div>
                   </td>

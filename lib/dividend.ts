@@ -31,6 +31,7 @@ export interface DividendStock {
   latestFYDPS?: number;
   latestFYDate?: string;
   dividendYield?: number | null;
+  shariah?: boolean;
   // Live price fields
   livePrice?: number;
   liveChange?: number;
