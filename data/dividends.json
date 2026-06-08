@@ -13664,6 +13664,9 @@
       }
     ],
     "shariah": true,
-    "price": 336.0
+    "price": 336.0,
+    "currentPrice": 334,
+    "priceChange": -7.22,
+    "dividendYield": 12.57
   }
 ]
