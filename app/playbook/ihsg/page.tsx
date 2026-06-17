@@ -412,9 +412,7 @@ export default function IHSGDashboard() {
               {data?.macro?.US10Y?.close != null && `US10Y ${data.macro.US10Y.close.toFixed(2)}%. `}
               BI Rate {(manual.biRate?.value ?? 5.50).toFixed(2)}%.
             </p>
-            <p className="text-[#B8AA96]/40 text-[10px] pt-2 border-t border-[#2C261E]/50">
-              Data: TradingView scanner (realtime, poll 60s) + Tradersaham (foreign flow auto). BI Rate: TradingEconomics (cron).
-            </p>
+
           </div>
         </div>
       </div>
