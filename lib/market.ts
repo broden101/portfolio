@@ -119,17 +119,17 @@ export function fmtNum(v: number | null | undefined, digits = 0): string {
 
 export function recommendLabel(rec: number | null | undefined): { label: string; color: string } {
   if (rec == null || !Number.isFinite(rec)) return { label: "N/A", color: "text-[#B8AA96]/50" };
-  if (rec <= -0.5) return { label: "Strong Sell", color: "text-red-400" };
+  if (rec <= -0.5) return { label: "Sell Kuat", color: "text-red-400" };
   if (rec < -0.1) return { label: "Sell", color: "text-red-400" };
-  if (rec < 0.1) return { label: "Neutral", color: "text-yellow-400" };
+  if (rec < 0.1) return { label: "Netral", color: "text-yellow-400" };
   if (rec < 0.5) return { label: "Buy", color: "text-emerald-400" };
-  return { label: "Strong Buy", color: "text-emerald-400" };
+  return { label: "Buy Kuat", color: "text-emerald-400" };
 }
 
 export function rsiLabel(rsi: number | null | undefined): { label: string; color: string } {
   if (rsi == null || !Number.isFinite(rsi)) return { label: "N/A", color: "text-[#B8AA96]/50" };
-  if (rsi < 30) return { label: `Oversold (${rsi.toFixed(1)})`, color: "text-yellow-400" };
-  if (rsi > 70) return { label: `Overbought (${rsi.toFixed(1)})`, color: "text-yellow-400" };
+  if (rsi < 30) return { label: `Jenuh Jual (${rsi.toFixed(1)})`, color: "text-yellow-400" };
+  if (rsi > 70) return { label: `Jenuh Beli (${rsi.toFixed(1)})`, color: "text-yellow-400" };
   return { label: rsi.toFixed(1), color: "text-[#B8AA96]" };
 }
 
