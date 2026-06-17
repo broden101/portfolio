@@ -35,9 +35,9 @@ const tools = [
   {
     title: "Simple DCF Model",
     desc: "Discounted Cash Flow with editable assumptions — revenue growth, margin, WACC, terminal growth — for intrinsic value estimation.",
-    tags: ["FCFF", "WACC", "Terminal Value", "Growth"],
-    href: "#",
-    ready: false,
+    tags: ["FCFF", "WACC", "Terminal Value", "IHSG"],
+    href: "/calculator/dcf",
+    ready: true,
     icon: (
       <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10" />
