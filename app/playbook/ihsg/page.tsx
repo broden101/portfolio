@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
   fetchMarketData,
-  type ForeignFlowData,
   type ManualData,
   type MarketData,
   type Quote,
@@ -67,12 +66,9 @@ export default function IHSGDashboard() {
 
   const refresh = useCallback(async () => {
     try {
-      const [next, ff] = await Promise.all([
-        fetchMarketData(),
-        fetchForeignFlowClient(),
-      ]);
+      const next = await fetchMarketData();
       setData(next);
-      setForeignFlow(ff ?? next.foreignFlow);
+      setForeignFlow(next.foreignFlow);
       setLastUpdated(next.timestamp);
       setLive(next.ok && next.ihsg != null);
     } catch {

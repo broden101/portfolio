@@ -7,24 +7,16 @@ import { join } from "path";
  *
  * Auto sources:
  *   - TradingView scanner → IHSG, sectors, macro
- *   - Tradersaham API → Foreign flow (TOP 10 buy/sell + totals)
- *   - data/manual-market.json → BI Rate, trade balance (cron-updated)
+ *   - data/manual-market.json → Foreign flow + BI Rate + trade balance
+ *     (auto-updated by VPS cron every 30 min)
  */
 
 const INDONESIA_SCANNER = "https://scanner.tradingview.com/indonesia/scan";
 const GLOBAL_SCANNER = "https://scanner.tradingview.com/global/scan";
-const TRADERSAHAM_API = "https://apiv2.tradersaham.com/api";
 
 const TV_HEADERS: Record<string, string> = {
   "User-Agent": "Mozilla/5.0 (compatible; RagaPlaybook/1.0)",
   "Content-Type": "application/json",
-};
-
-const TSAHAM_HEADERS: Record<string, string> = {
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-  "Accept": "application/json",
-  "Origin": "https://www.tradersaham.com",
-  "Referer": "https://www.tradersaham.com/market-overview",
 };
 
 const SECTOR_INDICES: Record<string, string> = {
@@ -118,32 +110,7 @@ async function scan(endpoint: string, tickers: string[], columns: string[]): Pro
   return out;
 }
 
-/** Fetch foreign flow from Tradersaham API (no auth needed) */
-async function fetchForeignFlow() {
-  try {
-    const resp = await fetch(`${TRADERSAHAM_API}/market-insight/foreign-flow`, {
-      headers: TSAHAM_HEADERS, cache: "no-store",
-    });
-    if (!resp.ok) return null;
-    const data = await resp.json();
-
-    const topBuy = (data.accumulation ?? []).slice(0, 10).map((a: Record<string, unknown>) => ({
-      ticker: a.stock_code, net: Math.round(Number(a.net_value ?? 0) / 1e6), // dalam Miliar
-    }));
-    const topSell = (data.distribution ?? []).slice(0, 10).map((d: Record<string, unknown>) => ({
-      ticker: d.stock_code, net: Math.round(Number(d.net_value ?? 0) / 1e6),
-    }));
-    const weekNet = topBuy.reduce((s: number, b: { net: number }) => s + b.net, 0) +
-                    topSell.reduce((s: number, d: { net: number }) => s + d.net, 0);
-
-    return { date: data.date, weekNet, mtdNet: null, ytdNet: null, topBuy, topSell };
-  } catch (e) {
-    console.error("foreign flow error:", e);
-    return null;
-  }
-}
-
-/** Read manual overrides (BI Rate, trade balance, etc.) */
+/** Read manual data file (foreign flow, BI Rate, trade balance from VPS cron) */
 function readManualData() {
   const manualPath = join(process.cwd(), "data", "manual-market.json");
   if (!existsSync(manualPath)) return {};
@@ -161,10 +128,9 @@ export async function GET() {
     const basketTickers = Object.values(SECTOR_BASKETS).flatMap((b) => b.tickers.map((t) => `IDX:${t}`));
     const macroTickers = Object.values(MACRO_SYMBOLS).map((m) => m.symbol);
 
-    const [idRows, macroRows, foreignFlow, manualData] = await Promise.all([
+    const [idRows, macroRows, manualData] = await Promise.all([
       scan(INDONESIA_SCANNER, [...indexTickers, ...basketTickers], COLUMNS),
       scan(GLOBAL_SCANNER, macroTickers, ["name", "close", "change", "change_abs"]),
-      fetchForeignFlow(),
       readManualData(),
     ]);
 
@@ -189,6 +155,13 @@ export async function GET() {
       if (row) macro[key] = { label: def.label, close: num(row.d[1]), change: num(row.d[2]) };
     }
 
+    // Extract foreign flow and manual data from the file
+    const foreignFlow = manualData?.foreignFlow ?? null;
+    const manualDataClean = {
+      biRate: manualData?.biRate ?? { value: 5.50, note: "BI RDG" },
+      tradeBalance: manualData?.tradeBalance ?? { value: 3.32, note: "Surplus" },
+    };
+
     const indexCount = sectors.filter((s) => s.type === "index").length;
     const basketCount = sectors.filter((s) => s.type === "basket").length;
 
@@ -198,8 +171,8 @@ export async function GET() {
         ihsg: ihsgQuote,
         lq45: buildSub("IDX:LQ45"), kompas100: buildSub("IDX:KOMPAS100"), idx30: buildSub("IDX:IDX30"),
         sectors, macro,
-        foreignFlow, // auto from Tradersaham!
-        manualData,  // BI Rate, trade balance (cron-updated)
+        foreignFlow, // from VPS cron → manual-market.json
+        manualData: manualDataClean, // BI Rate, trade balance
         coverage: { ihsg: !!ihsgQuote, sectorIndices: indexCount, sectorBaskets: basketCount, macro: Object.keys(macro).length },
       },
       { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120" } }
