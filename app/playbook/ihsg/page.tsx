@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
   fetchMarketData,
+  type ForeignFlowData,
   getManualData,
   recommendLabel,
   rsiLabel,
@@ -262,14 +263,14 @@ export default function IHSGDashboard() {
           <div className="card-luxury p-6">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium">Foreign Flow</h2>
-              <span className="text-[9px] text-[#B8AA96]/40 uppercase tracking-wider border border-[#2C261E] px-1.5 py-0.5">Manual</span>
+              <span className="text-[9px] text-emerald-400/50 uppercase tracking-wider border border-emerald-500/20 px-1.5 py-0.5">Auto</span>
             </div>
 
             <div className="grid grid-cols-3 gap-3 mb-5">
               {[
-                { label: "Week", value: manual.foreignFlow.weekNet, color: manual.foreignFlow.weekNet >= 0 ? "text-emerald-400" : "text-red-400" },
-                { label: "MTD", value: manual.foreignFlow.mtdNet, color: manual.foreignFlow.mtdNet >= 0 ? "text-emerald-400" : "text-red-400" },
-                { label: "YTD", value: manual.foreignFlow.ytdNet, color: manual.foreignFlow.ytdNet >= 0 ? "text-emerald-400" : "text-red-400" },
+                { label: "Week", value: ff.weekNet, color: ff.weekNet >= 0 ? "text-emerald-400" : "text-red-400" },
+                { label: "MTD", value: ff.mtdNet, color: ff.mtdNet >= 0 ? "text-emerald-400" : "text-red-400" },
+                { label: "YTD", value: ff.ytdNet, color: ff.ytdNet >= 0 ? "text-emerald-400" : "text-red-400" },
               ].map((f) => (
                 <div key={f.label} className="border border-[#2C261E] p-3 text-center">
                   <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{f.label}</div>
@@ -282,7 +283,7 @@ export default function IHSGDashboard() {
               <div>
                 <div className="text-emerald-400/70 text-[10px] tracking-[0.1em] uppercase mb-2">Top Net Buy</div>
                 <div className="space-y-1.5">
-                  {manual.foreignFlow.topBuy.map((b) => (
+                  {ff.topBuy.map((b) => (
                     <div key={b.ticker} className="flex justify-between items-center">
                       <span className="text-[#F4EFE6] text-xs font-mono">{b.ticker}</span>
                       <span className="text-emerald-400 text-[10px] font-mono">+{b.net}</span>
@@ -293,7 +294,7 @@ export default function IHSGDashboard() {
               <div>
                 <div className="text-red-400/70 text-[10px] tracking-[0.1em] uppercase mb-2">Top Net Sell</div>
                 <div className="space-y-1.5">
-                  {manual.foreignFlow.topSell.map((s) => (
+                  {ff.topSell.map((s) => (
                     <div key={s.ticker} className="flex justify-between items-center">
                       <span className="text-[#F4EFE6] text-xs font-mono">{s.ticker}</span>
                       <span className="text-red-400 text-[10px] font-mono">{s.net}</span>
@@ -463,8 +464,8 @@ export default function IHSGDashboard() {
               RSI {rsi.label}. {ihsg.perfYTD != null && `YTD ${fmtPct(ihsg.perfYTD)}.`}
             </p>
             <p>
-              <span className="text-[#F4EFE6] font-medium">Foreign Flow:</span> Minggu ini asing {manual.foreignFlow.weekNet >= 0 ? "net buy" : "net sell"} ({fmtMiliar(manual.foreignFlow.weekNet)}),
-              YTD {fmtMiliar(manual.foreignFlow.ytdNet)}.
+              <span className="text-[#F4EFE6] font-medium">Foreign Flow:</span> Minggu ini asing {ff.weekNet >= 0 ? "net buy" : "net sell"} ({fmtMiliar(ff.weekNet)}),
+              YTD {fmtMiliar(ff.ytdNet)}.
             </p>
             <p>
               <span className="text-[#F4EFE6] font-medium">Macro:</span>{" "}

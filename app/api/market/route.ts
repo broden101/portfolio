@@ -5,29 +5,28 @@ import { join } from "path";
 /**
  * /api/market — Realtime IHSG dashboard data
  *
- * Sources (all free, no API key needed):
- *   - TradingView indonesia scanner  → IHSG composite + IDX sector indices + bellwether stocks
- *   - TradingView global scanner     → USD/IDR, Gold, Brent Oil, US 10Y/2Y yields
- *   - data/manual-market.json        → BI Rate, Trade Balance, Foreign Flow (auto + manual)
- *
- * Cache: 60s server-side (s-maxage), 120s stale-while-revalidate.
- * The client polls every 60s (see lib/market.ts) so data stays fresh during market hours.
- *
- * Manual data is stored in data/manual-market.json and can be updated via:
- *   - Cron job (scripts/update-bi-rate.py for auto BI Rate)
- *   - POST /api/market/manual endpoint (for foreign flow, trade balance)
+ * Auto sources:
+ *   - TradingView scanner → IHSG, sectors, macro
+ *   - Tradersaham API → Foreign flow (TOP 10 buy/sell + totals)
+ *   - data/manual-market.json → BI Rate, trade balance (cron-updated)
  */
 
 const INDONESIA_SCANNER = "https://scanner.tradingview.com/indonesia/scan";
 const GLOBAL_SCANNER = "https://scanner.tradingview.com/global/scan";
+const TRADERSAHAM_API = "https://apiv2.tradersaham.com/api";
+
 const TV_HEADERS: Record<string, string> = {
   "User-Agent": "Mozilla/5.0 (compatible; RagaPlaybook/1.0)",
   "Content-Type": "application/json",
 };
 
-const MANUAL_DATA_FILE = join(process.cwd(), "data", "manual-market.json");
+const TSAHAM_HEADERS: Record<string, string> = {
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+  "Accept": "application/json",
+  "Origin": "https://www.tradersaham.com",
+  "Referer": "https://www.tradersaham.com/market-overview",
+};
 
-/* ── IDX sector indices that resolve directly in the scanner ── */
 const SECTOR_INDICES: Record<string, string> = {
   IDXFINANCE: "Finance",
   IDXBASIC: "Basic Materials",
@@ -37,22 +36,14 @@ const SECTOR_INDICES: Record<string, string> = {
   IDXPROPERT: "Properties & Real Estate",
 };
 
-/* ── Sectors with no direct scanner index → proxy from bellwether basket ── */
 const SECTOR_BASKETS: Record<string, { name: string; tickers: string[] }> = {
   IDXTECHNO: { name: "Technology", tickers: ["BUKA", "GOTO", "EMTK", "MCAS", "BELI"] },
   IDXINFRA: { name: "Infrastructure", tickers: ["JSMR", "PTPP", "ADHI", "WIKA", "TOWR"] },
-  IDXCYCLIC: {
-    name: "Consumer Cyclicals",
-    tickers: ["ASII", "MAPI", "ACES", "AMRT", "RALS"],
-  },
-  IDXNONCYC: {
-    name: "Consumer Non-Cyclicals",
-    tickers: ["ICBP", "UNVR", "INDF", "MYOR", "SIDO"],
-  },
+  IDXCYCLIC: { name: "Consumer Cyclicals", tickers: ["ASII", "MAPI", "ACES", "AMRT", "RALS"] },
+  IDXNONCYC: { name: "Consumer Non-Cyclicals", tickers: ["ICBP", "UNVR", "INDF", "MYOR", "SIDO"] },
   IDXTRANS: { name: "Transportation & Logistic", tickers: ["GIAA", "TPIA", "SMDR", "BBHI"] },
 };
 
-/* ── Macro indicators from the global scanner ── */
 const MACRO_SYMBOLS: Record<string, { symbol: string; label: string }> = {
   USDIDR: { symbol: "FX_IDC:USDIDR", label: "USD/IDR" },
   GOLD: { symbol: "TVC:GOLD", label: "Gold" },
@@ -61,131 +52,53 @@ const MACRO_SYMBOLS: Record<string, { symbol: string; label: string }> = {
   US02Y: { symbol: "TVC:US02Y", label: "US 2Y" },
 };
 
-/* Columns requested from the indonesia scanner (index = position in d[]) */
 const COLUMNS = [
-  "name", // 0
-  "description", // 1
-  "close", // 2
-  "change", // 3
-  "change_abs", // 4
-  "Recommend.All", // 5
-  "RSI", // 6
-  "SMA50", // 7
-  "SMA200", // 8
-  "Perf.W", // 9
-  "Perf.1M", // 10
-  "Perf.3M", // 11
-  "Perf.YTD", // 12
-  "Perf.Y", // 13
-  "high", // 14
-  "low", // 15
+  "name", "description", "close", "change", "change_abs",
+  "Recommend.All", "RSI", "SMA50", "SMA200",
+  "Perf.W", "Perf.1M", "Perf.3M", "Perf.YTD", "Perf.Y",
+  "high", "low",
 ];
 
-interface RawRow {
-  s: string;
-  d: (string | number | null)[];
-}
-
+interface RawRow { s: string; d: (string | number | null)[]; }
 function num(v: unknown): number | null {
   if (v == null) return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
 }
 
-/** Shared shape for any index/stock/basket we normalise. */
 interface QuoteData {
-  close: number | null;
-  change: number | null;
-  changeAbs: number | null;
-  recommend: number | null;
-  rsi: number | null;
-  sma50: number | null;
-  sma200: number | null;
-  perfWeek: number | null;
-  perf1M: number | null;
-  perf3M: number | null;
-  perfYTD: number | null;
-  perf1Y: number | null;
-  high: number | null;
-  low: number | null;
+  close: number | null; change: number | null; changeAbs: number | null;
+  recommend: number | null; rsi: number | null;
+  sma50: number | null; sma200: number | null;
+  perfWeek: number | null; perf1M: number | null; perf3M: number | null;
+  perfYTD: number | null; perf1Y: number | null;
+  high: number | null; low: number | null;
 }
 
 function buildQuote(row: RawRow): QuoteData {
   const d = row.d;
   return {
-    close: num(d[2]),
-    change: num(d[3]),
-    changeAbs: num(d[4]),
-    recommend: num(d[5]),
-    rsi: num(d[6]),
-    sma50: num(d[7]),
-    sma200: num(d[8]),
-    perfWeek: num(d[9]),
-    perf1M: num(d[10]),
-    perf3M: num(d[11]),
-    perfYTD: num(d[12]),
-    perf1Y: num(d[13]),
-    high: num(d[14]),
-    low: num(d[15]),
+    close: num(d[2]), change: num(d[3]), changeAbs: num(d[4]),
+    recommend: num(d[5]), rsi: num(d[6]), sma50: num(d[7]), sma200: num(d[8]),
+    perfWeek: num(d[9]), perf1M: num(d[10]), perf3M: num(d[11]),
+    perfYTD: num(d[12]), perf1Y: num(d[13]),
+    high: num(d[14]), low: num(d[15]),
   };
 }
 
-/** Average a basket of stocks into a sector proxy (mean of %-change fields). */
 function aggregateBasket(rows: RawRow[]): QuoteData & { components: number } {
   const valid = rows.filter((r) => num(r.d[2]) != null && num(r.d[2])! > 0);
   const avg = (idx: number): number | null => {
-    const vals = valid
-      .map((r) => num(r.d[idx]))
-      .filter((v): v is number => v != null);
+    const vals = valid.map((r) => num(r.d[idx])).filter((v): v is number => v != null);
     return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
   };
   return {
-    close: avg(2),
-    change: avg(3),
-    changeAbs: avg(4),
-    recommend: avg(5),
-    rsi: avg(6),
-    sma50: avg(7),
-    sma200: avg(8),
-    perfWeek: avg(9),
-    perf1M: avg(10),
-    perf3M: avg(11),
-    perfYTD: avg(12),
-    perf1Y: avg(13),
-    high: avg(14),
-    low: avg(15),
+    close: avg(2), change: avg(3), changeAbs: avg(4),
+    recommend: avg(5), rsi: avg(6), sma50: avg(7), sma200: avg(8),
+    perfWeek: avg(9), perf1M: avg(10), perf3M: avg(11),
+    perfYTD: avg(12), perf1Y: avg(13),
+    high: avg(14), low: avg(15),
     components: valid.length,
-  };
-}
-
-/** Load manual data from file (BI Rate, Foreign Flow, Trade Balance) */
-function loadManualData() {
-  try {
-    if (existsSync(MANUAL_DATA_FILE)) {
-      const raw = readFileSync(MANUAL_DATA_FILE, "utf-8");
-      return JSON.parse(raw);
-    }
-  } catch (e) {
-    console.error("Failed to load manual market data:", e);
-  }
-  // Fallback defaults
-  return {
-    biRate: { value: 5.50, note: "BI RDG", lastUpdated: null },
-    tradeBalance: { value: 3.32, note: "Surplus", lastUpdated: null },
-    foreignFlow: {
-      weekNet: 0, mtdNet: 0, ytdNet: 0,
-      topBuy: [
-        { ticker: "BBCA", net: 0 }, { ticker: "BMRI", net: 0 },
-        { ticker: "TLKM", net: 0 }, { ticker: "BBRI", net: 0 },
-        { ticker: "BBNI", net: 0 },
-      ],
-      topSell: [
-        { ticker: "ADRO", net: 0 }, { ticker: "MDKA", net: 0 },
-        { ticker: "INDF", net: 0 }, { ticker: "ANTM", net: 0 },
-        { ticker: "PTBA", net: 0 },
-      ],
-      lastUpdated: null,
-    },
   };
 }
 
@@ -194,49 +107,71 @@ async function scan(endpoint: string, tickers: string[], columns: string[]): Pro
   if (tickers.length === 0) return out;
   try {
     const resp = await fetch(endpoint, {
-      method: "POST",
-      headers: TV_HEADERS,
+      method: "POST", headers: TV_HEADERS,
       body: JSON.stringify({ columns, symbols: { tickers }, range: [0, tickers.length] }),
       cache: "no-store",
     });
     if (!resp.ok) return out;
     const data = await resp.json();
     for (const row of data?.data ?? []) out.set(row.s, row);
-  } catch (e) {
-    console.error(`scan ${endpoint} error:`, e);
-  }
+  } catch (e) { console.error(`scan ${endpoint} error:`, e); }
   return out;
+}
+
+/** Fetch foreign flow from Tradersaham API (no auth needed) */
+async function fetchForeignFlow() {
+  try {
+    const resp = await fetch(`${TRADERSAHAM_API}/market-insight/foreign-flow`, {
+      headers: TSAHAM_HEADERS, cache: "no-store",
+    });
+    if (!resp.ok) return null;
+    const data = await resp.json();
+
+    const topBuy = (data.accumulation ?? []).slice(0, 10).map((a: Record<string, unknown>) => ({
+      ticker: a.stock_code, net: Math.round(Number(a.net_value ?? 0) / 1e6), // dalam Miliar
+    }));
+    const topSell = (data.distribution ?? []).slice(0, 10).map((d: Record<string, unknown>) => ({
+      ticker: d.stock_code, net: Math.round(Number(d.net_value ?? 0) / 1e6),
+    }));
+    const weekNet = topBuy.reduce((s: number, b: { net: number }) => s + b.net, 0) +
+                    topSell.reduce((s: number, d: { net: number }) => s + d.net, 0);
+
+    return { date: data.date, weekNet, mtdNet: null, ytdNet: null, topBuy, topSell };
+  } catch (e) {
+    console.error("foreign flow error:", e);
+    return null;
+  }
+}
+
+/** Read manual overrides (BI Rate, trade balance, etc.) */
+function readManualData() {
+  const manualPath = join(process.cwd(), "data", "manual-market.json");
+  if (!existsSync(manualPath)) return {};
+  try {
+    return JSON.parse(readFileSync(manualPath, "utf-8"));
+  } catch { return {}; }
 }
 
 export async function GET() {
   const timestamp = new Date().toISOString();
 
   try {
-    // Load manual data (BI Rate, Foreign Flow, Trade Balance)
-    const manualData = loadManualData();
-
-    // ── Build the full ticker list for the indonesia scanner (one round-trip) ──
     const indexKeys = ["COMPOSITE", "LQ45", "KOMPAS100", "IDX30", ...Object.keys(SECTOR_INDICES)];
     const indexTickers = indexKeys.map((k) => `IDX:${k}`);
     const basketTickers = Object.values(SECTOR_BASKETS).flatMap((b) => b.tickers.map((t) => `IDX:${t}`));
     const macroTickers = Object.values(MACRO_SYMBOLS).map((m) => m.symbol);
 
-    const [idRows, macroRows] = await Promise.all([
+    const [idRows, macroRows, foreignFlow, manualData] = await Promise.all([
       scan(INDONESIA_SCANNER, [...indexTickers, ...basketTickers], COLUMNS),
       scan(GLOBAL_SCANNER, macroTickers, ["name", "close", "change", "change_abs"]),
+      fetchForeignFlow(),
+      readManualData(),
     ]);
 
-    // ── IHSG composite ──
     const ihsg = idRows.get("IDX:COMPOSITE") ?? null;
     const ihsgQuote = ihsg ? buildQuote(ihsg) : null;
+    const buildSub = (sym: string) => { const row = idRows.get(sym); return row ? buildQuote(row) : null; };
 
-    // ── Sub-indices ──
-    const buildSub = (sym: string) => {
-      const row = idRows.get(sym);
-      return row ? buildQuote(row) : null;
-    };
-
-    // ── Sectors ──
     const sectors: Array<QuoteData & { code: string; name: string; type: "index" | "basket"; components?: number }> = [];
     for (const [code, name] of Object.entries(SECTOR_INDICES)) {
       const row = idRows.get(`IDX:${code}`);
@@ -248,7 +183,6 @@ export async function GET() {
       if (agg.close != null) sectors.push({ code, name: def.name, type: "basket", ...agg });
     }
 
-    // ── Macro ──
     const macro: Record<string, { label: string; close: number | null; change: number | null }> = {};
     for (const [key, def] of Object.entries(MACRO_SYMBOLS)) {
       const row = macroRows.get(def.symbol);
@@ -260,27 +194,13 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        timestamp,
-        ok: ihsgQuote != null,
+        timestamp, ok: ihsgQuote != null,
         ihsg: ihsgQuote,
-        lq45: buildSub("IDX:LQ45"),
-        kompas100: buildSub("IDX:KOMPAS100"),
-        idx30: buildSub("IDX:IDX30"),
-        sectors,
-        macro,
-        // Include manual data in response
-        manualData: {
-          biRate: manualData.biRate,
-          tradeBalance: manualData.tradeBalance,
-          foreignFlow: manualData.foreignFlow,
-        },
-        coverage: { 
-          ihsg: !!ihsgQuote, 
-          sectorIndices: indexCount, 
-          sectorBaskets: basketCount, 
-          macro: Object.keys(macro).length,
-          manualDataSources: Object.keys(manualData).length,
-        },
+        lq45: buildSub("IDX:LQ45"), kompas100: buildSub("IDX:KOMPAS100"), idx30: buildSub("IDX:IDX30"),
+        sectors, macro,
+        foreignFlow, // auto from Tradersaham!
+        manualData,  // BI Rate, trade balance (cron-updated)
+        coverage: { ihsg: !!ihsgQuote, sectorIndices: indexCount, sectorBaskets: basketCount, macro: Object.keys(macro).length },
       },
       { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120" } }
     );
