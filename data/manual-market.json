@@ -1,6 +1,6 @@
 {
   "biRate": {
-    "value": 5.50,
+    "value": 5.5,
     "note": "BI RDG - auto from TradingEconomics",
     "lastUpdated": null
   },
@@ -10,23 +10,94 @@
     "lastUpdated": null
   },
   "foreignFlow": {
-    "weekNet": 0,
-    "mtdNet": 0,
-    "ytdNet": 0,
+    "date": "2026-06-17T00:00:00.000Z",
+    "weekNet": 95780,
+    "mtdNet": null,
+    "ytdNet": null,
     "topBuy": [
-      { "ticker": "BBCA", "net": 0 },
-      { "ticker": "BMRI", "net": 0 },
-      { "ticker": "TLKM", "net": 0 },
-      { "ticker": "BBRI", "net": 0 },
-      { "ticker": "BBNI", "net": 0 }
+      {
+        "ticker": "BBRI",
+        "net": 458769
+      },
+      {
+        "ticker": "BBCA",
+        "net": 366138
+      },
+      {
+        "ticker": "MAPI",
+        "net": 67639
+      },
+      {
+        "ticker": "ANTM",
+        "net": 38868
+      },
+      {
+        "ticker": "TINS",
+        "net": 33993
+      },
+      {
+        "ticker": "AMMN",
+        "net": 17547
+      },
+      {
+        "ticker": "EXCL",
+        "net": 14216
+      },
+      {
+        "ticker": "AKRA",
+        "net": 13587
+      },
+      {
+        "ticker": "INDF",
+        "net": 13320
+      },
+      {
+        "ticker": "HRTA",
+        "net": 12565
+      }
     ],
     "topSell": [
-      { "ticker": "ADRO", "net": 0 },
-      { "ticker": "MDKA", "net": 0 },
-      { "ticker": "INDF", "net": 0 },
-      { "ticker": "ANTM", "net": 0 },
-      { "ticker": "PTBA", "net": 0 }
+      {
+        "ticker": "TPIA",
+        "net": -345014
+      },
+      {
+        "ticker": "BRMS",
+        "net": -100284
+      },
+      {
+        "ticker": "DSSA",
+        "net": -99851
+      },
+      {
+        "ticker": "BUMI",
+        "net": -90918
+      },
+      {
+        "ticker": "KLBF",
+        "net": -76397
+      },
+      {
+        "ticker": "ASII",
+        "net": -73297
+      },
+      {
+        "ticker": "CUAN",
+        "net": -53767
+      },
+      {
+        "ticker": "AMRT",
+        "net": -35450
+      },
+      {
+        "ticker": "EMAS",
+        "net": -34879
+      },
+      {
+        "ticker": "BUKA",
+        "net": -31004
+      }
     ],
-    "lastUpdated": null
+    "fetchedAt": "2026-06-17T16:01:25.116531+00:00"
   }
 }
