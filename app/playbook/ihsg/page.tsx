@@ -388,33 +388,7 @@ export default function IHSGDashboard() {
           )}
         </div>
 
-        {/* MARKET SUMMARY */}
-        <div className="card-luxury p-8 mt-8">
-          <h2 className="font-heading text-xl text-[#F4EFE6] mb-4 font-medium">Market Summary</h2>
-          <div className="space-y-3 text-sm text-[#B8AA96] font-light leading-relaxed">
-            <p>
-              <span className="text-[#F4EFE6] font-medium">Trend:</span> IHSG {fmtNum(ihsgClose)} ({fmtPct(ihsg.change)}). {trendRegime.label} signal.{" "}
-              {ihsg.sma50 != null && `MA50 ${fmtNum(ihsg.sma50)}, `}{ihsg.sma200 != null && `MA200 ${fmtNum(ihsg.sma200)}. `}
-              RSI {rsi.label}. {ihsg.perfYTD != null && `YTD ${fmtPct(ihsg.perfYTD)}.`}
-            </p>
-            {ff && (
-              <p>
-                <span className="text-[#F4EFE6] font-medium">Foreign Flow:</span>{" "}
-                {ff.weekNet >= 0 ? "Net buy" : "Net sell"} ({fmtMiliar(ff.weekNet)}) hari ini.
-                Top buy: {ff.topBuy.slice(0, 3).map((b) => b.ticker).join(", ")}. Top sell: {ff.topSell.slice(0, 3).map((s) => s.ticker).join(", ")}.
-              </p>
-            )}
-            <p>
-              <span className="text-[#F4EFE6] font-medium">Macro:</span>{" "}
-              {data?.macro?.USDIDR?.close != null && `USD/IDR ${fmtNum(data.macro.USDIDR.close)}, `}
-              {data?.macro?.GOLD?.close != null && `Gold $${fmtNum(data.macro.GOLD.close)}, `}
-              {data?.macro?.UKOIL?.close != null && `Brent $${fmtNum(data.macro.UKOIL.close, 2)}, `}
-              {data?.macro?.US10Y?.close != null && `US10Y ${data.macro.US10Y.close.toFixed(2)}%. `}
-              BI Rate {(manual.biRate?.value ?? 5.50).toFixed(2)}%.
-            </p>
 
-          </div>
-        </div>
       </div>
       <Footer />
     </div>
