@@ -8,6 +8,11 @@
  *   - The server route caches for 60s (s-maxage) so concurrent clients share one TradingView hit.
  *   - Falls back gracefully to FALLBACK constants when the network/scanner is down, so the
  *     dashboard never renders empty.
+ *
+ * MANUAL DATA:
+ *   - BI Rate, Trade Balance, Foreign Flow are stored in data/manual-market.json
+ *   - Auto-updated via cron (scripts/update-bi-rate.py) for BI Rate
+ *   - Manual update via POST /api/market/manual endpoint
  */
 
 export interface Quote {
@@ -40,6 +45,21 @@ export interface MacroQuote {
   change: number | null;
 }
 
+export interface ForeignFlowData {
+  weekNet: number;
+  mtdNet: number;
+  ytdNet: number;
+  topBuy: Array<{ ticker: string; net: number }>;
+  topSell: Array<{ ticker: string; net: number }>;
+  lastUpdated: string | null;
+}
+
+export interface ManualData {
+  biRate: { value: number; note: string; lastUpdated: string | null };
+  tradeBalance: { value: number; note: string; lastUpdated: string | null };
+  foreignFlow: ForeignFlowData;
+}
+
 export interface MarketData {
   timestamp: string;
   ok: boolean;
@@ -49,46 +69,40 @@ export interface MarketData {
   idx30: Quote | null;
   sectors: SectorQuote[];
   macro: Record<string, MacroQuote>;
+  manualData?: ManualData;
   coverage?: {
     ihsg: boolean;
     sectorIndices: number;
     sectorBaskets: number;
     macro: number;
+    manualDataSources: number;
   };
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
-   MANUAL OVERRIDES — data TradingView's free scanner does NOT provide.
-   Update these when you (or Hermes) wire up a richer source.
-   These are "soft" values shown alongside the live numbers and clearly
-   marked as manually maintained in the UI.
+   FALLBACK DATA — used when API is unreachable or manual data not available
    ────────────────────────────────────────────────────────────────────────── */
-export const MARKET_OVERRIDES = {
-  /** Bank Indonesia 7-day reverse repo rate. Update after each RDG meeting. */
-  biRate: { value: 5.25, note: "Last: update after BI RDG" },
-  /** Monthly trade balance in USD billions (BPS / BEI). */
-  tradeBalance: { value: 3.32, note: "Surplus" },
-  /** Foreign flow in IDR millions. Update weekly from BEI RTI / idx.co.id summary. */
+
+export const FALLBACK_MANUAL_DATA: ManualData = {
+  biRate: { value: 5.50, note: "BI RDG", lastUpdated: null },
+  tradeBalance: { value: 3.32, note: "Surplus", lastUpdated: null },
   foreignFlow: {
-    weekNet: 1240,
-    mtdNet: -3800,
-    ytdNet: -52400,
+    weekNet: 0,
+    mtdNet: 0,
+    ytdNet: 0,
     topBuy: [
-      { ticker: "BBCA", net: 450 },
-      { ticker: "BMRI", net: 312 },
-      { ticker: "TLKM", net: 185 },
-      { ticker: "BBRI", net: 142 },
-      { ticker: "BBNI", net: 98 },
+      { ticker: "BBCA", net: 0 }, { ticker: "BMRI", net: 0 },
+      { ticker: "TLKM", net: 0 }, { ticker: "BBRI", net: 0 },
+      { ticker: "BBNI", net: 0 },
     ],
     topSell: [
-      { ticker: "ADRO", net: -285 },
-      { ticker: "MDKA", net: -198 },
-      { ticker: "INDF", net: -156 },
-      { ticker: "ANTM", net: -132 },
-      { ticker: "PTBA", net: -108 },
+      { ticker: "ADRO", net: 0 }, { ticker: "MDKA", net: 0 },
+      { ticker: "INDF", net: 0 }, { ticker: "ANTM", net: 0 },
+      { ticker: "PTBA", net: 0 },
     ],
+    lastUpdated: null,
   },
-} as const;
+};
 
 /* ── Static structural data (sector weights are fixed by IDX methodology) ── */
 export const SECTOR_META: Record<string, { weight: number; color: string }> = {
@@ -175,6 +189,11 @@ export async function fetchMarketData(): Promise<MarketData> {
   const res = await fetch("/api/market", { cache: "no-store" });
   if (!res.ok) throw new Error("market fetch failed");
   return res.json();
+}
+
+/** Helper to get manual data with fallback */
+export function getManualData(data: MarketData | null): ManualData {
+  return data?.manualData ?? FALLBACK_MANUAL_DATA;
 }
 
 /** Is the IDX currently in trading hours (Mon–Fri 09:00–15:50 WIB / UTC+7)? */

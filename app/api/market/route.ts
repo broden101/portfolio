@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { readFileSync, existsSync } from "fs";
+import { join } from "path";
 
 /**
  * /api/market — Realtime IHSG dashboard data
@@ -6,14 +8,14 @@ import { NextResponse } from "next/server";
  * Sources (all free, no API key needed):
  *   - TradingView indonesia scanner  → IHSG composite + IDX sector indices + bellwether stocks
  *   - TradingView global scanner     → USD/IDR, Gold, Brent Oil, US 10Y/2Y yields
+ *   - data/manual-market.json        → BI Rate, Trade Balance, Foreign Flow (auto + manual)
  *
  * Cache: 60s server-side (s-maxage), 120s stale-while-revalidate.
  * The client polls every 60s (see lib/market.ts) so data stays fresh during market hours.
  *
- * NOTE for future agent (Hermes): foreign-flow (net buy/sell per stock), BI Rate, and
- * trade balance are NOT available from TradingView's free scanner. They are kept as a
- * separate manual config (MARKET_OVERRIDES in lib/market.ts). Plug in a specialized
- * source (e.g. IDX RTI / Refinitiv) there when available.
+ * Manual data is stored in data/manual-market.json and can be updated via:
+ *   - Cron job (scripts/update-bi-rate.py for auto BI Rate)
+ *   - POST /api/market/manual endpoint (for foreign flow, trade balance)
  */
 
 const INDONESIA_SCANNER = "https://scanner.tradingview.com/indonesia/scan";
@@ -22,6 +24,8 @@ const TV_HEADERS: Record<string, string> = {
   "User-Agent": "Mozilla/5.0 (compatible; RagaPlaybook/1.0)",
   "Content-Type": "application/json",
 };
+
+const MANUAL_DATA_FILE = join(process.cwd(), "data", "manual-market.json");
 
 /* ── IDX sector indices that resolve directly in the scanner ── */
 const SECTOR_INDICES: Record<string, string> = {
@@ -154,6 +158,37 @@ function aggregateBasket(rows: RawRow[]): QuoteData & { components: number } {
   };
 }
 
+/** Load manual data from file (BI Rate, Foreign Flow, Trade Balance) */
+function loadManualData() {
+  try {
+    if (existsSync(MANUAL_DATA_FILE)) {
+      const raw = readFileSync(MANUAL_DATA_FILE, "utf-8");
+      return JSON.parse(raw);
+    }
+  } catch (e) {
+    console.error("Failed to load manual market data:", e);
+  }
+  // Fallback defaults
+  return {
+    biRate: { value: 5.50, note: "BI RDG", lastUpdated: null },
+    tradeBalance: { value: 3.32, note: "Surplus", lastUpdated: null },
+    foreignFlow: {
+      weekNet: 0, mtdNet: 0, ytdNet: 0,
+      topBuy: [
+        { ticker: "BBCA", net: 0 }, { ticker: "BMRI", net: 0 },
+        { ticker: "TLKM", net: 0 }, { ticker: "BBRI", net: 0 },
+        { ticker: "BBNI", net: 0 },
+      ],
+      topSell: [
+        { ticker: "ADRO", net: 0 }, { ticker: "MDKA", net: 0 },
+        { ticker: "INDF", net: 0 }, { ticker: "ANTM", net: 0 },
+        { ticker: "PTBA", net: 0 },
+      ],
+      lastUpdated: null,
+    },
+  };
+}
+
 async function scan(endpoint: string, tickers: string[], columns: string[]): Promise<Map<string, RawRow>> {
   const out = new Map<string, RawRow>();
   if (tickers.length === 0) return out;
@@ -177,6 +212,9 @@ export async function GET() {
   const timestamp = new Date().toISOString();
 
   try {
+    // Load manual data (BI Rate, Foreign Flow, Trade Balance)
+    const manualData = loadManualData();
+
     // ── Build the full ticker list for the indonesia scanner (one round-trip) ──
     const indexKeys = ["COMPOSITE", "LQ45", "KOMPAS100", "IDX30", ...Object.keys(SECTOR_INDICES)];
     const indexTickers = indexKeys.map((k) => `IDX:${k}`);
@@ -230,7 +268,19 @@ export async function GET() {
         idx30: buildSub("IDX:IDX30"),
         sectors,
         macro,
-        coverage: { ihsg: !!ihsgQuote, sectorIndices: indexCount, sectorBaskets: basketCount, macro: Object.keys(macro).length },
+        // Include manual data in response
+        manualData: {
+          biRate: manualData.biRate,
+          tradeBalance: manualData.tradeBalance,
+          foreignFlow: manualData.foreignFlow,
+        },
+        coverage: { 
+          ihsg: !!ihsgQuote, 
+          sectorIndices: indexCount, 
+          sectorBaskets: basketCount, 
+          macro: Object.keys(macro).length,
+          manualDataSources: Object.keys(manualData).length,
+        },
       },
       { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120" } }
     );

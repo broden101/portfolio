@@ -1,0 +1,32 @@
+{
+  "biRate": {
+    "value": 5.50,
+    "note": "BI RDG - auto from TradingEconomics",
+    "lastUpdated": null
+  },
+  "tradeBalance": {
+    "value": 3.32,
+    "note": "Surplus",
+    "lastUpdated": null
+  },
+  "foreignFlow": {
+    "weekNet": 0,
+    "mtdNet": 0,
+    "ytdNet": 0,
+    "topBuy": [
+      { "ticker": "BBCA", "net": 0 },
+      { "ticker": "BMRI", "net": 0 },
+      { "ticker": "TLKM", "net": 0 },
+      { "ticker": "BBRI", "net": 0 },
+      { "ticker": "BBNI", "net": 0 }
+    ],
+    "topSell": [
+      { "ticker": "ADRO", "net": 0 },
+      { "ticker": "MDKA", "net": 0 },
+      { "ticker": "INDF", "net": 0 },
+      { "ticker": "ANTM", "net": 0 },
+      { "ticker": "PTBA", "net": 0 }
+    ],
+    "lastUpdated": null
+  }
+}

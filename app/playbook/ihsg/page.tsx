@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
   fetchMarketData,
+  getManualData,
   recommendLabel,
   rsiLabel,
   fmtPct,
@@ -14,9 +15,10 @@ import {
   IHSG_FALLBACK,
   KEY_LEVELS_FALLBACK,
   SECTOR_META,
-  MARKET_OVERRIDES,
+  FALLBACK_MANUAL_DATA,
   type MarketData,
   type Quote,
+  type ManualData,
 } from "@/lib/market";
 
 type PerfTab = "Day" | "Week" | "1M" | "YTD";
@@ -82,6 +84,9 @@ export default function IHSGDashboard() {
 
   const marketOpen = isMarketOpen();
 
+  /* ── Manual data (BI Rate, Foreign Flow, Trade Balance) from API or fallback ── */
+  const manual: ManualData = data?.manualData ?? FALLBACK_MANUAL_DATA;
+
   /* ── Macro bar: live macro + manually-maintained BI rate & trade balance ── */
   const macroRows = useMemo(() => {
     const m = data?.macro ?? {};
@@ -106,10 +111,10 @@ export default function IHSGDashboard() {
       },
       {
         label: "BI Rate",
-        value: `${MARKET_OVERRIDES.biRate.value.toFixed(2)}%`,
+        value: `${manual.biRate.value.toFixed(2)}%`,
         change: "Manual",
         up: true,
-        note: MARKET_OVERRIDES.biRate.note,
+        note: manual.biRate.note,
       },
       {
         label: "US 10Y",
@@ -141,9 +146,9 @@ export default function IHSGDashboard() {
       },
       {
         label: "Trade Bal",
-        value: `$${MARKET_OVERRIDES.tradeBalance.value.toFixed(2)}B`,
-        change: MARKET_OVERRIDES.tradeBalance.note,
-        up: MARKET_OVERRIDES.tradeBalance.value >= 0,
+        value: `$${manual.tradeBalance.value.toFixed(2)}B`,
+        change: manual.tradeBalance.note,
+        up: manual.tradeBalance.value >= 0,
         note: "Manual",
       },
     ];
@@ -262,9 +267,9 @@ export default function IHSGDashboard() {
 
             <div className="grid grid-cols-3 gap-3 mb-5">
               {[
-                { label: "Week", value: MARKET_OVERRIDES.foreignFlow.weekNet, color: MARKET_OVERRIDES.foreignFlow.weekNet >= 0 ? "text-emerald-400" : "text-red-400" },
-                { label: "MTD", value: MARKET_OVERRIDES.foreignFlow.mtdNet, color: MARKET_OVERRIDES.foreignFlow.mtdNet >= 0 ? "text-emerald-400" : "text-red-400" },
-                { label: "YTD", value: MARKET_OVERRIDES.foreignFlow.ytdNet, color: MARKET_OVERRIDES.foreignFlow.ytdNet >= 0 ? "text-emerald-400" : "text-red-400" },
+                { label: "Week", value: manual.foreignFlow.weekNet, color: manual.foreignFlow.weekNet >= 0 ? "text-emerald-400" : "text-red-400" },
+                { label: "MTD", value: manual.foreignFlow.mtdNet, color: manual.foreignFlow.mtdNet >= 0 ? "text-emerald-400" : "text-red-400" },
+                { label: "YTD", value: manual.foreignFlow.ytdNet, color: manual.foreignFlow.ytdNet >= 0 ? "text-emerald-400" : "text-red-400" },
               ].map((f) => (
                 <div key={f.label} className="border border-[#2C261E] p-3 text-center">
                   <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{f.label}</div>
@@ -277,7 +282,7 @@ export default function IHSGDashboard() {
               <div>
                 <div className="text-emerald-400/70 text-[10px] tracking-[0.1em] uppercase mb-2">Top Net Buy</div>
                 <div className="space-y-1.5">
-                  {MARKET_OVERRIDES.foreignFlow.topBuy.map((b) => (
+                  {manual.foreignFlow.topBuy.map((b) => (
                     <div key={b.ticker} className="flex justify-between items-center">
                       <span className="text-[#F4EFE6] text-xs font-mono">{b.ticker}</span>
                       <span className="text-emerald-400 text-[10px] font-mono">+{b.net}</span>
@@ -288,7 +293,7 @@ export default function IHSGDashboard() {
               <div>
                 <div className="text-red-400/70 text-[10px] tracking-[0.1em] uppercase mb-2">Top Net Sell</div>
                 <div className="space-y-1.5">
-                  {MARKET_OVERRIDES.foreignFlow.topSell.map((s) => (
+                  {manual.foreignFlow.topSell.map((s) => (
                     <div key={s.ticker} className="flex justify-between items-center">
                       <span className="text-[#F4EFE6] text-xs font-mono">{s.ticker}</span>
                       <span className="text-red-400 text-[10px] font-mono">{s.net}</span>
@@ -458,8 +463,8 @@ export default function IHSGDashboard() {
               RSI {rsi.label}. {ihsg.perfYTD != null && `YTD ${fmtPct(ihsg.perfYTD)}.`}
             </p>
             <p>
-              <span className="text-[#F4EFE6] font-medium">Foreign Flow:</span> Minggu ini asing {MARKET_OVERRIDES.foreignFlow.weekNet >= 0 ? "net buy" : "net sell"} ({fmtMiliar(MARKET_OVERRIDES.foreignFlow.weekNet)}),
-              YTD {fmtMiliar(MARKET_OVERRIDES.foreignFlow.ytdNet)}.
+              <span className="text-[#F4EFE6] font-medium">Foreign Flow:</span> Minggu ini asing {manual.foreignFlow.weekNet >= 0 ? "net buy" : "net sell"} ({fmtMiliar(manual.foreignFlow.weekNet)}),
+              YTD {fmtMiliar(manual.foreignFlow.ytdNet)}.
             </p>
             <p>
               <span className="text-[#F4EFE6] font-medium">Macro:</span>{" "}
@@ -467,10 +472,10 @@ export default function IHSGDashboard() {
               {data?.macro?.GOLD?.close != null && `Gold $${fmtNum(data.macro.GOLD.close)}, `}
               {data?.macro?.UKOIL?.close != null && `Brent $${fmtNum(data.macro.UKOIL.close, 2)}, `}
               {data?.macro?.US10Y?.close != null && `US10Y ${data.macro.US10Y.close.toFixed(2)}%. `}
-              BI Rate {MARKET_OVERRIDES.biRate.value.toFixed(2)}%.
+              BI Rate {manual.biRate.value.toFixed(2)}%.
             </p>
             <p className="text-[#B8AA96]/40 text-[10px] pt-2 border-t border-[#2C261E]/50">
-              Data: TradingView scanner (realtime, poll 60s). Foreign flow, BI Rate & trade balance di-maintain manual di <code className="text-[#C6A15B]/70">lib/market.ts → MARKET_OVERRIDES</code>.
+              Data: TradingView scanner (realtime, poll 60s). Foreign flow, BI Rate & trade balance di-maintain manual di <code className="text-[#C6A15B]/70">lib/market.ts → FALLBACK_MANUAL_DATA (auto-updated via /api/market/manual)</code>.
             </p>
           </div>
         </div>
