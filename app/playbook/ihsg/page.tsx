@@ -258,7 +258,7 @@ export default function IHSGDashboard() {
     const unique = Array.from(uniqueMap.values());
     const topBuy = [...unique].sort((a, b) => b.net_value - a.net_value).slice(0, 10);
     const topSell = [...unique].sort((a, b) => a.net_value - b.net_value).slice(0, 10);
-    const topActive = [...unique].sort((a, b) => (b.total_buy_volume + b.total_sell_volume) - (a.total_buy_volume + a.total_sell_volume)).slice(0, 10);
+    const topActive = [...unique].sort((a, b) => ((b.total_buy_volume + b.total_sell_volume) * b.close_price) - ((a.total_buy_volume + a.total_sell_volume) * a.close_price)).slice(0, 10);
     return { topBuy, topSell, topActive };
   }, [ff]);
 
@@ -662,9 +662,7 @@ export default function IHSGDashboard() {
                           <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium w-8">#</th>
                           <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Saham</th>
                           <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Harga</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Vol Beli</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Vol Jual</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Total Vol</th>
+                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Value (Rp)</th>
                         </tr>
                       </thead>
                       <tbody className="font-mono">
@@ -673,9 +671,7 @@ export default function IHSGDashboard() {
                             <td className="py-1.5 text-[#B8AA96]/50">{i + 1}</td>
                             <td className="py-1.5 text-[#F4EFE6] font-sans font-medium">{s.stock_code}</td>
                             <td className="py-1.5 text-right text-[#B8AA96]/70">{s.close_price > 0 ? s.close_price.toLocaleString("id-ID") : "—"}</td>
-                            <td className="py-1.5 text-right text-emerald-400/70">{(s.total_buy_volume / 1e6).toFixed(1)}M</td>
-                            <td className="py-1.5 text-right text-red-400/70">{(s.total_sell_volume / 1e6).toFixed(1)}M</td>
-                            <td className="py-1.5 text-right text-[#F4EFE6] font-medium">{((s.total_buy_volume + s.total_sell_volume) / 1e6).toFixed(1)}M</td>
+                            <td className="py-1.5 text-right text-[#F4EFE6] font-medium">{(((s.total_buy_volume + s.total_sell_volume) * s.close_price) / 1e9).toFixed(1)}T</td>
                           </tr>
                         ))}
                       </tbody>
