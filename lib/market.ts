@@ -25,6 +25,12 @@ export interface Quote {
   perf1Y: number | null;
   high: number | null;
   low: number | null;
+  high6M: number | null;
+  low6M: number | null;
+  high3M: number | null;
+  low3M: number | null;
+  high1M: number | null;
+  low1M: number | null;
 }
 
 export interface SectorQuote extends Quote {
@@ -117,6 +123,7 @@ export const IHSG_FALLBACK: Quote = {
   perfWeek: 8.3, perf1M: -6.16, perf3M: -12.5,
   perfYTD: -29.4, perf1Y: -15.2,
   high: 9174, low: 5408,
+  high6M: 9174, low6M: 5318, high3M: 7774, low3M: 5318, high1M: 6460, low1M: 5318,
 };
 
 /* ── Fallback manual data ── */

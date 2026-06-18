@@ -50,6 +50,7 @@ const COLUMNS = [
   "Recommend.All", "RSI", "SMA20", "SMA50", "SMA100", "SMA200",
   "Perf.W", "Perf.1M", "Perf.3M", "Perf.YTD", "Perf.Y",
   "high", "low",
+  "High.6M", "Low.6M", "High.3M", "Low.3M", "High.1M", "Low.1M",
 ];
 
 interface RawRow { s: string; d: (string | number | null)[]; }
@@ -66,6 +67,9 @@ interface QuoteData {
   perfWeek: number | null; perf1M: number | null; perf3M: number | null;
   perfYTD: number | null; perf1Y: number | null;
   high: number | null; low: number | null;
+  high6M: number | null; low6M: number | null;
+  high3M: number | null; low3M: number | null;
+  high1M: number | null; low1M: number | null;
 }
 
 function buildQuote(row: RawRow): QuoteData {
@@ -76,6 +80,7 @@ function buildQuote(row: RawRow): QuoteData {
     perfWeek: num(d[12]), perf1M: num(d[13]), perf3M: num(d[14]),
     perfYTD: num(d[15]), perf1Y: num(d[16]),
     high: num(d[17]), low: num(d[18]),
+    high6M: num(d[19]), low6M: num(d[20]), high3M: num(d[21]), low3M: num(d[22]), high1M: num(d[23]), low1M: num(d[24]),
   };
 }
 
@@ -91,6 +96,7 @@ function aggregateBasket(rows: RawRow[]): QuoteData & { components: number } {
     perfWeek: avg(12), perf1M: avg(13), perf3M: avg(14),
     perfYTD: avg(15), perf1Y: avg(16),
     high: avg(17), low: avg(18),
+    high6M: avg(19), low6M: avg(20), high3M: avg(21), low3M: avg(22), high1M: avg(23), low1M: avg(24),
     components: valid.length,
   };
 }

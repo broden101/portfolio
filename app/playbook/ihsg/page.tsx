@@ -174,40 +174,59 @@ export default function IHSGDashboard() {
   // Dynamic key levels from IHSG price data
   const keyLevels = useMemo(() => {
     const price = ihsgClose;
-    const high52 = ihsg.high ?? price * 1.2;
-    const low52 = ihsg.low ?? price * 0.7;
 
-    // Support: -3%, -7%
-    const support = [
-      Math.round(price * 0.97),  // S1: -3%
-      Math.round(price * 0.93),  // S2: -7%
-    ].sort((a, b) => b - a); // descending (highest support first)
-    // Resistance: R1 (+3%), R2 (+7%) — sorted descending (highest first for display)
-    const resistance = [
-      Math.round(price * 1.03),  // R1: +3%
-      Math.round(price * 1.07),  // R2: +7%
-    ].sort((a, b) => b - a); // descending — R2 on top, R1 below
+    // Fibonacci retracement from swing data
+    const fibRatios = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1.0];
+    const fibLabels = ["0%", "23.6%", "38.2%", "50%", "61.8%", "78.6%", "100%"];
 
-    // Gap levels: psychological round numbers near current price
-    const roundLevels: number[] = [];
-    const step = price > 5000 ? 500 : 100;
-    const start = Math.floor(low52 / step) * step;
-    const end = Math.ceil(high52 / step) * step;
-    for (let lvl = start; lvl <= end; lvl += step) {
-      // Only include levels that aren't too close to current price or other levels
-      const distFromPrice = Math.abs(lvl - price) / price;
-      if (distFromPrice > 0.02 && distFromPrice < 0.25) {
-        roundLevels.push(lvl);
-      }
-    }
-    // Also include MA20, MA50, MA200 as gap levels if they exist and are distinct
+    // Build fib levels from all available swings
+    type FibLevel = { value: number; label: string; swing: string };
+    const allFibs: FibLevel[] = [];
+
+    const addSwing = (high: number | null, low: number | null, swingName: string) => {
+      if (high == null || low == null || high <= low) return;
+      const diff = high - low;
+      fibRatios.forEach((ratio, i) => {
+        const val = Math.round(high - diff * ratio);
+        allFibs.push({ value: val, label: `${fibLabels[i]} ${swingName}`, swing: swingName });
+      });
+    };
+
+    addSwing(ihsg.high6M, ihsg.low6M, "6B");
+    addSwing(ihsg.high3M, ihsg.low3M, "3B");
+    addSwing(ihsg.high1M, ihsg.low1M, "1B");
+
+    // Deduplicate by value (keep first label)
+    const seen = new Set<number>();
+    const uniqueFibs = allFibs.filter((f) => {
+      if (seen.has(f.value)) return false;
+      seen.add(f.value);
+      return true;
+    });
+
+    // Pick nearest 2 resistance (above price) and 2 support (below price)
+    const above = uniqueFibs.filter((f) => f.value > price * 1.005).sort((a, b) => a.value - b.value);
+    const below = uniqueFibs.filter((f) => f.value < price * 0.995).sort((a, b) => b.value - a.value);
+
+    const resistance = above.slice(0, 2).map((f) => ({ value: f.value, label: f.label })).reverse(); // descending for display
+    const support = below.slice(0, 2).map((f) => ({ value: f.value, label: f.label })); // descending (highest first)
+
+    // Gap levels: Fibonacci levels as chips
+    const fibGaps = uniqueFibs
+      .filter((f) => {
+        const dist = Math.abs(f.value - price) / price;
+        return dist > 0.01 && dist < 0.25;
+      })
+      .map((f) => f.value);
+
+    // MA gaps
     const maGaps: number[] = [];
     if (ihsg.sma20 != null && Math.abs(ihsg.sma20 - price) / price > 0.01) maGaps.push(Math.round(ihsg.sma20));
     if (ihsg.sma50 != null && Math.abs(ihsg.sma50 - price) / price > 0.02) maGaps.push(Math.round(ihsg.sma50));
     if (ihsg.sma100 != null && Math.abs(ihsg.sma100 - price) / price > 0.02) maGaps.push(Math.round(ihsg.sma100));
     if (ihsg.sma200 != null && Math.abs(ihsg.sma200 - price) / price > 0.02) maGaps.push(Math.round(ihsg.sma200));
 
-    const gaps = [...new Set([...roundLevels, ...maGaps])].sort((a, b) => a - b);
+    const gaps = [...new Set([...fibGaps, ...maGaps])].sort((a, b) => a - b);
     return { support, resistance, gaps };
   }, [ihsgClose, ihsg]);
 
@@ -418,7 +437,7 @@ export default function IHSGDashboard() {
             </div>
             <div className="space-y-1.5">
               {keyLevels.resistance.map((r, i) => (
-                <LevelRow key={`r-${i}`} label={`R${keyLevels.resistance.length - i}`} value={r} tone="resistance" price={ihsgClose} />
+                <LevelRow key={`r-${i}`} label={`R${keyLevels.resistance.length - i}`} value={r.value} tone="resistance" price={ihsgClose} sub={r.label} />
               ))}
               <div className="flex items-center gap-3 py-1">
                 <span className="text-[#C6A15B] text-[10px] tracking-wider uppercase w-16">SEKARANG</span>
@@ -426,7 +445,7 @@ export default function IHSGDashboard() {
                 <span className={`text-xs font-mono font-medium ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtNum(ihsgClose)}</span>
               </div>
               {keyLevels.support.map((s, i) => (
-                <LevelRow key={`s-${i}`} label={`S${i + 1}`} value={s} tone="support" price={ihsgClose} />
+                <LevelRow key={`s-${i}`} label={`S${i + 1}`} value={s.value} tone="support" price={ihsgClose} sub={s.label} />
               ))}
               <div className="mt-2 pt-2 border-t border-[#2C261E]" />
               {ihsg.sma20 != null && <LevelRow label="MA20" value={ihsg.sma20} tone="ma-cyan" price={ihsgClose} />}
@@ -771,7 +790,7 @@ function MaRow({ label, ma, price, color }: { label: string; ma: number | null; 
   );
 }
 
-function LevelRow({ label, value, tone, price }: { label: string; value: number; tone: "support" | "resistance" | "ma-blue" | "ma-cyan" | "ma-green" | "ma-purple"; price?: number }) {
+function LevelRow({ label, value, tone, price, sub }: { label: string; value: number; tone: "support" | "resistance" | "ma-blue" | "ma-cyan" | "ma-green" | "ma-purple"; price?: number; sub?: string }) {
   const pct = price != null && price > 0 ? ((value - price) / price) * 100 : null;
   const above = price != null && value >= price;
   const tones = {
@@ -786,6 +805,7 @@ function LevelRow({ label, value, tone, price }: { label: string; value: number;
     <div className="flex items-center gap-3">
       <span className={`${tones.text} text-[10px] tracking-wider uppercase w-16`}>{label}</span>
       <div className={`flex-1 h-px ${tones.bar}`} />
+      {sub && <span className="text-[9px] text-[#B8AA96]/40 font-mono hidden sm:inline">{sub}</span>}
       <span className={`${tones.dot} text-xs font-mono`}>{fmtNum(value)}</span>
       {pct != null && (
         <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${above ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"}`}>
