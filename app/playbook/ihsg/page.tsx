@@ -176,19 +176,40 @@ export default function IHSGDashboard() {
     const price = ihsgClose;
     const high52 = ihsg.high ?? price * 1.2;
     const low52 = ihsg.low ?? price * 0.7;
-    // Fibonacci retracement from 52-week range
-    const range = high52 - low52;
+
+    // Support: -3%, -7%, 52-week low
     const support = [
       Math.round(price * 0.97),  // S1: -3%
       Math.round(price * 0.93),  // S2: -7%
       Math.round(low52),         // S3: 52-week low
     ];
+    // Resistance: +3%, +7%, 52-week high
     const resistance = [
       Math.round(price * 1.03),  // R1: +3%
       Math.round(price * 1.07),  // R2: +7%
       Math.round(high52),        // R3: 52-week high
     ];
-    return { support, resistance };
+
+    // Gap levels: psychological round numbers near current price
+    const roundLevels: number[] = [];
+    const step = price > 5000 ? 500 : 100;
+    const start = Math.floor(low52 / step) * step;
+    const end = Math.ceil(high52 / step) * step;
+    for (let lvl = start; lvl <= end; lvl += step) {
+      // Only include levels that aren't too close to current price or other levels
+      const distFromPrice = Math.abs(lvl - price) / price;
+      if (distFromPrice > 0.02 && distFromPrice < 0.25) {
+        roundLevels.push(lvl);
+      }
+    }
+    // Also include MA20, MA50, MA200 as gap levels if they exist and are distinct
+    const maGaps: number[] = [];
+    if (ihsg.sma20 != null && Math.abs(ihsg.sma20 - price) / price > 0.01) maGaps.push(Math.round(ihsg.sma20));
+    if (ihsg.sma50 != null && Math.abs(ihsg.sma50 - price) / price > 0.02) maGaps.push(Math.round(ihsg.sma50));
+    if (ihsg.sma200 != null && Math.abs(ihsg.sma200 - price) / price > 0.02) maGaps.push(Math.round(ihsg.sma200));
+
+    const gaps = [...new Set([...roundLevels, ...maGaps])].sort((a, b) => a - b);
+    return { support, resistance, gaps };
   }, [ihsgClose, ihsg]);
 
   const rollingNetFlow = useMemo(() => {
@@ -283,6 +304,7 @@ export default function IHSGDashboard() {
               {[
                 { label: "Tren", value: trendRegime.label, color: trendRegime.color },
                 { label: "Momentum", value: rsi.label, color: rsi.color },
+                { label: "MA20", value: ihsg.sma20 != null ? fmtNum(ihsg.sma20) : "—", color: "text-[#B8AA96]" },
                 { label: "MA50", value: ihsg.sma50 != null ? fmtNum(ihsg.sma50) : "—", color: "text-[#B8AA96]" },
                 { label: "MA200", value: ihsg.sma200 != null ? fmtNum(ihsg.sma200) : "—", color: "text-[#B8AA96]" },
                 { label: "Sinyal", value: rec.label, color: rec.color },
@@ -296,6 +318,7 @@ export default function IHSGDashboard() {
             <div className="mt-5 pt-4 border-t border-[#2C261E]">
               <div className="text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase mb-3">Posisi vs Moving Average</div>
               <div className="space-y-2">
+                <MaRow label="MA20" ma={ihsg.sma20} price={ihsgClose} color="cyan" />
                 <MaRow label="MA50" ma={ihsg.sma50} price={ihsgClose} color="blue" />
                 <MaRow label="MA200" ma={ihsg.sma200} price={ihsgClose} color="purple" />
               </div>
@@ -375,12 +398,33 @@ export default function IHSGDashboard() {
                 <div className="flex-1 h-0.5 bg-[#C6A15B]/40" />
                 <span className={`text-xs font-mono font-medium ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtNum(ihsgClose)}</span>
               </div>
+              {ihsg.sma20 != null && <LevelRow label="MA20" value={ihsg.sma20} tone="ma-cyan" />}
               {ihsg.sma50 != null && <LevelRow label="MA50" value={ihsg.sma50} tone="ma-blue" />}
               {ihsg.sma200 != null && <LevelRow label="MA200" value={ihsg.sma200} tone="ma-purple" />}
               {keyLevels.support.map((s, i) => (
                 <LevelRow key={`s-${i}`} label={`S${i + 1}`} value={s} tone="support" />
               ))}
             </div>
+            {/* Gap Levels */}
+            {keyLevels.gaps.length > 0 && (
+              <div className="mt-3 pt-3 border-t border-[#2C261E]">
+                <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Gap & Level Psikologis</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {keyLevels.gaps.map((g) => {
+                    const above = g > ihsgClose;
+                    return (
+                      <span key={g} className={`text-[10px] font-mono px-2 py-0.5 border ${
+                        above
+                          ? "border-red-400/20 text-red-400/70 bg-red-400/5"
+                          : "border-emerald-400/20 text-emerald-400/70 bg-emerald-400/5"
+                      }`}>
+                        {fmtNum(g)}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
             <div className="mt-4 pt-3 border-t border-[#2C261E]">
               <p className="text-[#B8AA96]/30 text-[9px] leading-relaxed">
                 Sumber: TradingView ({live ? "live" : "offline"}). RSI {rsi.label}. Sinyal {rec.label}. Rentang 52 minggu {fmtNum(ihsg.low)}–{fmtNum(ihsg.high)}.
@@ -654,10 +698,10 @@ export default function IHSGDashboard() {
 }
 
 /* ── Presentational helpers ── */
-function MaRow({ label, ma, price, color }: { label: string; ma: number | null; price: number; color: "blue" | "purple" }) {
+function MaRow({ label, ma, price, color }: { label: string; ma: number | null; price: number; color: "blue" | "cyan" | "purple" }) {
   const above = ma != null && price >= ma;
   const pct = ma != null && ma > 0 ? ((price - ma) / ma) * 100 : null;
-  const colorClass = color === "blue" ? "text-blue-400" : "text-purple-400";
+  const colorClass = color === "cyan" ? "text-cyan-400" : color === "blue" ? "text-blue-400" : "text-purple-400";
   return (
     <div className="flex items-center justify-between text-xs">
       <span className={`${colorClass}/70 font-mono`}>{label}</span>
@@ -673,11 +717,12 @@ function MaRow({ label, ma, price, color }: { label: string; ma: number | null; 
   );
 }
 
-function LevelRow({ label, value, tone }: { label: string; value: number; tone: "support" | "resistance" | "ma-blue" | "ma-purple" }) {
+function LevelRow({ label, value, tone }: { label: string; value: number; tone: "support" | "resistance" | "ma-blue" | "ma-cyan" | "ma-purple" }) {
   const tones = {
     support: { text: "text-emerald-400/60", dot: "text-emerald-400", bar: "bg-emerald-400/20" },
     resistance: { text: "text-red-400/60", dot: "text-red-400", bar: "bg-red-400/20" },
     "ma-blue": { text: "text-blue-400/60", dot: "text-blue-400", bar: "bg-blue-400/20" },
+    "ma-cyan": { text: "text-cyan-400/60", dot: "text-cyan-400", bar: "bg-cyan-400/20" },
     "ma-purple": { text: "text-purple-400/60", dot: "text-purple-400", bar: "bg-purple-400/20" },
   }[tone];
   return (

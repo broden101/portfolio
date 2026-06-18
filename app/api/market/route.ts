@@ -47,7 +47,7 @@ const MACRO_SYMBOLS: Record<string, { symbol: string; label: string }> = {
 
 const COLUMNS = [
   "name", "description", "close", "change", "change_abs",
-  "Recommend.All", "RSI", "SMA50", "SMA200",
+  "Recommend.All", "RSI", "SMA20", "SMA50", "SMA200",
   "Perf.W", "Perf.1M", "Perf.3M", "Perf.YTD", "Perf.Y",
   "high", "low",
 ];
@@ -62,7 +62,7 @@ function num(v: unknown): number | null {
 interface QuoteData {
   close: number | null; change: number | null; changeAbs: number | null;
   recommend: number | null; rsi: number | null;
-  sma50: number | null; sma200: number | null;
+  sma20: number | null; sma50: number | null; sma200: number | null;
   perfWeek: number | null; perf1M: number | null; perf3M: number | null;
   perfYTD: number | null; perf1Y: number | null;
   high: number | null; low: number | null;
@@ -72,10 +72,10 @@ function buildQuote(row: RawRow): QuoteData {
   const d = row.d;
   return {
     close: num(d[2]), change: num(d[3]), changeAbs: num(d[4]),
-    recommend: num(d[5]), rsi: num(d[6]), sma50: num(d[7]), sma200: num(d[8]),
-    perfWeek: num(d[9]), perf1M: num(d[10]), perf3M: num(d[11]),
-    perfYTD: num(d[12]), perf1Y: num(d[13]),
-    high: num(d[14]), low: num(d[15]),
+    recommend: num(d[5]), rsi: num(d[6]), sma20: num(d[7]), sma50: num(d[8]), sma200: num(d[9]),
+    perfWeek: num(d[10]), perf1M: num(d[11]), perf3M: num(d[12]),
+    perfYTD: num(d[13]), perf1Y: num(d[14]),
+    high: num(d[15]), low: num(d[16]),
   };
 }
 
@@ -87,10 +87,10 @@ function aggregateBasket(rows: RawRow[]): QuoteData & { components: number } {
   };
   return {
     close: avg(2), change: avg(3), changeAbs: avg(4),
-    recommend: avg(5), rsi: avg(6), sma50: avg(7), sma200: avg(8),
-    perfWeek: avg(9), perf1M: avg(10), perf3M: avg(11),
-    perfYTD: avg(12), perf1Y: avg(13),
-    high: avg(14), low: avg(15),
+    recommend: avg(5), rsi: avg(6), sma20: avg(7), sma50: avg(8), sma200: avg(9),
+    perfWeek: avg(10), perf1M: avg(11), perf3M: avg(12),
+    perfYTD: avg(13), perf1Y: avg(14),
+    high: avg(15), low: avg(16),
     components: valid.length,
   };
 }

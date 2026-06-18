@@ -13,6 +13,7 @@ export interface Quote {
   changeAbs: number | null;
   recommend: number | null;
   rsi: number | null;
+  sma20: number | null;
   sma50: number | null;
   sma200: number | null;
   perfWeek: number | null;
@@ -110,7 +111,7 @@ export const KEY_LEVELS_FALLBACK = {
 export const IHSG_FALLBACK: Quote = {
   close: 6127, change: -0.55, changeAbs: -34,
   recommend: -0.75, rsi: 23.4,
-  sma50: 7071, sma200: 7950,
+  sma20: 6400, sma50: 7071, sma200: 7950,
   perfWeek: 8.3, perf1M: -6.16, perf3M: -12.5,
   perfYTD: -29.4, perf1Y: -15.2,
   high: 9174, low: 5408,
