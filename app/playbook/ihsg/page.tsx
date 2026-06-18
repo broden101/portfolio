@@ -177,17 +177,15 @@ export default function IHSGDashboard() {
     const high52 = ihsg.high ?? price * 1.2;
     const low52 = ihsg.low ?? price * 0.7;
 
-    // Support: -3%, -7%, -15%
+    // Support: -3%, -7%
     const support = [
       Math.round(price * 0.97),  // S1: -3%
       Math.round(price * 0.93),  // S2: -7%
-      Math.round(price * 0.85),  // S3: -15%
     ].sort((a, b) => b - a); // descending (highest support first)
-    // Resistance: +3%, +7%, MA200 (or +15% fallback)
+    // Resistance: +3%, +7%
     const resistance = [
       Math.round(price * 1.03),  // R1: +3%
       Math.round(price * 1.07),  // R2: +7%
-      Math.round(ihsg.sma200 ?? price * 1.15),  // R3: MA200
     ].sort((a, b) => a - b); // ascending (lowest resistance first)
 
     // Gap levels: psychological round numbers near current price
