@@ -418,7 +418,7 @@ export default function IHSGDashboard() {
             </div>
             <div className="space-y-1.5">
               {keyLevels.resistance.map((r, i) => (
-                <LevelRow key={`r-${i}`} label={`R${keyLevels.resistance.length - i}`} value={r} tone="resistance" />
+                <LevelRow key={`r-${i}`} label={`R${keyLevels.resistance.length - i}`} value={r} tone="resistance" price={ihsgClose} />
               ))}
               <div className="flex items-center gap-3 py-1">
                 <span className="text-[#C6A15B] text-[10px] tracking-wider uppercase w-16">SEKARANG</span>
@@ -426,13 +426,13 @@ export default function IHSGDashboard() {
                 <span className={`text-xs font-mono font-medium ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtNum(ihsgClose)}</span>
               </div>
               {keyLevels.support.map((s, i) => (
-                <LevelRow key={`s-${i}`} label={`S${i + 1}`} value={s} tone="support" />
+                <LevelRow key={`s-${i}`} label={`S${i + 1}`} value={s} tone="support" price={ihsgClose} />
               ))}
               <div className="mt-2 pt-2 border-t border-[#2C261E]" />
-              {ihsg.sma20 != null && <LevelRow label="MA20" value={ihsg.sma20} tone="ma-cyan" />}
-              {ihsg.sma50 != null && <LevelRow label="MA50" value={ihsg.sma50} tone="ma-blue" />}
-              {ihsg.sma100 != null && <LevelRow label="MA100" value={ihsg.sma100} tone="ma-green" />}
-              {ihsg.sma200 != null && <LevelRow label="MA200" value={ihsg.sma200} tone="ma-purple" />}
+              {ihsg.sma20 != null && <LevelRow label="MA20" value={ihsg.sma20} tone="ma-cyan" price={ihsgClose} />}
+              {ihsg.sma50 != null && <LevelRow label="MA50" value={ihsg.sma50} tone="ma-blue" price={ihsgClose} />}
+              {ihsg.sma100 != null && <LevelRow label="MA100" value={ihsg.sma100} tone="ma-green" price={ihsgClose} />}
+              {ihsg.sma200 != null && <LevelRow label="MA200" value={ihsg.sma200} tone="ma-purple" price={ihsgClose} />}
             </div>
             {/* Gap Levels */}
             {keyLevels.gaps.length > 0 && (
@@ -771,7 +771,9 @@ function MaRow({ label, ma, price, color }: { label: string; ma: number | null; 
   );
 }
 
-function LevelRow({ label, value, tone }: { label: string; value: number; tone: "support" | "resistance" | "ma-blue" | "ma-cyan" | "ma-green" | "ma-purple" }) {
+function LevelRow({ label, value, tone, price }: { label: string; value: number; tone: "support" | "resistance" | "ma-blue" | "ma-cyan" | "ma-green" | "ma-purple"; price?: number }) {
+  const pct = price != null && price > 0 ? ((value - price) / price) * 100 : null;
+  const above = price != null && value >= price;
   const tones = {
     support: { text: "text-emerald-400/60", dot: "text-emerald-400", bar: "bg-emerald-400/20" },
     resistance: { text: "text-red-400/60", dot: "text-red-400", bar: "bg-red-400/20" },
@@ -785,6 +787,11 @@ function LevelRow({ label, value, tone }: { label: string; value: number; tone: 
       <span className={`${tones.text} text-[10px] tracking-wider uppercase w-16`}>{label}</span>
       <div className={`flex-1 h-px ${tones.bar}`} />
       <span className={`${tones.dot} text-xs font-mono`}>{fmtNum(value)}</span>
+      {pct != null && (
+        <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${above ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"}`}>
+          {above ? "▲" : "▼"} {Math.abs(pct).toFixed(1)}%
+        </span>
+      )}
     </div>
   );
 }
