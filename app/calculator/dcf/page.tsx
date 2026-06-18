@@ -358,14 +358,14 @@ export default function DCFPage() {
         {/* ─── FCFF Projection Chart ─── */}
         <div className="card-luxury p-8 mt-8">
           <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">5-Year FCFF Projection</h3>
-          <div className="flex items-end gap-4 h-48">
+          <div className="flex items-end gap-4">
             {dcf.years.map((y) => {
-              const heightPct = maxFCFF > 0 ? (Math.abs(y.fcff) / maxFCFF) * 100 : 0;
+              const heightPct = maxFCFF > 0 ? Math.min((Math.abs(y.fcff) / maxFCFF) * 100, 100) : 0;
               const isNeg = y.fcff < 0;
               return (
                 <div key={y.year} className="flex-1 flex flex-col items-center gap-2">
                   <span className="text-[10px] text-[#B8AA96]/50">{fmtT(y.fcff)}</span>
-                  <div className="w-full flex justify-center" style={{ height: "140px", alignItems: "flex-end" }}>
+                  <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
                     <div
                       className="w-full max-w-[80px] transition-all duration-500"
                       style={{
@@ -384,11 +384,11 @@ export default function DCFPage() {
             {/* Terminal bar */}
             <div className="flex-1 flex flex-col items-center gap-2">
               <span className="text-[10px] text-[#B8AA96]/50">{fmtT(dcf.pvTerminal)}</span>
-              <div className="w-full flex justify-center" style={{ height: "140px", alignItems: "flex-end" }}>
+              <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
                 <div
                   className="w-full max-w-[80px] transition-all duration-500 opacity-70"
                   style={{
-                    height: `${Math.max((dcf.pvTerminal / maxFCFF) * 100, 4)}%`,
+                    height: `${Math.min(Math.max((dcf.pvTerminal / maxFCFF) * 100, 4), 100)}%`,
                     background: "linear-gradient(to top, #8B5CF6, #A78BFA)",
                   }}
                 />
