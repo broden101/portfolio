@@ -106,7 +106,7 @@ export default function IHSGDashboard() {
 
   useEffect(() => {
     refresh();
-    intervalRef.current = setInterval(refresh, 60_000);
+    intervalRef.current = setInterval(refresh, 30_000);
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [refresh]);
 
