@@ -72,7 +72,7 @@ export interface MarketData {
   timestamp: string;
   ok: boolean;
   ihsg: Quote | null;
-  lq45: Quote | null;
+  eido: Quote | null;
   kompas100: Quote | null;
   idx30: Quote | null;
   sectors: SectorQuote[];

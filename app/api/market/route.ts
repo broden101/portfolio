@@ -42,6 +42,7 @@ const MACRO_SYMBOLS: Record<string, { symbol: string; label: string }> = {
   UKOIL: { symbol: "FX:UKOIL", label: "Brent Oil" },
   US10Y: { symbol: "TVC:US10Y", label: "US 10Y" },
   US02Y: { symbol: "TVC:US02Y", label: "US 2Y" },
+  AMEX_EIDO: { symbol: "AMEX:EIDO", label: "EIDO (iShares MSCI Indonesia)" },
 };
 
 const COLUMNS = [
@@ -123,7 +124,7 @@ export async function GET() {
   const timestamp = new Date().toISOString();
 
   try {
-    const indexKeys = ["COMPOSITE", "LQ45", "KOMPAS100", "IDX30", ...Object.keys(SECTOR_INDICES)];
+    const indexKeys = ["COMPOSITE", "KOMPAS100", "IDX30", ...Object.keys(SECTOR_INDICES)];
     const indexTickers = indexKeys.map((k) => `IDX:${k}`);
     const basketTickers = Object.values(SECTOR_BASKETS).flatMap((b) => b.tickers.map((t) => `IDX:${t}`));
     const macroTickers = Object.values(MACRO_SYMBOLS).map((m) => m.symbol);
@@ -169,7 +170,7 @@ export async function GET() {
       {
         timestamp, ok: ihsgQuote != null,
         ihsg: ihsgQuote,
-        lq45: buildSub("IDX:LQ45"), kompas100: buildSub("IDX:KOMPAS100"), idx30: buildSub("IDX:IDX30"),
+        eido: macro.AMEX_EIDO ?? null, kompas100: buildSub("IDX:KOMPAS100"), idx30: buildSub("IDX:IDX30"),
         sectors, macro,
         foreignFlow, // from VPS cron → manual-market.json
         manualData: manualDataClean, // BI Rate, trade balance

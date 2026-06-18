@@ -17,7 +17,6 @@ import {
   fmtMiliar,
   isMarketOpen,
   IHSG_FALLBACK,
-  KEY_LEVELS_FALLBACK,
   SECTOR_META,
   FALLBACK_MANUAL,
 } from "@/lib/market";
@@ -155,7 +154,7 @@ export default function IHSGDashboard() {
       { label: "US 10Y", value: us10y?.close != null ? `${us10y.close.toFixed(3)}%` : "—", change: us10y?.change != null ? fmtPct(us10y.change) : "", up: (us10y?.change ?? 0) >= 0, note: "Yield Treasury" },
       { label: "Emas", value: gold?.close != null ? `$${fmtNum(gold.close, 0)}` : "—", change: gold?.change != null ? fmtPct(gold.change) : "", up: (gold?.change ?? 0) >= 0, note: "Safe haven" },
       { label: "Minyak Brent", value: brent?.close != null ? `$${fmtNum(brent.close, 2)}` : "—", change: brent?.change != null ? fmtPct(brent.change) : "", up: (brent?.change ?? 0) >= 0, note: "Risiko energi" },
-      { label: "LQ45", value: data?.lq45?.close != null ? fmtNum(data.lq45.close, 2) : "—", change: fmtPct(data?.lq45?.change), up: (data?.lq45?.change ?? 0) >= 0, note: "Indeks blue chip" },
+      { label: "EIDO", value: data?.eido?.close != null ? `$${fmtNum(data.eido.close, 2)}` : "—", change: fmtPct(data?.eido?.change), up: (data?.eido?.change ?? 0) >= 0, note: "iShares MSCI Indonesia" },
       { label: "Neraca Dagang", value: `$${(manual.tradeBalance?.value ?? 3.32).toFixed(2)}B`, change: manual.tradeBalance?.note ?? "", up: (manual.tradeBalance?.value ?? 3.32) >= 0, note: "Manual" },
     ];
   }, [data, ihsg, ihsgUp, manual]);
@@ -172,6 +171,26 @@ export default function IHSGDashboard() {
   const sortedSectors = useMemo(() => [...sectors].sort((a, b) => (getPerf(b) ?? -999) - (getPerf(a) ?? -999)), [sectors, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Rolling net flow from history
+  // Dynamic key levels from IHSG price data
+  const keyLevels = useMemo(() => {
+    const price = ihsgClose;
+    const high52 = ihsg.high ?? price * 1.2;
+    const low52 = ihsg.low ?? price * 0.7;
+    // Fibonacci retracement from 52-week range
+    const range = high52 - low52;
+    const support = [
+      Math.round(price * 0.97),  // S1: -3%
+      Math.round(price * 0.93),  // S2: -7%
+      Math.round(low52),         // S3: 52-week low
+    ];
+    const resistance = [
+      Math.round(price * 1.03),  // R1: +3%
+      Math.round(price * 1.07),  // R2: +7%
+      Math.round(high52),        // R3: 52-week high
+    ];
+    return { support, resistance };
+  }, [ihsgClose, ihsg]);
+
   const rollingNetFlow = useMemo(() => {
     const sumDays = (n: number) => {
       const slice = flowHistory.slice(-n);
@@ -348,7 +367,7 @@ export default function IHSGDashboard() {
               </div>
             </div>
             <div className="space-y-1.5">
-              {KEY_LEVELS_FALLBACK.resistance.map((r, i) => (
+              {keyLevels.resistance.map((r, i) => (
                 <LevelRow key={`r-${i}`} label={`R${i + 1}`} value={r} tone="resistance" />
               ))}
               <div className="flex items-center gap-3 py-1">
@@ -358,7 +377,7 @@ export default function IHSGDashboard() {
               </div>
               {ihsg.sma50 != null && <LevelRow label="MA50" value={ihsg.sma50} tone="ma-blue" />}
               {ihsg.sma200 != null && <LevelRow label="MA200" value={ihsg.sma200} tone="ma-purple" />}
-              {KEY_LEVELS_FALLBACK.support.map((s, i) => (
+              {keyLevels.support.map((s, i) => (
                 <LevelRow key={`s-${i}`} label={`S${i + 1}`} value={s} tone="support" />
               ))}
             </div>
