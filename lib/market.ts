@@ -8,6 +8,7 @@
  */
 
 export interface Quote {
+  open: number | null;
   close: number | null;
   change: number | null;
   changeAbs: number | null;
@@ -110,7 +111,7 @@ export const KEY_LEVELS_FALLBACK = {
 };
 
 export const IHSG_FALLBACK: Quote = {
-  close: 6127, change: -0.55, changeAbs: -34,
+  open: 6192, close: 6127, change: -0.55, changeAbs: -34,
   recommend: -0.75, rsi: 23.4,
   sma20: 6400, sma50: 7071, sma100: 7400, sma200: 7950,
   perfWeek: 8.3, perf1M: -6.16, perf3M: -12.5,

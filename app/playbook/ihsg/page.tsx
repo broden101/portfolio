@@ -389,6 +389,32 @@ export default function IHSGDashboard() {
               <div className={`text-xs font-mono mt-1 ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>
                 {ihsgUp ? "▲" : "▼"} {fmtPct(ihsg.change)} {ihsg.changeAbs != null && `(${ihsgUp ? "+" : ""}${ihsg.changeAbs.toFixed(0)})`}
               </div>
+              {/* Candle Terakhir */}
+              {ihsg.open != null && ihsg.high != null && ihsg.low != null && (
+                <div className="mt-4 pt-3 border-t border-[#2C261E]/50">
+                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Candle Terakhir</div>
+                  <div className="flex items-center justify-center gap-4">
+                    {/* Visual candle */}
+                    <div className="flex flex-col items-center" style={{ height: 60 }}>
+                      <CandleSVG o={ihsg.open} h={ihsg.high} l={ihsg.low} c={ihsgClose} />
+                    </div>
+                    {/* OHLC numbers */}
+                    <div className="text-left space-y-0.5">
+                      {[
+                        ["O", ihsg.open],
+                        ["H", ihsg.high],
+                        ["L", ihsg.low],
+                        ["C", ihsgClose],
+                      ].map(([l, v]) => (
+                        <div key={l as string} className="flex items-center gap-2">
+                          <span className="text-[#B8AA96]/40 text-[10px] w-3">{l}</span>
+                          <span className="text-[#B8AA96] text-[11px] font-mono">{fmtNum(v as number)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="space-y-1.5">
               {keyLevels.resistance.map((r, i) => (
@@ -697,6 +723,31 @@ export default function IHSGDashboard() {
       </div>
       <Footer />
     </div>
+  );
+}
+
+/* ── Candle SVG ── */
+function CandleSVG({ o, h, l, c }: { o: number; h: number; l: number; c: number }) {
+  const bearish = c < o;
+  const color = bearish ? "#ef4444" : "#34d399";
+  const wickColor = bearish ? "#ef444480" : "#34d39980";
+  const range = h - l || 1;
+  const svgH = 60;
+  const svgW = 24;
+  const bodyTop = ((h - Math.max(o, c)) / range) * svgH;
+  const bodyH = Math.max(((Math.abs(o - c)) / range) * svgH, 2);
+  const wickTop = 0;
+  const wickH = svgH;
+  const cx = svgW / 2;
+  return (
+    <svg width={svgW} height={svgH} viewBox={`0 0 ${svgW} ${svgH}`}>
+      {/* Upper wick */}
+      <line x1={cx} y1={wickTop} x2={cx} y2={bodyTop} stroke={wickColor} strokeWidth={1.5} />
+      {/* Body */}
+      <rect x={cx - 5} y={bodyTop} width={10} height={bodyH} fill={color} rx={1} />
+      {/* Lower wick */}
+      <line x1={cx} y1={bodyTop + bodyH} x2={cx} y2={wickH} stroke={wickColor} strokeWidth={1.5} />
+    </svg>
   );
 }
 

@@ -46,7 +46,7 @@ const MACRO_SYMBOLS: Record<string, { symbol: string; label: string }> = {
 };
 
 const COLUMNS = [
-  "name", "description", "close", "change", "change_abs",
+  "name", "description", "open", "close", "change", "change_abs",
   "Recommend.All", "RSI", "SMA20", "SMA50", "SMA100", "SMA200",
   "Perf.W", "Perf.1M", "Perf.3M", "Perf.YTD", "Perf.Y",
   "high", "low",
@@ -60,7 +60,7 @@ function num(v: unknown): number | null {
 }
 
 interface QuoteData {
-  close: number | null; change: number | null; changeAbs: number | null;
+  open: number | null; close: number | null; change: number | null; changeAbs: number | null;
   recommend: number | null; rsi: number | null;
   sma20: number | null; sma50: number | null; sma100: number | null; sma200: number | null;
   perfWeek: number | null; perf1M: number | null; perf3M: number | null;
@@ -71,26 +71,26 @@ interface QuoteData {
 function buildQuote(row: RawRow): QuoteData {
   const d = row.d;
   return {
-    close: num(d[2]), change: num(d[3]), changeAbs: num(d[4]),
-    recommend: num(d[5]), rsi: num(d[6]), sma20: num(d[7]), sma50: num(d[8]), sma100: num(d[9]), sma200: num(d[10]),
-    perfWeek: num(d[11]), perf1M: num(d[12]), perf3M: num(d[13]),
-    perfYTD: num(d[14]), perf1Y: num(d[15]),
-    high: num(d[16]), low: num(d[17]),
+    open: num(d[2]), close: num(d[3]), change: num(d[4]), changeAbs: num(d[5]),
+    recommend: num(d[6]), rsi: num(d[7]), sma20: num(d[8]), sma50: num(d[9]), sma100: num(d[10]), sma200: num(d[11]),
+    perfWeek: num(d[12]), perf1M: num(d[13]), perf3M: num(d[14]),
+    perfYTD: num(d[15]), perf1Y: num(d[16]),
+    high: num(d[17]), low: num(d[18]),
   };
 }
 
 function aggregateBasket(rows: RawRow[]): QuoteData & { components: number } {
-  const valid = rows.filter((r) => num(r.d[2]) != null && num(r.d[2])! > 0);
+  const valid = rows.filter((r) => num(r.d[3]) != null && num(r.d[3])! > 0);
   const avg = (idx: number): number | null => {
     const vals = valid.map((r) => num(r.d[idx])).filter((v): v is number => v != null);
     return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
   };
   return {
-    close: avg(2), change: avg(3), changeAbs: avg(4),
-    recommend: avg(5), rsi: avg(6), sma20: avg(7), sma50: avg(8), sma100: avg(9), sma200: avg(10),
-    perfWeek: avg(11), perf1M: avg(12), perf3M: avg(13),
-    perfYTD: avg(14), perf1Y: avg(15),
-    high: avg(16), low: avg(17),
+    open: avg(2), close: avg(3), change: avg(4), changeAbs: avg(5),
+    recommend: avg(6), rsi: avg(7), sma20: avg(8), sma50: avg(9), sma100: avg(10), sma200: avg(11),
+    perfWeek: avg(12), perf1M: avg(13), perf3M: avg(14),
+    perfYTD: avg(15), perf1Y: avg(16),
+    high: avg(17), low: avg(18),
     components: valid.length,
   };
 }
