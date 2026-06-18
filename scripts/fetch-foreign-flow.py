@@ -19,7 +19,7 @@ HEADERS = {
     "Referer": "https://www.tradersaham.com/market-overview",
 }
 
-REPO_DIR = Path("/tmp/portfolio")
+REPO_DIR = Path("/home/ubuntu/ragaplaybook")
 DATA_FILE = REPO_DIR / "data" / "manual-market.json"
 
 def main():
@@ -48,6 +48,20 @@ def main():
         "ytdNet": None,
         "topBuy": [{"ticker": t, "net": round(v / 1_000_000)} for t, v in top_buy],
         "topSell": [{"ticker": t, "net": round(v / 1_000_000)} for t, v in top_sell],
+        "rawAccumulation": [
+            {"stock_code": a["stock_code"], "net_value": a.get("net_value", 0), "net_volume": a.get("net_volume", 0),
+             "total_buy_volume": a.get("total_buy_volume", 0), "total_sell_volume": a.get("total_sell_volume", 0),
+             "total_buy_value": a.get("total_buy_value", 0), "total_sell_value": a.get("total_sell_value", 0),
+             "close_price": a.get("close_price", 0)}
+            for a in data.get('accumulation', [])[:20]
+        ],
+        "rawDistribution": [
+            {"stock_code": d["stock_code"], "net_value": d.get("net_value", 0), "net_volume": d.get("net_volume", 0),
+             "total_buy_volume": d.get("total_buy_volume", 0), "total_sell_volume": d.get("total_sell_volume", 0),
+             "total_buy_value": d.get("total_buy_value", 0), "total_sell_value": d.get("total_sell_value", 0),
+             "close_price": d.get("close_price", 0)}
+            for d in data.get('distribution', [])[:20]
+        ],
         "fetchedAt": datetime.now(timezone.utc).isoformat(),
     }
 
