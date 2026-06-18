@@ -805,7 +805,7 @@ function LevelRow({ label, value, tone, price, sub }: { label: string; value: nu
     <div className="flex items-center gap-3">
       <span className={`${tones.text} text-[10px] tracking-wider uppercase w-16`}>{label}</span>
       <div className={`flex-1 h-px ${tones.bar}`} />
-      {sub && <span className="text-[9px] text-[#B8AA96]/40 font-mono hidden sm:inline">{sub}</span>}
+      {sub && <span className="text-[9px] text-[#B8AA96]/40 font-mono truncate max-w-[80px]">{sub}</span>}
       <span className={`${tones.dot} text-xs font-mono`}>{fmtNum(value)}</span>
       {pct != null && (
         <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${above ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"}`}>
