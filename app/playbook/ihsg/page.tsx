@@ -246,11 +246,13 @@ export default function IHSGDashboard() {
       const existing = uniqueMap.get(s.stock_code);
       if (!existing) uniqueMap.set(s.stock_code, s);
       else {
-        // Merge: take higher net_value, sum volumes
+        // Merge: sum volumes and values
         uniqueMap.set(s.stock_code, {
           ...s,
           total_buy_volume: existing.total_buy_volume + s.total_buy_volume,
           total_sell_volume: existing.total_sell_volume + s.total_sell_volume,
+          total_buy_value: existing.total_buy_value + s.total_buy_value,
+          total_sell_value: existing.total_sell_value + s.total_sell_value,
           net_value: existing.net_value + s.net_value,
         });
       }
@@ -258,7 +260,7 @@ export default function IHSGDashboard() {
     const unique = Array.from(uniqueMap.values());
     const topBuy = [...unique].sort((a, b) => b.net_value - a.net_value).slice(0, 10);
     const topSell = [...unique].sort((a, b) => a.net_value - b.net_value).slice(0, 10);
-    const topActive = [...unique].sort((a, b) => ((b.total_buy_volume + b.total_sell_volume) * b.close_price) - ((a.total_buy_volume + a.total_sell_volume) * a.close_price)).slice(0, 10);
+    const topActive = [...unique].sort((a, b) => (b.total_buy_value + b.total_sell_value) - (a.total_buy_value + a.total_sell_value)).slice(0, 10);
     return { topBuy, topSell, topActive };
   }, [ff]);
 
@@ -671,7 +673,7 @@ export default function IHSGDashboard() {
                             <td className="py-1.5 text-[#B8AA96]/50">{i + 1}</td>
                             <td className="py-1.5 text-[#F4EFE6] font-sans font-medium">{s.stock_code}</td>
                             <td className="py-1.5 text-right text-[#B8AA96]/70">{s.close_price > 0 ? s.close_price.toLocaleString("id-ID") : "—"}</td>
-                            <td className="py-1.5 text-right text-[#F4EFE6] font-medium">{(((s.total_buy_volume + s.total_sell_volume) * s.close_price) / 1e9).toFixed(1)}T</td>
+                            <td className="py-1.5 text-right text-[#F4EFE6] font-medium">{((s.total_buy_value + s.total_sell_value) / 1e9).toFixed(1)}T</td>
                           </tr>
                         ))}
                       </tbody>

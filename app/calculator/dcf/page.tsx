@@ -1,72 +1,17 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-/* ─── IHSG Preset Templates ─── */
-interface Preset {
-  ticker: string;
-  name: string;
-  sector: string;
-  price: number;
-  baseRevenue: number; // T
-  ebitMargin: number; // %
-  capexPct: number; // % of revenue
-  daPct: number; // % of revenue
-  wcPct: number; // % of revenue change
-  shares: number; // Miliar lembar
-  netDebt: number; // T (negative = net cash)
-  taxRate: number;
-  growthRates: number[]; // Y1-Y5 %
-  wacc: number;
-  terminalGrowth: number;
-}
-
-const PRESETS: Preset[] = [
-  {
-    ticker: "BBCA", name: "Bank BCA", sector: "Banking",
-    price: 9500, baseRevenue: 96.0, ebitMargin: 65, capexPct: 1.5,
-    daPct: 3, wcPct: 5, shares: 12400, netDebt: -120, taxRate: 22,
-    growthRates: [12, 11, 10, 9, 8], wacc: 11, terminalGrowth: 5,
-  },
-  {
-    ticker: "BMRI", name: "Bank Mandiri", sector: "Banking",
-    price: 7100, baseRevenue: 120.0, ebitMargin: 62, capexPct: 2,
-    daPct: 3.5, wcPct: 5, shares: 4650, netDebt: -95, taxRate: 22,
-    growthRates: [13, 12, 11, 10, 9], wacc: 11.5, terminalGrowth: 5,
-  },
-  {
-    ticker: "BBRI", name: "Bank BRI", sector: "Banking",
-    price: 4200, baseRevenue: 170.0, ebitMargin: 58, capexPct: 2.5,
-    daPct: 4, wcPct: 6, shares: 15200, netDebt: -80, taxRate: 22,
-    growthRates: [14, 13, 12, 11, 10], wacc: 12, terminalGrowth: 5,
-  },
-  {
-    ticker: "TLKM", name: "Telkom Indonesia", sector: "Telecom",
-    price: 2650, baseRevenue: 148.0, ebitMargin: 32, capexPct: 18,
-    daPct: 14, wcPct: 2, shares: 99000, netDebt: 65, taxRate: 22,
-    growthRates: [8, 7, 7, 6, 6], wacc: 10.5, terminalGrowth: 5,
-  },
-  {
-    ticker: "ASII", name: "Astra International", sector: "Conglomerate",
-    price: 5400, baseRevenue: 310.0, ebitMargin: 14, capexPct: 5,
-    daPct: 5, wcPct: 3, shares: 40500, netDebt: 35, taxRate: 22,
-    growthRates: [10, 9, 8, 7, 6], wacc: 12, terminalGrowth: 5,
-  },
-  {
-    ticker: "UNVR", name: "Unilever Indonesia", sector: "Consumer",
-    price: 3800, baseRevenue: 46.0, ebitMargin: 22, capexPct: 3,
-    daPct: 4, wcPct: 1, shares: 3800, netDebt: -8, taxRate: 22,
-    growthRates: [6, 6, 5, 5, 5], wacc: 10.5, terminalGrowth: 4.5,
-  },
-  {
-    ticker: "CUSTOM", name: "Custom", sector: "-",
-    price: 0, baseRevenue: 0, ebitMargin: 25, capexPct: 5,
-    daPct: 5, wcPct: 3, shares: 1000, netDebt: 0, taxRate: 22,
-    growthRates: [10, 10, 8, 8, 6], wacc: 12, terminalGrowth: 5,
-  },
-];
+import { isBankTicker } from "@/lib/fundamentals";
+import {
+  ALL_PRESETS,
+  CORPORATE_PRESETS,
+  BANK_PRESETS,
+  isBank,
+  type Preset,
+  type BankPreset,
+} from "./presets";
 
 /* ─── Helpers ─── */
 const fmt = (n: number, d = 2) => n.toLocaleString("id-ID", { maximumFractionDigits: d });
@@ -74,34 +19,119 @@ const fmtIDR = (n: number) => `Rp ${fmt(n, 0)}`;
 const fmtPct = (n: number) => `${fmt(n, 1)}%`;
 const fmtT = (n: number) => `${fmt(n, 1)} T`;
 
+function capexPct_default(p: Preset) {
+  return p.capexPct;
+}
+
+/* ─── Auto-fill API response types ─── */
+interface DcfInputsResponse {
+  model: "fcff";
+  inputs: {
+    ticker: string;
+    price: number;
+    beta: number;
+    baseRevenue: number;
+    ebitMargin: number;
+    capexPct: number;
+    daPct: number;
+    wcPct: number;
+    shares: number;
+    netDebt: number;
+    taxRate: number;
+    growthRates: number[];
+    wacc: number;
+    terminalGrowth: number;
+  };
+}
+
+interface BankInputsResponse {
+  model: "bank";
+  inputs: {
+    ticker: string;
+    price: number;
+    beta: number;
+    bvPerShare: number;
+    roe: number;
+    payout: number;
+    eps: number;
+    dps: number;
+    shares: number;
+    ke: number;
+    growthRates: number[];
+    terminalGrowth: number;
+    roeFloor: number;
+    roeTerminal: number;
+  };
+  valuation: {
+    rimValue: number;
+    ddmValue: number;
+    blended: number;
+    justifiedPB: number;
+    marketPB: number;
+    upside: number;
+    ke: number;
+    roePath: number[];
+    bvPath: number[];
+    riPath: number[];
+    dpsPath: number[];
+  };
+}
+
 /* ─── Component ─── */
 export default function DCFPage() {
-  // Preset
+  // Mode
+  const [mode, setMode] = useState<"fcff" | "bank">("fcff");
+
+  // Shared
+  const [ticker, setTicker] = useState("TLKM");
+  const [currentPrice, setCurrentPrice] = useState(2650);
+
+  // FCFF inputs
   const [presetIdx, setPresetIdx] = useState(0);
-  const preset = PRESETS[presetIdx];
+  const [baseRevenue, setBaseRevenue] = useState(148.0);
+  const [ebitMargin, setEbitMargin] = useState(32);
+  const [capexPct, setCapexPct] = useState(18);
+  const [daPct, setDaPct] = useState(14);
+  const [wcPct, setWcPct] = useState(2);
+  const [shares, setShares] = useState(99000);
+  const [netDebt, setNetDebt] = useState(65);
+  const [taxRate, setTaxRate] = useState(22);
+  const [wacc, setWacc] = useState(10.5);
+  const [terminalGrowth, setTerminalGrowth] = useState(5);
+  const [g1, setG1] = useState(8);
+  const [g2, setG2] = useState(7);
+  const [g3, setG3] = useState(7);
+  const [g4, setG4] = useState(6);
+  const [g5, setG5] = useState(6);
 
-  // Core inputs
-  const [ticker, setTicker] = useState(preset.ticker);
-  const [currentPrice, setCurrentPrice] = useState(preset.price);
-  const [baseRevenue, setBaseRevenue] = useState(preset.baseRevenue);
-  const [ebitMargin, setEbitMargin] = useState(preset.ebitMargin);
-  const [capexPct, setCapexPct] = useState(capexPct_default(preset));
-  const [daPct, setDaPct] = useState(preset.daPct);
-  const [wcPct, setWcPct] = useState(preset.wcPct);
-  const [shares, setShares] = useState(preset.shares);
-  const [netDebt, setNetDebt] = useState(preset.netDebt);
-  const [taxRate, setTaxRate] = useState(preset.taxRate);
-  const [wacc, setWacc] = useState(preset.wacc);
-  const [terminalGrowth, setTerminalGrowth] = useState(preset.terminalGrowth);
-  const [g1, setG1] = useState(preset.growthRates[0]);
-  const [g2, setG2] = useState(preset.growthRates[1]);
-  const [g3, setG3] = useState(preset.growthRates[2]);
-  const [g4, setG4] = useState(preset.growthRates[3]);
-  const [g5, setG5] = useState(preset.growthRates[4]);
+  // Bank inputs
+  const [bankPresetIdx, setBankPresetIdx] = useState(0);
+  const [bvPerShare, setBvPerShare] = useState(2500);
+  const [roe, setRoe] = useState(23);
+  const [payout, setPayout] = useState(45);
+  const [eps, setEps] = useState(575);
+  const [dps, setDps] = useState(259);
+  const [bankShares, setBankShares] = useState(12400);
+  const [ke, setKe] = useState(10.25);
+  const [bankTG, setBankTG] = useState(3);
+  const [bankG1, setBankG1] = useState(12.7);
+  const [bankG2, setBankG2] = useState(10.5);
+  const [bankG3, setBankG3] = useState(8.4);
+  const [bankG4, setBankG4] = useState(6.3);
+  const [bankG5, setBankG5] = useState(4.2);
+  const [roeFloor, setRoeFloor] = useState(12);
+  const [roeTerminal, setRoeTerminal] = useState(20);
 
-  const applyPreset = (idx: number) => {
-    const p = PRESETS[idx];
+  // Auto-fill state
+  const [loading, setLoading] = useState(false);
+  const [autoError, setAutoError] = useState<string | null>(null);
+
+  // ── Preset apply ──
+  const applyCorporatePreset = (idx: number) => {
+    const p = CORPORATE_PRESETS[idx];
+    if (!p) return;
     setPresetIdx(idx);
+    setMode("fcff");
     setTicker(p.ticker);
     setCurrentPrice(p.price);
     setBaseRevenue(p.baseRevenue);
@@ -118,7 +148,99 @@ export default function DCFPage() {
     setG4(p.growthRates[3]); setG5(p.growthRates[4]);
   };
 
-  // ─── DCF Calculation ───
+  const applyBankPreset = (idx: number) => {
+    const p = BANK_PRESETS[idx];
+    if (!p) return;
+    setBankPresetIdx(idx);
+    setMode("bank");
+    setTicker(p.ticker);
+    setCurrentPrice(p.price);
+    setBvPerShare(p.bvPerShare);
+    setRoe(p.roe);
+    setPayout(p.payout);
+    setEps(p.eps);
+    setDps(p.dps);
+    setBankShares(p.shares);
+    setKe(p.ke);
+    setBankTG(p.terminalGrowth);
+    setBankG1(p.growthRates[0]); setBankG2(p.growthRates[1]); setBankG3(p.growthRates[2]);
+    setBankG4(p.growthRates[3]); setBankG5(p.growthRates[4]);
+    setRoeFloor(Math.max(p.ke, 12));
+    setRoeTerminal(Math.min(Math.max(p.roe, 12), 20));
+  };
+
+  // ── Auto-fill from API ──
+  const autoFill = useCallback(async () => {
+    if (!ticker || ticker === "CUSTOM") return;
+    setLoading(true);
+    setAutoError(null);
+    try {
+      const res = await fetch(`/api/dcf-inputs/${ticker.toUpperCase()}`);
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `HTTP ${res.status}`);
+      }
+      const data = await res.json();
+
+      if (data.model === "bank") {
+        const inp = data.inputs as BankInputsResponse["inputs"];
+        const val = data.valuation as BankInputsResponse["valuation"];
+        setMode("bank");
+        setTicker(inp.ticker);
+        setCurrentPrice(inp.price);
+        setBvPerShare(inp.bvPerShare);
+        setRoe(inp.roe);
+        setPayout(inp.payout);
+        setEps(inp.eps);
+        setDps(inp.dps);
+        setBankShares(inp.shares);
+        setKe(inp.ke);
+        setBankTG(inp.terminalGrowth);
+        setBankG1(inp.growthRates[0] ?? 3); setBankG2(inp.growthRates[1] ?? 3);
+        setBankG3(inp.growthRates[2] ?? 3); setBankG4(inp.growthRates[3] ?? 3);
+        setBankG5(inp.growthRates[4] ?? 3);
+        setRoeFloor(inp.roeFloor ?? 12);
+        setRoeTerminal(inp.roeTerminal ?? 20);
+      } else {
+        const inp = data.inputs as DcfInputsResponse["inputs"];
+        setMode("fcff");
+        setTicker(inp.ticker);
+        setCurrentPrice(inp.price);
+        setBaseRevenue(inp.baseRevenue);
+        setEbitMargin(inp.ebitMargin);
+        setCapexPct(inp.capexPct);
+        setDaPct(inp.daPct);
+        setWcPct(inp.wcPct);
+        setShares(inp.shares);
+        setNetDebt(inp.netDebt);
+        setTaxRate(inp.taxRate);
+        setWacc(inp.wacc);
+        setTerminalGrowth(inp.terminalGrowth);
+        setG1(inp.growthRates[0] ?? 10); setG2(inp.growthRates[1] ?? 10);
+        setG3(inp.growthRates[2] ?? 8); setG4(inp.growthRates[3] ?? 8);
+        setG5(inp.growthRates[4] ?? 6);
+      }
+    } catch (err: unknown) {
+      setAutoError(err instanceof Error ? err.message : "Gagal mengambil data");
+    } finally {
+      setLoading(false);
+    }
+  }, [ticker]);
+
+  // ── Mode switch on ticker change ──
+  const onTickerChange = (val: string) => {
+    const upper = val.toUpperCase();
+    setTicker(upper);
+    if (isBankTicker(upper)) {
+      setMode("bank");
+    } else if (upper === "CUSTOM") {
+      // keep current mode
+    } else {
+      setMode("fcff");
+    }
+  };
+
+  // ─── FCFF Calculation ───
   const dcf = useMemo(() => {
     const rates = [g1, g2, g3, g4, g5];
     const years: {
@@ -150,7 +272,6 @@ export default function DCFPage() {
       prevWC = wc;
     }
 
-    // Terminal Value (Gordon Growth)
     const lastFCFF = years[4].fcff;
     const terminalFCFF = lastFCFF * (1 + terminalGrowth / 100);
     const waccDecimal = wacc / 100;
@@ -159,22 +280,91 @@ export default function DCFPage() {
     const terminalValue = spread > 0 ? terminalFCFF / spread : 0;
     const pvTerminal = terminalValue / Math.pow(1 + waccDecimal, 5);
 
-    // Enterprise & Equity Value
     const enterpriseValue = sumPV + pvTerminal;
     const equityValue = enterpriseValue - netDebt;
-    const fairValuePerShare = shares > 0 ? (equityValue * 1e12) / (shares * 1e9) : 0; // T to Rp, Miliar shares
+    const fairValuePerShare = shares > 0 ? (equityValue * 1e12) / (shares * 1e9) : 0;
     const upside = currentPrice > 0 ? ((fairValuePerShare / currentPrice) - 1) * 100 : 0;
     const tvPct = enterpriseValue > 0 ? (pvTerminal / enterpriseValue) * 100 : 0;
 
     return { years, sumPV, terminalValue, pvTerminal, enterpriseValue, equityValue, fairValuePerShare, upside, tvPct, spread };
   }, [baseRevenue, ebitMargin, capexPct, daPct, wcPct, shares, netDebt, taxRate, wacc, terminalGrowth, g1, g2, g3, g4, g5, currentPrice]);
 
-  // ─── Sensitivity Matrix ───
+  // ─── Bank Calculation (RIM + DDM) ───
+  const bankResult = useMemo(() => {
+    const rates = [bankG1, bankG2, bankG3, bankG4, bankG5];
+    const keDec = ke / 100;
+    const tgDec = bankTG / 100;
+    const payoutDec = payout / 100;
+
+    const roePath: number[] = [];
+    const bvPath: number[] = [];
+    const riPath: number[] = [];
+    const dpsPath: number[] = [];
+
+    let bv = bvPerShare;
+    const rimPVs: number[] = [];
+    const ddmPVs: number[] = [];
+
+    for (let i = 0; i < 5; i++) {
+      const roeY = roe - ((roe - roeTerminal) * i) / 4;
+      const roeDec = Math.max(roeY, 0) / 100;
+      const disc = Math.pow(1 + keDec, i + 1);
+
+      const epsY = roeDec * bv;
+      const dpsY = payoutDec * epsY;
+      const riY = epsY - dpsY;
+
+      roePath.push(Math.round(roeY * 100) / 100);
+      bvPath.push(Math.round(bv));
+      riPath.push(Math.round(riY));
+      dpsPath.push(Math.round(dpsY));
+
+      rimPVs.push(riY / disc);
+      ddmPVs.push(dpsY / disc);
+
+      bv = bv + riY;
+    }
+
+    const terminalROE = roeTerminal / 100;
+    const terminalEPS = terminalROE * bv;
+    const terminalDPS = payoutDec * terminalEPS;
+    const terminalRI = terminalEPS - terminalDPS;
+
+    const tvRI = (terminalRI * (1 + tgDec)) / (keDec - tgDec);
+    const pvTVri = keDec > tgDec ? tvRI / Math.pow(1 + keDec, 5) : 0;
+    const rimPV = rimPVs.reduce((a, b) => a + b, 0);
+    const rimValue = bvPerShare + rimPV + pvTVri;
+
+    const tvDPS = (terminalDPS * (1 + tgDec)) / (keDec - tgDec);
+    const pvTVdps = keDec > tgDec ? tvDPS / Math.pow(1 + keDec, 5) : 0;
+    const ddmPV = ddmPVs.reduce((a, b) => a + b, 0);
+    const ddmValue = ddmPV + pvTVdps;
+
+    const blended = (rimValue + ddmValue) / 2;
+    const justifiedPB = keDec > tgDec ? (roe / 100 - tgDec) / (keDec - tgDec) : 0;
+    const marketPB = bvPerShare > 0 ? currentPrice / bvPerShare : 0;
+    const upside = currentPrice > 0 ? ((blended / currentPrice) - 1) * 100 : 0;
+
+    const sgr = Math.min((1 - payoutDec) * roe, 25);
+
+    return {
+      rimValue: Math.round(rimValue),
+      ddmValue: Math.round(ddmValue),
+      blended: Math.round(blended),
+      justifiedPB: Math.round(justifiedPB * 100) / 100,
+      marketPB: Math.round(marketPB * 100) / 100,
+      upside: Math.round(upside * 100) / 100,
+      roePath, bvPath, riPath, dpsPath,
+      sgr: Math.round(sgr * 100) / 100,
+      growthRates: rates,
+    };
+  }, [bvPerShare, roe, payout, ke, bankTG, bankG1, bankG2, bankG3, bankG4, bankG5, roeTerminal, currentPrice]);
+
+  // ─── FCFF Sensitivity Matrix ───
   const sensitivity = useMemo(() => {
     const waccRange = [wacc - 2, wacc - 1, wacc, wacc + 1, wacc + 2];
     const tgRange = [terminalGrowth - 1.5, terminalGrowth - 0.5, terminalGrowth, terminalGrowth + 0.5, terminalGrowth + 1.5];
     const matrix: number[][] = [];
-
     const rates = [g1, g2, g3, g4, g5];
 
     for (const w of waccRange) {
@@ -211,9 +401,12 @@ export default function DCFPage() {
 
   // ─── Bar chart scaling ───
   const maxFCFF = Math.max(...dcf.years.map((y) => Math.abs(y.fcff)), Math.abs(dcf.pvTerminal), 1);
+  const maxBV = Math.max(...bankResult.bvPath.map(Math.abs), bvPerShare, 1);
 
-  const verdict = dcf.upside > 20 ? "UNDERVALUED" : dcf.upside < -20 ? "OVERVALUED" : "FAIR VALUE";
-  const verdictColor = dcf.upside > 20 ? "#22C55E" : dcf.upside < -20 ? "#EF4444" : "#FACC15";
+  // Verdict
+  const activeUpside = mode === "fcff" ? dcf.upside : bankResult.upside;
+  const verdict = activeUpside > 20 ? "UNDERVALUED" : activeUpside < -20 ? "OVERVALUED" : "FAIR VALUE";
+  const verdictColor = activeUpside > 20 ? "#22C55E" : activeUpside < -20 ? "#EF4444" : "#FACC15";
 
   return (
     <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
@@ -229,20 +422,36 @@ export default function DCFPage() {
             Discounted <span className="text-gold-gradient font-medium">Cash Flow</span>
           </h1>
           <p className="text-[#B8AA96]/60 text-sm font-light max-w-xl">
-            FCFF-based intrinsic value estimation with editable 5-year projections, terminal value, and WACC sensitivity analysis for IDX stocks.
+            {mode === "bank"
+              ? "Model bank: RIM + DDM + Justified P/B. Auto-switch untuk saham perbankan IDX."
+              : "FCFF-based intrinsic value estimation with editable 5-year projections, terminal value, and WACC sensitivity analysis for IDX stocks."}
           </p>
         </div>
 
         {/* Preset Selector */}
         <div className="card-luxury p-6 mb-8">
-          <p className="text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-4">Quick Start — IHSG Presets</p>
+          <p className="text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-4">Quick Start — Preset</p>
           <div className="flex flex-wrap gap-2">
-            {PRESETS.map((p, i) => (
+            {BANK_PRESETS.map((p, i) => (
               <button
-                key={p.ticker}
-                onClick={() => applyPreset(i)}
+                key={`bank-${p.ticker}`}
+                onClick={() => applyBankPreset(i)}
                 className={`px-4 py-2 text-sm border transition-all ${
-                  presetIdx === i
+                  mode === "bank" && bankPresetIdx === i
+                    ? "border-[#C6A15B] text-[#C6A15B] bg-[#C6A15B]/10"
+                    : "border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B]/30 hover:text-[#B8AA96]"
+                }`}
+              >
+                🏦 {p.ticker}
+              </button>
+            ))}
+            <div className="w-px bg-[#2C261E] mx-1" />
+            {CORPORATE_PRESETS.map((p, i) => (
+              <button
+                key={`corp-${p.ticker}`}
+                onClick={() => applyCorporatePreset(i)}
+                className={`px-4 py-2 text-sm border transition-all ${
+                  mode === "fcff" && presetIdx === i
                     ? "border-[#C6A15B] text-[#C6A15B] bg-[#C6A15B]/10"
                     : "border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B]/30 hover:text-[#B8AA96]"
                 }`}
@@ -253,217 +462,409 @@ export default function DCFPage() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* ─── Left: Inputs ─── */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Company Info */}
-            <div className="card-luxury p-6">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Company & Market Data</h3>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <InputField label="Ticker" value={ticker} onChange={setTicker} suffix="IDX" type="text" />
-                <InputField label="Harga Saham" value={currentPrice} onChange={setCurrentPrice} prefix="Rp" />
-                <InputField label="Shares Outstanding" value={shares} onChange={setShares} suffix="Miliar" />
-              </div>
-            </div>
-
-            {/* Revenue & Margins */}
-            <div className="card-luxury p-6">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Revenue & Profitability</h3>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <InputField label="Base Revenue (FY Latest)" value={baseRevenue} onChange={setBaseRevenue} suffix="T" />
-                <InputField label="EBIT Margin" value={ebitMargin} onChange={setEbitMargin} suffix="%" />
-                <InputField label="Capex / Revenue" value={capexPct} onChange={setCapexPct} suffix="%" />
-                <InputField label="D&A / Revenue" value={daPct} onChange={setDaPct} suffix="%" />
-                <InputField label="Δ Working Capital / Revenue" value={wcPct} onChange={setWcPct} suffix="%" />
-                <InputField label="Effective Tax Rate" value={taxRate} onChange={setTaxRate} suffix="%" />
-              </div>
-            </div>
-
-            {/* Growth Rates */}
-            <div className="card-luxury p-6">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Revenue Growth Projections</h3>
-              <div className="grid grid-cols-5 gap-3">
-                <InputField label="Year 1" value={g1} onChange={setG1} suffix="%" />
-                <InputField label="Year 2" value={g2} onChange={setG2} suffix="%" />
-                <InputField label="Year 3" value={g3} onChange={setG3} suffix="%" />
-                <InputField label="Year 4" value={g4} onChange={setG4} suffix="%" />
-                <InputField label="Year 5" value={g5} onChange={setG5} suffix="%" />
-              </div>
-            </div>
-
-            {/* WACC & Terminal */}
-            <div className="card-luxury p-6">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Discount Rate & Terminal Value</h3>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <InputField label="WACC" value={wacc} onChange={setWacc} suffix="%" />
-                <InputField label="Terminal Growth Rate" value={terminalGrowth} onChange={setTerminalGrowth} suffix="%" />
-                <InputField label="Net Debt (neg = net cash)" value={netDebt} onChange={setNetDebt} suffix="T" />
-              </div>
-              <p className="text-[#B8AA96]/30 text-[10px] mt-3">WACC spread: {fmtPct(wacc - terminalGrowth)}. Terminal growth harus &lt; WACC.</p>
-            </div>
+        {/* ─── Auto-fill bar ─── */}
+        <div className="card-luxury p-4 mb-8 flex flex-wrap items-center gap-4">
+          <div className="flex-1 min-w-[180px]">
+            <InputField label="Ticker" value={ticker} onChange={onTickerChange} suffix="IDX" type="text" />
           </div>
-
-          {/* ─── Right: Results Summary ─── */}
-          <div className="space-y-6">
-            {/* Verdict */}
-            <div className="card-luxury p-6 text-center">
-              <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">{ticker === "CUSTOM" ? "Custom" : `IDX:${ticker}`}</p>
-              <div className="text-4xl font-heading font-medium mb-1" style={{ color: verdictColor }}>
-                {fmtIDR(Math.round(dcf.fairValuePerShare))}
-              </div>
-              <p className="text-[#B8AA96]/50 text-xs mb-4">Fair Value / Share</p>
-              <div className="flex justify-center gap-6 text-sm">
-                <div>
-                  <p className="text-[#B8AA96]/40 text-[10px] uppercase">Current</p>
-                  <p className="text-[#F4EFE6] font-medium">{fmtIDR(currentPrice)}</p>
-                </div>
-                <div>
-                  <p className="text-[#B8AA96]/40 text-[10px] uppercase">Upside</p>
-                  <p className="font-medium" style={{ color: verdictColor }}>{fmtPct(dcf.upside)}</p>
-                </div>
-              </div>
-              <div className="mt-4 py-2 px-4 border text-xs tracking-[0.15em] uppercase font-medium inline-block" style={{ borderColor: verdictColor, color: verdictColor }}>
-                {verdict}
-              </div>
-            </div>
-
-            {/* Value Breakdown */}
-            <div className="card-luxury p-6">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-4 font-medium">Value Breakdown</h3>
-              <div className="space-y-3 text-sm">
-                <BreakdownRow label="PV of FCFF (Y1–Y5)" value={fmtT(dcf.sumPV)} />
-                <BreakdownRow label="Terminal Value" value={fmtT(dcf.terminalValue)} />
-                <BreakdownRow label="PV of Terminal" value={fmtT(dcf.pvTerminal)} />
-                <div className="border-t border-[#2C261E] my-2" />
-                <BreakdownRow label="Enterprise Value" value={fmtT(dcf.enterpriseValue)} highlight />
-                <BreakdownRow label="− Net Debt" value={fmtT(netDebt)} />
-                <div className="border-t border-[#2C261E] my-2" />
-                <BreakdownRow label="Equity Value" value={fmtT(dcf.equityValue)} highlight />
-                <BreakdownRow label="Terminal % of EV" value={fmtPct(dcf.tvPct)} />
-                <BreakdownRow label="Shares Outstanding" value={`${fmt(shares, 0)} Miliar`} />
-              </div>
-            </div>
-
-            {/* Methodology note */}
-            <div className="card-luxury p-5">
-              <p className="text-[#B8AA96]/30 text-[10px] leading-relaxed">
-                <strong className="text-[#B8AA96]/50">Methodology:</strong> FCFF = NOPAT + D&A − Capex − ΔWC.
-                Terminal Value via Gordon Growth Model. Enterprise Value = Σ PV(FCFF) + PV(TV). Equity Value = EV − Net Debt.
-                All figures in IDR Triliun unless noted.
-              </p>
-            </div>
-          </div>
+          <button
+            onClick={autoFill}
+            disabled={loading || !ticker || ticker === "CUSTOM"}
+            className="px-5 py-2.5 text-sm border border-[#C6A15B] text-[#C6A15B] hover:bg-[#C6A15B]/10 transition-all disabled:opacity-40 disabled:cursor-not-allowed mt-auto"
+          >
+            {loading ? "⏳ Memuat..." : "⚡ Auto-Fill Data"}
+          </button>
+          {autoError && <span className="text-red-400 text-xs">{autoError}</span>}
+          {mode === "bank" && (
+            <span className="px-3 py-1 text-[10px] tracking-[0.15em] uppercase font-medium border border-blue-400/40 text-blue-400 bg-blue-400/10">
+              🏦 Bank Model
+            </span>
+          )}
         </div>
 
-        {/* ─── FCFF Projection Chart ─── */}
-        <div className="card-luxury p-8 mt-8">
-          <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">5-Year FCFF Projection</h3>
-          <div className="flex items-end gap-4">
-            {dcf.years.map((y) => {
-              const heightPct = maxFCFF > 0 ? Math.min((Math.abs(y.fcff) / maxFCFF) * 100, 100) : 0;
-              const isNeg = y.fcff < 0;
-              return (
-                <div key={y.year} className="flex-1 flex flex-col items-center gap-2">
-                  <span className="text-[10px] text-[#B8AA96]/50">{fmtT(y.fcff)}</span>
+        {/* ─── FCFF Mode ─── */}
+        {mode === "fcff" && (
+          <>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Left: Inputs */}
+              <div className="lg:col-span-2 space-y-6">
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Data Perusahaan & Pasar</h3>
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <InputField label="Harga Saham" value={currentPrice} onChange={setCurrentPrice} prefix="Rp" />
+                    <InputField label="Shares Outstanding" value={shares} onChange={setShares} suffix="Miliar" />
+                    <InputField label="WACC" value={wacc} onChange={setWacc} suffix="%" />
+                  </div>
+                </div>
+
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Revenue & Profitabilitas</h3>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <InputField label="Base Revenue (FY Terakhir)" value={baseRevenue} onChange={setBaseRevenue} suffix="T" />
+                    <InputField label="EBIT Margin" value={ebitMargin} onChange={setEbitMargin} suffix="%" />
+                    <InputField label="Capex / Revenue" value={capexPct} onChange={setCapexPct} suffix="%" />
+                    <InputField label="D&A / Revenue" value={daPct} onChange={setDaPct} suffix="%" />
+                    <InputField label="Δ Working Capital / Revenue" value={wcPct} onChange={setWcPct} suffix="%" />
+                    <InputField label="Effective Tax Rate" value={taxRate} onChange={setTaxRate} suffix="%" />
+                  </div>
+                </div>
+
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Proyeksi Pertumbuhan Revenue</h3>
+                  <div className="grid grid-cols-5 gap-3">
+                    <InputField label="Tahun 1" value={g1} onChange={setG1} suffix="%" />
+                    <InputField label="Tahun 2" value={g2} onChange={setG2} suffix="%" />
+                    <InputField label="Tahun 3" value={g3} onChange={setG3} suffix="%" />
+                    <InputField label="Tahun 4" value={g4} onChange={setG4} suffix="%" />
+                    <InputField label="Tahun 5" value={g5} onChange={setG5} suffix="%" />
+                  </div>
+                </div>
+
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Discount Rate & Terminal Value</h3>
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <InputField label="Terminal Growth Rate" value={terminalGrowth} onChange={setTerminalGrowth} suffix="%" />
+                    <InputField label="Net Debt (neg = net cash)" value={netDebt} onChange={setNetDebt} suffix="T" />
+                  </div>
+                  <p className="text-[#B8AA96]/30 text-[10px] mt-3">WACC spread: {fmtPct(wacc - terminalGrowth)}. Terminal growth harus &lt; WACC.</p>
+                </div>
+              </div>
+
+              {/* Right: Results */}
+              <div className="space-y-6">
+                <div className="card-luxury p-6 text-center">
+                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">{ticker === "CUSTOM" ? "Custom" : `IDX:${ticker}`}</p>
+                  <div className="text-4xl font-heading font-medium mb-1" style={{ color: verdictColor }}>
+                    {fmtIDR(Math.round(dcf.fairValuePerShare))}
+                  </div>
+                  <p className="text-[#B8AA96]/50 text-xs mb-4">Fair Value / Share</p>
+                  <div className="flex justify-center gap-6 text-sm">
+                    <div>
+                      <p className="text-[#B8AA96]/40 text-[10px] uppercase">Harga Saat Ini</p>
+                      <p className="text-[#F4EFE6] font-medium">{fmtIDR(currentPrice)}</p>
+                    </div>
+                    <div>
+                      <p className="text-[#B8AA96]/40 text-[10px] uppercase">Upside</p>
+                      <p className="font-medium" style={{ color: verdictColor }}>{fmtPct(dcf.upside)}</p>
+                    </div>
+                  </div>
+                  <div className="mt-4 py-2 px-4 border text-xs tracking-[0.15em] uppercase font-medium inline-block" style={{ borderColor: verdictColor, color: verdictColor }}>
+                    {verdict}
+                  </div>
+                </div>
+
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-4 font-medium">Value Breakdown</h3>
+                  <div className="space-y-3 text-sm">
+                    <BreakdownRow label="PV of FCFF (Y1–Y5)" value={fmtT(dcf.sumPV)} />
+                    <BreakdownRow label="Terminal Value" value={fmtT(dcf.terminalValue)} />
+                    <BreakdownRow label="PV of Terminal" value={fmtT(dcf.pvTerminal)} />
+                    <div className="border-t border-[#2C261E] my-2" />
+                    <BreakdownRow label="Enterprise Value" value={fmtT(dcf.enterpriseValue)} highlight />
+                    <BreakdownRow label="− Net Debt" value={fmtT(netDebt)} />
+                    <div className="border-t border-[#2C261E] my-2" />
+                    <BreakdownRow label="Equity Value" value={fmtT(dcf.equityValue)} highlight />
+                    <BreakdownRow label="Terminal % of EV" value={fmtPct(dcf.tvPct)} />
+                    <BreakdownRow label="Shares Outstanding" value={`${fmt(shares, 0)} Miliar`} />
+                  </div>
+                </div>
+
+                <div className="card-luxury p-5">
+                  <p className="text-[#B8AA96]/30 text-[10px] leading-relaxed">
+                    <strong className="text-[#B8AA96]/50">Metodologi:</strong> FCFF = NOPAT + D&A − Capex − ΔWC.
+                    Terminal Value via Gordon Growth Model. EV = Σ PV(FCFF) + PV(TV). Equity Value = EV − Net Debt.
+                    Semua angka dalam IDR Triliun.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* FCFF Chart */}
+            <div className="card-luxury p-8 mt-8">
+              <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">Proyeksi FCFF 5 Tahun</h3>
+              <div className="flex items-end gap-4">
+                {dcf.years.map((y) => {
+                  const heightPct = maxFCFF > 0 ? Math.min((Math.abs(y.fcff) / maxFCFF) * 100, 100) : 0;
+                  const isNeg = y.fcff < 0;
+                  return (
+                    <div key={y.year} className="flex-1 flex flex-col items-center gap-2">
+                      <span className="text-[10px] text-[#B8AA96]/50">{fmtT(y.fcff)}</span>
+                      <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
+                        <div
+                          className="w-full max-w-[80px] transition-all duration-500"
+                          style={{
+                            height: `${Math.max(heightPct, 4)}%`,
+                            background: isNeg
+                              ? "linear-gradient(to top, #EF4444, #FCA5A5)"
+                              : "linear-gradient(to top, #C6A15B, #D4B76A)",
+                          }}
+                        />
+                      </div>
+                      <span className="text-[10px] text-[#B8AA96]/40">Y{y.year}</span>
+                      <span className="text-[9px] text-[#B8AA96]/25">{fmtPct(y.growth)} growth</span>
+                    </div>
+                  );
+                })}
+                <div className="flex-1 flex flex-col items-center gap-2">
+                  <span className="text-[10px] text-[#B8AA96]/50">{fmtT(dcf.pvTerminal)}</span>
+                  <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
+                    <div
+                      className="w-full max-w-[80px] transition-all duration-500 opacity-70"
+                      style={{
+                        height: `${Math.min(Math.max((dcf.pvTerminal / maxFCFF) * 100, 4), 100)}%`,
+                        background: "linear-gradient(to top, #8B5CF6, #A78BFA)",
+                      }}
+                    />
+                  </div>
+                  <span className="text-[10px] text-[#B8AA96]/40">TV</span>
+                  <span className="text-[9px] text-[#B8AA96]/25">terminal</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Detailed Projections Table */}
+            <div className="card-luxury p-8 mt-8 overflow-x-auto">
+              <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">Proyeksi Detail Per Tahun</h3>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-[#2C261E]">
+                    <th className="text-left text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">Metric</th>
+                    {dcf.years.map((y) => (
+                      <th key={y.year} className="text-right text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">Y{y.year}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="text-[#B8AA96]/70">
+                  <TableRow label="Revenue" values={dcf.years.map((y) => fmtT(y.revenue))} />
+                  <TableRow label="Growth %" values={dcf.years.map((y) => fmtPct(y.growth))} />
+                  <TableRow label="EBIT" values={dcf.years.map((y) => fmtT(y.ebit))} />
+                  <TableRow label="NOPAT" values={dcf.years.map((y) => fmtT(y.nopat))} />
+                  <TableRow label="(+) D&A" values={dcf.years.map((y) => fmtT(y.da))} />
+                  <TableRow label="(−) Capex" values={dcf.years.map((y) => fmtT(y.capex))} />
+                  <TableRow label="(−) ΔWC" values={dcf.years.map((y) => fmtT(y.wc))} />
+                  <tr className="border-t border-[#2C261E]">
+                    <td className="py-2 pr-4 text-[#C6A15B] font-medium">FCFF</td>
+                    {dcf.years.map((y) => (
+                      <td key={y.year} className="text-right py-2 px-2 text-[#C6A15B] font-medium">{fmtT(y.fcff)}</td>
+                    ))}
+                  </tr>
+                  <TableRow label="PV(FCFF)" values={dcf.years.map((y) => fmtT(y.pv))} />
+                </tbody>
+              </table>
+            </div>
+
+            {/* Sensitivity Matrix */}
+            <div className="card-luxury p-8 mt-8 overflow-x-auto">
+              <h3 className="font-heading text-lg text-[#F4EFE6] mb-2 font-medium">Sensitivity Analysis</h3>
+              <p className="text-[#B8AA96]/40 text-xs mb-6">Fair value per share (Rp) pada variasi WACC dan terminal growth</p>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-[#2C261E]">
+                    <th className="text-left text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">WACC ↓ / TG →</th>
+                    {sensitivity.tgRange.map((tg) => (
+                      <th key={tg} className="text-right text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">
+                        {fmtPct(tg)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {sensitivity.matrix.map((row, wi) => (
+                    <tr key={wi} className="border-b border-[#2C261E]/50">
+                      <td className="py-2 pr-4 text-[#B8AA96]/60 font-medium text-xs">{fmtPct(sensitivity.waccRange[wi])}</td>
+                      {row.map((fv, ti) => {
+                        const isBase = sensitivity.waccRange[wi] === wacc && sensitivity.tgRange[ti] === terminalGrowth;
+                        const color = fv > currentPrice * 1.1 ? "text-[#22C55E]" : fv < currentPrice * 0.9 ? "text-[#EF4444]" : "text-[#FACC15]";
+                        return (
+                          <td key={ti} className={`text-right py-2 px-2 font-mono text-xs ${isBase ? "text-[#C6A15B] font-bold bg-[#C6A15B]/5" : color}`}>
+                            {fmt(Math.round(fv), 0)}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="text-[#B8AA96]/25 text-[10px] mt-3">Sel highlight = base case WACC/TG. Hijau &gt; 10% upside, Merah &gt; 10% overvalued.</p>
+            </div>
+          </>
+        )}
+
+        {/* ─── Bank Mode ─── */}
+        {mode === "bank" && (
+          <>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Left: Bank Inputs */}
+              <div className="lg:col-span-2 space-y-6">
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Data Bank & Pasar</h3>
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <InputField label="Harga Saham" value={currentPrice} onChange={setCurrentPrice} prefix="Rp" />
+                    <InputField label="Shares Outstanding" value={bankShares} onChange={setBankShares} suffix="Miliar" />
+                    <InputField label="Cost of Equity (Ke)" value={ke} onChange={setKe} suffix="%" />
+                  </div>
+                </div>
+
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Fundamental Bank</h3>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <InputField label="Book Value / Share" value={bvPerShare} onChange={setBvPerShare} prefix="Rp" />
+                    <InputField label="ROE" value={roe} onChange={setRoe} suffix="%" />
+                    <InputField label="Payout Ratio" value={payout} onChange={setPayout} suffix="%" />
+                    <InputField label="EPS" value={eps} onChange={setEps} prefix="Rp" />
+                    <InputField label="DPS" value={dps} onChange={setDps} prefix="Rp" />
+                    <InputField label="Terminal Growth" value={bankTG} onChange={setBankTG} suffix="%" />
+                  </div>
+                </div>
+
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Proyeksi Pertumbuhan (SGR-based)</h3>
+                  <p className="text-[#B8AA96]/40 text-[10px] mb-3">SGR = Retention × ROE = {fmtPct(bankResult.sgr)}. Growth fade dari SGR → {fmtPct(bankTG)} (terminal).</p>
+                  <div className="grid grid-cols-5 gap-3">
+                    <InputField label="Tahun 1" value={bankG1} onChange={setBankG1} suffix="%" />
+                    <InputField label="Tahun 2" value={bankG2} onChange={setBankG2} suffix="%" />
+                    <InputField label="Tahun 3" value={bankG3} onChange={setBankG3} suffix="%" />
+                    <InputField label="Tahun 4" value={bankG4} onChange={setBankG4} suffix="%" />
+                    <InputField label="Tahun 5" value={bankG5} onChange={setBankG5} suffix="%" />
+                  </div>
+                </div>
+
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">ROE & Floor Parameter</h3>
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <InputField label="ROE Floor" value={roeFloor} onChange={setRoeFloor} suffix="%" />
+                    <InputField label="ROE Terminal" value={roeTerminal} onChange={setRoeTerminal} suffix="%" />
+                  </div>
+                  <p className="text-[#B8AA96]/30 text-[10px] mt-3">ROE fade: {fmtPct(roe)} → {fmtPct(roeTerminal)} (clamped 12-20%). Ke: {fmtPct(ke)}.</p>
+                </div>
+              </div>
+
+              {/* Right: Bank Results */}
+              <div className="space-y-6">
+                {/* RIM Card */}
+                <div className="card-luxury p-6 text-center">
+                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">IDX:{ticker} — RIM Model</p>
+                  <div className="text-4xl font-heading font-medium mb-1 text-[#C6A15B]">
+                    {fmtIDR(bankResult.rimValue)}
+                  </div>
+                  <p className="text-[#B8AA96]/50 text-xs">Residual Income Model</p>
+                </div>
+
+                {/* DDM Card */}
+                <div className="card-luxury p-6 text-center">
+                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">IDX:{ticker} — DDM Model</p>
+                  <div className="text-4xl font-heading font-medium mb-1 text-[#3B82F6]">
+                    {fmtIDR(bankResult.ddmValue)}
+                  </div>
+                  <p className="text-[#B8AA96]/50 text-xs">Dividend Discount Model</p>
+                </div>
+
+                {/* Blended Verdict */}
+                <div className="card-luxury p-6 text-center">
+                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">Blended (RIM + DDM) / 2</p>
+                  <div className="text-4xl font-heading font-medium mb-1" style={{ color: verdictColor }}>
+                    {fmtIDR(bankResult.blended)}
+                  </div>
+                  <p className="text-[#B8AA96]/50 text-xs mb-4">Fair Value / Share</p>
+                  <div className="flex justify-center gap-6 text-sm">
+                    <div>
+                      <p className="text-[#B8AA96]/40 text-[10px] uppercase">Harga</p>
+                      <p className="text-[#F4EFE6] font-medium">{fmtIDR(currentPrice)}</p>
+                    </div>
+                    <div>
+                      <p className="text-[#B8AA96]/40 text-[10px] uppercase">Upside</p>
+                      <p className="font-medium" style={{ color: verdictColor }}>{fmtPct(bankResult.upside)}</p>
+                    </div>
+                  </div>
+                  <div className="mt-4 py-2 px-4 border text-xs tracking-[0.15em] uppercase font-medium inline-block" style={{ borderColor: verdictColor, color: verdictColor }}>
+                    {verdict}
+                  </div>
+                </div>
+
+                {/* P/B Comparison */}
+                <div className="card-luxury p-6">
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-4 font-medium">P/B Comparison</h3>
+                  <div className="space-y-3 text-sm">
+                    <BreakdownRow label="Justified P/B" value={`${fmt(bankResult.justifiedPB)}x`} highlight />
+                    <BreakdownRow label="Market P/B" value={`${fmt(bankResult.marketPB)}x`} />
+                    <BreakdownRow label="BV / Share" value={fmtIDR(bvPerShare)} />
+                    <BreakdownRow label="ROE" value={fmtPct(roe)} />
+                    <BreakdownRow label="Cost of Equity" value={fmtPct(ke)} />
+                    <BreakdownRow label="Terminal Growth" value={fmtPct(bankTG)} />
+                  </div>
+                </div>
+
+                <div className="card-luxury p-5">
+                  <p className="text-[#B8AA96]/30 text-[10px] leading-relaxed">
+                    <strong className="text-[#B8AA96]/50">Metodologi Bank:</strong> RIM = BV₀ + Σ PV(RI) + PV(TV).
+                    DDM = Σ PV(DPS) + PV(TV). Justified P/B = (ROE − g) / (Ke − g).
+                    ROE fade: {fmtPct(roe)} → {fmtPct(roeTerminal)}. SGR: {fmtPct(bankResult.sgr)}.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* BV Growth Chart */}
+            <div className="card-luxury p-8 mt-8">
+              <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">Proyeksi Book Value 5 Tahun</h3>
+              <div className="flex items-end gap-4">
+                {/* Year 0 */}
+                <div className="flex-1 flex flex-col items-center gap-2">
+                  <span className="text-[10px] text-[#B8AA96]/50">{fmtIDR(bvPerShare)}</span>
                   <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
                     <div
                       className="w-full max-w-[80px] transition-all duration-500"
                       style={{
-                        height: `${Math.max(heightPct, 4)}%`,
-                        background: isNeg
-                          ? "linear-gradient(to top, #EF4444, #FCA5A5)"
-                          : "linear-gradient(to top, #C6A15B, #D4B76A)",
+                        height: `${Math.max((bvPerShare / maxBV) * 100, 4)}%`,
+                        background: "linear-gradient(to top, #C6A15B, #D4B76A)",
                       }}
                     />
                   </div>
-                  <span className="text-[10px] text-[#B8AA96]/40">Y{y.year}</span>
-                  <span className="text-[9px] text-[#B8AA96]/25">{fmtPct(y.growth)} rev growth</span>
+                  <span className="text-[10px] text-[#B8AA96]/40">Y0</span>
+                  <span className="text-[9px] text-[#B8AA96]/25">BV saat ini</span>
                 </div>
-              );
-            })}
-            {/* Terminal bar */}
-            <div className="flex-1 flex flex-col items-center gap-2">
-              <span className="text-[10px] text-[#B8AA96]/50">{fmtT(dcf.pvTerminal)}</span>
-              <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
-                <div
-                  className="w-full max-w-[80px] transition-all duration-500 opacity-70"
-                  style={{
-                    height: `${Math.min(Math.max((dcf.pvTerminal / maxFCFF) * 100, 4), 100)}%`,
-                    background: "linear-gradient(to top, #8B5CF6, #A78BFA)",
-                  }}
-                />
+                {bankResult.bvPath.map((bv, i) => (
+                  <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                    <span className="text-[10px] text-[#B8AA96]/50">{fmtIDR(bv)}</span>
+                    <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
+                      <div
+                        className="w-full max-w-[80px] transition-all duration-500"
+                        style={{
+                          height: `${Math.max((bv / maxBV) * 100, 4)}%`,
+                          background: "linear-gradient(to top, #C6A15B, #D4B76A)",
+                        }}
+                      />
+                    </div>
+                    <span className="text-[10px] text-[#B8AA96]/40">Y{i + 1}</span>
+                    <span className="text-[9px] text-[#B8AA96]/25">ROE {fmtPct(bankResult.roePath[i])}</span>
+                  </div>
+                ))}
               </div>
-              <span className="text-[10px] text-[#B8AA96]/40">TV</span>
-              <span className="text-[9px] text-[#B8AA96]/25">terminal</span>
             </div>
-          </div>
-        </div>
 
-        {/* ─── Detailed Projections Table ─── */}
-        <div className="card-luxury p-8 mt-8 overflow-x-auto">
-          <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">Detailed Year-by-Year Projections</h3>
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-[#2C261E]">
-                <th className="text-left text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">Metric</th>
-                {dcf.years.map((y) => (
-                  <th key={y.year} className="text-right text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">Y{y.year}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="text-[#B8AA96]/70">
-              <TableRow label="Revenue" values={dcf.years.map((y) => fmtT(y.revenue))} />
-              <TableRow label="Growth %" values={dcf.years.map((y) => fmtPct(y.growth))} />
-              <TableRow label="EBIT" values={dcf.years.map((y) => fmtT(y.ebit))} />
-              <TableRow label="NOPAT" values={dcf.years.map((y) => fmtT(y.nopat))} />
-              <TableRow label="(+) D&A" values={dcf.years.map((y) => fmtT(y.da))} />
-              <TableRow label="(−) Capex" values={dcf.years.map((y) => fmtT(y.capex))} />
-              <TableRow label="(−) ΔWC" values={dcf.years.map((y) => fmtT(y.wc))} />
-              <tr className="border-t border-[#2C261E]">
-                <td className="py-2 pr-4 text-[#C6A15B] font-medium">FCFF</td>
-                {dcf.years.map((y) => (
-                  <td key={y.year} className="text-right py-2 px-2 text-[#C6A15B] font-medium">{fmtT(y.fcff)}</td>
-                ))}
-              </tr>
-              <TableRow label="PV(FCFF)" values={dcf.years.map((y) => fmtT(y.pv))} />
-            </tbody>
-          </table>
-        </div>
-
-        {/* ─── Sensitivity Matrix ─── */}
-        <div className="card-luxury p-8 mt-8 overflow-x-auto">
-          <h3 className="font-heading text-lg text-[#F4EFE6] mb-2 font-medium">Sensitivity Analysis</h3>
-          <p className="text-[#B8AA96]/40 text-xs mb-6">Fair value per share (Rp) at varying WACC and terminal growth rates</p>
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-[#2C261E]">
-                <th className="text-left text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">WACC ↓ / TG →</th>
-                {sensitivity.tgRange.map((tg) => (
-                  <th key={tg} className="text-right text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">
-                    {fmtPct(tg)}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {sensitivity.matrix.map((row, wi) => (
-                <tr key={wi} className="border-b border-[#2C261E]/50">
-                  <td className="py-2 pr-4 text-[#B8AA96]/60 font-medium text-xs">{fmtPct(sensitivity.waccRange[wi])}</td>
-                  {row.map((fv, ti) => {
-                    const isBase = sensitivity.waccRange[wi] === wacc && sensitivity.tgRange[ti] === terminalGrowth;
-                    const color = fv > currentPrice * 1.1 ? "text-[#22C55E]" : fv < currentPrice * 0.9 ? "text-[#EF4444]" : "text-[#FACC15]";
-                    return (
-                      <td key={ti} className={`text-right py-2 px-2 font-mono text-xs ${isBase ? "text-[#C6A15B] font-bold bg-[#C6A15B]/5" : color}`}>
-                        {fmt(Math.round(fv), 0)}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="text-[#B8AA96]/25 text-[10px] mt-3">Highlighted cell = base case WACC/TG. Green &gt; 10% upside, Red &gt; 10% overvalued.</p>
-        </div>
+            {/* Growth Path Table */}
+            <div className="card-luxury p-8 mt-8 overflow-x-auto">
+              <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">Tabel Jalur Pertumbuhan (RIM & DDM)</h3>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-[#2C261E]">
+                    <th className="text-left text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">Metrik</th>
+                    {["Y1", "Y2", "Y3", "Y4", "Y5"].map((y) => (
+                      <th key={y} className="text-right text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">{y}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="text-[#B8AA96]/70">
+                  <TableRow label="Growth Rate" values={bankResult.growthRates.map(fmtPct)} />
+                  <TableRow label="ROE (%)" values={bankResult.roePath.map(fmtPct)} />
+                  <TableRow label="BV (Rp)" values={bankResult.bvPath.map(fmtIDR)} />
+                  <TableRow label="Residual Income (Rp)" values={bankResult.riPath.map(fmtIDR)} />
+                  <TableRow label="DPS (Rp)" values={bankResult.dpsPath.map(fmtIDR)} />
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
       </div>
       <Footer />
     </div>
@@ -471,7 +872,6 @@ export default function DCFPage() {
 }
 
 /* ─── Sub-components ─── */
-function capexPct_default(p: Preset) { return p.capexPct; }
 
 function InputField({ label, value, onChange, prefix, suffix, type = "number" }: {
   label: string; value: string | number; onChange: (v: any) => void;
