@@ -62,7 +62,7 @@ function num(v: unknown): number | null {
 interface QuoteData {
   close: number | null; change: number | null; changeAbs: number | null;
   recommend: number | null; rsi: number | null;
-  sma20: number | null; sma50: number | null; sma200: number | null;
+  sma20: number | null; sma50: number | null; sma100: number | null; sma200: number | null;
   perfWeek: number | null; perf1M: number | null; perf3M: number | null;
   perfYTD: number | null; perf1Y: number | null;
   high: number | null; low: number | null;
