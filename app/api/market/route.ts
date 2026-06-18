@@ -39,7 +39,7 @@ const SECTOR_BASKETS: Record<string, { name: string; tickers: string[] }> = {
 const MACRO_SYMBOLS: Record<string, { symbol: string; label: string }> = {
   USDIDR: { symbol: "FX_IDC:USDIDR", label: "USD/IDR" },
   GOLD: { symbol: "TVC:GOLD", label: "Gold" },
-  UKOIL: { symbol: "TVC:UKOIL", label: "Brent Oil" },
+  UKOIL: { symbol: "FX:UKOIL", label: "Brent Oil" },
   US10Y: { symbol: "TVC:US10Y", label: "US 10Y" },
   US02Y: { symbol: "TVC:US02Y", label: "US 2Y" },
 };
