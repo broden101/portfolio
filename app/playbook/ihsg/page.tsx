@@ -9,6 +9,7 @@ import {
   type MarketData,
   type Quote,
   type ForeignFlowData,
+  type ForeignFlowStock,
   recommendLabel,
   rsiLabel,
   fmtPct,
@@ -22,6 +23,7 @@ import {
 } from "@/lib/market";
 
 type PerfTab = "Day" | "Week" | "1M" | "YTD";
+type MoversTab = "beli" | "jual" | "aktif";
 
 const TAB_COLUMNS: Record<PerfTab, (q: Quote) => number | null> = {
   Day: (q) => q.change,
@@ -42,17 +44,39 @@ async function fetchForeignFlowClient(): Promise<ForeignFlowData | null> {
     });
     if (!resp.ok) return null;
     const data = await resp.json();
-    const topBuy = (data.accumulation ?? []).slice(0, 10).map((a: Record<string, unknown>) => ({
+    const rawAcc = (data.accumulation ?? []) as Record<string, unknown>[];
+    const rawDist = (data.distribution ?? []) as Record<string, unknown>[];
+    const topBuy = rawAcc.slice(0, 10).map((a) => ({
       ticker: a.stock_code as string,
       net: Math.round(Number(a.net_value ?? 0) / 1e6),
     }));
-    const topSell = (data.distribution ?? []).slice(0, 10).map((d: Record<string, unknown>) => ({
+    const topSell = rawDist.slice(0, 10).map((d) => ({
       ticker: d.stock_code as string,
       net: Math.round(Number(d.net_value ?? 0) / 1e6),
     }));
-    const weekNet = topBuy.reduce((s: number, b: { net: number }) => s + b.net, 0) +
-                    topSell.reduce((s: number, d: { net: number }) => s + d.net, 0);
-    return { date: data.date, weekNet, mtdNet: null, ytdNet: null, topBuy, topSell };
+    const weekNet = topBuy.reduce((s, b) => s + b.net, 0) +
+                    topSell.reduce((s, d) => s + d.net, 0);
+    const totalForeignBuy = [...rawAcc, ...rawDist].reduce((s, r) => s + Number(r.total_buy_value ?? 0), 0);
+    const totalForeignSell = [...rawAcc, ...rawDist].reduce((s, r) => s + Number(r.total_sell_value ?? 0), 0);
+    const mapRaw = (r: Record<string, unknown>) => ({
+      rank: Number(r.rank ?? 0),
+      stock_code: String(r.stock_code ?? ""),
+      stock_name: String(r.stock_name ?? ""),
+      close_price: Number(r.close_price ?? 0),
+      net_value: Number(r.net_value ?? 0),
+      net_volume: Number(r.net_volume ?? 0),
+      total_buy_volume: Number(r.total_buy_volume ?? 0),
+      total_sell_volume: Number(r.total_sell_volume ?? 0),
+      total_buy_value: Number(r.total_buy_value ?? 0),
+      total_sell_value: Number(r.total_sell_value ?? 0),
+    });
+    return {
+      date: data.date, weekNet, mtdNet: null, ytdNet: null, topBuy, topSell,
+      rawAccumulation: rawAcc.map(mapRaw),
+      rawDistribution: rawDist.map(mapRaw),
+      totalForeignBuy,
+      totalForeignSell,
+    };
   } catch { return null; }
 }
 
@@ -63,6 +87,8 @@ export default function IHSGDashboard() {
   const [activeTab, setActiveTab] = useState<PerfTab>("1M");
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [live, setLive] = useState(false);
+  const [flowHistory, setFlowHistory] = useState<{ date: string; dailyNet: number; totalForeignBuy: number; totalForeignSell: number }[]>([]);
+  const [moversTab, setMoversTab] = useState<MoversTab>("beli");
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const refresh = useCallback(async () => {
@@ -84,6 +110,14 @@ export default function IHSGDashboard() {
     intervalRef.current = setInterval(refresh, 60_000);
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [refresh]);
+
+  // Fetch foreign flow history (rolling net flow)
+  useEffect(() => {
+    fetch("/api/foreign-flow-history")
+      .then((r) => r.json())
+      .then((d) => setFlowHistory(d.days ?? []))
+      .catch(() => {});
+  }, []);
 
   const ihsg: Quote = data?.ihsg ?? IHSG_FALLBACK;
   const ihsgClose = ihsg.close ?? IHSG_FALLBACK.close!;
@@ -136,6 +170,41 @@ export default function IHSGDashboard() {
 
   const getPerf = (q: Quote) => TAB_COLUMNS[activeTab](q);
   const sortedSectors = useMemo(() => [...sectors].sort((a, b) => (getPerf(b) ?? -999) - (getPerf(a) ?? -999)), [sectors, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Rolling net flow from history
+  const rollingNetFlow = useMemo(() => {
+    const sumDays = (n: number) => {
+      const slice = flowHistory.slice(-n);
+      return { total: slice.reduce((s, d) => s + d.dailyNet, 0), count: slice.length };
+    };
+    return { net7d: sumDays(7), net14d: sumDays(14), net30d: sumDays(30) };
+  }, [flowHistory]);
+
+  // Top movers computed from raw foreign flow data
+  const topMovers = useMemo(() => {
+    if (!ff?.rawAccumulation || !ff?.rawDistribution) return null;
+    const allStocks = [...ff.rawAccumulation, ...ff.rawDistribution];
+    // Deduplicate by stock_code (some may appear in both)
+    const uniqueMap = new Map<string, ForeignFlowStock>();
+    for (const s of allStocks) {
+      const existing = uniqueMap.get(s.stock_code);
+      if (!existing) uniqueMap.set(s.stock_code, s);
+      else {
+        // Merge: take higher net_value, sum volumes
+        uniqueMap.set(s.stock_code, {
+          ...s,
+          total_buy_volume: existing.total_buy_volume + s.total_buy_volume,
+          total_sell_volume: existing.total_sell_volume + s.total_sell_volume,
+          net_value: existing.net_value + s.net_value,
+        });
+      }
+    }
+    const unique = Array.from(uniqueMap.values());
+    const topBuy = [...unique].sort((a, b) => b.net_value - a.net_value).slice(0, 10);
+    const topSell = [...unique].sort((a, b) => a.net_value - b.net_value).slice(0, 10);
+    const topActive = [...unique].sort((a, b) => (b.total_buy_volume + b.total_sell_volume) - (a.total_buy_volume + a.total_sell_volume)).slice(0, 10);
+    return { topBuy, topSell, topActive };
+  }, [ff]);
 
   const fmtTime = (iso: string) => {
     try {
@@ -298,6 +367,179 @@ export default function IHSGDashboard() {
                 Sumber: TradingView ({live ? "live" : "offline"}). RSI {rsi.label}. Sinyal {rec.label}. Rentang 52 minggu {fmtNum(ihsg.low)}–{fmtNum(ihsg.high)}.
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* ═══ MARKET OVERVIEW: Net Flow + Composition + Top Movers ═══ */}
+        <div className="mb-8">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-10 h-px bg-[#C6A15B]/30" />
+            <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
+              Market <span className="text-gold-gradient font-medium">Overview</span>
+            </h2>
+            <span className="text-[9px] text-emerald-400/50 uppercase tracking-wider border border-emerald-500/20 px-1.5 py-0.5">Auto</span>
+          </div>
+
+          {/* Net Flow Rolling + Composition */}
+          <div className="grid lg:grid-cols-2 gap-6 mb-6">
+            {/* Net Flow 7d / 14d / 30d */}
+            <div className="card-luxury p-6">
+              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Net Flow Kumulatif</h3>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { label: "7 Hari", data: rollingNetFlow.net7d },
+                  { label: "14 Hari", data: rollingNetFlow.net14d },
+                  { label: "30 Hari", data: rollingNetFlow.net30d },
+                ].map((r) => (
+                  <div key={r.label} className="border border-[#2C261E] p-3 text-center">
+                    <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
+                    <div className={`text-sm font-mono font-medium ${r.data.total >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                      {fmtMiliar(r.data.total)}
+                    </div>
+                    <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{r.data.count} hari data</div>
+                  </div>
+                ))}
+              </div>
+              {flowHistory.length > 0 && (
+                <div className="mt-4 pt-3 border-t border-[#2C261E]">
+                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Tren Harian (Miliar Rp)</div>
+                  <div className="flex items-end gap-0.5 h-12">
+                    {flowHistory.slice(-30).map((d, i) => {
+                      const maxAbs = Math.max(...flowHistory.slice(-30).map(x => Math.abs(x.dailyNet)), 1);
+                      const h = Math.min(Math.abs(d.dailyNet) / maxAbs * 100, 100);
+                      return (
+                        <div key={i} className="flex-1 flex items-end justify-center" title={`${d.date}: ${fmtMiliar(d.dailyNet)}`}>
+                          <div
+                            className={`w-full ${d.dailyNet >= 0 ? "bg-emerald-400/60" : "bg-red-400/60"}`}
+                            style={{ height: `${Math.max(h, 2)}%` }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="flex justify-between text-[#B8AA96]/30 text-[8px] mt-1">
+                    <span>{flowHistory.slice(-30)[0]?.date ?? ""}</span>
+                    <span>{flowHistory.slice(-1)[0]?.date ?? ""}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Composition Foreign Buy vs Sell */}
+            <div className="card-luxury p-6">
+              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Komposisi Transaksi Asing</h3>
+              {ff?.totalForeignBuy != null && ff?.totalForeignSell != null ? (
+                <>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">Total Beli Asing</div>
+                      <div className="text-emerald-400 text-sm font-mono font-medium">Rp {(ff.totalForeignBuy / 1e9).toFixed(1)}T</div>
+                    </div>
+                    <div>
+                      <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">Total Jual Asing</div>
+                      <div className="text-red-400 text-sm font-mono font-medium">Rp {(ff.totalForeignSell / 1e9).toFixed(1)}T</div>
+                    </div>
+                  </div>
+                  <div className="mb-3">
+                    <div className="flex h-4 rounded-sm overflow-hidden">
+                      {(() => {
+                        const total = ff.totalForeignBuy + ff.totalForeignSell;
+                        const buyPct = total > 0 ? (ff.totalForeignBuy / total * 100) : 50;
+                        return (
+                          <>
+                            <div className="bg-emerald-400/70 transition-all" style={{ width: `${buyPct}%` }} />
+                            <div className="bg-red-400/70 transition-all" style={{ width: `${100 - buyPct}%` }} />
+                          </>
+                        );
+                      })()}
+                    </div>
+                    <div className="flex justify-between text-[#B8AA96]/40 text-[9px] mt-1">
+                      <span className="text-emerald-400/70">{(() => { const t = ff.totalForeignBuy + ff.totalForeignSell; return t > 0 ? `${(ff.totalForeignBuy / t * 100).toFixed(1)}%` : "50%"; })()}</span>
+                      <span className="text-red-400/70">{(() => { const t = ff.totalForeignBuy + ff.totalForeignSell; return t > 0 ? `${(ff.totalForeignSell / t * 100).toFixed(1)}%` : "50%"; })()}</span>
+                    </div>
+                  </div>
+                  <div className="border-t border-[#2C261E] pt-3">
+                    <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-1">Net Hari Ini</div>
+                    <div className={`font-heading text-lg font-medium ${((ff.totalForeignBuy - ff.totalForeignSell) >= 0) ? "text-emerald-400" : "text-red-400"}`}>
+                      {fmtMiliar(((ff.totalForeignBuy - ff.totalForeignSell) / 1e6))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-8 text-[#B8AA96]/40 text-sm">Data komposisi tidak tersedia.</div>
+              )}
+            </div>
+          </div>
+
+          {/* Top Movers: Foreign Buy / Foreign Sell / Most Active */}
+          <div className="card-luxury p-6">
+            <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium">Top Mover Saham</h3>
+              <div className="flex items-center gap-1">
+                {([
+                  { key: "beli" as MoversTab, label: "Beli Asing" },
+                  { key: "jual" as MoversTab, label: "Jual Asing" },
+                  { key: "aktif" as MoversTab, label: "Paling Aktif" },
+                ]).map((tab) => (
+                  <button key={tab.key} onClick={() => setMoversTab(tab.key)}
+                    className={`px-3 py-1.5 text-[10px] tracking-[0.1em] uppercase font-medium transition-all ${
+                      moversTab === tab.key ? "bg-[#C6A15B]/15 text-[#C6A15B] border border-[#C6A15B]/30" : "border border-[#2C261E] text-[#B8AA96]/50 hover:text-[#B8AA96]"
+                    }`}>{tab.label}</button>
+                ))}
+              </div>
+            </div>
+            {topMovers ? (
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-[#2C261E]">
+                      <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium w-8">#</th>
+                      <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Saham</th>
+                      <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Harga</th>
+                      {moversTab === "aktif" ? (
+                        <>
+                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Vol Beli</th>
+                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Vol Jual</th>
+                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Total Vol</th>
+                        </>
+                      ) : (
+                        <>
+                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Net Value</th>
+                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Net Vol</th>
+                        </>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody className="font-mono">
+                    {(moversTab === "beli" ? topMovers.topBuy : moversTab === "jual" ? topMovers.topSell : topMovers.topActive).map((s, i) => (
+                      <tr key={s.stock_code} className="border-b border-[#2C261E]/30">
+                        <td className="py-2 text-[#B8AA96]/50">{i + 1}</td>
+                        <td className="py-2 text-[#F4EFE6] font-sans font-medium">{s.stock_code}</td>
+                        <td className="py-2 text-right text-[#B8AA96]/70">{s.close_price > 0 ? s.close_price.toLocaleString("id-ID") : "—"}</td>
+                        {moversTab === "aktif" ? (
+                          <>
+                            <td className="py-2 text-right text-emerald-400/70">{(s.total_buy_volume / 1e6).toFixed(1)}M</td>
+                            <td className="py-2 text-right text-red-400/70">{(s.total_sell_volume / 1e6).toFixed(1)}M</td>
+                            <td className="py-2 text-right text-[#F4EFE6] font-medium">{((s.total_buy_volume + s.total_sell_volume) / 1e6).toFixed(1)}M</td>
+                          </>
+                        ) : (
+                          <>
+                            <td className={`py-2 text-right ${s.net_value >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                              {s.net_value >= 0 ? "+" : ""}{(s.net_value / 1e6).toFixed(0)}M
+                            </td>
+                            <td className={`py-2 text-right ${s.net_volume >= 0 ? "text-emerald-400/70" : "text-red-400/70"}`}>
+                              {s.net_volume >= 0 ? "+" : ""}{(s.net_volume / 1e6).toFixed(1)}M
+                            </td>
+                          </>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-8 text-[#B8AA96]/40 text-sm">Data top mover tidak tersedia.</div>
+            )}
           </div>
         </div>
 

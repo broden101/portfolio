@@ -37,6 +37,19 @@ export interface MacroQuote {
   change: number | null;
 }
 
+export interface ForeignFlowStock {
+  rank: number;
+  stock_code: string;
+  stock_name: string;
+  close_price: number;
+  net_value: number;
+  net_volume: number;
+  total_buy_volume: number;
+  total_sell_volume: number;
+  total_buy_value: number;
+  total_sell_value: number;
+}
+
 export interface ForeignFlowData {
   date: string;
   weekNet: number;
@@ -44,6 +57,10 @@ export interface ForeignFlowData {
   ytdNet: number | null;
   topBuy: { ticker: string; net: number }[];
   topSell: { ticker: string; net: number }[];
+  rawAccumulation?: ForeignFlowStock[];
+  rawDistribution?: ForeignFlowStock[];
+  totalForeignBuy?: number;
+  totalForeignSell?: number;
 }
 
 export interface ManualData {

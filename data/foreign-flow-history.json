@@ -1,0 +1,185 @@
+{
+  "lastUpdated": "2026-06-18T23:00:32",
+  "days": [
+    {
+      "date": "2026-04-29",
+      "dailyNet": -857243,
+      "totalForeignBuy": 2467142607100,
+      "totalForeignSell": 3324385362100
+    },
+    {
+      "date": "2026-04-30",
+      "dailyNet": -1516282,
+      "totalForeignBuy": 4139561514200,
+      "totalForeignSell": 5655843452700
+    },
+    {
+      "date": "2026-05-04",
+      "dailyNet": -697039,
+      "totalForeignBuy": 3491151306300,
+      "totalForeignSell": 4188190405400
+    },
+    {
+      "date": "2026-05-05",
+      "dailyNet": -268279,
+      "totalForeignBuy": 2996652260300,
+      "totalForeignSell": 3264931583000
+    },
+    {
+      "date": "2026-05-06",
+      "dailyNet": -380573,
+      "totalForeignBuy": 2987805119800,
+      "totalForeignSell": 3368377778700
+    },
+    {
+      "date": "2026-05-07",
+      "dailyNet": -366162,
+      "totalForeignBuy": 3514131995400,
+      "totalForeignSell": 3880294201400
+    },
+    {
+      "date": "2026-05-08",
+      "dailyNet": -333197,
+      "totalForeignBuy": 3965835946300,
+      "totalForeignSell": 4299033100000
+    },
+    {
+      "date": "2026-05-11",
+      "dailyNet": -592336,
+      "totalForeignBuy": 4135856756900,
+      "totalForeignSell": 4728192318300
+    },
+    {
+      "date": "2026-05-12",
+      "dailyNet": -616211,
+      "totalForeignBuy": 3265579517900,
+      "totalForeignSell": 3881790703200
+    },
+    {
+      "date": "2026-05-13",
+      "dailyNet": -973999,
+      "totalForeignBuy": 3668501306800,
+      "totalForeignSell": 4642500778500
+    },
+    {
+      "date": "2026-05-18",
+      "dailyNet": -423624,
+      "totalForeignBuy": 5971622059000,
+      "totalForeignSell": 6395245715000
+    },
+    {
+      "date": "2026-05-19",
+      "dailyNet": 231883,
+      "totalForeignBuy": 5255302455100,
+      "totalForeignSell": 5023419823800
+    },
+    {
+      "date": "2026-05-20",
+      "dailyNet": -265493,
+      "totalForeignBuy": 6232386703000,
+      "totalForeignSell": 6497879504700
+    },
+    {
+      "date": "2026-05-21",
+      "dailyNet": -368730,
+      "totalForeignBuy": 5060826195800,
+      "totalForeignSell": 5429556303900
+    },
+    {
+      "date": "2026-05-22",
+      "dailyNet": -1002684,
+      "totalForeignBuy": 5653731426300,
+      "totalForeignSell": 6656415018300
+    },
+    {
+      "date": "2026-05-25",
+      "dailyNet": -1254954,
+      "totalForeignBuy": 3933210581600,
+      "totalForeignSell": 5188164273700
+    },
+    {
+      "date": "2026-05-26",
+      "dailyNet": -1568145,
+      "totalForeignBuy": 4622137307000,
+      "totalForeignSell": 6190282026000
+    },
+    {
+      "date": "2026-05-29",
+      "dailyNet": -7769870,
+      "totalForeignBuy": 23526691529900,
+      "totalForeignSell": 31296561154200
+    },
+    {
+      "date": "2026-06-02",
+      "dailyNet": -969149,
+      "totalForeignBuy": 8085255367700,
+      "totalForeignSell": 9054404528900
+    },
+    {
+      "date": "2026-06-03",
+      "dailyNet": -817160,
+      "totalForeignBuy": 7439563675600,
+      "totalForeignSell": 8256723344100
+    },
+    {
+      "date": "2026-06-04",
+      "dailyNet": -1516452,
+      "totalForeignBuy": 9703846270300,
+      "totalForeignSell": 11220298388500
+    },
+    {
+      "date": "2026-06-05",
+      "dailyNet": -3214779,
+      "totalForeignBuy": 6288889968900,
+      "totalForeignSell": 9503668583600
+    },
+    {
+      "date": "2026-06-08",
+      "dailyNet": -690532,
+      "totalForeignBuy": 7899094239200,
+      "totalForeignSell": 8589626636600
+    },
+    {
+      "date": "2026-06-09",
+      "dailyNet": -2361949,
+      "totalForeignBuy": 8803124428000,
+      "totalForeignSell": 11165073513700
+    },
+    {
+      "date": "2026-06-10",
+      "dailyNet": -2134892,
+      "totalForeignBuy": 7950778314200,
+      "totalForeignSell": 10085669945000
+    },
+    {
+      "date": "2026-06-11",
+      "dailyNet": -97687,
+      "totalForeignBuy": 6898658370000,
+      "totalForeignSell": 6996345702800
+    },
+    {
+      "date": "2026-06-12",
+      "dailyNet": 244734,
+      "totalForeignBuy": 6157543557900,
+      "totalForeignSell": 5912809255300
+    },
+    {
+      "date": "2026-06-15",
+      "dailyNet": 306175,
+      "totalForeignBuy": 8313364694600,
+      "totalForeignSell": 8007189249700
+    },
+    {
+      "date": "2026-06-17",
+      "dailyNet": -56219,
+      "totalForeignBuy": 6413052214900,
+      "totalForeignSell": 6469270816800
+    },
+    {
+      "date": "2026-06-18",
+      "dailyNet": -744225,
+      "totalForeignBuy": 4096360168600,
+      "totalForeignSell": 4840585200700
+    }
+  ]
+}
