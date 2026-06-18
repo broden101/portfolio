@@ -1,8 +1,8 @@
 {
   "biRate": {
-    "value": 5.5,
-    "note": "BI RDG - auto from TradingEconomics",
-    "lastUpdated": null
+    "value": 5.75,
+    "note": "BI RDG Juni 2026",
+    "lastUpdated": "2026-06-18"
   },
   "tradeBalance": {
     "value": 3.32,
