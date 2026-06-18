@@ -182,11 +182,11 @@ export default function IHSGDashboard() {
       Math.round(price * 0.97),  // S1: -3%
       Math.round(price * 0.93),  // S2: -7%
     ].sort((a, b) => b - a); // descending (highest support first)
-    // Resistance: +3%, +7%
+    // Resistance: R1 (+3%), R2 (+7%) — sorted descending (highest first for display)
     const resistance = [
       Math.round(price * 1.03),  // R1: +3%
       Math.round(price * 1.07),  // R2: +7%
-    ].sort((a, b) => a - b); // ascending (lowest resistance first)
+    ].sort((a, b) => b - a); // descending — R2 on top, R1 below
 
     // Gap levels: psychological round numbers near current price
     const roundLevels: number[] = [];
@@ -418,7 +418,7 @@ export default function IHSGDashboard() {
             </div>
             <div className="space-y-1.5">
               {keyLevels.resistance.map((r, i) => (
-                <LevelRow key={`r-${i}`} label={`R${i + 1}`} value={r} tone="resistance" />
+                <LevelRow key={`r-${i}`} label={`R${keyLevels.resistance.length - i}`} value={r} tone="resistance" />
               ))}
               <div className="flex items-center gap-3 py-1">
                 <span className="text-[#C6A15B] text-[10px] tracking-wider uppercase w-16">SEKARANG</span>
