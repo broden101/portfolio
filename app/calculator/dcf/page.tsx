@@ -210,7 +210,7 @@ export default function DCFPage() {
   }, [baseRevenue, ebitMargin, capexPct, daPct, wcPct, shares, netDebt, taxRate, wacc, terminalGrowth, g1, g2, g3, g4, g5]);
 
   // ─── Bar chart scaling ───
-  const maxFCFF = Math.max(...dcf.years.map((y) => Math.abs(y.fcff)), 1);
+  const maxFCFF = Math.max(...dcf.years.map((y) => Math.abs(y.fcff)), Math.abs(dcf.pvTerminal), 1);
 
   const verdict = dcf.upside > 20 ? "UNDERVALUED" : dcf.upside < -20 ? "OVERVALUED" : "FAIR VALUE";
   const verdictColor = dcf.upside > 20 ? "#22C55E" : dcf.upside < -20 ? "#EF4444" : "#FACC15";
