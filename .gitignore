@@ -3,3 +3,4 @@ node_modules/
 out/
 .env
 .vercel
+__pycache__/
