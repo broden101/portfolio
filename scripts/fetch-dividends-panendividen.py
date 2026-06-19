@@ -27,7 +27,7 @@ KOMPAS_100 = [
     "CPIN", "CTRA", "CUAN", "DEWA", "DMAS", "DSNG", "DSSA", "ELSA", "EMTK",
     "ENRG", "ERAA", "ESSA", "EXCL", "FILM", "GOTO", "HEAL", "HMSP", "HRTA",
     "HRUM", "ICBP", "IMPC", "INCO", "INDF", "INDY", "INET", "INKP", "INTP",
-    "ISAT", "ITMG", "JPFA", "JSMR", "KIJA", "KLBF", "KPIG", "LPPF", "MAPA", "MAPI",
+    "ISAT", "ITMG", "IPCC", "IPCM", "JPFA", "JSMR", "KIJA", "KLBF", "KPIG", "LPPF", "MAPA", "MAPI",
     "MBMA", "MDKA", "MEDC", "MIKA", "MPMX", "MTEL", "MYOR", "NCKL", "PANI",
     "PGAS", "PGEO", "PNLF", "PSAB", "PTBA", "PTRO", "PWON", "RAJA", "RATU",
     "SCMA", "SGER", "SIDO", "SMGR", "SMIL", "SMRA", "SSIA", "TAPG", "TCPI",
