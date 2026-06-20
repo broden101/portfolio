@@ -65,6 +65,8 @@ export interface GoldReserves extends BaseReserve {
 export interface CopperGoldReserves extends BaseReserve {
   type: "copperGold";
   oreReserveMt: number;          // million tonnes ore reserves
+  containedCopperMlbs: number;   // contained copper in reserves
+  containedGoldMoz: number;      // contained gold in reserves
   annualThroughputMt: number;    // Mt/yr processed ore
   annualCopperMlbs: number;      // copper in concentrate/cathode equivalent
   annualGoldKoz: number;         // gold in concentrate/refined equivalent
@@ -108,8 +110,10 @@ export const COMMODITY_RESERVES: Record<string, CommodityReserve> = {
     ticker: "AMMN", type: "copperGold", asOf: "2025-12-31",
     sourceUrl: "data/reserves/AMMN_2025.pdf",
     sharesOutstandingBn: 72.518217656,
-    oreReserveMt: 460,              // Batu Hijau Phase 8 mineral reserves; Elang not included yet
-    annualThroughputMt: 32,         // 2025 mill throughput
+    oreReserveMt: 3231,             // Batu Hijau 705Mt + Elang 2,526Mt ore reserves (JORC, 31 Dec 2024)
+    containedCopperMlbs: 23450,     // Batu Hijau 5.61B lbs + Elang 17.84B lbs
+    containedGoldMoz: 32.82,        // Batu Hijau 6.32Moz + Elang 26.5Moz
+    annualThroughputMt: 32,         // 2025 mill throughput; conservative vs future Elang ramp-up
     annualCopperMlbs: 208.9,        // 2025 copper production in concentrate
     annualGoldKoz: 102.8,           // 2025 gold production in concentrate
     cashCostUSDperLb: -0.54,        // 2025 adjusted C1 cash cost, net by-product credits

@@ -805,7 +805,10 @@ export async function computeCommodityNav(
 
   if (reserve.type === "copperGold") {
     const r = reserve as CopperGoldReserves;
-    const mineLife = Math.min(Math.round(r.oreReserveMt / r.annualThroughputMt), 50);
+    const copperLife = r.containedCopperMlbs / r.annualCopperMlbs;
+    const goldLife = (r.containedGoldMoz * 1000) / r.annualGoldKoz;
+    const throughputLife = r.oreReserveMt / r.annualThroughputMt;
+    const mineLife = Math.min(Math.round(Math.max(copperLife, goldLife, throughputLife)), 50);
 
     for (const [label, priceMultiplier] of [
       ["mid-cycle", midCycle.mid],
@@ -834,7 +837,7 @@ export async function computeCommodityNav(
 
     return {
       ticker, commodityType: "Copper-Gold", mineLifeYears: mineLife,
-      reserveSummary: `${r.oreReserveMt.toLocaleString()}Mt ore reserve, ${r.annualThroughputMt}Mt throughput/yr`,
+      reserveSummary: `${r.oreReserveMt.toLocaleString()}Mt ore reserve, ${(r.containedCopperMlbs / 1000).toFixed(2)}B lbs Cu, ${r.containedGoldMoz.toFixed(2)}Moz Au`,
       scenarios, cashCost: `US$${r.cashCostUSDperLb}/lb C1 net by-product`,
       annualProduction: `${r.annualCopperMlbs.toLocaleString()} Mlbs Cu + ${r.annualGoldKoz.toLocaleString()} koz Au/yr`,
       asOf: r.asOf, sourceUrl: r.sourceUrl,
