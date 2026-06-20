@@ -17,6 +17,7 @@ export interface TopMoverData {
   topBuy: StockMover[];
   topSell: StockMover[];
   topActive: StockMover[];
+  date?: string;
 }
 
 interface Props {
@@ -182,6 +183,11 @@ export function TopMoverPanel({ data, live }: Props) {
         <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium">
           Top Mover Saham
         </h3>
+        {data?.date && (
+          <span className="text-[10px] tracking-[0.1em] text-[#B8AA96]/60">
+            {data.date}
+          </span>
+        )}
         <span
           className={`flex items-center gap-1.5 text-[10px] tracking-[0.1em] uppercase ${
             live ? "text-emerald-400/70" : "text-[#B8AA96]/40"
