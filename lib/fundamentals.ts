@@ -12,7 +12,7 @@
  */
 
 import { FALLBACK_MANUAL } from "@/lib/market";
-import { getReserves, type CommodityReserve, type NickelReserves, type CoalReserves, type CpoReserves, type OilGasReserves } from "./commodityReserves";
+import { getReserves, type CommodityReserve, type NickelReserves, type CoalReserves, type CpoReserves, type OilGasReserves, type GoldReserves } from "./commodityReserves";
 
 // ── Constants ──
 const RF = FALLBACK_MANUAL.biRate?.value ?? 5.5; // Risk-free from BI Rate
@@ -681,6 +681,7 @@ const COMMODITY_TV_SYMBOLS: Record<string, string> = {
   nickel: "TVC:NICKEL",
   cpo: "TVC:PALMOIL",
   oilgas: "TVC:UKOIL",
+  gold: "TVC:GOLD",
 };
 
 // Mid-cycle prices (USD or IDR per unit)
@@ -689,6 +690,7 @@ const MID_CYCLE_PRICES: Record<string, { mid: number; low: number; high: number;
   nickel: { mid: 15000, low: 13000, high: 17000, unit: "USD/ton matte" },
   cpo: { mid: 14000, low: 11000, high: 17000, unit: "IDR/kg" },
   oilgas: { mid: 75, low: 60, high: 90, unit: "USD/boe" },
+  gold: { mid: 2500, low: 2000, high: 3200, unit: "USD/oz" },
 };
 
 async function fetchLiveCommodityPrice(type: string): Promise<number | null> {
@@ -758,6 +760,43 @@ export async function computeCommodityNav(
       reserveSummary: `${r.measuredIndicatedDMT_M.toFixed(1)}M DMT @ ${r.gradeNiPct}% Ni, recovery ${(r.recovery * 100).toFixed(0)}%`,
       scenarios, cashCost: `US$${r.cashCostUSDperTonneMatte.toLocaleString()}/ton matte`,
       annualProduction: `${r.annualMatteT.toLocaleString()} ton matte/yr`,
+      asOf: r.asOf, sourceUrl: r.sourceUrl,
+    };
+  }
+
+  if (reserve.type === "gold") {
+    const r = reserve as GoldReserves;
+    const effectiveReserve = r.provenProbableOz + Math.max(0, r.measuredIndicatedInferredOz - r.provenProbableOz) * 0.3;
+    const mineLife = Math.min(Math.round(effectiveReserve / r.annualProductionOz), 50);
+
+    for (const [label, priceMultiplier] of [
+      ["mid-cycle", midCycle.mid],
+      ["optimistic", midCycle.high],
+      ["pessimistic", midCycle.low],
+    ] as const) {
+      const liveP = livePrice ?? midCycle.mid;
+      let navUSD = 0;
+      for (let t = 1; t <= mineLife; t++) {
+        const priceT = t <= 5
+          ? liveP + (priceMultiplier - liveP) * (t / 5)
+          : priceMultiplier;
+        const fcfUSD = (priceT - r.cashCostUSDperOz) * r.annualProductionOz;
+        navUSD += fcfUSD / Math.pow(1 + waccDec, t);
+      }
+      const navPerShare = (navUSD * usdIdrRate) / (sharesOutstanding * 1e9);
+      scenarios.push({
+        label: `NAV ${label}`,
+        fairValuePerShare: Math.round(navPerShare),
+        upside: currentPrice > 0 ? Math.round((navPerShare / currentPrice - 1) * 100) : 0,
+        priceAssumption: `${(livePrice ?? midCycle.mid).toLocaleString()} → ${priceMultiplier.toLocaleString()} USD/oz`,
+      });
+    }
+
+    return {
+      ticker, commodityType: "Gold", mineLifeYears: mineLife,
+      reserveSummary: `${(r.provenProbableOz / 1e6).toFixed(2)} Moz reserve, ${(r.measuredIndicatedInferredOz / 1e6).toFixed(2)} Moz resource`,
+      scenarios, cashCost: `US$${r.cashCostUSDperOz.toLocaleString()}/oz`,
+      annualProduction: `${r.annualProductionOz.toLocaleString()} oz/yr`,
       asOf: r.asOf, sourceUrl: r.sourceUrl,
     };
   }

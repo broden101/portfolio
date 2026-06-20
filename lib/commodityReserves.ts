@@ -4,7 +4,7 @@
  * Update yearly after AR publication (~April).
  */
 
-export type CommodityType = "coal" | "nickel" | "cpo" | "oilgas";
+export type CommodityType = "coal" | "nickel" | "cpo" | "oilgas" | "gold";
 
 interface BaseReserve {
   ticker: string;
@@ -52,7 +52,16 @@ export interface OilGasReserves extends BaseReserve {
   cashCostPerBoeUSD: number;
 }
 
-export type CommodityReserve = CoalReserves | NickelReserves | CpoReserves | OilGasReserves;
+export interface GoldReserves extends BaseReserve {
+  type: "gold";
+  provenProbableOz: number;     // contained gold ounces
+  measuredIndicatedInferredOz: number;
+  annualProductionOz: number;
+  cashCostUSDperOz: number;     // or AISC if more conservative
+  gradeGpt?: number;
+}
+
+export type CommodityReserve = CoalReserves | NickelReserves | CpoReserves | OilGasReserves | GoldReserves;
 
 /**
  * Static reserve data cache. Updated yearly from annual reports.
@@ -68,6 +77,22 @@ export const COMMODITY_RESERVES: Record<string, CommodityReserve> = {
     recovery: 0.85,
     annualMatteT: 73093,
     cashCostUSDperTonneMatte: 9339,
+  },
+  PSAB: {
+    ticker: "PSAB", type: "gold", asOf: "2025-12-31",
+    sourceUrl: "data/reserves/PSAB_2025.pdf",
+    provenProbableOz: 2174000,
+    measuredIndicatedInferredOz: 5201000,
+    annualProductionOz: 95000, // mid-point conservative from Bakan 70-120k; other projects not all producing
+    cashCostUSDperOz: 1500,
+  },
+  ARCI: {
+    ticker: "ARCI", type: "gold", asOf: "2025-12-31",
+    sourceUrl: "data/reserves/ARCI_2025.pdf",
+    provenProbableOz: 2500000,
+    measuredIndicatedInferredOz: 2500000, // use same until full resource parsed
+    annualProductionOz: 200000,
+    cashCostUSDperOz: 1400,
   },
   // TODO: Seed after downloading annual reports via IR sites
   // ADRO: { ticker: "ADRO", type: "coal", ... } // alamtri.com

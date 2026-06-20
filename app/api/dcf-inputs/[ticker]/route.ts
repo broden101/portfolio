@@ -22,17 +22,17 @@ export async function GET(
       fetchTvQuote(ticker),
     ]);
 
-    if (!sa) {
+    const price = tv?.price ?? 0;
+    const beta = tv?.beta ?? 1;
+
+    if (!sa && !hasReserves(ticker)) {
       return NextResponse.json(
         { error: `Data fundamental untuk ${ticker} tidak ditemukan` },
         { status: 404 },
       );
     }
 
-    const price = tv?.price ?? 0;
-    const beta = tv?.beta ?? 1;
-
-    if (isBankTicker(ticker)) {
+    if (sa && isBankTicker(ticker)) {
       const inputs = computeBankInputs(sa, price, beta);
       const valuation = computeBankValuation(inputs);
       return NextResponse.json(
@@ -43,9 +43,9 @@ export async function GET(
 
     if (hasReserves(ticker)) {
       const reserve = getReserves(ticker);
-      const sharesRaw = sa ? sa.years.length : 0; // placeholder, we compute below
-      // Get shares from SA data
+      // Get shares from SA data when available; fallback keeps NAV endpoint usable for manual reserve names.
       const sharesRow = (() => {
+        if (!sa) return null;
         for (const key of Object.keys(sa.income)) {
           const n = key.toLowerCase().replace(/[^a-z0-9]/g, "");
           if (n.includes("sharesoutstanding") || n.includes("weightedaverageshares") || n.includes("dilutedshares")) {
@@ -65,6 +65,13 @@ export async function GET(
           nav,
         },
         { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=600" } },
+      );
+    }
+
+    if (!sa) {
+      return NextResponse.json(
+        { error: `Data fundamental untuk ${ticker} tidak ditemukan` },
+        { status: 404 },
       );
     }
 
