@@ -227,8 +227,11 @@ export default function DCFPage() {
     }
   }, [ticker]);
 
-  // ── Mode switch on ticker change ──
-  const onTickerChange = (val: string) => {
+  // ── Auto-fetch on ticker change (debounced) ──
+  const [debounceTimer, setDebounceTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+  const [autoFetching, setAutoFetching] = useState(false);
+
+  const onTickerChange = useCallback((val: string) => {
     const upper = val.toUpperCase();
     setTicker(upper);
     if (isBankTicker(upper)) {
@@ -238,7 +241,59 @@ export default function DCFPage() {
     } else {
       setMode("fcff");
     }
-  };
+    // Auto-fetch if valid ticker (3+ chars, not CUSTOM)
+    if (upper.length >= 3 && upper !== "CUSTOM") {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      const timer = setTimeout(() => {
+        setAutoFetching(true);
+        // Trigger autoFill inline
+        fetch(`/api/dcf-inputs/${upper}`)
+          .then((r) => r.ok ? r.json() : r.json().then((d) => { throw new Error(d.error || `HTTP ${r.status}`); }))
+          .then((data) => {
+            if (data.model === "bank") {
+              const inp = data.inputs;
+              setMode("bank");
+              setTicker(inp.ticker);
+              setCurrentPrice(inp.price);
+              setBvPerShare(inp.bvPerShare);
+              setRoe(inp.roe);
+              setPayout(inp.payout);
+              setEps(inp.eps);
+              setDps(inp.dps);
+              setBankShares(inp.shares);
+              setKe(inp.ke);
+              setBankTG(inp.terminalGrowth);
+              setBankG1(inp.growthRates[0] ?? 3); setBankG2(inp.growthRates[1] ?? 3);
+              setBankG3(inp.growthRates[2] ?? 3); setBankG4(inp.growthRates[3] ?? 3);
+              setBankG5(inp.growthRates[4] ?? 3);
+              setRoeFloor(inp.roeFloor ?? 12);
+              setRoeTerminal(inp.roeTerminal ?? 20);
+            } else {
+              const inp = data.inputs;
+              setMode("fcff");
+              setTicker(inp.ticker);
+              setCurrentPrice(inp.price);
+              setBaseRevenue(inp.baseRevenue);
+              setEbitMargin(inp.ebitMargin);
+              setCapexPct(inp.capexPct);
+              setDaPct(inp.daPct);
+              setWcPct(inp.wcPct);
+              setShares(inp.shares);
+              setNetDebt(inp.netDebt);
+              setTaxRate(inp.taxRate);
+              setWacc(inp.wacc);
+              setTerminalGrowth(inp.terminalGrowth);
+              setG1(inp.growthRates[0] ?? 10); setG2(inp.growthRates[1] ?? 10);
+              setG3(inp.growthRates[2] ?? 8); setG4(inp.growthRates[3] ?? 8);
+              setG5(inp.growthRates[4] ?? 6);
+            }
+          })
+          .catch(() => {}) // silent fail on auto-fetch
+          .finally(() => setAutoFetching(false));
+      }, 800);
+      setDebounceTimer(timer);
+    }
+  }, [debounceTimer]);
 
   // ─── FCFF Calculation ───
   const dcf = useMemo(() => {
@@ -469,11 +524,12 @@ export default function DCFPage() {
           </div>
           <button
             onClick={autoFill}
-            disabled={loading || !ticker || ticker === "CUSTOM"}
+            disabled={loading || autoFetching || !ticker || ticker === "CUSTOM"}
             className="px-5 py-2.5 text-sm border border-[#C6A15B] text-[#C6A15B] hover:bg-[#C6A15B]/10 transition-all disabled:opacity-40 disabled:cursor-not-allowed mt-auto"
           >
-            {loading ? "⏳ Memuat..." : "⚡ Auto-Fill Data"}
+            {loading || autoFetching ? "⏳ Memuat..." : "⚡ Auto-Fill Data"}
           </button>
+          {autoFetching && <span className="text-[#C6A15B]/60 text-xs italic">Mengambil data {ticker}...</span>}
           {autoError && <span className="text-red-400 text-xs">{autoError}</span>}
           {mode === "bank" && (
             <span className="px-3 py-1 text-[10px] tracking-[0.15em] uppercase font-medium border border-blue-400/40 text-blue-400 bg-blue-400/10">
