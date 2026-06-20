@@ -4,13 +4,14 @@
  * Update yearly after AR publication (~April).
  */
 
-export type CommodityType = "coal" | "nickel" | "cpo" | "oilgas" | "gold";
+export type CommodityType = "coal" | "nickel" | "cpo" | "oilgas" | "gold" | "copperGold";
 
 interface BaseReserve {
   ticker: string;
   type: CommodityType;
   asOf: string;           // "YYYY-MM-DD" — reserve statement date
   sourceUrl: string;      // annual report PDF link
+  sharesOutstandingBn?: number; // fallback when StockAnalysis shares unavailable
 }
 
 export interface CoalReserves extends BaseReserve {
@@ -61,7 +62,16 @@ export interface GoldReserves extends BaseReserve {
   gradeGpt?: number;
 }
 
-export type CommodityReserve = CoalReserves | NickelReserves | CpoReserves | OilGasReserves | GoldReserves;
+export interface CopperGoldReserves extends BaseReserve {
+  type: "copperGold";
+  oreReserveMt: number;          // million tonnes ore reserves
+  annualThroughputMt: number;    // Mt/yr processed ore
+  annualCopperMlbs: number;      // copper in concentrate/cathode equivalent
+  annualGoldKoz: number;         // gold in concentrate/refined equivalent
+  cashCostUSDperLb: number;      // C1 cash cost, net by-product credits
+}
+
+export type CommodityReserve = CoalReserves | NickelReserves | CpoReserves | OilGasReserves | GoldReserves | CopperGoldReserves;
 
 /**
  * Static reserve data cache. Updated yearly from annual reports.
@@ -93,6 +103,16 @@ export const COMMODITY_RESERVES: Record<string, CommodityReserve> = {
     measuredIndicatedInferredOz: 2500000, // use same until full resource parsed
     annualProductionOz: 200000,
     cashCostUSDperOz: 1400,
+  },
+  AMMN: {
+    ticker: "AMMN", type: "copperGold", asOf: "2025-12-31",
+    sourceUrl: "data/reserves/AMMN_2025.pdf",
+    sharesOutstandingBn: 72.518217656,
+    oreReserveMt: 460,              // Batu Hijau Phase 8 mineral reserves; Elang not included yet
+    annualThroughputMt: 32,         // 2025 mill throughput
+    annualCopperMlbs: 208.9,        // 2025 copper production in concentrate
+    annualGoldKoz: 102.8,           // 2025 gold production in concentrate
+    cashCostUSDperLb: -0.54,        // 2025 adjusted C1 cash cost, net by-product credits
   },
   // TODO: Seed after downloading annual reports via IR sites
   // ADRO: { ticker: "ADRO", type: "coal", ... } // alamtri.com
