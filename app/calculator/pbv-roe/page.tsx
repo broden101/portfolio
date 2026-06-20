@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { fetchTvQuote } from "@/lib/fundamentals";
 
 interface BankData {
   ticker: string;
@@ -27,6 +28,22 @@ export default function PBVROEPage() {
   const [banks, setBanks] = useState(INITIAL_BANKS);
   const [coe, setCoe] = useState(DEFAULT_COE);
   const [g, setGrowth] = useState(DEFAULT_G);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const next = [...banks];
+      for (let i = 0; i < next.length; i++) {
+        try {
+          const q = await fetchTvQuote(next[i].ticker);
+          if (!cancelled && q?.price) next[i] = { ...next[i], price: Math.round(q.price) };
+        } catch {}
+      }
+      if (!cancelled) setBanks(next);
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const updateBank = (idx: number, field: keyof BankData, value: number) => {
     setBanks((prev) => {
