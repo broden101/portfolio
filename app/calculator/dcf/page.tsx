@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { isBankTicker } from "@/lib/fundamentals";
@@ -18,10 +18,6 @@ const fmt = (n: number, d = 2) => n.toLocaleString("id-ID", { maximumFractionDig
 const fmtIDR = (n: number) => `Rp ${fmt(n, 0)}`;
 const fmtPct = (n: number) => `${fmt(n, 1)}%`;
 const fmtT = (n: number) => `${fmt(n, 1)} T`;
-
-function capexPct_default(p: Preset) {
-  return p.capexPct;
-}
 
 /* ─── Auto-fill API response types ─── */
 interface DcfInputsResponse {
@@ -83,11 +79,11 @@ export default function DCFPage() {
   const [mode, setMode] = useState<"fcff" | "bank">("fcff");
 
   // Shared
-  const [ticker, setTicker] = useState("TLKM");
+  const [ticker, setTicker] = useState("BBCA");
+  const [customInput, setCustomInput] = useState<string>("");
   const [currentPrice, setCurrentPrice] = useState(2650);
 
   // FCFF inputs
-  const [presetIdx, setPresetIdx] = useState(0);
   const [baseRevenue, setBaseRevenue] = useState(148.0);
   const [ebitMargin, setEbitMargin] = useState(32);
   const [capexPct, setCapexPct] = useState(18);
@@ -105,7 +101,6 @@ export default function DCFPage() {
   const [g5, setG5] = useState(6);
 
   // Bank inputs
-  const [bankPresetIdx, setBankPresetIdx] = useState(0);
   const [bvPerShare, setBvPerShare] = useState(2500);
   const [roe, setRoe] = useState(23);
   const [payout, setPayout] = useState(45);
@@ -122,60 +117,16 @@ export default function DCFPage() {
   const [roeFloor, setRoeFloor] = useState(12);
   const [roeTerminal, setRoeTerminal] = useState(20);
 
-  // Auto-fill state
-  const [loading, setLoading] = useState(false);
-  const [autoError, setAutoError] = useState<string | null>(null);
+  // ── Autofill status ──
+  type AutofillStatus = { status: "idle" } | { status: "loading" } | { status: "error"; message: string };
+  const [autofill, setAutofill] = useState<AutofillStatus>({ status: "idle" });
 
-  // ── Preset apply ──
-  const applyCorporatePreset = (idx: number) => {
-    const p = CORPORATE_PRESETS[idx];
-    if (!p) return;
-    setPresetIdx(idx);
-    setMode("fcff");
-    setTicker(p.ticker);
-    setCurrentPrice(p.price);
-    setBaseRevenue(p.baseRevenue);
-    setEbitMargin(p.ebitMargin);
-    setCapexPct(p.capexPct);
-    setDaPct(p.daPct);
-    setWcPct(p.wcPct);
-    setShares(p.shares);
-    setNetDebt(p.netDebt);
-    setTaxRate(p.taxRate);
-    setWacc(p.wacc);
-    setTerminalGrowth(p.terminalGrowth);
-    setG1(p.growthRates[0]); setG2(p.growthRates[1]); setG3(p.growthRates[2]);
-    setG4(p.growthRates[3]); setG5(p.growthRates[4]);
-  };
-
-  const applyBankPreset = (idx: number) => {
-    const p = BANK_PRESETS[idx];
-    if (!p) return;
-    setBankPresetIdx(idx);
-    setMode("bank");
-    setTicker(p.ticker);
-    setCurrentPrice(p.price);
-    setBvPerShare(p.bvPerShare);
-    setRoe(p.roe);
-    setPayout(p.payout);
-    setEps(p.eps);
-    setDps(p.dps);
-    setBankShares(p.shares);
-    setKe(p.ke);
-    setBankTG(p.terminalGrowth);
-    setBankG1(p.growthRates[0]); setBankG2(p.growthRates[1]); setBankG3(p.growthRates[2]);
-    setBankG4(p.growthRates[3]); setBankG5(p.growthRates[4]);
-    setRoeFloor(Math.max(p.ke, 12));
-    setRoeTerminal(Math.min(Math.max(p.roe, 12), 20));
-  };
-
-  // ── Auto-fill from API ──
-  const autoFill = useCallback(async () => {
-    if (!ticker || ticker === "CUSTOM") return;
-    setLoading(true);
-    setAutoError(null);
+  // runAutofill: receives target ticker, no closure deps on form state
+  const runAutofill = useCallback(async (target: string) => {
+    if (!target || target === "CUSTOM") return;
+    setAutofill({ status: "loading" });
     try {
-      const res = await fetch(`/api/dcf-inputs/${ticker.toUpperCase()}`);
+      const res = await fetch(`/api/dcf-inputs/${target.toUpperCase()}`);
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || `HTTP ${res.status}`);
@@ -184,7 +135,6 @@ export default function DCFPage() {
 
       if (data.model === "bank") {
         const inp = data.inputs as BankInputsResponse["inputs"];
-        const val = data.valuation as BankInputsResponse["valuation"];
         setMode("bank");
         setTicker(inp.ticker);
         setCurrentPrice(inp.price);
@@ -220,80 +170,74 @@ export default function DCFPage() {
         setG3(inp.growthRates[2] ?? 8); setG4(inp.growthRates[3] ?? 8);
         setG5(inp.growthRates[4] ?? 6);
       }
+      setAutofill({ status: "idle" });
     } catch (err: unknown) {
-      setAutoError(err instanceof Error ? err.message : "Gagal mengambil data");
-    } finally {
-      setLoading(false);
+      setAutofill({ status: "error", message: err instanceof Error ? err.message : "Gagal mengambil data" });
     }
-  }, [ticker]);
+  }, []);
 
-  // ── Auto-fetch on ticker change (debounced) ──
-  const [debounceTimer, setDebounceTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
-  const [autoFetching, setAutoFetching] = useState(false);
+  // ── Auto-run on page load AND when ticker changes ──
+  useEffect(() => {
+    if (ticker === "CUSTOM") {
+      setAutofill({ status: "idle" });
+      return;
+    }
+    runAutofill(ticker);
+  }, [ticker, runAutofill]);
 
-  const onTickerChange = useCallback((val: string) => {
-    const upper = val.toUpperCase();
-    setTicker(upper);
-    if (isBankTicker(upper)) {
+  // ── Free-text ticker submit (Enter / blur) ──
+  const submitCustomTicker = useCallback(() => {
+    const t = customInput.trim().toUpperCase().replace(/\.JK$/, "");
+    if (!t || !/^[A-Z]{1,5}$/.test(t)) return;
+    setTicker(t);
+    setCustomInput(t);
+  }, [customInput]);
+
+  // ── Preset apply ──
+  const selectPreset = (tickerStr: string) => {
+    const bankP = BANK_PRESETS.find((p) => p.ticker === tickerStr);
+    const corpP = CORPORATE_PRESETS.find((p) => p.ticker === tickerStr);
+    const p = bankP ?? corpP;
+    if (!p) return;
+    if (bankP) {
       setMode("bank");
-    } else if (upper === "CUSTOM") {
-      // keep current mode
     } else {
       setMode("fcff");
     }
-    // Auto-fetch if valid ticker (3+ chars, not CUSTOM)
-    if (upper.length >= 3 && upper !== "CUSTOM") {
-      if (debounceTimer) clearTimeout(debounceTimer);
-      const timer = setTimeout(() => {
-        setAutoFetching(true);
-        // Trigger autoFill inline
-        fetch(`/api/dcf-inputs/${upper}`)
-          .then((r) => r.ok ? r.json() : r.json().then((d) => { throw new Error(d.error || `HTTP ${r.status}`); }))
-          .then((data) => {
-            if (data.model === "bank") {
-              const inp = data.inputs;
-              setMode("bank");
-              setTicker(inp.ticker);
-              setCurrentPrice(inp.price);
-              setBvPerShare(inp.bvPerShare);
-              setRoe(inp.roe);
-              setPayout(inp.payout);
-              setEps(inp.eps);
-              setDps(inp.dps);
-              setBankShares(inp.shares);
-              setKe(inp.ke);
-              setBankTG(inp.terminalGrowth);
-              setBankG1(inp.growthRates[0] ?? 3); setBankG2(inp.growthRates[1] ?? 3);
-              setBankG3(inp.growthRates[2] ?? 3); setBankG4(inp.growthRates[3] ?? 3);
-              setBankG5(inp.growthRates[4] ?? 3);
-              setRoeFloor(inp.roeFloor ?? 12);
-              setRoeTerminal(inp.roeTerminal ?? 20);
-            } else {
-              const inp = data.inputs;
-              setMode("fcff");
-              setTicker(inp.ticker);
-              setCurrentPrice(inp.price);
-              setBaseRevenue(inp.baseRevenue);
-              setEbitMargin(inp.ebitMargin);
-              setCapexPct(inp.capexPct);
-              setDaPct(inp.daPct);
-              setWcPct(inp.wcPct);
-              setShares(inp.shares);
-              setNetDebt(inp.netDebt);
-              setTaxRate(inp.taxRate);
-              setWacc(inp.wacc);
-              setTerminalGrowth(inp.terminalGrowth);
-              setG1(inp.growthRates[0] ?? 10); setG2(inp.growthRates[1] ?? 10);
-              setG3(inp.growthRates[2] ?? 8); setG4(inp.growthRates[3] ?? 8);
-              setG5(inp.growthRates[4] ?? 6);
-            }
-          })
-          .catch(() => {}) // silent fail on auto-fetch
-          .finally(() => setAutoFetching(false));
-      }, 800);
-      setDebounceTimer(timer);
+    setTicker(p.ticker);
+    setCustomInput("");
+    setCurrentPrice(p.price);
+    // Apply form fields immediately (preset values as starting point)
+    if ("bvPerShare" in p) {
+      const bp = p as BankPreset;
+      setBvPerShare(bp.bvPerShare);
+      setRoe(bp.roe);
+      setPayout(bp.payout);
+      setEps(bp.eps);
+      setDps(bp.dps);
+      setBankShares(bp.shares);
+      setKe(bp.ke);
+      setBankTG(bp.terminalGrowth);
+      setBankG1(bp.growthRates[0]); setBankG2(bp.growthRates[1]); setBankG3(bp.growthRates[2]);
+      setBankG4(bp.growthRates[3]); setBankG5(bp.growthRates[4]);
+      setRoeFloor(Math.max(bp.ke, 12));
+      setRoeTerminal(Math.min(Math.max(bp.roe, 12), 20));
+    } else {
+      const cp = p as Preset;
+      setBaseRevenue(cp.baseRevenue);
+      setEbitMargin(cp.ebitMargin);
+      setCapexPct(cp.capexPct);
+      setDaPct(cp.daPct);
+      setWcPct(cp.wcPct);
+      setShares(cp.shares);
+      setNetDebt(cp.netDebt);
+      setTaxRate(cp.taxRate);
+      setWacc(cp.wacc);
+      setTerminalGrowth(cp.terminalGrowth);
+      setG1(cp.growthRates[0]); setG2(cp.growthRates[1]); setG3(cp.growthRates[2]);
+      setG4(cp.growthRates[3]); setG5(cp.growthRates[4]);
     }
-  }, [debounceTimer]);
+  };
 
   // ─── FCFF Calculation ───
   const dcf = useMemo(() => {
@@ -483,16 +427,16 @@ export default function DCFPage() {
           </p>
         </div>
 
-        {/* Preset Selector */}
+        {/* Ticker Selector */}
         <div className="card-luxury p-6 mb-8">
-          <p className="text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-4">Quick Start — Preset</p>
-          <div className="flex flex-wrap gap-2">
-            {BANK_PRESETS.map((p, i) => (
+          <p className="text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-4">Pilih Saham</p>
+          <div className="flex flex-wrap items-center gap-2">
+            {BANK_PRESETS.map((p) => (
               <button
                 key={`bank-${p.ticker}`}
-                onClick={() => applyBankPreset(i)}
+                onClick={() => selectPreset(p.ticker)}
                 className={`px-4 py-2 text-sm border transition-all ${
-                  mode === "bank" && bankPresetIdx === i
+                  ticker === p.ticker
                     ? "border-[#C6A15B] text-[#C6A15B] bg-[#C6A15B]/10"
                     : "border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B]/30 hover:text-[#B8AA96]"
                 }`}
@@ -501,46 +445,53 @@ export default function DCFPage() {
               </button>
             ))}
             <div className="w-px bg-[#2C261E] mx-1" />
-            {CORPORATE_PRESETS.map((p, i) => (
+            {CORPORATE_PRESETS.filter((p) => p.ticker !== "CUSTOM").map((p) => (
               <button
                 key={`corp-${p.ticker}`}
-                onClick={() => applyCorporatePreset(i)}
+                onClick={() => selectPreset(p.ticker)}
                 className={`px-4 py-2 text-sm border transition-all ${
-                  mode === "fcff" && presetIdx === i
+                  ticker === p.ticker
                     ? "border-[#C6A15B] text-[#C6A15B] bg-[#C6A15B]/10"
                     : "border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B]/30 hover:text-[#B8AA96]"
                 }`}
               >
-                {p.ticker === "CUSTOM" ? "✦ Custom" : p.ticker}
+                {p.ticker}
               </button>
             ))}
+            {/* Free-text ticker input */}
+            <div className="flex items-center border border-[#2C261E] bg-[#0B0B0A] focus-within:border-[#C6A15B]/40">
+              <span className="text-[#C6A15B]/60 text-xs pl-3">✦</span>
+              <input
+                type="text"
+                value={customInput}
+                onChange={(e) => setCustomInput(e.target.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 5))}
+                onKeyDown={(e) => { if (e.key === "Enter") submitCustomTicker(); }}
+                onBlur={() => { if (customInput && customInput !== ticker) submitCustomTicker(); }}
+                placeholder="Ticker (mis. GOTO)"
+                className="w-36 bg-transparent text-[#F4EFE6] text-sm py-2 px-2 outline-none font-mono uppercase"
+              />
+            </div>
+            {/* Refresh button */}
+            <button
+              onClick={() => runAutofill(ticker)}
+              disabled={autofill.status === "loading" || !ticker || ticker === "CUSTOM"}
+              className="px-4 py-2 text-sm border border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B]/30 hover:text-[#B8AA96] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              {autofill.status === "loading" ? "Fetching…" : "↻ Refresh"}
+            </button>
           </div>
-        </div>
-
-        {/* ─── Auto-fill bar ─── */}
-        <div className="card-luxury p-4 mb-8 flex flex-wrap items-center gap-4">
-          <div className="flex-1 min-w-[180px]">
-            <InputField label="Ticker" value={ticker} onChange={onTickerChange} suffix="IDX" type="text" />
-          </div>
-          <button
-            onClick={autoFill}
-            disabled={loading || autoFetching || !ticker || ticker === "CUSTOM"}
-            className="px-5 py-2.5 text-sm border border-[#C6A15B] text-[#C6A15B] hover:bg-[#C6A15B]/10 transition-all disabled:opacity-40 disabled:cursor-not-allowed mt-auto"
-          >
-            {loading || autoFetching ? "⏳ Memuat..." : "⚡ Auto-Fill Data"}
-          </button>
-          {autoFetching && <span className="text-[#C6A15B]/60 text-xs italic">Mengambil data {ticker}...</span>}
-          {autoError && <span className="text-red-400 text-xs">{autoError}</span>}
-          {mode === "bank" && (
-            <span className="px-3 py-1 text-[10px] tracking-[0.15em] uppercase font-medium border border-blue-400/40 text-blue-400 bg-blue-400/10">
-              🏦 Bank Model
-            </span>
+          {autofill.status === "error" && (
+            <div className="flex items-center gap-2 p-2 mt-2 border border-red-400/20 bg-red-400/5 text-xs text-red-400">
+              ⚠ {autofill.message}
+            </div>
           )}
         </div>
 
         {/* ─── FCFF Mode ─── */}
         {mode === "fcff" && (
           <>
+            {autofill.status === "loading" && <LoadingBanner ticker={ticker} />}
+            <div className={`transition-opacity ${autofill.status === "loading" ? "opacity-60" : "opacity-100"}`}>
             <div className="grid lg:grid-cols-3 gap-8">
               {/* Left: Inputs */}
               <div className="lg:col-span-2 space-y-6">
@@ -743,12 +694,15 @@ export default function DCFPage() {
               </table>
               <p className="text-[#B8AA96]/25 text-[10px] mt-3">Sel highlight = base case WACC/TG. Hijau &gt; 10% upside, Merah &gt; 10% overvalued.</p>
             </div>
+            </div>
           </>
         )}
 
         {/* ─── Bank Mode ─── */}
         {mode === "bank" && (
           <>
+            {autofill.status === "loading" && <LoadingBanner ticker={ticker} />}
+            <div className={`transition-opacity ${autofill.status === "loading" ? "opacity-60" : "opacity-100"}`}>
             <div className="grid lg:grid-cols-3 gap-8">
               {/* Left: Bank Inputs */}
               <div className="lg:col-span-2 space-y-6">
@@ -919,6 +873,7 @@ export default function DCFPage() {
                 </tbody>
               </table>
             </div>
+            </div>
           </>
         )}
       </div>
@@ -928,6 +883,18 @@ export default function DCFPage() {
 }
 
 /* ─── Sub-components ─── */
+
+function LoadingBanner({ ticker: tk }: { ticker: string }) {
+  return (
+    <div className="flex items-center gap-3 p-3 mb-6 border border-[#C6A15B]/20 bg-[#C6A15B]/5 text-xs">
+      <span className="inline-block w-3 h-3 border border-[#C6A15B] border-t-transparent rounded-full animate-spin" />
+      <span className="text-[#B8AA96]">
+        Mengambil data <strong className="text-[#C6A15B]">{tk}</strong> dari Stock Analysis &amp; TradingView…
+      </span>
+      <span className="ml-auto text-[#B8AA96]/40 uppercase tracking-wider">menampilkan preset sementara</span>
+    </div>
+  );
+}
 
 function InputField({ label, value, onChange, prefix, suffix, type = "number" }: {
   label: string; value: string | number; onChange: (v: any) => void;
