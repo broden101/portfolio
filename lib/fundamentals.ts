@@ -211,7 +211,13 @@ function findTableInJson(obj: unknown, depth = 0): { headers: string[]; rows: { 
   return null;
 }
 
-// Extract value from a row by label (case-insensitive partial match)
+// Normalize a label for matching: lowercase, strip non-alphanumeric chars.
+// Fixes mismatches caused by apostrophes (Shareholders' Equity), HTML entities (&amp;), etc.
+function norm(s: string): string {
+  return s.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+// Extract value from a row by label (case-insensitive partial match, punctuation-agnostic)
 // Accepts both array-of-objects and Record<string, array> formats
 function findRow(
   rows: { label: string; values: (number | null)[] }[] | Record<string, (number | null)[]> | undefined,
@@ -219,13 +225,15 @@ function findRow(
 ): (number | null)[] | null {
   if (!rows) return null;
 
+  const normPatterns = patterns.map(norm);
+
   // Record<string, (number|null)[]> — from SAFinancials income/cashflow/balance/ratios
   if (!Array.isArray(rows)) {
     const keys = Object.keys(rows);
     for (const key of keys) {
-      const lower = key.toLowerCase();
-      for (const p of patterns) {
-        if (lower.includes(p.toLowerCase())) return rows[key];
+      const n = norm(key);
+      for (const np of normPatterns) {
+        if (n.includes(np)) return rows[key];
       }
     }
     return null;
@@ -233,9 +241,9 @@ function findRow(
 
   // Array<{label, values}> — from parsed HTML tables
   for (const row of rows) {
-    const lower = row.label.toLowerCase();
-    for (const p of patterns) {
-      if (lower.includes(p.toLowerCase())) return row.values;
+    const n = norm(row.label);
+    for (const np of normPatterns) {
+      if (n.includes(np)) return row.values;
     }
   }
   return null;
@@ -490,43 +498,46 @@ export function computeBankInputs(sa: SAFinancials, price: number, beta: number)
     bvPerShare = shares > 0 ? (equity / shares) * 1_000_000 / 1_000_000 : 0; // already per share in IDR
   }
 
-  // ROE
-  const roeRow = findRow(sa.ratios, "return on equity", "roe") ??
-    findRow(sa.ratios, "return on equity");
-  let roe = latestValue(roeRow) ?? 0;
-  // If ratio not found, compute: net income / equity
-  if (roe === 0) {
-    const niRow = findRow(sa.income, "net income", "net income common");
-    const equityRow = findRow(sa.balance, "total equity", "stockholders equity");
-    const ni = latestValue(niRow) ?? 0;
-    const eq = latestValue(equityRow) ?? 1;
-    roe = eq > 0 ? (ni / eq) * 100 : 15;
-  }
-
-  // Payout ratio
-  const payoutRow = findRow(sa.ratios, "payout ratio", "dividend payout", "payout") ??
-    findRow(sa.ratios, "dividend payout ratio");
-  let payout = latestValue(payoutRow) ?? 0;
-  // If not found, try DPS / EPS
-  if (payout === 0) {
-    const epsRow = findRow(sa.ratios, "earnings per share", "eps") ??
-      findRow(sa.income, "earnings per share", "diluted eps");
-    const dpsRow = findRow(sa.ratios, "dividends per share", "dps") ??
-      findRow(sa.cashflow, "dividends paid");
-    const epsVal = latestValue(epsRow) ?? 0;
-    const dpsVal = latestValue(dpsRow) ?? 0;
-    payout = epsVal > 0 ? (dpsVal / epsVal) * 100 : 40;
-  }
-
-  // EPS
+  // EPS (needed for ROE fallback)
   const epsRow = findRow(sa.ratios, "earnings per share", "eps") ??
     findRow(sa.income, "earnings per share", "diluted eps");
   const eps = latestValue(epsRow) ?? 0;
 
-  // DPS
+  // DPS (needed for payout fallback)
   const dpsRow = findRow(sa.ratios, "dividends per share", "dps") ??
     findRow(sa.ratios, "dividend per share");
   const dps = latestValue(dpsRow) ?? 0;
+
+  // ROE — try ratios page first, sanity-check, then fallback
+  const roeRow = findRow(sa.ratios, "return on equity", "roe") ??
+    findRow(sa.ratios, "return on equity");
+  let roe = latestValue(roeRow) ?? 0;
+  // Unreasonable ROE from ratios → recompute from EPS / BV
+  if (roe > 50 || roe < 0 || roe === 0) {
+    if (bvPerShare > 0 && eps > 0) {
+      roe = (eps / bvPerShare) * 100;
+    } else {
+      const niRow = findRow(sa.income, "net income", "net income common");
+      const equityRow = findRow(sa.balance, "total equity", "stockholders equity");
+      const ni = latestValue(niRow) ?? 0;
+      const eq = latestValue(equityRow) ?? 1;
+      roe = eq > 0 ? (ni / eq) * 100 : 15;
+    }
+    roe = Math.min(Math.max(roe, 1), 50); // hard cap after fallback
+  }
+
+  // Payout ratio — try ratios page first, sanity-check, then fallback
+  const payoutRow = findRow(sa.ratios, "payout ratio", "dividend payout", "payout") ??
+    findRow(sa.ratios, "dividend payout ratio");
+  let payout = latestValue(payoutRow) ?? 0;
+  if (payout > 100 || payout < 0 || payout === 0) {
+    if (eps > 0 && dps > 0) {
+      payout = (dps / eps) * 100;
+    } else {
+      payout = 40;
+    }
+    payout = Math.min(Math.max(payout, 0), 100);
+  }
 
   // Shares
   const sharesRow = findRow(sa.income, "shares outstanding", "weighted average shares", "diluted shares") ??
