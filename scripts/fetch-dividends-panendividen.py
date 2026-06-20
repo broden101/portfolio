@@ -20,10 +20,10 @@ import requests
 
 # ── Kompas 100 constituents ──────────────────────────────────────────
 KOMPAS_100 = [
-    "AADI", "ACES", "ADMR", "ADRO", "AGII", "AKRA", "AMMN", "AMRT", "ANTM",
+    "AADI", "ABMM", "ACES", "ADMR", "ADRO", "AGII", "AKRA", "AMMN", "AMRT", "ANTM",
     "ARCI", "ARTO", "ASII", "ASSA", "BBCA", "BBNI", "BBRI", "BBTN", "BBYB",
     "BFIN", "BJBR", "BJTM", "BKSL", "BMRI", "BMTR", "BREN", "BRIS", "BRMS",
-    "BRPT", "BSDE", "BTPS", "BUKA", "BULL", "BUMI", "BUVA", "CBDK", "CMRY",
+    "BRPT", "BSDE", "BSSR", "BTPS", "BUKA", "BULL", "BUMI", "BUVA", "CBDK", "CMRY",
     "CPIN", "CTRA", "CUAN", "DEWA", "DMAS", "DSNG", "DSSA", "ELSA", "EMTK",
     "ENRG", "ERAA", "ESSA", "EXCL", "FILM", "GOTO", "HEAL", "HMSP", "HRTA",
     "HRUM", "ICBP", "IMPC", "INCO", "INDF", "INDY", "INET", "INKP", "INTP",

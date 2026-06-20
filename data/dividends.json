@@ -814,6 +814,212 @@
     "rank": 3
   },
   {
+    "ticker": "BSSR",
+    "companyName": "PT Baramulti Suksessarana Tbk",
+    "sector": "Energy",
+    "industry": "Coal",
+    "ipoDate": "2012-11-08",
+    "totalDividends": 5664.54,
+    "dividendCount": 25,
+    "latestDividend": {
+      "date": "2026-06-25",
+      "amount": 486.13,
+      "type": "final",
+      "paymentDate": "2026-07-08"
+    },
+    "yearsOfHistory": 12,
+    "avgDividendPerYear": 472.04,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "allDividends": [
+      {
+        "exDate": "2026-06-25",
+        "amount": 486.13,
+        "paymentDate": "2026-07-08",
+        "fiscalYear": "2025",
+        "type": "final"
+      },
+      {
+        "exDate": "2026-01-05",
+        "amount": 127.41,
+        "paymentDate": "2026-01-15",
+        "fiscalYear": "2025",
+        "type": "interim"
+      },
+      {
+        "exDate": "2025-11-13",
+        "amount": 222.59,
+        "paymentDate": "2025-11-21",
+        "fiscalYear": "2025",
+        "type": "interim"
+      },
+      {
+        "exDate": "2025-06-18",
+        "amount": 123.82,
+        "paymentDate": "2025-7-02",
+        "fiscalYear": "2024",
+        "type": "final"
+      },
+      {
+        "exDate": "2025-01-13",
+        "amount": 154.39,
+        "paymentDate": "2025-01-15",
+        "fiscalYear": "2024",
+        "type": "interim"
+      },
+      {
+        "exDate": "2024-11-06",
+        "amount": 179.19,
+        "paymentDate": "2024-11-21",
+        "fiscalYear": "2024",
+        "type": "interim"
+      },
+      {
+        "exDate": "2024-07-03",
+        "amount": 345.14999,
+        "paymentDate": "2024-07-09",
+        "fiscalYear": "2023",
+        "type": "final"
+      },
+      {
+        "exDate": "2024-01-08",
+        "amount": 118.3948,
+        "paymentDate": "2024-01-24",
+        "fiscalYear": "2023",
+        "type": "interim"
+      },
+      {
+        "exDate": "2023-09-15",
+        "amount": 349.93311,
+        "paymentDate": "2023-09-26",
+        "fiscalYear": "2023",
+        "type": "interim"
+      },
+      {
+        "exDate": "2023-06-06",
+        "amount": 341.40265,
+        "paymentDate": "2023-06-16",
+        "fiscalYear": "2022",
+        "type": "final"
+      },
+      {
+        "exDate": "2022-12-23",
+        "amount": 580.59131,
+        "paymentDate": "2022-12-30",
+        "fiscalYear": "2022",
+        "type": "interim"
+      },
+      {
+        "exDate": "2022-09-22",
+        "amount": 567.13165,
+        "paymentDate": "2022-09-30",
+        "fiscalYear": "2022",
+        "type": "interim"
+      },
+      {
+        "exDate": "2022-05-18",
+        "amount": 411.0453,
+        "paymentDate": "2022-05-23",
+        "fiscalYear": "2021",
+        "type": "final"
+      },
+      {
+        "exDate": "2022-01-11",
+        "amount": 348.92401,
+        "paymentDate": "2022-01-25",
+        "fiscalYear": "2021",
+        "type": "interim"
+      },
+      {
+        "exDate": "2021-09-23",
+        "amount": 212.55112,
+        "paymentDate": "2021-09-29",
+        "fiscalYear": "2021",
+        "type": "interim"
+      },
+      {
+        "exDate": "2021-05-21",
+        "amount": 222.77087,
+        "paymentDate": "2021-06-03",
+        "fiscalYear": "2020",
+        "type": "final"
+      },
+      {
+        "exDate": "2020-07-01",
+        "amount": 57.12211,
+        "paymentDate": "2020-07-17",
+        "fiscalYear": "2019",
+        "type": "final"
+      },
+      {
+        "exDate": "2019-04-10",
+        "amount": 53.88492,
+        "paymentDate": "2019-04-22",
+        "fiscalYear": "2018",
+        "type": "final"
+      },
+      {
+        "exDate": "2018-10-03",
+        "amount": 151.22682,
+        "paymentDate": "2018-10-19",
+        "fiscalYear": "2018",
+        "type": "interim"
+      },
+      {
+        "exDate": "2018-04-30",
+        "amount": 220.53812,
+        "paymentDate": "2018-05-11",
+        "fiscalYear": "2017",
+        "type": "final"
+      },
+      {
+        "exDate": "2017-10-30",
+        "amount": 125.68,
+        "paymentDate": "2017-11-08",
+        "fiscalYear": "2017",
+        "type": "interim"
+      },
+      {
+        "exDate": "2017-03-23",
+        "amount": 178.2973,
+        "paymentDate": "2017-04-13",
+        "fiscalYear": "2016",
+        "type": "final"
+      },
+      {
+        "exDate": "2016-03-23",
+        "amount": 25.3119,
+        "paymentDate": "",
+        "fiscalYear": "2015",
+        "type": "final"
+      },
+      {
+        "exDate": "2015-10-15",
+        "amount": 53.55,
+        "paymentDate": "",
+        "fiscalYear": "2015",
+        "type": "interim"
+      },
+      {
+        "exDate": "2015-06-22",
+        "amount": 7.5,
+        "paymentDate": "",
+        "fiscalYear": "2014",
+        "type": "final"
+      }
+    ],
+    "price": 4450.0,
+    "latestFYDPS": 836.13,
+    "latestFYDate": "2026-06-25",
+    "dividendYield": 18.79,
+    "rank": 4
+  },
+  {
     "ticker": "ASII",
     "companyName": "PT Astra International Tbk",
     "sector": "Consumer Cyclical",
@@ -1164,7 +1370,7 @@
     "latestFYDPS": 390.0,
     "latestFYDate": "2026-05-05",
     "dividendYield": 8.11,
-    "rank": 4
+    "rank": 5
   },
   {
     "ticker": "PTBA",
@@ -1391,7 +1597,7 @@
     "latestFYDPS": 114.51,
     "latestFYDate": "2026-06-23",
     "dividendYield": 4.53,
-    "rank": 5
+    "rank": 6
   },
   {
     "ticker": "SMGR",
@@ -1583,7 +1789,7 @@
     "latestFYDPS": 28.33,
     "latestFYDate": "2026-05-21",
     "dividendYield": 1.97,
-    "rank": 6
+    "rank": 7
   },
   {
     "ticker": "LPPF",
@@ -1712,7 +1918,7 @@
     "latestFYDPS": 250.0,
     "latestFYDate": "2026-04-24",
     "dividendYield": 16.45,
-    "rank": 7
+    "rank": 8
   },
   {
     "ticker": "ADRO",
@@ -1988,7 +2194,7 @@
     "latestFYDPS": 263.15,
     "latestFYDate": "2026-04-28",
     "dividendYield": 11.85,
-    "rank": 8
+    "rank": 9
   },
   {
     "ticker": "INDF",
@@ -2201,7 +2407,7 @@
     "latestFYDPS": 280.0,
     "latestFYDate": "2025-07-02",
     "dividendYield": 4.16,
-    "rank": 9
+    "rank": 10
   },
   {
     "ticker": "UNVR",
@@ -2568,7 +2774,7 @@
     "latestFYDPS": 201.0,
     "latestFYDate": "2026-06-15",
     "dividendYield": 11.93,
-    "rank": 10
+    "rank": 11
   },
   {
     "ticker": "BMRI",
@@ -2795,7 +3001,7 @@
     "latestFYDPS": 476.96,
     "latestFYDate": "2026-05-11",
     "dividendYield": 11.07,
-    "rank": 11
+    "rank": 12
   },
   {
     "ticker": "ICBP",
@@ -2938,7 +3144,7 @@
     "latestFYDPS": 250.0,
     "latestFYDate": "2025-07-02",
     "dividendYield": 3.73,
-    "rank": 12
+    "rank": 13
   },
   {
     "ticker": "BBRI",
@@ -3172,7 +3378,7 @@
     "latestFYDPS": 346.0,
     "latestFYDate": "2026-04-21",
     "dividendYield": 11.81,
-    "rank": 13
+    "rank": 14
   },
   {
     "ticker": "TLKM",
@@ -3406,7 +3612,7 @@
     "latestFYDPS": 222.08,
     "latestFYDate": "2026-06-18",
     "dividendYield": 8.61,
-    "rank": 14
+    "rank": 15
   },
   {
     "ticker": "BBNI",
@@ -3605,7 +3811,7 @@
     "latestFYDPS": 349.41,
     "latestFYDate": "2026-03-25",
     "dividendYield": 9.52,
-    "rank": 15
+    "rank": 16
   },
   {
     "ticker": "PGAS",
@@ -3818,7 +4024,7 @@
     "latestFYDPS": 125.61,
     "latestFYDate": "2025-06-05",
     "dividendYield": 8.16,
-    "rank": 16
+    "rank": 17
   },
   {
     "ticker": "BBCA",
@@ -4171,7 +4377,7 @@
     "latestFYDPS": 20.0,
     "latestFYDate": "2026-06-17",
     "dividendYield": 0.32,
-    "rank": 17
+    "rank": 18
   },
   {
     "ticker": "MPMX",
@@ -4293,7 +4499,7 @@
     "latestFYDPS": 170.0,
     "latestFYDate": "2026-06-09",
     "dividendYield": 17.8,
-    "rank": 18
+    "rank": 19
   },
   {
     "ticker": "HMSP",
@@ -4632,7 +4838,7 @@
     "latestFYDPS": 56.3,
     "latestFYDate": "2026-05-29",
     "dividendYield": 8.73,
-    "rank": 19
+    "rank": 20
   },
   {
     "ticker": "BJBR",
@@ -4775,7 +4981,7 @@
     "latestFYDPS": 85.54,
     "latestFYDate": "2026-05-08",
     "dividendYield": 11.11,
-    "rank": 20
+    "rank": 21
   },
   {
     "ticker": "JSMR",
@@ -4932,7 +5138,101 @@
     "latestFYDPS": 156.23,
     "latestFYDate": "2026-06-03",
     "dividendYield": 6.08,
-    "rank": 21
+    "rank": 22
+  },
+  {
+    "ticker": "ABMM",
+    "companyName": "PT ABM Investama Tbk",
+    "sector": "Energy",
+    "industry": "Coal",
+    "ipoDate": "2011-12-06",
+    "totalDividends": 1278.77,
+    "dividendCount": 9,
+    "latestDividend": {
+      "date": "2026-05-11",
+      "amount": 97.0,
+      "type": "final",
+      "paymentDate": "2026-05-28"
+    },
+    "yearsOfHistory": 9,
+    "avgDividendPerYear": 142.09,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021"
+    ],
+    "allDividends": [
+      {
+        "exDate": "2026-05-11",
+        "amount": 97.0,
+        "paymentDate": "2026-05-28",
+        "fiscalYear": "2025",
+        "type": "final"
+      },
+      {
+        "exDate": "2025-05-07",
+        "amount": 153.0,
+        "paymentDate": "2025-05-28",
+        "fiscalYear": "2024",
+        "type": "final"
+      },
+      {
+        "exDate": "2024-05-28",
+        "amount": 295.0,
+        "paymentDate": "2024-06-14",
+        "fiscalYear": "2023",
+        "type": "final"
+      },
+      {
+        "exDate": "2023-05-22",
+        "amount": 400.0,
+        "paymentDate": "2023-06-09",
+        "fiscalYear": "2022",
+        "type": "final"
+      },
+      {
+        "exDate": "2022-05-23",
+        "amount": 267.0,
+        "paymentDate": "2022-06-10",
+        "fiscalYear": "2021",
+        "type": "final"
+      },
+      {
+        "exDate": "2020-06-29",
+        "amount": 13.17,
+        "paymentDate": "2020-07-22",
+        "fiscalYear": "2019",
+        "type": "final"
+      },
+      {
+        "exDate": "2019-05-13",
+        "amount": 36.32184,
+        "paymentDate": "2019-05-28",
+        "fiscalYear": "2018",
+        "type": "final"
+      },
+      {
+        "exDate": "2014-06-13",
+        "amount": 4.98,
+        "paymentDate": "",
+        "fiscalYear": "2013",
+        "type": "final"
+      },
+      {
+        "exDate": "2013-06-27",
+        "amount": 12.3,
+        "paymentDate": "",
+        "fiscalYear": "2012",
+        "type": "final"
+      }
+    ],
+    "price": 2450.0,
+    "latestFYDPS": 97.0,
+    "latestFYDate": "2026-05-11",
+    "dividendYield": 3.96,
+    "rank": 23
   },
   {
     "ticker": "INCO",
@@ -5103,7 +5403,7 @@
     "latestFYDPS": 77.64,
     "latestFYDate": "2026-06-11",
     "dividendYield": 1.53,
-    "rank": 22
+    "rank": 24
   },
   {
     "ticker": "CPIN",
@@ -5274,7 +5574,7 @@
     "latestFYDPS": 180.0,
     "latestFYDate": "2026-06-03",
     "dividendYield": 5.42,
-    "rank": 23
+    "rank": 25
   },
   {
     "ticker": "ANTM",
@@ -5431,7 +5731,7 @@
     "latestFYDPS": 209.99,
     "latestFYDate": "2026-06-22",
     "dividendYield": 6.82,
-    "rank": 24
+    "rank": 26
   },
   {
     "ticker": "INDY",
@@ -5567,7 +5867,7 @@
     "latestFYDPS": 10.25,
     "latestFYDate": "2026-06-03",
     "dividendYield": 0.46,
-    "rank": 25
+    "rank": 27
   },
   {
     "ticker": "AADI",
@@ -5608,7 +5908,7 @@
     "latestFYDPS": 999.7,
     "latestFYDate": "2026-06-05",
     "dividendYield": 12.69,
-    "rank": 26
+    "rank": 28
   },
   {
     "ticker": "ISAT",
@@ -5765,7 +6065,7 @@
     "latestFYDPS": 111.0,
     "latestFYDate": "2026-05-18",
     "dividendYield": 6.4,
-    "rank": 27
+    "rank": 29
   },
   {
     "ticker": "EXCL",
@@ -5887,7 +6187,7 @@
     "latestFYDPS": 159.0,
     "latestFYDate": "2025-12-02",
     "dividendYield": 6.16,
-    "rank": 28
+    "rank": 30
   },
   {
     "ticker": "TINS",
@@ -6086,7 +6386,7 @@
     "latestFYDPS": 88.19,
     "latestFYDate": "2026-06-24",
     "dividendYield": 2.53,
-    "rank": 29
+    "rank": 31
   },
   {
     "ticker": "JPFA",
@@ -6236,7 +6536,7 @@
     "latestFYDPS": 140.0,
     "latestFYDate": "2026-05-11",
     "dividendYield": 7.25,
-    "rank": 30
+    "rank": 32
   },
   {
     "ticker": "AKRA",
@@ -6547,7 +6847,7 @@
     "latestFYDPS": 100.0,
     "latestFYDate": "2026-05-07",
     "dividendYield": 8.16,
-    "rank": 31
+    "rank": 33
   },
   {
     "ticker": "BJTM",
@@ -6676,7 +6976,7 @@
     "latestFYDPS": 56.62,
     "latestFYDate": "2026-05-19",
     "dividendYield": 11.1,
-    "rank": 32
+    "rank": 34
   },
   {
     "ticker": "INKP",
@@ -6791,7 +7091,7 @@
     "latestFYDPS": 50.0,
     "latestFYDate": "2025-06-25",
     "dividendYield": 0.67,
-    "rank": 33
+    "rank": 35
   },
   {
     "ticker": "CMRY",
@@ -6864,7 +7164,7 @@
     "latestFYDPS": 200.0,
     "latestFYDate": "2026-04-20",
     "dividendYield": 4.48,
-    "rank": 34
+    "rank": 36
   },
   {
     "ticker": "TAPG",
@@ -6958,7 +7258,7 @@
     "latestFYDPS": 180.0,
     "latestFYDate": "2026-06-04",
     "dividendYield": 11.8,
-    "rank": 35
+    "rank": 37
   },
   {
     "ticker": "BBTN",
@@ -7094,7 +7394,7 @@
     "latestFYDPS": 53.57,
     "latestFYDate": "2025-04-15",
     "dividendYield": 4.37,
-    "rank": 36
+    "rank": 38
   },
   {
     "ticker": "IPCC",
@@ -7209,7 +7509,7 @@
     "latestFYDPS": 112.85,
     "latestFYDate": "2026-06-22",
     "dividendYield": 9.03,
-    "rank": 37
+    "rank": 39
   },
   {
     "ticker": "BFIN",
@@ -7464,7 +7764,7 @@
     "latestFYDPS": 70.0,
     "latestFYDate": "2026-06-03",
     "dividendYield": 10.29,
-    "rank": 38
+    "rank": 40
   },
   {
     "ticker": "MYOR",
@@ -7670,7 +7970,7 @@
     "latestFYDPS": 60.0,
     "latestFYDate": "2026-06-15",
     "dividendYield": 3.02,
-    "rank": 39
+    "rank": 41
   },
   {
     "ticker": "BTPS",
@@ -7757,7 +8057,7 @@
     "latestFYDPS": 85.7,
     "latestFYDate": "2026-04-27",
     "dividendYield": 8.57,
-    "rank": 40
+    "rank": 42
   },
   {
     "ticker": "KLBF",
@@ -7949,7 +8249,7 @@
     "latestFYDPS": 20.0,
     "latestFYDate": "2026-06-04",
     "dividendYield": 2.86,
-    "rank": 41
+    "rank": 43
   },
   {
     "ticker": "HRUM",
@@ -8043,7 +8343,7 @@
     "latestFYDPS": 75.1,
     "latestFYDate": "2022-12-14",
     "dividendYield": 9.1,
-    "rank": 42
+    "rank": 44
   },
   {
     "ticker": "MIKA",
@@ -8151,7 +8451,7 @@
     "latestFYDPS": 43.0,
     "latestFYDate": "2026-06-19",
     "dividendYield": 2.69,
-    "rank": 43
+    "rank": 45
   },
   {
     "ticker": "SIDO",
@@ -8329,7 +8629,7 @@
     "latestFYDPS": 37.0,
     "latestFYDate": "2026-04-20",
     "dividendYield": 9.89,
-    "rank": 44
+    "rank": 46
   },
   {
     "ticker": "ACES",
@@ -8493,7 +8793,7 @@
     "latestFYDPS": 32.01,
     "latestFYDate": "2026-06-22",
     "dividendYield": 8.75,
-    "rank": 45
+    "rank": 47
   },
   {
     "ticker": "ELSA",
@@ -8657,7 +8957,7 @@
     "latestFYDPS": 44.29,
     "latestFYDate": "2026-06-18",
     "dividendYield": 7.84,
-    "rank": 46
+    "rank": 48
   },
   {
     "ticker": "BUMI",
@@ -8758,7 +9058,7 @@
     "latestFYDPS": 14.31,
     "latestFYDate": "2012-06-20",
     "dividendYield": 8.52,
-    "rank": 47
+    "rank": 49
   },
   {
     "ticker": "DMAS",
@@ -8908,7 +9208,7 @@
     "latestFYDPS": 16.5,
     "latestFYDate": "2026-06-25",
     "dividendYield": 10.78,
-    "rank": 48
+    "rank": 50
   },
   {
     "ticker": "MEDC",
@@ -9100,7 +9400,7 @@
     "latestFYDPS": 28.45,
     "latestFYDate": "2025-11-11",
     "dividendYield": 2.48,
-    "rank": 49
+    "rank": 51
   },
   {
     "ticker": "AMRT",
@@ -9271,7 +9571,7 @@
     "latestFYDPS": 41.5,
     "latestFYDate": "2026-06-15",
     "dividendYield": 3.07,
-    "rank": 50
+    "rank": 52
   },
   {
     "ticker": "TOWR",
@@ -9435,7 +9735,7 @@
     "latestFYDPS": 13.76,
     "latestFYDate": "2026-06-03",
     "dividendYield": 3.7,
-    "rank": 51
+    "rank": 53
   },
   {
     "ticker": "PTRO",
@@ -9613,7 +9913,7 @@
     "latestFYDPS": 16.54,
     "latestFYDate": "2025-04-30",
     "dividendYield": 0.39,
-    "rank": 52
+    "rank": 54
   },
   {
     "ticker": "DSNG",
@@ -9735,7 +10035,7 @@
     "latestFYDPS": 47.0,
     "latestFYDate": "2026-06-19",
     "dividendYield": 4.12,
-    "rank": 53
+    "rank": 55
   },
   {
     "ticker": "SCMA",
@@ -10018,7 +10318,7 @@
     "latestFYDPS": 21.0,
     "latestFYDate": "2026-06-04",
     "dividendYield": 10.5,
-    "rank": 54
+    "rank": 56
   },
   {
     "ticker": "EMTK",
@@ -10196,7 +10496,7 @@
     "latestFYDPS": 10.0,
     "latestFYDate": "2026-06-04",
     "dividendYield": 1.82,
-    "rank": 55
+    "rank": 57
   },
   {
     "ticker": "RAJA",
@@ -10311,7 +10611,7 @@
     "latestFYDPS": 25.0,
     "latestFYDate": "2026-01-09",
     "dividendYield": 0.65,
-    "rank": 56
+    "rank": 58
   },
   {
     "ticker": "CTRA",
@@ -10461,7 +10761,7 @@
     "latestFYDPS": 24.0,
     "latestFYDate": "2025-06-26",
     "dividendYield": 4.36,
-    "rank": 57
+    "rank": 59
   },
   {
     "ticker": "SSIA",
@@ -10576,7 +10876,7 @@
     "latestFYDPS": 15.0,
     "latestFYDate": "2025-06-24",
     "dividendYield": 0.94,
-    "rank": 58
+    "rank": 60
   },
   {
     "ticker": "PGEO",
@@ -10634,7 +10934,7 @@
     "latestFYDPS": 49.44,
     "latestFYDate": "2026-05-04",
     "dividendYield": 5.52,
-    "rank": 59
+    "rank": 61
   },
   {
     "ticker": "SMRA",
@@ -10819,7 +11119,108 @@
     "latestFYDPS": 5.0,
     "latestFYDate": "2026-06-23",
     "dividendYield": 1.7,
-    "rank": 60
+    "rank": 62
+  },
+  {
+    "ticker": "ASSA",
+    "companyName": "PT Adi Sarana Armada Tbk",
+    "sector": "Industrials",
+    "industry": "Rental & Leasing Services",
+    "ipoDate": "2012-11-12",
+    "totalDividends": 154.14,
+    "dividendCount": 10,
+    "latestDividend": {
+      "date": "2026-06-26",
+      "amount": 30.0,
+      "type": "final",
+      "paymentDate": "2026-07-17"
+    },
+    "yearsOfHistory": 8,
+    "avgDividendPerYear": 19.27,
+    "fiscalYears": [
+      "2025",
+      "2024",
+      "2023",
+      "2017",
+      "2016"
+    ],
+    "allDividends": [
+      {
+        "exDate": "2026-06-26",
+        "amount": 30.0,
+        "paymentDate": "2026-07-17",
+        "fiscalYear": "2025",
+        "type": "final"
+      },
+      {
+        "exDate": "2025-11-14",
+        "amount": 20.0,
+        "paymentDate": "2025-11-21",
+        "fiscalYear": "2025",
+        "type": "interim"
+      },
+      {
+        "exDate": "2025-07-04",
+        "amount": 30.0,
+        "paymentDate": "2025-07-25",
+        "fiscalYear": "2024",
+        "type": "final"
+      },
+      {
+        "exDate": "2024-11-15",
+        "amount": 20.0,
+        "paymentDate": "2024-11-22",
+        "fiscalYear": "2024",
+        "type": "interim"
+      },
+      {
+        "exDate": "2024-07-05",
+        "amount": 20.0,
+        "paymentDate": "2024-07-26",
+        "fiscalYear": "2023",
+        "type": "final"
+      },
+      {
+        "exDate": "2018-05-09",
+        "amount": 11.07391,
+        "paymentDate": "2018-05-31",
+        "fiscalYear": "2017",
+        "type": "final"
+      },
+      {
+        "exDate": "2017-06-08",
+        "amount": 6.45978,
+        "paymentDate": "2017-06-22",
+        "fiscalYear": "2016",
+        "type": "final"
+      },
+      {
+        "exDate": "2016-06-14",
+        "amount": 3.6913,
+        "paymentDate": "",
+        "fiscalYear": "2015",
+        "type": "final"
+      },
+      {
+        "exDate": "2015-06-16",
+        "amount": 4.61413,
+        "paymentDate": "",
+        "fiscalYear": "2014",
+        "type": "final"
+      },
+      {
+        "exDate": "2014-05-30",
+        "amount": 8.30543,
+        "paymentDate": "",
+        "fiscalYear": "2013",
+        "type": "final"
+      }
+    ],
+    "price": 640.0,
+    "latestFYDPS": 50.0,
+    "latestFYDate": "2026-06-26",
+    "dividendYield": 7.81,
+    "rank": 63
   },
   {
     "ticker": "BMTR",
@@ -10934,7 +11335,7 @@
     "latestFYDPS": 5.0,
     "latestFYDate": "2018-07-05",
     "dividendYield": 4.24,
-    "rank": 61
+    "rank": 64
   },
   {
     "ticker": "TPIA",
@@ -11126,7 +11527,7 @@
     "latestFYDPS": 9.91,
     "latestFYDate": "2026-05-26",
     "dividendYield": 0.48,
-    "rank": 62
+    "rank": 65
   },
   {
     "ticker": "ERAA",
@@ -11234,7 +11635,7 @@
     "latestFYDPS": 19.0,
     "latestFYDate": "2025-06-19",
     "dividendYield": 5.08,
-    "rank": 63
+    "rank": 66
   },
   {
     "ticker": "HRTA",
@@ -11328,101 +11729,7 @@
     "latestFYDPS": 40.0,
     "latestFYDate": "2026-06-12",
     "dividendYield": 1.89,
-    "rank": 64
-  },
-  {
-    "ticker": "ASSA",
-    "companyName": "PT Adi Sarana Armada Tbk",
-    "sector": "Industrials",
-    "industry": "Rental & Leasing Services",
-    "ipoDate": "2012-11-12",
-    "totalDividends": 124.14,
-    "dividendCount": 9,
-    "latestDividend": {
-      "date": "2025-11-14",
-      "amount": 20.0,
-      "type": "interim",
-      "paymentDate": "2025-11-21"
-    },
-    "yearsOfHistory": 8,
-    "avgDividendPerYear": 15.52,
-    "fiscalYears": [
-      "2025",
-      "2024",
-      "2023",
-      "2017",
-      "2016"
-    ],
-    "allDividends": [
-      {
-        "exDate": "2025-11-14",
-        "amount": 20.0,
-        "paymentDate": "2025-11-21",
-        "fiscalYear": "2025",
-        "type": "interim"
-      },
-      {
-        "exDate": "2025-07-04",
-        "amount": 30.0,
-        "paymentDate": "2025-07-25",
-        "fiscalYear": "2024",
-        "type": "final"
-      },
-      {
-        "exDate": "2024-11-15",
-        "amount": 20.0,
-        "paymentDate": "2024-11-22",
-        "fiscalYear": "2024",
-        "type": "interim"
-      },
-      {
-        "exDate": "2024-07-05",
-        "amount": 20.0,
-        "paymentDate": "2024-07-26",
-        "fiscalYear": "2023",
-        "type": "final"
-      },
-      {
-        "exDate": "2018-05-09",
-        "amount": 11.07391,
-        "paymentDate": "2018-05-31",
-        "fiscalYear": "2017",
-        "type": "final"
-      },
-      {
-        "exDate": "2017-06-08",
-        "amount": 6.45978,
-        "paymentDate": "2017-06-22",
-        "fiscalYear": "2016",
-        "type": "final"
-      },
-      {
-        "exDate": "2016-06-14",
-        "amount": 3.6913,
-        "paymentDate": "",
-        "fiscalYear": "2015",
-        "type": "final"
-      },
-      {
-        "exDate": "2015-06-16",
-        "amount": 4.61413,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "final"
-      },
-      {
-        "exDate": "2014-05-30",
-        "amount": 8.30543,
-        "paymentDate": "",
-        "fiscalYear": "2013",
-        "type": "final"
-      }
-    ],
-    "price": 640.0,
-    "latestFYDPS": 20.0,
-    "latestFYDate": "2025-11-14",
-    "dividendYield": 3.12,
-    "rank": 65
+    "rank": 67
   },
   {
     "ticker": "PSAB",
@@ -11488,7 +11795,7 @@
     "latestFYDPS": 105.0,
     "latestFYDate": "2026-06-12",
     "dividendYield": 23.86,
-    "rank": 66
+    "rank": 68
   },
   {
     "ticker": "BRIS",
@@ -11561,7 +11868,7 @@
     "latestFYDPS": 32.81,
     "latestFYDate": "2026-05-18",
     "dividendYield": 1.79,
-    "rank": 67
+    "rank": 69
   },
   {
     "ticker": "ADMR",
@@ -11603,7 +11910,7 @@
     "latestFYDPS": 50.62,
     "latestFYDate": "2026-04-28",
     "dividendYield": 3.34,
-    "rank": 68
+    "rank": 70
   },
   {
     "ticker": "RATU",
@@ -11645,7 +11952,7 @@
     "latestFYDPS": 45.0,
     "latestFYDate": "2026-05-20",
     "dividendYield": 0.94,
-    "rank": 69
+    "rank": 71
   },
   {
     "ticker": "PWON",
@@ -11767,7 +12074,7 @@
     "latestFYDPS": 13.0,
     "latestFYDate": "2026-06-23",
     "dividendYield": 5.12,
-    "rank": 70
+    "rank": 72
   },
   {
     "ticker": "BSDE",
@@ -11861,7 +12168,7 @@
     "latestFYDPS": 5.0,
     "latestFYDate": "2017-06-12",
     "dividendYield": 0.9,
-    "rank": 71
+    "rank": 73
   },
   {
     "ticker": "NCKL",
@@ -11911,7 +12218,7 @@
     "latestFYDPS": 30.36,
     "latestFYDate": "2025-06-30",
     "dividendYield": 3.51,
-    "rank": 72
+    "rank": 74
   },
   {
     "ticker": "MTEL",
@@ -11969,7 +12276,7 @@
     "latestFYDPS": 25.33,
     "latestFYDate": "2025-06-12",
     "dividendYield": 5.07,
-    "rank": 73
+    "rank": 75
   },
   {
     "ticker": "ESSA",
@@ -12027,7 +12334,7 @@
     "latestFYDPS": 10.0,
     "latestFYDate": "2025-04-28",
     "dividendYield": 1.56,
-    "rank": 74
+    "rank": 76
   },
   {
     "ticker": "TOBA",
@@ -12121,7 +12428,7 @@
     "latestFYDPS": 18.53,
     "latestFYDate": "2026-04-27",
     "dividendYield": 4.48,
-    "rank": 75
+    "rank": 77
   },
   {
     "ticker": "MAPI",
@@ -12257,7 +12564,7 @@
     "latestFYDPS": 10.0,
     "latestFYDate": "2025-07-09",
     "dividendYield": 0.66,
-    "rank": 76
+    "rank": 78
   },
   {
     "ticker": "SGER",
@@ -12337,7 +12644,7 @@
     "latestFYDPS": 9.0,
     "latestFYDate": "2025-05-16",
     "dividendYield": 2.33,
-    "rank": 77
+    "rank": 79
   },
   {
     "ticker": "HEAL",
@@ -12424,7 +12731,7 @@
     "latestFYDPS": 13.5,
     "latestFYDate": "2026-05-05",
     "dividendYield": 1.53,
-    "rank": 78
+    "rank": 80
   },
   {
     "ticker": "AGII",
@@ -12504,7 +12811,7 @@
     "latestFYDPS": 11.42,
     "latestFYDate": "2026-06-23",
     "dividendYield": 0.43,
-    "rank": 79
+    "rank": 81
   },
   {
     "ticker": "TCPI",
@@ -12577,7 +12884,7 @@
     "latestFYDPS": 5.0,
     "latestFYDate": "2025-07-02",
     "dividendYield": 0.06,
-    "rank": 80
+    "rank": 82
   },
   {
     "ticker": "IMPC",
@@ -12671,7 +12978,7 @@
     "latestFYDPS": 4.5,
     "latestFYDate": "2024-05-31",
     "dividendYield": 0.27,
-    "rank": 81
+    "rank": 83
   },
   {
     "ticker": "ARCI",
@@ -12712,7 +13019,7 @@
     "latestFYDPS": 40.82,
     "latestFYDate": "2026-05-20",
     "dividendYield": 3.8,
-    "rank": 82
+    "rank": 84
   },
   {
     "ticker": "FILM",
@@ -12754,7 +13061,7 @@
     "latestFYDPS": 25.0,
     "latestFYDate": "2024-07-09",
     "dividendYield": 1.48,
-    "rank": 83
+    "rank": 85
   },
   {
     "ticker": "PNLF",
@@ -12804,7 +13111,7 @@
     "latestFYDPS": 10.0,
     "latestFYDate": "2022-07-11",
     "dividendYield": 4.59,
-    "rank": 84
+    "rank": 86
   },
   {
     "ticker": "BRPT",
@@ -12877,7 +13184,7 @@
     "latestFYDPS": 0.87,
     "latestFYDate": "2024-06-27",
     "dividendYield": 0.05,
-    "rank": 85
+    "rank": 87
   },
   {
     "ticker": "CBDK",
@@ -12927,7 +13234,7 @@
     "latestFYDPS": 5.0,
     "latestFYDate": "2026-06-15",
     "dividendYield": 0.14,
-    "rank": 86
+    "rank": 88
   },
   {
     "ticker": "MAPA",
@@ -12977,7 +13284,7 @@
     "latestFYDPS": 4.0,
     "latestFYDate": "2025-07-09",
     "dividendYield": 0.67,
-    "rank": 87
+    "rank": 89
   },
   {
     "ticker": "PANI",
@@ -13027,7 +13334,7 @@
     "latestFYDPS": 5.0,
     "latestFYDate": "2026-06-15",
     "dividendYield": 0.07,
-    "rank": 88
+    "rank": 90
   },
   {
     "ticker": "BREN",
@@ -13077,7 +13384,7 @@
     "latestFYDPS": 3.78,
     "latestFYDate": "2024-12-12",
     "dividendYield": 0.1,
-    "rank": 89
+    "rank": 91
   },
   {
     "ticker": "KIJA",
@@ -13157,7 +13464,7 @@
     "latestFYDPS": 2.03,
     "latestFYDate": "2026-06-17",
     "dividendYield": 1.68,
-    "rank": 90
+    "rank": 92
   },
   {
     "ticker": "KPIG",
@@ -13230,7 +13537,7 @@
     "latestFYDPS": 0.6,
     "latestFYDate": "2016-05-16",
     "dividendYield": 0.73,
-    "rank": 91
+    "rank": 93
   },
   {
     "ticker": "SMIL",
@@ -13272,7 +13579,7 @@
     "latestFYDPS": 3.69,
     "latestFYDate": "2025-06-30",
     "dividendYield": 1.37,
-    "rank": 92
+    "rank": 94
   },
   {
     "ticker": "WIFI",
@@ -13314,7 +13621,7 @@
     "latestFYDPS": 2.0,
     "latestFYDate": "2025-06-23",
     "dividendYield": 0.12,
-    "rank": 93
+    "rank": 95
   },
   {
     "ticker": "CUAN",
@@ -13348,7 +13655,7 @@
     "latestFYDPS": 2.93,
     "latestFYDate": "2025-04-30",
     "dividendYield": 0.43,
-    "rank": 94
+    "rank": 96
   },
   {
     "ticker": "BBYB",
@@ -13406,7 +13713,7 @@
     "latestFYDPS": 0.21,
     "latestFYDate": "2021-04-12",
     "dividendYield": 0.09,
-    "rank": 95
+    "rank": 97
   },
   {
     "ticker": "ENRG",
@@ -13440,7 +13747,7 @@
     "latestFYDPS": 2.66,
     "latestFYDate": "2004-12-02",
     "dividendYield": 0.19,
-    "rank": 96
+    "rank": 98
   },
   {
     "ticker": "BKSL",
@@ -13474,7 +13781,7 @@
     "latestFYDPS": 0.24,
     "latestFYDate": "2015-09-29",
     "dividendYield": 0.36,
-    "rank": 97
+    "rank": 99
   },
   {
     "ticker": "INET",
@@ -13508,7 +13815,7 @@
     "latestFYDPS": 0.08,
     "latestFYDate": "2025-06-23",
     "dividendYield": 0.04,
-    "rank": 98
+    "rank": 100
   },
   {
     "ticker": "AMMN",
@@ -13527,7 +13834,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 99
+    "rank": 101
   },
   {
     "ticker": "ARTO",
@@ -13546,7 +13853,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 100
+    "rank": 102
   },
   {
     "ticker": "BRMS",
@@ -13565,7 +13872,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 101
+    "rank": 103
   },
   {
     "ticker": "BUKA",
@@ -13584,7 +13891,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 102
+    "rank": 104
   },
   {
     "ticker": "BULL",
@@ -13603,7 +13910,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 103
+    "rank": 105
   },
   {
     "ticker": "BUVA",
@@ -13622,7 +13929,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 104
+    "rank": 106
   },
   {
     "ticker": "DEWA",
@@ -13641,7 +13948,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 105
+    "rank": 107
   },
   {
     "ticker": "DSSA",
@@ -13660,7 +13967,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 106
+    "rank": 108
   },
   {
     "ticker": "GOTO",
@@ -13679,7 +13986,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 107
+    "rank": 109
   },
   {
     "ticker": "MBMA",
@@ -13698,7 +14005,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 108
+    "rank": 110
   },
   {
     "ticker": "MDKA",
@@ -13717,7 +14024,7 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 109
+    "rank": 111
   },
   {
     "ticker": "WIRG",
@@ -13736,6 +14043,6 @@
     "latestFYDPS": 0,
     "latestFYDate": null,
     "dividendYield": null,
-    "rank": 110
+    "rank": 112
   }
 ]
