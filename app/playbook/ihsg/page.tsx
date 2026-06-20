@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Navbar from "@/components/Navbar";
+import { TopMoverPanel } from "./TopMoverPanel";
 import Footer from "@/components/Footer";
 import {
   fetchMarketData,
@@ -582,109 +583,7 @@ export default function IHSGDashboard() {
             </div>
           </div>
 
-          {/* Top Movers: all three stacked */}
-          <div className="card-luxury p-6 space-y-6">
-            <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium">Top Mover Saham</h3>
-            {topMovers ? (
-              <>
-                {/* Net Foreign Buy */}
-                <div>
-                  <h4 className="text-[10px] tracking-[0.15em] uppercase text-emerald-400/80 font-medium mb-2 flex items-center gap-2">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400/60"></span>
-                    Net Foreign Buy
-                  </h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b border-[#2C261E]">
-                          <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium w-8">#</th>
-                          <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Saham</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Harga</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Net Value</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Net Vol</th>
-                        </tr>
-                      </thead>
-                      <tbody className="font-mono">
-                        {topMovers.topBuy.map((s, i) => (
-                          <tr key={s.stock_code} className="border-b border-[#2C261E]/30">
-                            <td className="py-1.5 text-[#B8AA96]/50">{i + 1}</td>
-                            <td className="py-1.5 text-[#F4EFE6] font-sans font-medium">{s.stock_code}</td>
-                            <td className="py-1.5 text-right text-[#B8AA96]/70">{s.close_price > 0 ? s.close_price.toLocaleString("id-ID") : "—"}</td>
-                            <td className={`py-1.5 text-right ${s.net_value >= 0 ? "text-emerald-400" : "text-red-400"}`}>{s.net_value >= 0 ? "+" : ""}{(s.net_value / 1e6).toFixed(0)}M</td>
-                            <td className={`py-1.5 text-right ${s.net_volume >= 0 ? "text-emerald-400/70" : "text-red-400/70"}`}>{s.net_volume >= 0 ? "+" : ""}{(s.net_volume / 1e6).toFixed(1)}M</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                {/* Net Foreign Sell */}
-                <div>
-                  <h4 className="text-[10px] tracking-[0.15em] uppercase text-red-400/80 font-medium mb-2 flex items-center gap-2">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400/60"></span>
-                    Net Foreign Sell
-                  </h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b border-[#2C261E]">
-                          <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium w-8">#</th>
-                          <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Saham</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Harga</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Net Value</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Net Vol</th>
-                        </tr>
-                      </thead>
-                      <tbody className="font-mono">
-                        {topMovers.topSell.map((s, i) => (
-                          <tr key={s.stock_code} className="border-b border-[#2C261E]/30">
-                            <td className="py-1.5 text-[#B8AA96]/50">{i + 1}</td>
-                            <td className="py-1.5 text-[#F4EFE6] font-sans font-medium">{s.stock_code}</td>
-                            <td className="py-1.5 text-right text-[#B8AA96]/70">{s.close_price > 0 ? s.close_price.toLocaleString("id-ID") : "—"}</td>
-                            <td className={`py-1.5 text-right ${s.net_value >= 0 ? "text-emerald-400" : "text-red-400"}`}>{s.net_value >= 0 ? "+" : ""}{(s.net_value / 1e6).toFixed(0)}M</td>
-                            <td className={`py-1.5 text-right ${s.net_volume >= 0 ? "text-emerald-400/70" : "text-red-400/70"}`}>{s.net_volume >= 0 ? "+" : ""}{(s.net_volume / 1e6).toFixed(1)}M</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                {/* Top Value Transaction */}
-                <div>
-                  <h4 className="text-[10px] tracking-[0.15em] uppercase text-[#C6A15B]/80 font-medium mb-2 flex items-center gap-2">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#C6A15B]/60"></span>
-                    Top Value Transaction
-                  </h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b border-[#2C261E]">
-                          <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium w-8">#</th>
-                          <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Saham</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Harga</th>
-                          <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-1.5 font-medium">Value (Rp)</th>
-                        </tr>
-                      </thead>
-                      <tbody className="font-mono">
-                        {topMovers.topActive.map((s, i) => (
-                          <tr key={s.stock_code} className="border-b border-[#2C261E]/30">
-                            <td className="py-1.5 text-[#B8AA96]/50">{i + 1}</td>
-                            <td className="py-1.5 text-[#F4EFE6] font-sans font-medium">{s.stock_code}</td>
-                            <td className="py-1.5 text-right text-[#B8AA96]/70">{s.close_price > 0 ? s.close_price.toLocaleString("id-ID") : "—"}</td>
-                            <td className="py-1.5 text-right text-[#F4EFE6] font-medium">{((s.total_buy_value + s.total_sell_value) / 1e9).toFixed(1)}T</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="text-center py-8 text-[#B8AA96]/40 text-sm">Data top mover tidak tersedia.</div>
-            )}
-          </div>
+          <TopMoverPanel data={topMovers} live={live} />
         </div>
 
         {/* SECTOR ROTATION HEATMAP */}
