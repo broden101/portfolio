@@ -177,6 +177,18 @@ export const COMMODITY_RESERVES: Record<string, CommodityReserve> = {
     annualCpoT: 1200000,
     cashCostIDRperKg: 6500,
   },
+  TAPG: {
+    ticker: "TAPG", type: "cpo", asOf: "2025-12-31",
+    sourceUrl: "data/reserves/TAPG_2025.pdf",
+    sharesOutstandingBn: 19.85254,
+    plantedHectares: 159700,
+    matureHectares: 140900,          // derived from 3.425Mt FFB / 24.3t per ha yield
+    immatureHectares: 18800,
+    ffbYieldPerHa: 24.3,
+    cpoExtractionRate: 0.233,
+    annualCpoT: 953000,
+    cashCostIDRperKg: 6500,          // conservative CPO-equivalent cost proxy
+  },
   MEDC: {
     ticker: "MEDC", type: "oilgas", asOf: "2025-12-31",
     sourceUrl: "data/reserves/MEDC_2025.pdf",
