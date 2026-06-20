@@ -4,7 +4,7 @@
  * Update yearly after AR publication (~April).
  */
 
-export type CommodityType = "coal" | "nickel" | "cpo" | "oilgas" | "gold" | "copperGold";
+export type CommodityType = "coal" | "nickel" | "cpo" | "oilgas" | "gold" | "copperGold" | "tin";
 
 interface BaseReserve {
   ticker: string;
@@ -73,7 +73,15 @@ export interface CopperGoldReserves extends BaseReserve {
   cashCostUSDperLb: number;      // C1 cash cost, net by-product credits
 }
 
-export type CommodityReserve = CoalReserves | NickelReserves | CpoReserves | OilGasReserves | GoldReserves | CopperGoldReserves;
+export interface TinReserves extends BaseReserve {
+  type: "tin";
+  provenT: number;              // contained tin tonnes
+  resourcesT: number;           // additional resources tonnes
+  annualProductionT: number;    // tonnes tin/yr
+  cashCostUSDperTonne: number;
+}
+
+export type CommodityReserve = CoalReserves | NickelReserves | CpoReserves | OilGasReserves | GoldReserves | CopperGoldReserves | TinReserves;
 
 /**
  * Static reserve data cache. Updated yearly from annual reports.
@@ -208,6 +216,17 @@ export const COMMODITY_RESERVES: Record<string, CommodityReserve> = {
     recovery: 0.90,
     annualMatteT: 188581,
     cashCostUSDperTonneMatte: 9000,
+  },
+  TINS: {
+    ticker: "TINS",
+    type: "tin",
+    asOf: "2025-12-31",
+    sourceUrl: "data/reserves/TINS_2025.pdf",
+    sharesOutstandingBn: 7.448,
+    provenT: 313000,
+    resourcesT: 780000,
+    annualProductionT: 17784,
+    cashCostUSDperTonne: 18000,
   },
   // TODO: Seed after downloading annual reports via IR sites
   // ADRO: { ticker: "ADRO", type: "coal", ... } // alamtri.com
