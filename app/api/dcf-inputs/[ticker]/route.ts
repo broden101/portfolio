@@ -55,7 +55,7 @@ export async function GET(
         return null;
       })();
       const sharesVal = sharesRow ? (sharesRow[0] ?? null) : null; // MILLIONS
-      const shares = sharesVal ? sharesVal / 1000 : (reserve?.sharesOutstandingBn ?? 1); // Miliar
+      const shares = reserve?.sharesOutstandingBn ?? (sharesVal ? sharesVal / 1000 : 1); // Miliar
 
       const nav = await computeCommodityNav(ticker, price, shares, 16000, 10);
       return NextResponse.json(
