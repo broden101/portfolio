@@ -12,6 +12,7 @@
  */
 
 import { FALLBACK_MANUAL } from "@/lib/market";
+import { getReserves, type CommodityReserve, type NickelReserves, type CoalReserves, type CpoReserves, type OilGasReserves } from "./commodityReserves";
 
 // ── Constants ──
 const RF = FALLBACK_MANUAL.biRate?.value ?? 5.5; // Risk-free from BI Rate
@@ -659,4 +660,218 @@ export function computeBankValuation(inputs: BankInputs): BankValuation {
     riPath,
     dpsPath,
   };
+}
+
+// ── Commodity NAV computation ──
+export interface CommodityNavResult {
+  ticker: string;
+  commodityType: string;
+  mineLifeYears: number;
+  reserveSummary: string;
+  scenarios: { label: string; fairValuePerShare: number; upside: number; priceAssumption: string }[];
+  cashCost: string;
+  annualProduction: string;
+  asOf: string;
+  sourceUrl: string;
+}
+
+// Live commodity prices — fetched from TradingView
+const COMMODITY_TV_SYMBOLS: Record<string, string> = {
+  coal: "TVC:COAL",
+  nickel: "TVC:NICKEL",
+  cpo: "TVC:PALMOIL",
+  oilgas: "TVC:UKOIL",
+};
+
+// Mid-cycle prices (USD or IDR per unit)
+const MID_CYCLE_PRICES: Record<string, { mid: number; low: number; high: number; unit: string }> = {
+  coal: { mid: 110, low: 80, high: 140, unit: "USD/ton" },
+  nickel: { mid: 15000, low: 13000, high: 17000, unit: "USD/ton matte" },
+  cpo: { mid: 14000, low: 11000, high: 17000, unit: "IDR/kg" },
+  oilgas: { mid: 75, low: 60, high: 90, unit: "USD/boe" },
+};
+
+async function fetchLiveCommodityPrice(type: string): Promise<number | null> {
+  const symbol = COMMODITY_TV_SYMBOLS[type];
+  if (!symbol) return null;
+  try {
+    const res = await fetch("https://scanner.tradingview.com/global/scan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ columns: ["close"], symbols: { tickers: [symbol] }, range: [0, 1] }),
+    });
+    const data = await res.json();
+    const close = data?.data?.[0]?.d?.[0];
+    return typeof close === "number" ? close : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function computeCommodityNav(
+  ticker: string,
+  currentPrice: number,
+  sharesOutstanding: number,
+  usdIdrRate: number = 16000,
+  wacc: number = 10
+): Promise<CommodityNavResult | null> {
+  const reserve = getReserves(ticker);
+  if (!reserve) return null;
+
+  const livePrice = await fetchLiveCommodityPrice(reserve.type);
+  const midCycle = MID_CYCLE_PRICES[reserve.type];
+  const waccDec = wacc / 100;
+
+  const scenarios: CommodityNavResult["scenarios"] = [];
+
+  if (reserve.type === "nickel") {
+    const r = reserve as NickelReserves;
+    const recoverableNi = r.measuredIndicatedDMT_M * 1e6 * (r.gradeNiPct / 100) * r.recovery;
+    const mineLife = Math.min(Math.round(recoverableNi / r.annualMatteT), 50);
+
+    for (const [label, priceMultiplier] of [
+      ["mid-cycle", midCycle.mid],
+      ["optimistic", midCycle.high],
+      ["pessimistic", midCycle.low],
+    ] as const) {
+      // Fade from live to mid-cycle over 5 years, then flat
+      const liveP = livePrice ?? midCycle.mid;
+      let navUSD = 0;
+      for (let t = 1; t <= mineLife; t++) {
+        const priceT = t <= 5
+          ? liveP + (priceMultiplier - liveP) * (t / 5)
+          : priceMultiplier;
+        const fcfUSD = (priceT - r.cashCostUSDperTonneMatte) * r.annualMatteT;
+        navUSD += fcfUSD / Math.pow(1 + waccDec, t);
+      }
+      const navPerShare = (navUSD * usdIdrRate) / (sharesOutstanding * 1e9);
+      scenarios.push({
+        label: `NAV ${label}`,
+        fairValuePerShare: Math.round(navPerShare),
+        upside: currentPrice > 0 ? Math.round((navPerShare / currentPrice - 1) * 100) : 0,
+        priceAssumption: `${(livePrice ?? midCycle.mid).toLocaleString()} → ${priceMultiplier.toLocaleString()} USD/ton`,
+      });
+    }
+
+    return {
+      ticker, commodityType: "Nickel", mineLifeYears: mineLife,
+      reserveSummary: `${r.measuredIndicatedDMT_M.toFixed(1)}M DMT @ ${r.gradeNiPct}% Ni, recovery ${(r.recovery * 100).toFixed(0)}%`,
+      scenarios, cashCost: `US$${r.cashCostUSDperTonneMatte.toLocaleString()}/ton matte`,
+      annualProduction: `${r.annualMatteT.toLocaleString()} ton matte/yr`,
+      asOf: r.asOf, sourceUrl: r.sourceUrl,
+    };
+  }
+
+  if (reserve.type === "coal") {
+    const r = reserve as CoalReserves;
+    const effectiveReserve = r.provenMt + r.indicatedMt * 0.7;
+    const mineLife = Math.min(Math.round(effectiveReserve / r.annualProductionMt), 50);
+
+    for (const [label, priceMultiplier] of [
+      ["mid-cycle", midCycle.mid],
+      ["optimistic", midCycle.high],
+      ["pessimistic", midCycle.low],
+    ] as const) {
+      const liveP = livePrice ?? midCycle.mid;
+      let navUSD = 0;
+      for (let t = 1; t <= mineLife; t++) {
+        const priceT = t <= 5
+          ? liveP + (priceMultiplier - liveP) * (t / 5)
+          : priceMultiplier;
+        const fcfUSD = (priceT - r.cashCostPerTonUSD) * r.annualProductionMt * 1e6;
+        navUSD += fcfUSD / Math.pow(1 + waccDec, t);
+      }
+      const navPerShare = (navUSD * usdIdrRate) / (sharesOutstanding * 1e9);
+      scenarios.push({
+        label: `NAV ${label}`,
+        fairValuePerShare: Math.round(navPerShare),
+        upside: currentPrice > 0 ? Math.round((navPerShare / currentPrice - 1) * 100) : 0,
+        priceAssumption: `${(livePrice ?? midCycle.mid).toFixed(0)} → ${priceMultiplier} USD/ton`,
+      });
+    }
+
+    return {
+      ticker, commodityType: "Coal", mineLifeYears: mineLife,
+      reserveSummary: `${(r.provenMt + r.indicatedMt).toFixed(0)}Mt reserve, GAR ${r.gradeGAR} kcal/kg`,
+      scenarios, cashCost: `US$${r.cashCostPerTonUSD}/ton (strip ${r.stripRatio}:1)`,
+      annualProduction: `${r.annualProductionMt} Mt/yr`,
+      asOf: r.asOf, sourceUrl: r.sourceUrl,
+    };
+  }
+
+  if (reserve.type === "cpo") {
+    const r = reserve as CpoReserves;
+    const mineLife = 25; // plantation, replanting cycle
+
+    for (const [label, priceMultiplier] of [
+      ["mid-cycle", midCycle.mid],
+      ["optimistic", midCycle.high],
+      ["pessimistic", midCycle.low],
+    ] as const) {
+      const liveP = livePrice ?? midCycle.mid;
+      let navIDR = 0;
+      for (let t = 1; t <= mineLife; t++) {
+        const priceT = t <= 5
+          ? liveP + (priceMultiplier - liveP) * (t / 5)
+          : priceMultiplier;
+        const fcfIDR = (priceT - r.cashCostIDRperKg) * r.annualCpoT * 1000; // ton→kg
+        navIDR += fcfIDR / Math.pow(1 + waccDec, t);
+      }
+      const navPerShare = navIDR / (sharesOutstanding * 1e9);
+      scenarios.push({
+        label: `NAV ${label}`,
+        fairValuePerShare: Math.round(navPerShare),
+        upside: currentPrice > 0 ? Math.round((navPerShare / currentPrice - 1) * 100) : 0,
+        priceAssumption: `${(livePrice ?? midCycle.mid).toLocaleString()} → ${priceMultiplier.toLocaleString()} IDR/kg`,
+      });
+    }
+
+    return {
+      ticker, commodityType: "CPO", mineLifeYears: mineLife,
+      reserveSummary: `${r.matureHectares.toLocaleString()} Ha mature, yield ${r.ffbYieldPerHa} t/ha/yr`,
+      scenarios, cashCost: `Rp${r.cashCostIDRperKg.toLocaleString()}/kg (COGS-derived)`,
+      annualProduction: `${r.annualCpoT.toLocaleString()} ton CPO/yr`,
+      asOf: r.asOf, sourceUrl: r.sourceUrl,
+    };
+  }
+
+  if (reserve.type === "oilgas") {
+    const r = reserve as OilGasReserves;
+    const effectiveReserve = r.provedDevelopedMMboe + r.provedUndevelopedMMboe * 0.7 + r.probableMMboe * 0.3;
+    const annualProduction = r.productionBoePerDay * 365;
+    const mineLife = Math.min(Math.round((effectiveReserve * 1e6) / annualProduction), 50);
+
+    for (const [label, priceMultiplier] of [
+      ["mid-cycle", midCycle.mid],
+      ["optimistic", midCycle.high],
+      ["pessimistic", midCycle.low],
+    ] as const) {
+      const liveP = livePrice ?? midCycle.mid;
+      let navUSD = 0;
+      for (let t = 1; t <= mineLife; t++) {
+        const priceT = t <= 5
+          ? liveP + (priceMultiplier - liveP) * (t / 5)
+          : priceMultiplier;
+        const fcfUSD = (priceT - r.cashCostPerBoeUSD) * annualProduction;
+        navUSD += fcfUSD / Math.pow(1 + waccDec, t);
+      }
+      const navPerShare = (navUSD * usdIdrRate) / (sharesOutstanding * 1e9);
+      scenarios.push({
+        label: `NAV ${label}`,
+        fairValuePerShare: Math.round(navPerShare),
+        upside: currentPrice > 0 ? Math.round((navPerShare / currentPrice - 1) * 100) : 0,
+        priceAssumption: `${(livePrice ?? midCycle.mid).toFixed(0)} → ${priceMultiplier} USD/boe`,
+      });
+    }
+
+    return {
+      ticker, commodityType: "Oil & Gas", mineLifeYears: mineLife,
+      reserveSummary: `${(r.provedDevelopedMMboe + r.provedUndevelopedMMboe).toFixed(0)}M boe proved, +${r.probableMMboe}M probable`,
+      scenarios, cashCost: `US$${r.cashCostPerBoeUSD}/boe`,
+      annualProduction: `${r.productionBoePerDay.toLocaleString()} boe/day`,
+      asOf: r.asOf, sourceUrl: r.sourceUrl,
+    };
+  }
+
+  return null;
 }

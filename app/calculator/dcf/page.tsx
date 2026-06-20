@@ -9,6 +9,7 @@ import {
   CORPORATE_PRESETS,
   BANK_PRESETS,
   isBank,
+  isCommodity,
   type Preset,
   type BankPreset,
 } from "./presets";
@@ -76,7 +77,7 @@ interface BankInputsResponse {
 /* ─── Component ─── */
 export default function DCFPage() {
   // Mode
-  const [mode, setMode] = useState<"fcff" | "bank">("fcff");
+  const [mode, setMode] = useState<"fcff" | "bank" | "commodity">("fcff");
 
   // Shared
   const [ticker, setTicker] = useState("BBCA");
@@ -117,6 +118,9 @@ export default function DCFPage() {
   const [roeFloor, setRoeFloor] = useState(12);
   const [roeTerminal, setRoeTerminal] = useState(20);
 
+  // Commodity NAV state
+  const [commodityNav, setCommodityNav] = useState<any>(null);
+
   // ── Autofill status ──
   type AutofillStatus = { status: "idle" } | { status: "loading" } | { status: "error"; message: string };
   const [autofill, setAutofill] = useState<AutofillStatus>({ status: "idle" });
@@ -151,6 +155,12 @@ export default function DCFPage() {
         setBankG5(inp.growthRates[4] ?? 3);
         setRoeFloor(inp.roeFloor ?? 12);
         setRoeTerminal(inp.roeTerminal ?? 20);
+      } else if (data.model === "commodity") {
+        setMode("commodity");
+        setTicker(data.inputs.ticker);
+        setCurrentPrice(data.inputs.price);
+        setCommodityNav(data.nav);
+        if (data.inputs.shares) setShares(data.inputs.shares);
       } else {
         const inp = data.inputs as DcfInputsResponse["inputs"];
         setMode("fcff");
@@ -201,6 +211,8 @@ export default function DCFPage() {
     if (!p) return;
     if (bankP) {
       setMode("bank");
+    } else if (isCommodity(tickerStr)) {
+      setMode("commodity");
     } else {
       setMode("fcff");
     }
@@ -403,7 +415,7 @@ export default function DCFPage() {
   const maxBV = Math.max(...bankResult.bvPath.map(Math.abs), bvPerShare, 1);
 
   // Verdict
-  const activeUpside = mode === "fcff" ? dcf.upside : bankResult.upside;
+  const activeUpside = mode === "fcff" ? dcf.upside : mode === "bank" ? bankResult.upside : commodityNav?.scenarios?.[0]?.upside ?? 0;
   const verdict = activeUpside > 20 ? "UNDERVALUED" : activeUpside < -20 ? "OVERVALUED" : "FAIR VALUE";
   const verdictColor = activeUpside > 20 ? "#22C55E" : activeUpside < -20 ? "#EF4444" : "#FACC15";
 
@@ -423,6 +435,8 @@ export default function DCFPage() {
           <p className="text-[#B8AA96]/60 text-sm font-light max-w-xl">
             {mode === "bank"
               ? "Model bank: RIM + DDM + Justified P/B. Auto-switch untuk saham perbankan IDX."
+              : mode === "commodity"
+              ? "Commodity NAV: Mine-life DCF based on reserve data, live commodity prices, and cash cost. 3-scenario valuation."
               : "FCFF-based intrinsic value estimation with editable 5-year projections, terminal value, and WACC sensitivity analysis for IDX stocks."}
           </p>
         </div>
@@ -875,6 +889,60 @@ export default function DCFPage() {
             </div>
             </div>
           </>
+        )}
+
+        {/* ─── Commodity Mode ─── */}
+        {mode === "commodity" && commodityNav && (
+          <div className="card-luxury p-8">
+            {autofill.status === "loading" && <LoadingBanner ticker={ticker} />}
+            <div className={`transition-opacity ${autofill.status === "loading" ? "opacity-60" : "opacity-100"}`}>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-[#C6A15B] text-xs tracking-[0.2em] uppercase">⛏️ COMMODITY · NAV</span>
+                <span className="text-[#B8AA96]/40 text-xs">{commodityNav.commodityType}</span>
+              </div>
+              {/* Reserve Summary */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div>
+                  <div className="text-[#B8AA96]/40 text-xs uppercase">Mine Life</div>
+                  <div className="text-[#F4EFE6] text-lg font-heading">{commodityNav.mineLifeYears} tahun</div>
+                </div>
+                <div>
+                  <div className="text-[#B8AA96]/40 text-xs uppercase">Reserve</div>
+                  <div className="text-[#F4EFE6] text-sm">{commodityNav.reserveSummary}</div>
+                </div>
+                <div>
+                  <div className="text-[#B8AA96]/40 text-xs uppercase">Cash Cost</div>
+                  <div className="text-[#F4EFE6] text-sm">{commodityNav.cashCost}</div>
+                </div>
+                <div>
+                  <div className="text-[#B8AA96]/40 text-xs uppercase">Production</div>
+                  <div className="text-[#F4EFE6] text-sm">{commodityNav.annualProduction}</div>
+                </div>
+              </div>
+              {/* NAV Scenarios */}
+              <div className="space-y-3 mb-8">
+                <p className="text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase">NAV Scenarios</p>
+                {commodityNav.scenarios.map((s: any, i: number) => (
+                  <div key={i} className="flex items-center justify-between p-4 border border-[#2C261E] bg-[#0B0B0A]/50">
+                    <div>
+                      <div className="text-[#B8AA96] text-sm">{s.label}</div>
+                      <div className="text-[#B8AA96]/40 text-xs">{s.priceAssumption}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-[#F4EFE6] text-lg font-heading">{fmtIDR(s.fairValuePerShare)}</div>
+                      <div className={`text-sm ${s.upside >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                        {s.upside >= 0 ? "+" : ""}{s.upside}%
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Source */}
+              <div className="text-[#B8AA96]/30 text-xs">
+                Data cadangan per {commodityNav.asOf} · <a href={commodityNav.sourceUrl} target="_blank" rel="noopener" className="underline hover:text-[#C6A15B]/60">Annual Report</a>
+              </div>
+            </div>
+          </div>
         )}
       </div>
       <Footer />

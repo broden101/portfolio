@@ -34,10 +34,17 @@ export interface BankPreset {
   terminalGrowth: number;
 }
 
+import { hasReserves } from "@/lib/commodityReserves";
+
 /* ── Check if preset is bank model (has bvPerShare field) ── */
 export function isBank(idx: number, presets: (Preset | BankPreset)[]): boolean {
   const p = presets[idx];
   return p !== undefined && "bvPerShare" in p;
+}
+
+// Check if a ticker has commodity reserve data
+export function isCommodity(ticker: string): boolean {
+  return hasReserves(ticker);
 }
 
 /* ── Corporate (FCFF) Presets ── */
