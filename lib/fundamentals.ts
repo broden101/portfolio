@@ -12,7 +12,7 @@
  */
 
 import { FALLBACK_MANUAL } from "@/lib/market";
-import { getReserves, type CommodityReserve, type NickelReserves, type CoalReserves, type CpoReserves, type OilGasReserves, type GoldReserves, type CopperGoldReserves, type TinReserves } from "./commodityReserves";
+import { getReserves, type CommodityReserve, type NickelReserves, type CoalReserves, type CpoReserves, type OilGasReserves, type GoldReserves, type CopperGoldReserves, type TinReserves, type AmmoniaReserves } from "./commodityReserves";
 
 // ── Constants ──
 const RF = FALLBACK_MANUAL.biRate?.value ?? 5.5; // Risk-free from BI Rate
@@ -684,6 +684,7 @@ const COMMODITY_TV_SYMBOLS: Record<string, string> = {
   gold: "TVC:GOLD",
   copperGold: "TVC:COPPER",
   tin: "TVC:TIN",
+  ammonia: "", // no reliable TradingView spot; use mid-cycle fallback
 };
 
 // Mid-cycle prices (USD or IDR per unit)
@@ -695,6 +696,7 @@ const MID_CYCLE_PRICES: Record<string, { mid: number; low: number; high: number;
   gold: { mid: 2500, low: 2000, high: 3200, unit: "USD/oz" },
   copperGold: { mid: 4.25, low: 3.50, high: 5.25, unit: "USD/lb Cu" },
   tin: { mid: 28000, low: 22000, high: 34000, unit: "USD/ton" },
+  ammonia: { mid: 450, low: 350, high: 600, unit: "USD/ton" },
 };
 
 async function fetchLiveCommodityPrice(type: string): Promise<number | null> {
@@ -879,6 +881,38 @@ export async function computeCommodityNav(
       reserveSummary: `${r.provenT.toLocaleString()}t proven, +${r.resourcesT.toLocaleString()}t resources @ 50% confidence`,
       scenarios, cashCost: `US$${r.cashCostUSDperTonne.toLocaleString()}/ton`,
       annualProduction: `${r.annualProductionT.toLocaleString()} ton/yr`,
+      asOf: r.asOf, sourceUrl: r.sourceUrl,
+    };
+  }
+
+  if (reserve.type === "ammonia") {
+    const r = reserve as AmmoniaReserves;
+    const mineLife = r.plantLifeYears;
+
+    for (const [label, priceMultiplier] of [
+      ["mid-cycle", midCycle.mid],
+      ["optimistic", midCycle.high],
+      ["pessimistic", midCycle.low],
+    ] as const) {
+      let navUSD = 0;
+      for (let t = 1; t <= mineLife; t++) {
+        const fcfUSD = (priceMultiplier - r.cashCostUSDperTonne) * r.annualProductionT;
+        navUSD += fcfUSD / Math.pow(1 + waccDec, t);
+      }
+      const navPerShare = (navUSD * usdIdrRate) / (sharesOutstanding * 1e9);
+      scenarios.push({
+        label: `NAV ${label}`,
+        fairValuePerShare: Math.round(navPerShare),
+        upside: currentPrice > 0 ? Math.round((navPerShare / currentPrice - 1) * 100) : 0,
+        priceAssumption: `${priceMultiplier.toLocaleString()} USD/ton ammonia`,
+      });
+    }
+
+    return {
+      ticker, commodityType: "Ammonia", mineLifeYears: mineLife,
+      reserveSummary: `${r.capacityT.toLocaleString()}t capacity, ${(r.capacityUtilization * 100).toFixed(0)}% utilization`,
+      scenarios, cashCost: `US$${r.cashCostUSDperTonne.toLocaleString()}/ton`,
+      annualProduction: `${r.annualProductionT.toLocaleString()} ton ammonia/yr`,
       asOf: r.asOf, sourceUrl: r.sourceUrl,
     };
   }

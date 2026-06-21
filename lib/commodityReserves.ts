@@ -4,7 +4,7 @@
  * Update yearly after AR publication (~April).
  */
 
-export type CommodityType = "coal" | "nickel" | "cpo" | "oilgas" | "gold" | "copperGold" | "tin";
+export type CommodityType = "coal" | "nickel" | "cpo" | "oilgas" | "gold" | "copperGold" | "tin" | "ammonia";
 
 interface BaseReserve {
   ticker: string;
@@ -81,7 +81,16 @@ export interface TinReserves extends BaseReserve {
   cashCostUSDperTonne: number;
 }
 
-export type CommodityReserve = CoalReserves | NickelReserves | CpoReserves | OilGasReserves | GoldReserves | CopperGoldReserves | TinReserves;
+export interface AmmoniaReserves extends BaseReserve {
+  type: "ammonia";
+  annualProductionT: number;    // tonnes ammonia/yr
+  cashCostUSDperTonne: number;
+  capacityT: number;            // plant capacity tonnes/yr
+  capacityUtilization: number;  // 0-1
+  plantLifeYears: number;
+}
+
+export type CommodityReserve = CoalReserves | NickelReserves | CpoReserves | OilGasReserves | GoldReserves | CopperGoldReserves | TinReserves | AmmoniaReserves;
 
 /**
  * Static reserve data cache. Updated yearly from annual reports.
@@ -227,6 +236,18 @@ export const COMMODITY_RESERVES: Record<string, CommodityReserve> = {
     resourcesT: 780000,
     annualProductionT: 17784,
     cashCostUSDperTonne: 18000,
+  },
+  ESSA: {
+    ticker: "ESSA",
+    type: "ammonia",
+    asOf: "2025-12-31",
+    sourceUrl: "data/reserves/ESSA_2025.pdf",
+    sharesOutstandingBn: 17.23,
+    annualProductionT: 650000,
+    cashCostUSDperTonne: 260,
+    capacityT: 700000,
+    capacityUtilization: 0.93,
+    plantLifeYears: 25,
   },
   // TODO: Seed after downloading annual reports via IR sites
   // ADRO: { ticker: "ADRO", type: "coal", ... } // alamtri.com
