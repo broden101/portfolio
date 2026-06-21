@@ -24,7 +24,7 @@ KOMPAS_100 = [
     "ARCI", "ARTO", "ASII", "ASSA", "BBCA", "BBNI", "BBRI", "BBTN", "BBYB",
     "BFIN", "BJBR", "BJTM", "BKSL", "BMRI", "BMTR", "BREN", "BRIS", "BRMS",
     "BRPT", "BSDE", "BSSR", "BTPS", "BUKA", "BULL", "BUMI", "BUVA", "CBDK", "CMRY",
-    "CPIN", "CTRA", "CUAN", "DEWA", "DMAS", "DSNG", "DSSA", "ELSA", "EMTK",
+    "CPIN", "CTRA", "CUAN", "DEWA", "DMAS", "DSNG", "DSSA", "EKAD", "ELSA", "EMTK",
     "ENRG", "ERAA", "ESSA", "EXCL", "FILM", "GOTO", "HEAL", "HMSP", "HRTA",
     "HRUM", "ICBP", "IMPC", "INCO", "INDF", "INDY", "INET", "INKP", "INTP",
     "ISAT", "ITMG", "IPCC", "JPFA", "JSMR", "KIJA", "KLBF", "KPIG", "LPPF", "MAPA", "MAPI",
