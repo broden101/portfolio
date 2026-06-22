@@ -3,7 +3,6 @@
 import { useState, useMemo, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { fetchTvQuote } from "@/lib/fundamentals";
 
 interface BankData {
   ticker: string;
@@ -32,17 +31,26 @@ export default function PBVROEPage() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const next = [...banks];
-      for (let i = 0; i < next.length; i++) {
-        try {
-          const q = await fetchTvQuote(next[i].ticker);
-          if (!cancelled && q?.price) next[i] = { ...next[i], price: Math.round(q.price) };
-        } catch {}
-      }
-      if (!cancelled) setBanks(next);
+      try {
+        const res = await fetch("/api/scanner", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tickers: INITIAL_BANKS.map((b) => b.ticker) }),
+          cache: "no-store",
+        });
+        if (!res.ok) return;
+        const json = await res.json();
+        const livePrices = new Map<string, number>(
+          (json?.data || [])
+            .filter((row: { name?: string; close?: number }) => row?.name && Number.isFinite(row?.close))
+            .map((row: { name: string; close: number }) => [row.name.toUpperCase(), Math.round(row.close)])
+        );
+        if (!cancelled && livePrices.size > 0) {
+          setBanks((prev) => prev.map((b) => ({ ...b, price: livePrices.get(b.ticker) ?? b.price })));
+        }
+      } catch {}
     })();
     return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateBank = (idx: number, field: keyof BankData, value: number) => {
