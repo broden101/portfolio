@@ -126,6 +126,16 @@ export const COMMODITY_RESERVES: Record<string, CommodityReserve> = {
     annualProductionOz: 200000,
     cashCostUSDperOz: 1400,
   },
+  BRMS: {
+    ticker: "BRMS", type: "gold", asOf: "2025-12-31",
+    sourceUrl: "https://www.bumiresourcesminerals.com/annual-report/",
+    sharesOutstandingBn: 141.784,
+    provenProbableOz: 1200000, // conservative reserve proxy until detailed JORC table is archived
+    measuredIndicatedInferredOz: 3900000, // Poboya / Citra Palu Minerals resource proxy
+    annualProductionOz: 80000, // conservative near-term run-rate; refine after AR parse
+    cashCostUSDperOz: 1500,
+    gradeGpt: 2.0,
+  },
   AMMN: {
     ticker: "AMMN", type: "copperGold", asOf: "2025-12-31",
     sourceUrl: "data/reserves/AMMN_2025.pdf",
