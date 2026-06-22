@@ -11,13 +11,15 @@ interface BankData {
   bvps: number;
   netProfit: number; // triliun
   equity: number; // triliun
+  casa: number; // %
+  nim: number; // %
   color: string;
 }
 
 const INITIAL_BANKS: BankData[] = [
-  { ticker: "BMRI", name: "Bank Mandiri", price: 7100, bvps: 2950, netProfit: 56.0, equity: 255.0, color: "#3B82F6" },
-  { ticker: "BBRI", name: "Bank BRI", price: 4200, bvps: 1600, netProfit: 62.0, equity: 310.0, color: "#F97316" },
-  { ticker: "BBCA", name: "Bank BCA", price: 9500, bvps: 2250, netProfit: 52.0, equity: 220.0, color: "#22C55E" },
+  { ticker: "BMRI", name: "Bank Mandiri", price: 7100, bvps: 2950, netProfit: 56.0, equity: 255.0, casa: 78.6, nim: 5.1, color: "#3B82F6" },
+  { ticker: "BBRI", name: "Bank BRI", price: 4200, bvps: 1600, netProfit: 62.0, equity: 310.0, casa: 64.0, nim: 7.6, color: "#F97316" },
+  { ticker: "BBCA", name: "Bank BCA", price: 9500, bvps: 2250, netProfit: 52.0, equity: 220.0, casa: 82.8, nim: 5.8, color: "#22C55E" },
 ];
 
 const DEFAULT_COE = 12; // %
@@ -166,6 +168,8 @@ export default function PBVROEPage() {
                   { label: "BVPS (Rp)", field: "bvps" as const, val: bank.bvps },
                   { label: "Laba Bersih (T)", field: "netProfit" as const, val: bank.netProfit },
                   { label: "Ekuitas (T)", field: "equity" as const, val: bank.equity },
+                  { label: "CASA (%)", field: "casa" as const, val: bank.casa },
+                  { label: "NIM (%)", field: "nim" as const, val: bank.nim },
                 ].map((inp) => (
                   <div key={inp.field}>
                     <label className="block text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase mb-1">{inp.label}</label>
@@ -225,6 +229,8 @@ export default function PBVROEPage() {
                   { label: "BVPS", values: results.map((r) => fmtIDR(r.bvps)) },
                   { label: "PBV (Actual)", values: results.map((r) => `${fmt(r.pbv)}x`) },
                   { label: "ROE", values: results.map((r) => `${fmt(r.roe)}%`) },
+                  { label: "CASA", values: results.map((r) => `${fmt(r.casa)}%`) },
+                  { label: "NIM", values: results.map((r) => `${fmt(r.nim)}%`) },
                   { label: "Theo PBV (ROE / Spread)", values: results.map((r) => `${fmt(r.theoPBV)}x`) },
                   { label: "Premium / Discount", values: results.map((r) => (
                     <span key={r.ticker} className={r.premiumDiscount > 0 ? "text-red-400" : "text-emerald-400"}>
@@ -253,7 +259,7 @@ export default function PBVROEPage() {
         {/* PBV vs ROE Visual Chart */}
         <div className="card-luxury p-8 mb-8">
           <h2 className="font-heading text-xl text-[#F4EFE6] mb-2 font-medium">PBV vs ROE Scatter</h2>
-          <p className="text-[#B8AA96]/40 text-xs mb-6">Garis diagonal = theoretical fair value line (PBV = ROE / {coe - g}%)</p>
+          <p className="text-[#B8AA96]/40 text-xs mb-6">Garis diagonal = theoretical fair value line (PBV = ROE / {coe - g}%). CASA dan NIM menjadi indikator kualitas funding dan margin bank.</p>
 
           <div className="relative" style={{ height: 360 }}>
             {/* Y-axis labels */}
@@ -327,7 +333,7 @@ export default function PBVROEPage() {
                         {r.ticker}
                       </span>
                       <span className="text-[#B8AA96]/40 text-[9px] ml-1">
-                        PBV {fmt(r.pbv)}x / ROE {fmt(r.roe)}%
+                        PBV {fmt(r.pbv)}x / ROE {fmt(r.roe)}% / CASA {fmt(r.casa)}% / NIM {fmt(r.nim)}%
                       </span>
                     </div>
                     {/* Fair value dot */}
@@ -379,7 +385,7 @@ export default function PBVROEPage() {
                     <span className={r.premiumDiscount > 0 ? "text-red-400" : "text-emerald-400"}>
                       {r.premiumDiscount > 0 ? "+" : ""}{fmt(r.premiumDiscount)}% premium
                     </span>{" "}
-                    ke Theo PBV → {status}.{" "}
+                    ke Theo PBV → {status}. CASA {fmt(r.casa)}% dan NIM {fmt(r.nim)}%.{" "}
                     {r.upside >= 0 ? (
                       <span className="text-emerald-400">Upside {fmt(r.upside)}% ke fair value {fmtIDR(r.fairPrice)}</span>
                     ) : (
@@ -391,7 +397,7 @@ export default function PBVROEPage() {
               );
             })}
             <p className="text-[#B8AA96]/40 text-xs pt-2">
-              * Model PBV = ROE / (COE − g). Asumsi COE {coe}% dan growth {g}% bisa disesuaikan di atas. Data default bersifat estimasi — gunakan data real-time untuk analisis aktual.
+              * Model PBV = ROE / (COE − g). CASA dan NIM bersifat input manual berbasis publikasi bank terbaru; harga saham otomatis dari TradingView. Asumsi COE {coe}% dan growth {g}% bisa disesuaikan di atas.
             </p>
           </div>
         </div>
