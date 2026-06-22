@@ -20,6 +20,7 @@ const INITIAL_BANKS: BankData[] = [
   { ticker: "BMRI", name: "Bank Mandiri", price: 7100, bvps: 2950, netProfit: 56.0, equity: 255.0, casa: 78.6, nim: 5.1, color: "#3B82F6" },
   { ticker: "BBRI", name: "Bank BRI", price: 4200, bvps: 1600, netProfit: 62.0, equity: 310.0, casa: 64.0, nim: 7.6, color: "#F97316" },
   { ticker: "BBCA", name: "Bank BCA", price: 9500, bvps: 2250, netProfit: 52.0, equity: 220.0, casa: 82.8, nim: 5.8, color: "#22C55E" },
+  { ticker: "BBNI", name: "Bank BNI", price: 3570, bvps: 4332, netProfit: 21.5, equity: 174.4, casa: 70.6, nim: 4.2, color: "#FACC15" },
 ];
 
 const DEFAULT_COE = 12; // %
@@ -117,7 +118,7 @@ export default function PBVROEPage() {
             PBV-ROE <span className="text-gold-gradient font-medium">Banking Valuation</span>
           </h1>
           <p className="text-[#B8AA96]/60 text-sm font-light">
-            Fair value framework — BMRI vs BBRI vs BBCA. PBV = ROE / (COE − g).
+            Fair value framework — BMRI vs BBRI vs BBCA vs BBNI. PBV = ROE / (COE − g).
           </p>
         </div>
 
