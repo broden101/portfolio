@@ -897,17 +897,19 @@ export default function DCFPage() {
             {autofill.status === "loading" && <LoadingBanner ticker={ticker} />}
             <div className={`transition-opacity ${autofill.status === "loading" ? "opacity-60" : "opacity-100"}`}>
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-[#C6A15B] text-xs tracking-[0.2em] uppercase">⛏️ COMMODITY · NAV</span>
+                <span className="text-[#C6A15B] text-xs tracking-[0.2em] uppercase">
+                  {commodityNav.valuationMethod ? "📊 SOTP · TARGET PRICE" : "⛏️ COMMODITY · NAV"}
+                </span>
                 <span className="text-[#B8AA96]/40 text-xs">{commodityNav.commodityType}</span>
               </div>
-              {/* Reserve Summary */}
+              {/* Reserve / SOTP Summary */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div>
-                  <div className="text-[#B8AA96]/40 text-xs uppercase">Mine Life</div>
-                  <div className="text-[#F4EFE6] text-lg font-heading">{commodityNav.mineLifeYears} tahun</div>
+                  <div className="text-[#B8AA96]/40 text-xs uppercase">{commodityNav.valuationMethod ? "Method" : "Mine Life"}</div>
+                  <div className="text-[#F4EFE6] text-lg font-heading">{commodityNav.valuationMethod ? "SOTP" : `${commodityNav.mineLifeYears} tahun`}</div>
                 </div>
                 <div>
-                  <div className="text-[#B8AA96]/40 text-xs uppercase">Reserve</div>
+                  <div className="text-[#B8AA96]/40 text-xs uppercase">{commodityNav.valuationMethod ? "Valuation" : "Reserve"}</div>
                   <div className="text-[#F4EFE6] text-sm">{commodityNav.reserveSummary}</div>
                 </div>
                 <div>
@@ -915,13 +917,13 @@ export default function DCFPage() {
                   <div className="text-[#F4EFE6] text-sm">{commodityNav.cashCost}</div>
                 </div>
                 <div>
-                  <div className="text-[#B8AA96]/40 text-xs uppercase">Production</div>
+                  <div className="text-[#B8AA96]/40 text-xs uppercase">{commodityNav.valuationMethod ? "Forecast" : "Production"}</div>
                   <div className="text-[#F4EFE6] text-sm">{commodityNav.annualProduction}</div>
                 </div>
               </div>
-              {/* NAV Scenarios */}
+              {/* NAV / SOTP Scenarios */}
               <div className="space-y-3 mb-8">
-                <p className="text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase">NAV Scenarios</p>
+                <p className="text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase">{commodityNav.valuationMethod ? "SOTP Scenarios" : "NAV Scenarios"}</p>
                 {commodityNav.scenarios.map((s: any, i: number) => (
                   <div key={i} className="flex items-center justify-between p-4 border border-[#2C261E] bg-[#0B0B0A]/50">
                     <div>
@@ -939,7 +941,7 @@ export default function DCFPage() {
               </div>
               {/* Source */}
               <div className="text-[#B8AA96]/30 text-xs">
-                Data cadangan per {commodityNav.asOf} · <a href={commodityNav.sourceUrl} target="_blank" rel="noopener" className="underline hover:text-[#C6A15B]/60">Annual Report</a>
+                {commodityNav.valuationMethod ? "Valuasi" : "Data cadangan"} per {commodityNav.asOf} · <a href={commodityNav.sourceUrl} target="_blank" rel="noopener" className="underline hover:text-[#C6A15B]/60">{commodityNav.valuationMethod ? "Research Report" : "Annual Report"}</a>
               </div>
             </div>
           </div>

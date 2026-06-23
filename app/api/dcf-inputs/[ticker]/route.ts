@@ -43,6 +43,53 @@ export async function GET(
 
     if (hasReserves(ticker)) {
       const reserve = getReserves(ticker);
+
+      if (ticker === "MEDC") {
+        const shares = reserve?.sharesOutstandingBn ?? 25.14;
+        const targetPrice = 1800;
+        const sensitivity = 100;
+        const scenarios = [
+          {
+            label: "SOTP bear case",
+            fairValuePerShare: targetPrice - sensitivity,
+            upside: price > 0 ? Math.round(((targetPrice - sensitivity) / price - 1) * 100) : 0,
+            priceAssumption: "Oil -US$5/bbl sensitivity",
+          },
+          {
+            label: "SOTP base case",
+            fairValuePerShare: targetPrice,
+            upside: price > 0 ? Math.round((targetPrice / price - 1) * 100) : 0,
+            priceAssumption: "O&G 2.8x EV/EBITDA · Power 2.4x · AMMN 1.0x PBV",
+          },
+          {
+            label: "SOTP bull case",
+            fairValuePerShare: targetPrice + sensitivity,
+            upside: price > 0 ? Math.round(((targetPrice + sensitivity) / price - 1) * 100) : 0,
+            priceAssumption: "Oil +US$5/bbl sensitivity",
+          },
+        ];
+
+        return NextResponse.json(
+          {
+            model: "commodity",
+            inputs: { ticker, price, shares, type: reserve?.type },
+            nav: {
+              ticker,
+              commodityType: "Oil & Gas · SOTP",
+              valuationMethod: "SOTP / broker-style target price",
+              mineLifeYears: null,
+              reserveSummary: "SOTP: O&G + Power + AMMN stake, bukan gross reserve NAV",
+              scenarios,
+              cashCost: "<US$10/boe",
+              annualProduction: "FY26 EBITDA est. US$1.53bn",
+              asOf: "2026-06-23",
+              sourceUrl: "Fundamental Research_20260623_MEDC Initiating Coverage.pdf",
+            },
+          },
+          { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=600" } },
+        );
+      }
+
       // Get shares from SA data when available; fallback keeps NAV endpoint usable for manual reserve names.
       const sharesRow = (() => {
         if (!sa) return null;
