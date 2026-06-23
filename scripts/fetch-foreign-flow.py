@@ -94,12 +94,6 @@ def main():
     def run(cmd):
         return subprocess.run(cmd, cwd=REPO_DIR, text=True, capture_output=True)
 
-    pull = run(["git", "pull", "origin", "master", "--rebase"])
-    if pull.returncode != 0:
-        print(pull.stdout + pull.stderr)
-        print("ERROR: git pull failed")
-        return pull.returncode
-
     add = run(["git", "add", "data/manual-market.json"])
     if add.returncode != 0:
         print(add.stdout + add.stderr)
