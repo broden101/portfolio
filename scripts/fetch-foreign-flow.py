@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""
-Fetch foreign flow data from Tradersaham API and update ragaplaybook.com.
-Runs as cron job. Data stored in data/manual-market.json, pushed to GitHub.
-Schedule: every 30 min during market hours (Mon-Fri 09:00-15:50 WIB)
+"""Fetch foreign flow data from Tradersaham API and update ragaplaybook.com.
+
+Runs as cron job after market close (host 19:00 = 18:00 WIB).
+Data stored in data/manual-market.json, pushed to GitHub.
 """
 import json
 import os
@@ -10,6 +10,7 @@ import sys
 import requests
 from datetime import datetime, timezone
 from pathlib import Path
+import subprocess
 
 TSAHAM_API = "https://apiv2.tradersaham.com/api/market-insight/foreign-flow"
 HEADERS = {
@@ -89,13 +90,40 @@ def main():
 
     # Push to GitHub
     os.chdir(str(REPO_DIR))
-    os.system("git pull origin master --rebase 2>/dev/null")
-    os.system("git add data/manual-market.json")
-    code = os.system("git diff --cached --quiet || git commit -m 'data: update foreign flow from Tradersaham' && git push origin master")
-    if code != 0:
-        print("Pushed to GitHub")
-    else:
+
+    def run(cmd):
+        return subprocess.run(cmd, cwd=REPO_DIR, text=True, capture_output=True)
+
+    pull = run(["git", "pull", "origin", "master", "--rebase"])
+    if pull.returncode != 0:
+        print(pull.stdout + pull.stderr)
+        print("ERROR: git pull failed")
+        return pull.returncode
+
+    add = run(["git", "add", "data/manual-market.json"])
+    if add.returncode != 0:
+        print(add.stdout + add.stderr)
+        print("ERROR: git add failed")
+        return add.returncode
+
+    diff = run(["git", "diff", "--cached", "--quiet"])
+    if diff.returncode == 0:
         print("No changes")
+        return 0
+
+    commit = run(["git", "commit", "-m", "data: update foreign flow from Tradersaham"])
+    print(commit.stdout + commit.stderr)
+    if commit.returncode != 0:
+        print("ERROR: git commit failed")
+        return commit.returncode
+
+    push = run(["git", "push", "origin", "master"])
+    print(push.stdout + push.stderr)
+    if push.returncode != 0:
+        print("ERROR: git push failed")
+        return push.returncode
+
+    print("Pushed to GitHub")
     return 0
 
 if __name__ == "__main__":
