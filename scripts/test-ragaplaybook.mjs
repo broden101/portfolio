@@ -98,6 +98,7 @@ async function testSourceHasNoKnownUiRegression() {
   const ihsgPage = await readFile(new URL('../app/playbook/ihsg/page.tsx', import.meta.url), 'utf8');
   const marketRoute = await readFile(new URL('../app/api/market/route.ts', import.meta.url), 'utf8');
   assert.match(marketRoute, /High\.6M/, 'market API must request 6M swing columns for fib levels');
+  assert.match(marketRoute, /export const dynamic = ["']force-dynamic["']/, 'market API must be explicit dynamic to avoid build-time no-store warnings');
   assert.doesNotMatch(ihsgPage, /hidden sm:inline/, 'mobile fib labels must not be hidden');
 
   const topMover = await readFile(new URL('../app/playbook/ihsg/TopMoverPanel.tsx', import.meta.url), 'utf8');

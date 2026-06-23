@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 
+export const dynamic = "force-dynamic";
+
 /**
  * /api/market — Realtime IHSG dashboard data
  *
