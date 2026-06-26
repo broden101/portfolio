@@ -40,10 +40,10 @@ const snapshots = [
 ];
 
 const method = [
-  { title: "Macro Regime", desc: "Membaca arah siklus global, makro domestik, dan kebijakan yang menggerakkan market.", icon: "globe" },
+  { title: "Macro dan Micro Dashboard", desc: "Membaca arah siklus global, makro domestik, dan kebijakan yang menggerakkan market.", icon: "globe" },
   { title: "Valuation Check", desc: "Memastikan harga masuk akal dengan pendekatan DCF, komparabel, dan reverse check.", icon: "search" },
   { title: "Flow & Positioning", desc: "Memantau arus dana asing, likuiditas, dan positioning institusi di tiap sektor.", icon: "chart" },
-  { title: "Risk First", desc: "Disiplin manajemen risiko: skenario, downside, dan probabilitas lebih dulu.", icon: "shield" },
+  { title: "Trading Plan / Investing Plan", desc: "Disiplin manajemen risiko: skenario, downside, dan probabilitas lebih dulu.", icon: "shield" },
 ];
 
 const marketMap = [
@@ -81,7 +81,7 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 pb-20 lg:grid-cols-[1fr_420px] lg:px-12">
           <div className="relative flex gap-8">
             <div className="hidden pt-4 lg:block">
-              <div className="vertical-rl text-[10px] tracking-[0.35em] text-[#d6ad5a]/60 [writing-mode:vertical-rl]">FOCUS. DISCIPLINE. PROCESS.</div>
+              <div className="vertical-rl text-[10px] tracking-[0.35em] text-[#d6ad5a]/60 [writing-mode:vertical-rl]">FOCUS. DISCIPLINE. CONSISTENT.</div>
             </div>
             <div className="max-w-3xl pt-6">
               <div className="mb-8 h-px w-24 bg-[#d6ad5a]" />
@@ -155,7 +155,9 @@ export default function Home() {
         <div className="flex flex-col justify-between border border-[rgba(214,173,90,0.28)] bg-[#101010] p-8">
           <div className="font-heading text-7xl leading-none text-[#d6ad5a]">“</div>
           <blockquote className="mt-4 font-heading text-3xl leading-tight text-[#f2eee6]">
-Pasar bukan mesin yang cepat. Tapi mesin transfer uang dari yang sabar ke yang gegabah.
+Pasar itu selalu benar,
+            Ego dan serakah bikin ambyar,
+            Kenali dan atur stregimu ndar
           </blockquote>
           <div className="mt-10">
             <p className="text-sm text-[#aaa295]">— Raga</p>
@@ -165,7 +167,7 @@ Pasar bukan mesin yang cepat. Tapi mesin transfer uang dari yang sabar ke yang g
       </section>
 
       <section id="about" className="mx-auto max-w-7xl border-b border-[rgba(214,173,90,0.28)] px-6 py-16 lg:px-12">
-        <h2 className="mb-10 font-heading text-4xl text-[#f2eee6]">CARA RAGA MEMBACA MARKET</h2>
+        <h2 className="mb-10 font-heading text-4xl text-[#f2eee6]">CARA MEMBACA MARKET</h2>
         <div className="grid gap-px bg-[rgba(214,173,90,0.28)] md:grid-cols-2 lg:grid-cols-4">
           {method.map((m) => (
             <div key={m.title} className="bg-[#050505] p-7">
