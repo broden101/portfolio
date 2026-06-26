@@ -155,9 +155,9 @@ export default function Home() {
         <div className="flex flex-col justify-between border border-[rgba(214,173,90,0.28)] bg-[#101010] p-8">
           <div className="font-heading text-7xl leading-none text-[#d6ad5a]">“</div>
           <blockquote className="mt-4 font-heading text-3xl leading-tight text-[#f2eee6]">
-Pasar itu selalu benar,
-            Ego dan serakah bikin ambyar,
-            Kenali dan atur stregimu ndar
+Jangan takut mengakui kesalahan,
+            Itu bukan kekalahan,
+            Tapi kebijaksanaan.
           </blockquote>
           <div className="mt-10">
             <p className="text-sm text-[#aaa295]">— Raga</p>
@@ -216,21 +216,7 @@ Pasar itu selalu benar,
         </div>
       </section>
 
-      <section id="contact" className="border-y border-[rgba(214,173,90,0.28)] bg-[#101010]">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between lg:px-12">
-          <div className="flex gap-4">
-            <div className="flex h-12 w-12 items-center justify-center border border-[#d6ad5a]/40 text-[#d6ad5a]">✉</div>
-            <div>
-              <h3 className="font-heading text-2xl text-[#f2eee6]">Dapatkan catatan riset terbaru setiap minggu.</h3>
-              <p className="mt-1 text-sm text-[#aaa295]/65">Insight mendalam. Tanpa spam. Hanya yang penting untuk investor Indonesia.</p>
-            </div>
-          </div>
-          <form className="flex w-full max-w-md border border-[rgba(214,173,90,0.28)] bg-[#050505]">
-            <input type="email" placeholder="Masukkan email Anda" className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-[#f2eee6] placeholder:text-[#aaa295]/35" />
-            <button className="bg-[#d6ad5a] px-5 text-[11px] font-semibold tracking-[0.18em] text-[#050505]">SUBSCRIBE</button>
-          </form>
-        </div>
-      </section>
+      
 
       <Footer />
     </main>
