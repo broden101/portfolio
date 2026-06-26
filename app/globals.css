@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0B0B0A;
-  --card: #141210;
-  --text: #F4EFE6;
-  --text-secondary: #B8AA96;
-  --accent: #C6A15B;
-  --accent-dark: #8A6F3D;
-  --border: #2C261E;
+  --bg: #050505;
+  --card: #101010;
+  --text: #f2eee6;
+  --text-secondary: #aaa295;
+  --accent: #d6ad5a;
+  --accent-dark: #a9823c;
+  --border: rgba(214, 173, 90, 0.28);
   --font-heading: var(--font-heading), 'Cormorant Garamond', serif;
   --font-body: var(--font-body), 'Inter', sans-serif;
 }

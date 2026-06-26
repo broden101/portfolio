@@ -18,7 +18,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Raga Playbook | Catatan Saham Indonesia",
-  description: "Catatan pasar pribadi Raga: riset emiten IDX, valuasi, IHSG, foreign flow, dividen, dan tools investasi Indonesia.",
+  description: "Catatan riset pribadi tentang pasar modal Indonesia. Fokus pada valuasi, arus asing, corporate action, dan narasi yang layak diikuti.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang="id" className={`${cormorant.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   );
