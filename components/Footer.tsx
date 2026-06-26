@@ -36,12 +36,15 @@ export default function Footer() {
           </p>
           <div className="mt-6 flex gap-5 text-[10px] font-semibold tracking-[0.16em] text-[#aaa295]/50">
             {[
-              { label: "X/Twitter", href: "https://x.com" },
-              { label: "LinkedIn", href: "https://id.linkedin.com/in/polikarpusraga" },
-              { label: "Instagram", href: "https://www.instagram.com/bagus.raga" },
-              { label: "Email", href: "mailto:baguspolikarpus@gmail.com" },
+              { label: "X/Twitter", href: "https://x.com", icon: "x" },
+              { label: "LinkedIn", href: "https://id.linkedin.com/in/polikarpusraga", icon: "linkedin" },
+              { label: "Email", href: "mailto:baguspolikarpus@gmail.com", icon: "email" },
             ].map((l) => (
-              <a key={l.label} href={l.href} className="hover:text-[#d6ad5a]">{l.label}</a>
+              <a key={l.label} href={l.href} aria-label={l.label} className="flex h-8 w-8 items-center justify-center border border-[rgba(214,173,90,0.28)] text-[#aaa295]/60 transition hover:border-[#d6ad5a] hover:text-[#d6ad5a]">
+                {l.icon === "x" && <svg viewBox="0 0 18 18" className="h-3.5 w-3.5" fill="currentColor"><path d="M13.5 3h2.1l-4.6 5.3L16.5 15h-4.2l-3.3-4.2L5.1 15H3l4.9-5.6L2.7 3h4.3l3 3.8L13.5 3Zm-.7 10.6h1.2L5.5 4.3h-1.2l9 9.3Z"/></svg>}
+                {l.icon === "linkedin" && <svg viewBox="0 0 18 18" className="h-3.5 w-3.5" fill="currentColor"><path d="M4.6 3a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6ZM3 7.2h3.2V15H3V7.2Zm5.2 0H11v1.1h.04c.5-.9 1.7-1.9 3.5-1.9 3.8 0 4.5 2.5 4.5 5.7V15h-3.2v-4.3c0-1 0-2.3-1.4-2.3-1.4 0-1.6 1.1-1.6 2.2V15H8.2V7.2Z"/></svg>}
+                {l.icon === "email" && <svg viewBox="0 0 18 18" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="4" width="14" height="10" rx="1.5"/><path d="m2 5.5 7 5 7-5"/></svg>}
+              </a>
             ))}
           </div>
         </div>
