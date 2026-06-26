@@ -91,30 +91,30 @@ export default function Hero() {
 
           {/* ── LEFT: copywriting ── */}
           <div>
-            <div className="animate-fade-in opacity-0 mb-6">
-              <span className="text-[#C6A15B] text-[11px] tracking-[0.5em] uppercase font-medium">
+            <div className="mb-6">
+              <span className="text-[#C6A15B] text-sm font-medium">
                 Catatan pasar pribadi · IDX · valuasi · arus asing
               </span>
             </div>
 
-            <h1 className="animate-fade-in animate-delay-1 opacity-0 font-heading text-5xl md:text-6xl lg:text-7xl text-[#F4EFE6] mb-6 leading-[1.05] font-light tracking-tight">
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl text-[#F4EFE6] mb-6 leading-[1.05] font-light tracking-tight">
               Raga Playbook
             </h1>
 
-            <p className="animate-fade-in animate-delay-2 opacity-0 text-[#B8AA96] text-base md:text-lg font-light leading-relaxed max-w-lg mb-10">
+            <p className="text-[#B8AA96] text-base md:text-lg font-light leading-relaxed max-w-lg mb-10">
               Tempat gue bongkar saham Indonesia: mana yang murah beneran, mana yang cuma murah di headline, dan level mana yang layak ditunggu.
             </p>
 
-            <div className="animate-fade-in animate-delay-3 opacity-0 flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <a
                 href="/articles"
-                className="px-8 py-3.5 bg-[#C6A15B] text-[#0B0B0A] text-[11px] tracking-[0.2em] uppercase font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#C6A15B]"
+                className="px-6 py-3 bg-[#C6A15B] text-[#0B0B0A] text-sm font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#C6A15B]"
               >
                 Baca Riset
               </a>
               <a
                 href="/screener"
-                className="px-8 py-3.5 bg-transparent text-[#F4EFE6] text-[11px] tracking-[0.2em] uppercase font-semibold border border-[#8A6F3D] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all duration-300"
+                className="px-6 py-3 bg-transparent text-[#F4EFE6] text-sm font-semibold border border-[#8A6F3D] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all duration-300"
               >
                 Buka Tools
               </a>
@@ -122,7 +122,7 @@ export default function Hero() {
           </div>
 
           {/* ── RIGHT: animated tool card ── */}
-          <div className="animate-fade-in animate-delay-2 opacity-0 flex flex-col items-center lg:items-end">
+          <div className="flex flex-col items-center lg:items-end">
             <div className="relative w-full max-w-md">
               {/* stacked shadow cards (depth effect) */}
               <div className="absolute -top-2 -right-2 w-full h-full border border-[#2C261E]/40" />
@@ -131,7 +131,7 @@ export default function Hero() {
               {/* main card */}
               <div
                 key={active}
-                className="relative bg-[#0E0E0C] border border-[#2C261E] p-8 md:p-10 animate-fade-in"
+                className="relative bg-[#0E0E0C] border border-[#2C261E] p-8 md:p-10"
               >
                 {/* icon + label row */}
                 <div className="flex items-center justify-between mb-6">
@@ -139,13 +139,13 @@ export default function Hero() {
                     <div className="w-10 h-10 border border-[#C6A15B]/30 flex items-center justify-center text-[#C6A15B]">
                       {tools[active].icon}
                     </div>
-                    <span className="text-[#B8AA96]/50 text-[10px] tracking-[0.3em] uppercase">
+                    <span className="text-[#B8AA96]/50 text-xs">
                       Modul {active + 1} / {tools.length}
                     </span>
                   </div>
                   <a
                     href={tools[active].href}
-                    className="text-[#C6A15B] text-[10px] tracking-[0.2em] uppercase font-medium hover:text-[#D4B76A] transition-colors"
+                    className="text-[#C6A15B] text-xs font-medium hover:text-[#D4B76A] transition-colors"
                   >
                     Buka →
                   </a>
@@ -200,7 +200,7 @@ export default function Hero() {
 
       {/* scroll hint */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-[#B8AA96]">Geser</span>
+        <span className="text-xs text-[#B8AA96]">Geser</span>
         <div className="w-px h-8 bg-gradient-to-b from-[#B8AA96] to-transparent" />
       </div>
     </section>

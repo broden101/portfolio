@@ -21,7 +21,7 @@ export default function ArticlePage() {
           </div>
 
           <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] leading-tight font-light mb-6">
-            IHSG Q1 2026: Fear Driven Selling, Fiscal Pressure, and Rupiah at a Crossroads
+            IHSG Q1 2026 Anjlok: Asing Kabur, Rupiah Lemah, Fiskal Diuji
           </h1>
 
           <p className="text-[#B8AA96] text-lg leading-relaxed font-light">

@@ -15,38 +15,38 @@ interface Article {
 const articles: Article[] = [
   {
     slug: "robot-actuator-supply-chain",
-    date: "June 2026",
-    tag: "Robotics / Supply Chain",
-    title: "Who Builds the Actuator? Inside the Global Supply Chain of Every Robot Joint",
-    excerpt: "A single robot joint depends on specialized components from at least five countries. No single nation can produce a complete actuator alone. The picks-and-shovels play for the humanoid robot revolution.",
+    date: "Juni 2026",
+    tag: "Robotik / Supply Chain",
+    title: "Siapa Pembuat Sendi Robot? Rantai Pasok Aktuator dari Jepang sampai China",
+    excerpt: "Satu joint robot butuh komponen dari banyak negara. Ini cara baca emiten picks-and-shovels di balik hype humanoid robot.",
   },
   {
     slug: "ihsg-q1-2026",
-    date: "March 2026",
-    tag: "IHSG / Macro",
-    title: "IHSG Q1 2026: Fear-Driven Selling, Fiscal Pressure, and Rupiah at the Crossroads",
-    excerpt: "IHSG plunged -19.68% from ATH. Foreign outflows of Rp 6.71T in two waves. A combination of MSCI risk, credit rating downgrades, Iran geopolitics, fiscal stress, and rupiah weakness created a bearish zone.",
+    date: "Maret 2026",
+    tag: "IHSG / Makro",
+    title: "IHSG Q1 2026 Anjlok: Asing Kabur, Rupiah Lemah, Fiskal Diuji",
+    excerpt: "IHSG turun -19,68% dari ATH. Asing keluar Rp6,71T dalam dua gelombang. Catatan penyebab, bukan drama headline.",
   },
   {
     slug: "right-issue-2026",
-    date: "May 2026",
+    date: "Mei 2026",
     tag: "Corporate Action / Rights Issue",
-    title: "2026 Rights Issue Schedule: 9 Issuers with Tens of Trillions in Capital",
-    excerpt: "MPPA Rp 5.94T, BNBR Rp 4.76T, IRSX Rp 3.7T — some already have effective dates, others still pending. Complete list with ratios and exercise prices.",
+    title: "Jadwal Rights Issue 2026: Emiten Mana yang Benar Butuh Modal?",
+    excerpt: "MPPA Rp5,94T, BNBR Rp4,76T, IRSX Rp3,7T. Cek rasio, harga pelaksanaan, dan potensi dilusi.",
   },
   {
     slug: "msci-value-mei-2026",
-    date: "May 2026",
-    tag: "MSCI / Index Rebalancing",
-    title: "MSCI Value May 2026: Leaner, BMRI Takes the Throne from BBRI as Largest Weight",
-    excerpt: "MSCI trimmed constituents from 10 to 7 stocks. BBCA, CPIN, and TPIA removed. BMRI replaces BBRI as the largest weight. Average dividend yield of 8.7%.",
+    date: "Mei 2026",
+    tag: "MSCI / Rebalancing",
+    title: "MSCI Value Mei 2026: BMRI Geser BBRI, BBCA Keluar",
+    excerpt: "Konstituen dipangkas dari 10 ke 7 saham. BMRI jadi bobot terbesar, yield rata-rata 8,7%.",
   },
   {
     slug: "ftse-russell-juni-2026",
-    date: "June 2026",
+    date: "Juni 2026",
     tag: "IHSG",
-    title: "4 Indonesian Stocks Removed from FTSE Russell June 2026 Index",
-    excerpt: "FTSE Russell officially announced the removal of DSSA, DAAZ, HILL, and MLIA from its global index in the June 2026 rebalancing.",
+    title: "FTSE Russell Juni 2026: DSSA, DAAZ, HILL, MLIA Keluar",
+    excerpt: "Empat saham keluar dari indeks global. Catatan dampak flow pasif dan risiko tekanan teknikal.",
   },
 ];
 
@@ -58,10 +58,10 @@ export default function ArticlesPage() {
         <div className="mb-10">
           <div className="flex items-center gap-4 mb-3">
             <div className="w-10 h-px bg-[#C6A15B]/30" />
-            <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Research & Analysis</span>
+            <span className="text-[#C6A15B] text-sm font-medium">Catatan riset</span>
           </div>
           <h1 className="font-heading text-4xl text-[#F4EFE6] font-light">
-            Market <span className="text-gold-gradient font-medium">Articles</span>
+            Arsip tulisan saham dan market
           </h1>
         </div>
 
@@ -76,7 +76,7 @@ export default function ArticlesPage() {
               <h2 className="font-heading text-2xl text-[#F4EFE6] mb-3 font-medium group-hover:text-[#C6A15B] transition-colors">{a.title}</h2>
               <p className="text-[#B8AA96] text-sm leading-relaxed font-light">{a.excerpt}</p>
               <div className="mt-4 pt-4 border-t border-[#2C261E]">
-                <span className="text-[#C6A15B]/50 text-xs tracking-[0.2em] uppercase group-hover:text-[#C6A15B] transition-colors">Read Article →</span>
+                <span className="text-[#C6A15B]/60 text-sm group-hover:text-[#C6A15B] transition-colors">Baca →</span>
               </div>
             </Link>
           ))}

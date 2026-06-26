@@ -16,6 +16,7 @@ export default function ScreenerPage() {
   const [results, setResults] = useState<ScreenResult[]>([]);
   const [filters, setFilters] = useState<FilterConfig[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [scanning, setScanning] = useState(false);
   const [universe, setUniverse] = useState<"IDX100" | "LQ45">("IDX100");
 
   useEffect(() => {
@@ -71,12 +72,12 @@ export default function ScreenerPage() {
           <div>
             <div className="flex items-center gap-4 mb-3">
               <div className="w-10 h-px bg-[#C6A15B]/30" />
-              <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">
-                IDX Screener
+              <span className="text-[#C6A15B] text-sm font-medium">
+                Screener IDX
               </span>
             </div>
             <h1 className="font-heading text-4xl text-[#F4EFE6] font-light">
-              Stock <span className="text-gold-gradient font-medium">Screener</span>
+              Cari saham yang angkanya masih nyambung
             </h1>
           </div>
           {mode === "standard" && (
@@ -84,12 +85,12 @@ export default function ScreenerPage() {
               {results.length > 0 && (
                 <button
                   onClick={rescreen}
-                  className="px-5 py-2.5 border border-[#8A6F3D] text-[#F4EFE6] text-xs tracking-[0.15em] uppercase font-medium hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all"
+                  className="px-5 py-2.5 border border-[#8A6F3D] text-[#F4EFE6] text-sm font-medium hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all"
                 >
-                  Re-screen
+                  Hitung ulang
                 </button>
               )}
-              <ScannerButton onResults={setResults} />
+              <ScannerButton onResults={setResults} onLoading={setScanning} />
             </div>
           )}
         </div>
@@ -97,13 +98,13 @@ export default function ScreenerPage() {
         {/* Mode tabs */}
         <div className="flex items-center gap-1 mb-8 border-b border-[#2C261E]">
           {([
-            { key: "standard" as ScreenerMode, label: "Standard Screener" },
-            { key: "reversal" as ScreenerMode, label: "Reversal Watch" },
+            { key: "standard" as ScreenerMode, label: "Screener utama" },
+            { key: "reversal" as ScreenerMode, label: "Reversal watch" },
           ]).map((tab) => (
             <button
               key={tab.key}
               onClick={() => setMode(tab.key)}
-              className={`px-6 py-3 text-xs tracking-[0.15em] uppercase font-medium transition-all border-b-2 -mb-px ${
+              className={`px-6 py-3 text-sm font-medium transition-all border-b-2 -mb-px ${
                 mode === tab.key
                   ? "border-[#C6A15B] text-[#C6A15B]"
                   : "border-transparent text-[#B8AA96]/40 hover:text-[#B8AA96]"
@@ -128,7 +129,7 @@ export default function ScreenerPage() {
                 <button
                   key={u}
                   onClick={() => changeUniverse(u)}
-                  className={`px-5 py-1.5 text-xs tracking-[0.15em] uppercase font-medium transition-all ${
+                  className={`px-5 py-1.5 text-sm font-medium transition-all ${
                     universe === u
                       ? "bg-[#C6A15B]/15 text-[#C6A15B] border border-[#C6A15B]/30"
                       : "border border-[#2C261E] text-[#B8AA96]/50 hover:text-[#B8AA96]"
@@ -155,7 +156,7 @@ export default function ScreenerPage() {
                     <div className={`font-heading text-3xl font-medium ${s.color}`}>
                       {s.value}
                     </div>
-                    <div className="text-[#B8AA96]/40 text-xs tracking-[0.2em] uppercase mt-1">
+                    <div className="text-[#B8AA96]/50 text-xs mt-1">
                       {s.label}
                     </div>
                   </div>
@@ -166,8 +167,8 @@ export default function ScreenerPage() {
             <div className="grid lg:grid-cols-4 gap-8">
               <div className="space-y-6">
                 <div className="card-luxury p-6">
-                  <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">
-                    Filters
+                  <h3 className="text-sm text-[#C6A15B] mb-5 font-medium">
+                    Filter
                   </h3>
                   <div className="space-y-4">
                     {filters.map((f) => (
@@ -225,8 +226,8 @@ export default function ScreenerPage() {
                 </div>
 
                 <div className="card-luxury p-6">
-                  <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">
-                    Signal
+                  <h3 className="text-sm text-[#C6A15B] mb-5 font-medium">
+                    Sinyal
                   </h3>
                   <div className="space-y-1">
                     {(["all", "BUY", "WATCH", "HOLD", "AVOID"] as const).map((m) => (
@@ -249,23 +250,39 @@ export default function ScreenerPage() {
               <div className="lg:col-span-3">
                 <div className="card-luxury p-6">
                   {!loaded ? (
-                    <div className="text-center text-[#B8AA96]/40 py-12">Loading...</div>
+                    <div className="text-center text-[#B8AA96]/40 py-12">Menyiapkan screener...</div>
                   ) : (
                     <>
                       <div className="flex items-center justify-between mb-6">
                         <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
-                          Results{" "}
+                          Hasil{" "}
                           <span className="text-[#B8AA96]/50 font-light">
                             ({filtered.length})
                           </span>
                         </h2>
                         {results.length > 0 && (
                           <span className="text-xs text-[#B8AA96]/30">
-                            {filters.filter((f) => f.enabled).length} active filters
+                            {filters.filter((f) => f.enabled).length} filter aktif
                           </span>
                         )}
                       </div>
-                      <StockTable results={filtered} />
+                      {scanning && results.length === 0 ? (
+                        <div className="py-12 text-center border border-[#2C261E] bg-[#0E0E0C]">
+                          <div className="text-[#F4EFE6] font-heading text-xl mb-2">Lagi ambil data TradingView...</div>
+                          <p className="text-[#B8AA96]/60 text-sm max-w-md mx-auto">
+                            Biasanya 5-15 detik buat IDX100. Kalau kelamaan, refresh lalu coba LQ45 dulu.
+                          </p>
+                        </div>
+                      ) : results.length === 0 ? (
+                        <div className="py-12 text-center border border-[#2C261E] bg-[#0E0E0C]">
+                          <div className="text-[#F4EFE6] font-heading text-xl mb-2">Belum ada hasil.</div>
+                          <p className="text-[#B8AA96]/60 text-sm max-w-md mx-auto">
+                            Klik “Run Screener” buat narik data live. Filter bisa diubah sebelum atau sesudah scan.
+                          </p>
+                        </div>
+                      ) : (
+                        <StockTable results={filtered} />
+                      )}
                     </>
                   )}
                 </div>

@@ -30,7 +30,7 @@ export default function Services() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center gap-4 mb-6">
           <div className="w-16 h-px bg-[#C6A15B]/30" />
-          <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Yang dikerjakan</span>
+          <span className="text-[#C6A15B] text-sm font-medium">Yang dikerjakan</span>
         </div>
 
         <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-16 max-w-xl font-light">

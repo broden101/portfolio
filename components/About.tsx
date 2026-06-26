@@ -7,7 +7,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center gap-4 mb-16">
           <div className="w-16 h-px bg-[#C6A15B]/30" />
-          <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Tentang Raga</span>
+          <span className="text-[#C6A15B] text-sm font-medium">Tentang Raga</span>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
