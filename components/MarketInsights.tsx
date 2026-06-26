@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const insights = [
   { date: "Juni 2026", tag: "IHSG", title: "4 Saham RI Keluar dari FTSE Russell", excerpt: "FTSE Russell resmi hapus DSSA, DAAZ, HILL, MLIA dari indeks global dalam rebalancing Juni 2026.", slug: "/articles/ftse-russell-juni-2026" },
-  { date: "Mei 2026", tag: "Makro", title: "Dampak Kebijakan BI Rate", excerpt: "Bagaimana kebijakan suku bunga Bank Indonesia mempengaruhi arah investasi obligasi dan ekuitas.", slug: "" },
-  { date: "April 2026", tag: "Sektor", title: "Sektor Perbankan: Peluang & Tantangan", excerpt: "Evaluasi kinerja emiten bank besar dan prospek pertumbuhan kredit di sisa tahun.", slug: "" },
+  { date: "Mei 2026", tag: "Makro", title: "BI Rate: Siapa Diuntungkan?", excerpt: "Catatan dampak suku bunga ke bank, obligasi, properti, rupiah, dan appetite asing di IHSG.", slug: "" },
+  { date: "April 2026", tag: "Sektor", title: "Bank Besar: Mahal Tapi Tetap Dikejar", excerpt: "Cek ROE, CASA, NIM, kualitas aset, dan kenapa saham bank bisa tetap premium saat market lelah.", slug: "" },
 ];
 
 export default function MarketInsights() {
@@ -17,10 +17,10 @@ export default function MarketInsights() {
           <div>
             <div className="flex items-center gap-4 mb-6">
               <div className="w-16 h-px bg-[#C6A15B]/30" />
-              <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Market Insight</span>
+              <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Catatan terbaru</span>
             </div>
             <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light">
-              Market <span className="text-gold-gradient font-medium">Insights</span>
+              Bukan headline doang, <span className="text-gold-gradient font-medium">angka ikut masuk</span>
             </h2>
           </div>
         </div>
@@ -38,7 +38,7 @@ export default function MarketInsights() {
                 <p className="text-[#B8AA96] text-sm leading-relaxed font-light flex-1">{item.excerpt}</p>
                 <div className="mt-6 pt-6 border-t border-[#2C261E]">
                   <span className="text-[#C6A15B]/50 text-xs tracking-[0.2em] uppercase group-hover:text-[#C6A15B] transition-colors">
-                    Read More →
+                    Baca →
                   </span>
                 </div>
               </>

@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 
 const tools = [
   {
-    title: "Stock Screener",
-    desc: "Filter IDX-listed companies by valuation, profitability, liquidity, and momentum.",
+    title: "Screener Saham",
+    desc: "Cari emiten IDX yang masih masuk akal: valuasi, ROE, likuiditas, momentum, dan ruang risiko.",
     tags: ["PBV", "PER", "ROE", "Revenue Growth", "Liquidity"],
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -17,8 +17,8 @@ const tools = [
     accent: "#C6A15B",
   },
   {
-    title: "Valuation Lab",
-    desc: "Estimate fair value using DCF, PBV, PER, and EV/EBITDA frameworks.",
+    title: "Lab Valuasi",
+    desc: "Hitung harga wajar pakai DCF, PBV-ROE, PER, EV/EBITDA, dan skenario yang bisa diperdebatkan.",
     tags: ["DCF", "PBV", "PER", "EV/EBITDA", "Scenario Analysis"],
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -31,7 +31,7 @@ const tools = [
   },
   {
     title: "Tradebook",
-    desc: "Track simulated trades, execution logic, position review, and performance journal.",
+    desc: "Catat alasan entry, exit, salah baca, dan evaluasi posisi. Bukan cuma screenshot cuan.",
     tags: ["Entry", "Exit", "PnL", "Replay", "Journal"],
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -43,8 +43,8 @@ const tools = [
     accent: "#C6A15B",
   },
   {
-    title: "Dividend Tracker",
-    desc: "Monitor upcoming dividends, yield history, ex-date calendar, and payout consistency across IDX stocks.",
+    title: "Kalender Dividen",
+    desc: "Pantau ex-date, yield, riwayat dividen, dan konsistensi payout emiten IDX.",
     tags: ["Ex-Date", "Yield", "Payout Ratio", "Calendar", "History"],
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -93,7 +93,7 @@ export default function Hero() {
           <div>
             <div className="animate-fade-in opacity-0 mb-6">
               <span className="text-[#C6A15B] text-[11px] tracking-[0.5em] uppercase font-medium">
-                Private Market Notes &amp; Investment Research
+                Catatan pasar pribadi · IDX · valuasi · arus asing
               </span>
             </div>
 
@@ -102,7 +102,7 @@ export default function Hero() {
             </h1>
 
             <p className="animate-fade-in animate-delay-2 opacity-0 text-[#B8AA96] text-base md:text-lg font-light leading-relaxed max-w-lg mb-10">
-              Market research, valuation frameworks, and practical investment tools for Indonesian capital markets.
+              Tempat gue bongkar saham Indonesia: mana yang murah beneran, mana yang cuma murah di headline, dan level mana yang layak ditunggu.
             </p>
 
             <div className="animate-fade-in animate-delay-3 opacity-0 flex flex-wrap items-center gap-4">
@@ -110,13 +110,13 @@ export default function Hero() {
                 href="/articles"
                 className="px-8 py-3.5 bg-[#C6A15B] text-[#0B0B0A] text-[11px] tracking-[0.2em] uppercase font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#C6A15B]"
               >
-                Explore Research
+                Baca Riset
               </a>
               <a
                 href="/screener"
                 className="px-8 py-3.5 bg-transparent text-[#F4EFE6] text-[11px] tracking-[0.2em] uppercase font-semibold border border-[#8A6F3D] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all duration-300"
               >
-                View Tools
+                Buka Tools
               </a>
             </div>
           </div>
@@ -140,14 +140,14 @@ export default function Hero() {
                       {tools[active].icon}
                     </div>
                     <span className="text-[#B8AA96]/50 text-[10px] tracking-[0.3em] uppercase">
-                      Tool {active + 1} / {tools.length}
+                      Modul {active + 1} / {tools.length}
                     </span>
                   </div>
                   <a
                     href={tools[active].href}
                     className="text-[#C6A15B] text-[10px] tracking-[0.2em] uppercase font-medium hover:text-[#D4B76A] transition-colors"
                   >
-                    Open →
+                    Buka →
                   </a>
                 </div>
 
@@ -200,7 +200,7 @@ export default function Hero() {
 
       {/* scroll hint */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-[#B8AA96]">Scroll</span>
+        <span className="text-[10px] tracking-[0.3em] uppercase text-[#B8AA96]">Geser</span>
         <div className="w-px h-8 bg-gradient-to-b from-[#B8AA96] to-transparent" />
       </div>
     </section>

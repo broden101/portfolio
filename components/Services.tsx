@@ -3,23 +3,23 @@
 const competencies = [
   {
     icon: (<svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-4 4 4 5-5" /></svg>),
-    title: "Equity Research",
-    desc: "Fundamental analysis, financial statement review, valuation, and investment thesis writing on IDX-listed companies.",
+    title: "Riset Emiten",
+    desc: "Bongkar laporan keuangan, bisnis utama, valuasi, dan red flag emiten IDX sebelum masuk watchlist.",
   },
   {
     icon: (<svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>),
-    title: "Market Strategy",
-    desc: "Monitoring macro indicators, interest rates, currency movement, commodity prices, foreign flow, and sector rotation.",
+    title: "Peta Market",
+    desc: "Pantau IHSG, BI Rate, USD/IDR, komoditas, foreign flow, dan rotasi sektor buat baca arah risiko.",
   },
   {
     icon: (<svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 3v18" /></svg>),
-    title: "Portfolio & Asset Allocation",
-    desc: "Understanding client risk profile, investment horizon, and asset class allocation across equities, bonds, mutual funds, and sukuk.",
+    title: "Portofolio Nasabah",
+    desc: "Sesuaikan saham, obligasi, reksa dana, dan sukuk dengan horizon, tujuan, dan toleransi drawdown.",
   },
   {
     icon: (<svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" y1="22" x2="4" y2="15" /></svg>),
-    title: "Data-Driven Screening",
-    desc: "Using Excel, Python, and market data tools to screen stocks based on valuation, profitability, liquidity, and momentum.",
+    title: "Screener Data",
+    desc: "Pakai Excel, Python, dan data market buat shortlist saham. Narasi belakangan, angka dulu.",
   },
 ];
 
@@ -30,11 +30,11 @@ export default function Services() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center gap-4 mb-6">
           <div className="w-16 h-px bg-[#C6A15B]/30" />
-          <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Core Competencies</span>
+          <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Yang dikerjakan</span>
         </div>
 
         <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-16 max-w-xl font-light">
-          What I <span className="text-gold-gradient font-medium">Bring</span>
+          Dari data mentah ke <span className="text-gold-gradient font-medium">keputusan</span>
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8">

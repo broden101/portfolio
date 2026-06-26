@@ -17,8 +17,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Raga Playbook | Investment Research & Market Strategy",
-  description: "Private Market Notes & Investment Research — equity research, market insights, valuation work, and data-driven investment thinking.",
+  title: "Raga Playbook | Catatan Saham Indonesia",
+  description: "Catatan pasar pribadi Raga: riset emiten IDX, valuasi, IHSG, foreign flow, dividen, dan tools investasi Indonesia.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

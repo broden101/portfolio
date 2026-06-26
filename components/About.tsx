@@ -7,7 +7,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center gap-4 mb-16">
           <div className="w-16 h-px bg-[#C6A15B]/30" />
-          <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">About Me</span>
+          <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Tentang Raga</span>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
@@ -24,20 +24,21 @@ export default function About() {
 
           <div className="flex flex-col justify-center">
             <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-8 leading-tight font-light">
-              Aspiring Investment<br />
-              <span className="text-gold-gradient font-medium">Professional</span>
+              Bukan sekadar<br />
+              <span className="text-gold-gradient font-medium">portfolio template</span>
             </h2>
 
             <div className="space-y-5 text-[#B8AA96] text-base leading-relaxed font-light">
-              <p>I am an aspiring investment professional with strong interest in Indonesian capital markets, equity research, and financial analysis.</p>
-              <p>Through Raga Playbook, I document my research process, investment thesis, and market observations to demonstrate analytical thinking, curiosity, and discipline in understanding businesses and market dynamics.</p>
+              <p>Gue Raga. Sehari-hari ketemu market, nasabah, flow asing, berita emiten, dan pertanyaan klasik: ini saham murah, jebakan, atau memang belum dilirik?</p>
+              <p>Raga Playbook gue pakai sebagai meja kerja publik: catatan riset, valuasi, dashboard IHSG, screener, dividen, sampai kesalahan baca market yang perlu diingat lagi.</p>
+              <p>Bahasanya dibuat langsung, karena market juga langsung. Kalau tesis lemah, harus kelihatan. Kalau angka nggak nyambung, jangan dipaksa jadi narasi.</p>
             </div>
 
             <div className="grid grid-cols-3 gap-8 mt-14 pt-10 border-t border-[#2C261E]">
               {[
-                { number: "5+", label: "Years of Interest" },
-                { number: "100+", label: "Research Notes" },
-                { number: "IDX", label: "IDX Focus" },
+                { number: "IDX", label: "Fokus utama" },
+                { number: "Live", label: "IHSG & flow" },
+                { number: "Rp", label: "Valuasi dulu" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="font-heading text-3xl md:text-4xl text-[#C6A15B] mb-2 font-medium">{stat.number}</div>
