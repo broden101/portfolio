@@ -51,7 +51,7 @@ function TickerCard({ item }: { item: TickerItem }) {
   const isDown = item.change != null && item.change < 0;
 
   return (
-    <div className="min-w-[130px] border border-[rgba(214,173,90,0.22)] bg-[#0a0a0a] px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+    <div className="min-w-[112px] border border-[rgba(214,173,90,0.22)] bg-[#0a0a0a] px-3 py-2.5 shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:min-w-[130px] sm:px-4 sm:py-3">
       <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#d6ad5a]">{item.name}</div>
       <div className="mt-1 font-mono text-[17px] font-semibold leading-tight text-[#f2eee6]">{item.value}</div>
       {item.change == null ? (
@@ -137,9 +137,9 @@ export default function MarketTickerStrip() {
           </div>
 
           <div className="relative min-w-0 flex-1 overflow-hidden">
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#070707] to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#070707] to-transparent" />
-            <div className="flex w-max animate-[ticker-scroll_38s_linear_infinite] gap-3 hover:[animation-play-state:paused]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#070707] to-transparent sm:w-10" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#070707] to-transparent sm:w-10" />
+            <div className="flex w-max animate-[ticker-scroll_36s_linear_infinite] gap-2.5 hover:[animation-play-state:paused] sm:gap-3">
               {[...visibleStocks, ...visibleStocks].map((item, idx) => (
                 <TickerCard key={`${item.name}-${idx}`} item={item} />
               ))}
