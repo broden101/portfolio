@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Disclaimer } from "@/components/DataState";
 
 interface Article {
   slug: string;
@@ -82,6 +83,10 @@ export default function ArticlesPage() {
           ))}
         </div>
       </div>
+      <div className="max-w-5xl mx-auto px-6 lg:px-12 pt-8">
+        <Disclaimer />
+      </div>
+
       <Footer />
     </div>
   );

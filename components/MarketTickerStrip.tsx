@@ -126,7 +126,7 @@ export default function MarketTickerStrip() {
     <section className="border-y border-[rgba(214,173,90,0.28)] bg-[#070707] text-[#f2eee6]">
       <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-12">
         <div className="mb-3 grid items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-[#aaa295]/50 md:grid-cols-3">
-          <div>Terakhir diperbarui: {updatedAt ? formatTime(updatedAt) : "mengambil data..."}</div>
+          <div>Terakhir diperbarui: {updatedAt ? formatTime(updatedAt) : "Memuat data pasar…"}</div>
           <div className="text-center text-[13px] font-semibold tracking-[0.22em] text-[#d6ad5a]">LQ 45</div>
           <div className="text-left md:text-right">Data pasar live dari TradingView</div>
         </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { ScannerButton } from "@/components/ScannerButton";
 import { StockTable } from "@/components/StockTable";
 import ReversalScreener from "@/components/ReversalScreener";
+import { EmptyState, ErrorState, Disclaimer } from "@/components/DataState";
 import { getSettings, saveSettings, getCachedResults } from "@/lib/storage";
 import type { ScreenResult, FilterConfig } from "@/lib/types";
 import Navbar from "@/components/Navbar";
@@ -250,7 +251,9 @@ export default function ScreenerPage() {
               <div className="lg:col-span-3">
                 <div className="card-luxury p-6">
                   {!loaded ? (
-                    <div className="text-center text-[#B8AA96]/40 py-12">Menyiapkan screener...</div>
+                    <EmptyState title="Menyiapkan screener" description="Jika data tidak muncul, segarkan halaman atau periksa koneksi.">
+                      <button onClick={() => window.location.reload()} className="border border-[rgba(214,173,90,0.28)] px-3 py-1.5 text-[11px] tracking-[0.1em] text-[#d6ad5a] transition hover:border-[#d6ad5a]">Segarkan</button>
+                    </EmptyState>
                   ) : (
                     <>
                       <div className="flex items-center justify-between mb-6">

@@ -141,7 +141,7 @@ export default function ArticlePage() {
           href="/articles"
           className="inline-flex items-center gap-2 text-[#B8AA96]/50 text-xs tracking-wider uppercase hover:text-[#C6A15B] transition-colors mb-10"
         >
-          ← Back to Articles
+          ← Kembali ke Arsip Riset
         </Link>
 
         {/* Header */}

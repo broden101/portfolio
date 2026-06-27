@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Disclaimer, SourceNote } from "@/components/DataState";
 
 export default function ArticlePage() {
   return (
@@ -9,7 +10,7 @@ export default function ArticlePage() {
       <article className="max-w-3xl mx-auto px-6 lg:px-12">
         {/* Back link */}
         <Link href="/articles" className="inline-flex items-center gap-2 text-[#B8AA96]/50 text-xs tracking-wider uppercase hover:text-[#C6A15B] transition-colors mb-10">
-          ← Back to Articles
+          ← Kembali ke Arsip Riset
         </Link>
 
         {/* Header */}
@@ -345,9 +346,16 @@ export default function ArticlePage() {
         <div className="gold-line w-full mt-12 mb-8" />
 
         <Link href="/articles" className="inline-flex items-center gap-2 text-[#C6A15B] text-xs tracking-[0.2em] uppercase hover:text-[#D4B76A] transition-colors">
-          ← Back to Articles
+          ← Kembali ke Arsip Riset
         </Link>
       </article>
+
+      <div className="max-w-3xl mx-auto px-6 lg:px-12 pt-10">
+        <SourceNote source="IHSG, IDX, Kemenkeu, Bank Indonesia, media" note="Angka bisa berbeda antar sumber karena perbedaan periode dan metode." className="mb-4" />
+        <Disclaimer />
+      </div>
+
+      <Footer />
     </div>
   );
 }

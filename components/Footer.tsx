@@ -5,12 +5,12 @@ const links = {
     { label: "Riset Terbaru", href: "/articles" },
     { label: "Market Playbook", href: "/playbook" },
     { label: "Valuation Lab", href: "/calculator" },
-    { label: "Tools", href: "/screener" },
+    { label: "Data Room", href: "/screener" },
   ],
   "SUMBER DATA": [
-    { label: "Macro View", href: "/playbook/ihsg" },
-    { label: "Screening", href: "/screener" },
-    { label: "Portfolio Ideas", href: "/dividend" },
+    { label: "Market Map", href: "/playbook/ihsg" },
+    { label: "Radar Saham", href: "/screener" },
+    { label: "Portfolio Journal", href: "/dividend" },
     { label: "Tentang Raga", href: "/#about" },
   ],
   PERUSAHAAN: [
@@ -64,7 +64,7 @@ export default function Footer() {
       <div className="border-t border-[rgba(214,173,90,0.28)]">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 text-[10px] tracking-[0.14em] text-[#aaa295]/30 lg:px-12">
           <span>© {new Date().getFullYear()} Raga Playbook</span>
-          <span>All rights reserved.</span>
+          <span>Riset pribadi, bukan rekomendasi investasi.</span>
         </div>
       </div>
     </footer>

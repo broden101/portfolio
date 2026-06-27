@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Disclaimer, SourceNote } from "@/components/DataState";
 
 interface BankData {
   ticker: string;
@@ -146,10 +147,13 @@ export default function PBVROEPage() {
                 className="w-24 bg-[#0B0B0A] border border-[#2C261E] px-3 py-2 text-[#F4EFE6] text-sm font-mono"
               />
             </div>
-            <div className="flex items-end">
+            <div className="flex items-end flex-col gap-1">
               <span className="text-[#B8AA96]/30 text-[10px] tracking-[0.1em] uppercase">
                 Spread = {coe - g}% → Theoretical PBV = ROE / {coe - g}
               </span>
+              {coe - g <= 0 && (
+                <span className="text-red-400 text-[10px]">COE harus lebih besar dari growth agar model valid.</span>
+              )}
             </div>
           </div>
         </div>
@@ -365,6 +369,35 @@ export default function PBVROEPage() {
               ROE
             </div>
           </div>
+        </div>
+
+                {/* Sensitivity Analysis */}
+        <div className="card-luxury p-8 mt-8 mb-8">
+          <h2 className="font-heading text-xl text-[#F4EFE6] mb-5 font-medium">Sensitivitas Asumsi</h2>
+          <p className="text-[#B8AA96]/50 text-xs mb-4">Tabel ini menunjukkan bagaimana perubahan COE dan growth memengaruhi Theo PBV.</p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm font-mono">
+              <thead>
+                <tr className="border-b border-[#2C261E]">
+                  <th className="py-2 pr-4 text-left text-[10px] tracking-[0.15em] uppercase text-[#B8AA96]/60">COE / Growth</th>
+                  {[g - 1, g, g + 1].filter((v) => v >= 0).map((v) => (
+                    <th key={v} className="py-2 text-right text-[10px] tracking-[0.15em] uppercase text-[#B8AA96]/60">{v}%</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[coe - 1, coe, coe + 1].filter((c) => c > 0).map((c) => (
+                  <tr key={c} className="border-b border-[#2C261E]/40">
+                    <td className="py-2 pr-4 text-[#B8AA96]/60">{c}%</td>
+                    {[g - 1, g, g + 1].filter((v) => v >= 0).map((v) => (
+                      <td key={v} className="py-2 text-right">{c - v > 0 ? `${fmt(20 / (c - v))}x` : '--'}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <SourceNote source="PBV-ROE manual input" note="Gunakan skenario ini untuk melihat sensitivitas, bukan sebagai target harga." className="mt-4" />
         </div>
 
         {/* Conclusion */}

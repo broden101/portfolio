@@ -3,6 +3,12 @@
 import { useState, useMemo } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Disclaimer, SourceNote } from "@/components/DataState";
+
+const EXAMPLES = [
+  { label: "BBNI 2026", avgPrice: 4500, lots: 10, cumPrice: 5100, riPrice: 2800, ratioOld: 5, ratioNew: 2 },
+  { label: "MPPA 2026", avgPrice: 800, lots: 20, cumPrice: 900, riPrice: 500, ratioOld: 10, ratioNew: 3 },
+];
 
 export default function RightsIssuePage() {
   const [avgPrice, setAvgPrice] = useState("");
@@ -96,7 +102,16 @@ export default function RightsIssuePage() {
           {/* Input Form */}
           <div className="space-y-6">
             <div className="card-luxury p-8">
-              <h2 className="font-heading text-xl text-[#F4EFE6] mb-6 font-medium">Data Saham</h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">Data Saham</h2>
+                <div className="flex gap-2">
+                  {EXAMPLES.map((ex) => (
+                    <button key={ex.label} onClick={() => { setAvgPrice(String(ex.avgPrice)); setLots(String(ex.lots)); setCumPrice(String(ex.cumPrice)); setRiPrice(String(ex.riPrice)); setRatioOld(String(ex.ratioOld)); setRatioNew(String(ex.ratioNew)); }} className="border border-[rgba(214,173,90,0.28)] px-2.5 py-1.5 text-[10px] tracking-[0.1em] text-[#d6ad5a] hover:border-[#d6ad5a]">
+                    {ex.label}
+                  </button>
+                ))}
+                </div>
+              </div>
               <div className="space-y-5">
                 <div>
                   <label className="block text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-2">Harga Rata-rata (avg price)</label>
@@ -130,8 +145,9 @@ export default function RightsIssuePage() {
               <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Formula</h3>
               <div className="space-y-2 text-xs text-[#B8AA96]/60 font-mono">
                 <p>Harga Teoritis = (Saham Lama × Harga Cum + Saham Baru × Harga Tebus) / Total Saham</p>
-                <p>HMETD Value = Harga Cum − Harga Teoritis</p>
+                <p>HMETD Value = Harga Cum - Harga Teoritis</p>
               </div>
+              <SourceNote source="Rights issue formula" note="HMETD adalah hak memesan efek terlebih dahulu. Hasil bersifat teoretis dan belum termasuk biaya pasar." className="mt-3" />
             </div>
           </div>
 
@@ -206,6 +222,10 @@ export default function RightsIssuePage() {
           </div>
         </div>
       </div>
+      <div className="max-w-5xl mx-auto px-6 lg:px-12 pt-8">
+        <Disclaimer />
+      </div>
+
       <Footer />
     </div>
   );

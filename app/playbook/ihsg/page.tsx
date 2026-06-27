@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Navbar from "@/components/Navbar";
 import { TopMoverPanel } from "./TopMoverPanel";
 import Footer from "@/components/Footer";
+import { Disclaimer, SourceNote, EmptyState } from "@/components/DataState";
 import {
   fetchMarketData,
   type ManualData,
@@ -396,7 +397,9 @@ export default function IHSGDashboard() {
                 </div>
               </>
             ) : (
-              <div className="text-center py-8 text-[#B8AA96]/40 text-sm">Data aliran dana asing tidak tersedia.</div>
+              <EmptyState title="Data aliran dana asing tidak tersedia" description="Data bisa muncul kembali saat sumber market insight aktif.">
+                <SourceNote source="Tradersaham Market Insight" note="Gunakan konteks ini sebagai referensi, bukan sinyal tunggal." />
+              </EmptyState>
             )}
           </div>
 
@@ -478,6 +481,7 @@ export default function IHSGDashboard() {
               <p className="text-[#B8AA96]/30 text-[9px] leading-relaxed">
                 Sumber: TradingView ({live ? "live" : "offline"}). RSI {rsi.label}. Sinyal {rec.label}. Rentang 52 minggu {fmtNum(ihsg.low)}–{fmtNum(ihsg.high)}.
               </p>
+              <SourceNote source="TradingView" updatedAt={live ? "live feed" : "offline fallback"} note="Kekuatan sinyal menurun ketika data tidak lengkap." className="mt-2" />
             </div>
           </div>
         </div>
@@ -578,7 +582,7 @@ export default function IHSGDashboard() {
                   </div>
                 </>
               ) : (
-                <div className="text-center py-8 text-[#B8AA96]/40 text-sm">Data komposisi tidak tersedia.</div>
+                <EmptyState title="Data komposisi tidak tersedia" description="Komposisi transaksi akan muncul ketika feed market tersedia." />
               )}
             </div>
           </div>
@@ -607,7 +611,7 @@ export default function IHSGDashboard() {
             </div>
           </div>
           {sortedSectors.length === 0 ? (
-            <div className="text-center py-12 text-[#B8AA96]/40 text-sm">Data sektor tidak tersedia.</div>
+            <EmptyState title="Data sektor tidak tersedia" description="Rotasi sektor akan tampil saat data sektor berhasil dimuat." />
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 mb-6">
               {sortedSectors.map((s) => {
@@ -672,6 +676,10 @@ export default function IHSGDashboard() {
 
 
       </div>
+      <div className="mx-auto max-w-7xl px-6 pb-10 lg:px-12">
+        <Disclaimer />
+      </div>
+
       <Footer />
     </div>
   );

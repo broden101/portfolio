@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Disclaimer } from "@/components/DataState";
 
 const tools = [
   {
@@ -96,7 +97,7 @@ export default function PlaybookHubPage() {
                 </div>
                 {!tool.ready && (
                   <span className="text-[9px] tracking-[0.2em] uppercase text-[#B8AA96]/30 border border-[#2C261E] px-2 py-1">
-                    Soon
+                    Coming Soon
                   </span>
                 )}
               </div>
@@ -118,6 +119,11 @@ export default function PlaybookHubPage() {
           ))}
         </div>
       </div>
+
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 pt-8">
+        <Disclaimer />
+      </div>
+
       <Footer />
     </div>
   );

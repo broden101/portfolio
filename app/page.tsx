@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MarketTickerStrip from "@/components/MarketTickerStrip";
+import { Disclaimer, DataBadge, SourceNote, EmptyState } from "@/components/DataState";
 
 const gold = "#d6ad5a";
 
@@ -88,6 +89,7 @@ export default function Home() {
   const [snapshots, setSnapshots] = useState(defaultSnapshots);
   const [updatedAt, setUpdatedAt] = useState<string | "">("");
   const [sectors, setSectors] = useState<SectorRow[]>([]);
+  const [marketStatus, setMarketStatus] = useState<"loading" | "loaded" | "error">("loading");
 
   useEffect(() => {
     let cancelled = false;
@@ -145,9 +147,10 @@ export default function Home() {
           setSnapshots(nextSnapshots);
           setSectors(nextSectors);
           setUpdatedAt(`${datePart} ${timePart} WIB`);
+          setMarketStatus("loaded");
         }
       } catch {
-        // keep fallback
+        if (!cancelled) setMarketStatus("error");
       }
     }
 
@@ -203,7 +206,7 @@ export default function Home() {
             <div className="mb-6 flex items-end justify-between border-b border-[rgba(214,173,90,0.28)] pb-4">
               <div>
                 <p className="text-[10px] font-semibold tracking-[0.25em] text-[#d6ad5a]">KILASAN PASAR</p>
-                <p className="mt-2 text-xs text-[#aaa295]/50">{updatedAt || "mengambil data..."}</p>
+                <p className="mt-2 text-xs text-[#aaa295]/50">{updatedAt || "Memuat data pasar..."}</p>
               </div>
               <div className="h-2 w-2 rounded-full bg-emerald-400" />
             </div>
@@ -224,7 +227,10 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <a href="/playbook/ihsg" className="mt-6 inline-block text-[11px] font-semibold tracking-[0.18em] text-[#d6ad5a]">LIHAT SELENGKAPNYA →</a>
+              <div className="mt-3 text-[10px] text-[#aaa295]/45">
+                {marketStatus === "error" ? "Data pasar tidak tersedia saat ini." : "Sumber: TradingView. Data dapat tertunda."}
+              </div>
+              <a href="/playbook/ihsg" className="mt-6 inline-block text-[11px] font-semibold tracking-[0.18em] text-[#d6ad5a]">LIHAT SELENGKAPNYA →</a>
           </aside>
         </div>
       </section>
@@ -298,7 +304,7 @@ Jangan takut mengakui kesalahan,
             <a href="/playbook/ihsg" className="text-[10px] font-semibold tracking-[0.18em] text-[#d6ad5a]">LIHAT DETAIL →</a>
           </div>
           {sectors.length === 0 ? (
-            <div className="text-sm text-[#aaa295]/60">Mengambil data sektor...</div>
+            <div className="text-xs text-[#aaa295]/60">Data sektor belum tersedia. Coba segarkan untuk memuat data terbaru.</div>
           ) : (
             <div className="grid grid-cols-2 gap-2 text-[10px] font-semibold tracking-[0.12em]">
               {gridSectors.map((s) => (
@@ -315,6 +321,10 @@ Jangan takut mengakui kesalahan,
       </section>
 
       
+
+      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-12">
+        <Disclaimer />
+      </div>
 
       <Footer />
     </main>

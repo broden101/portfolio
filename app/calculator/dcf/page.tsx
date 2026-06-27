@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Disclaimer, SourceNote } from "@/components/DataState";
 import { isBankTicker } from "@/lib/fundamentals";
 import {
   ALL_PRESETS,
@@ -77,12 +78,12 @@ interface BankInputsResponse {
 /* ─── Component ─── */
 export default function DCFPage() {
   // Mode
-  const [mode, setMode] = useState<"fcff" | "bank" | "commodity">("fcff");
+  const [mode, setMode] = useState<"fcff" | "bank" | "commodity">("bank");
 
   // Shared
   const [ticker, setTicker] = useState("BBCA");
   const [customInput, setCustomInput] = useState<string>("");
-  const [currentPrice, setCurrentPrice] = useState(2650);
+  const [currentPrice, setCurrentPrice] = useState(9500);
 
   // FCFF inputs
   const [baseRevenue, setBaseRevenue] = useState(148.0);
@@ -501,7 +502,15 @@ export default function DCFPage() {
           )}
         </div>
 
-        {/* ─── FCFF Mode ─── */}
+{/* Validation Warnings */}
+            {mode === "fcff" && dcf.tvPct > 80 && (
+              <div className="mb-6 rounded border border-amber-400/30 bg-amber-400/5 p-4 text-amber-200 text-xs leading-relaxed">Nilai terminal sangat dominan ({Math.round(dcf.tvPct)}% EV). Periksa asumsi WACC, pertumbuhan terminal, dan kualitas proyeksi.</div>
+            )}
+            {mode === "fcff" && dcf.fairValuePerShare > 0 && currentPrice > 0 && dcf.fairValuePerShare < currentPrice * 0.05 && (
+              <div className="mb-6 rounded border border-red-400/30 bg-red-400/5 p-4 text-red-200 text-xs leading-relaxed">Output fair value per share terlihat tidak wajar. Periksa satuan input, terutama shares outstanding dan harga saham.</div>
+            )}
+
+            {/* FCFF Mode */}
         {mode === "fcff" && (
           <>
             {autofill.status === "loading" && <LoadingBanner ticker={ticker} />}
@@ -594,8 +603,10 @@ export default function DCFPage() {
                   <p className="text-[#B8AA96]/30 text-[10px] leading-relaxed">
                     <strong className="text-[#B8AA96]/50">Metodologi:</strong> FCFF = NOPAT + D&A − Capex − ΔWC.
                     Terminal Value via Gordon Growth Model. EV = Σ PV(FCFF) + PV(TV). Equity Value = EV − Net Debt.
-                    Semua angka dalam IDR Triliun.
+                    Semua angka dalam IDR Triliun. Nilai terminal yang sangat dominan menandakan asumsi sensitif dan perlu diuji ulang.
                   </p>
+                  <SourceNote source="DCF manual / autofill" note="Hasil bersifat teoretis dan sangat sensitif terhadap asumsi pertumbuhan serta WACC." className="mt-2" />
+                  <Disclaimer className="mt-2" />
                 </div>
               </div>
             </div>
@@ -824,6 +835,8 @@ export default function DCFPage() {
                     DDM = Σ PV(DPS) + PV(TV). Justified P/B = (ROE − g) / (Ke − g).
                     ROE fade: {fmtPct(roe)} → {fmtPct(roeTerminal)}. SGR: {fmtPct(bankResult.sgr)}.
                   </p>
+                  <SourceNote source="Bank valuation preset / autofill" note="Nilai bank sangat tergantung pada asumsi ROE fade, cost of equity, dan pertumbuhan residual." className="mt-2" />
+                  <Disclaimer className="mt-2" />
                 </div>
               </div>
             </div>
