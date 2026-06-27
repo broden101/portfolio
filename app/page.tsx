@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MarketTickerStrip from "@/components/MarketTickerStrip";
 
 const gold = "#d6ad5a";
 
@@ -75,6 +76,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#050505] text-[#f2eee6]">
       <Navbar />
+      <MarketTickerStrip />
 
       <section className="relative border-b border-[rgba(214,173,90,0.28)] pt-28 lg:pt-32">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_10%,rgba(198,161,91,0.09),transparent_34%)]" />

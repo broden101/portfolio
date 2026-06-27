@@ -1,0 +1,158 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+
+type ScannerRow = {
+  name?: string;
+  close?: number;
+  change?: number;
+};
+
+type TickerItem = {
+  name: string;
+  value: string;
+  change: number | null;
+};
+
+const LQ45_TICKERS = [
+  "BBCA", "BMRI", "BBRI", "TLKM", "ASII", "AMMN", "BRIS", "BBNI",
+  "MDKA", "ADRO", "MEDC", "JPFA", "SIDO", "HRUM", "UNTR", "ICBP",
+];
+
+const BOND_CARDS: TickerItem[] = [
+  { name: "INDO 5Y", value: "95,18", change: null },
+  { name: "INDO 10Y", value: "95,65", change: null },
+  { name: "INDO 15Y", value: "99,07", change: null },
+  { name: "INDO 20Y", value: "99,03", change: null },
+];
+
+function fmtPrice(v: number) {
+  return new Intl.NumberFormat("id-ID", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(v);
+}
+
+function fmtPct(v: number) {
+  return `${Math.abs(v).toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`;
+}
+
+function formatTime(date: Date) {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+  return `${day}-${month}-${year} ${hour}:${minute} WIB`;
+}
+
+function TickerCard({ item }: { item: TickerItem }) {
+  const isUp = item.change != null && item.change > 0;
+  const isDown = item.change != null && item.change < 0;
+
+  return (
+    <div className="min-w-[132px] rounded-2xl border border-black/5 bg-white px-4 py-3 text-[#151515] shadow-[0_10px_24px_rgba(0,0,0,0.08)]">
+      <div className="text-[11px] font-semibold tracking-[0.08em] text-[#2a2a2a]">{item.name}</div>
+      <div className="mt-1 font-mono text-[18px] font-semibold leading-tight text-black">{item.value}</div>
+      {item.change == null ? (
+        <div className="mt-1 text-[11px] text-[#9a9a9a]">—</div>
+      ) : (
+        <div className={`mt-1 flex items-center gap-1 font-mono text-[11px] font-semibold ${isUp ? "text-emerald-600" : isDown ? "text-red-500" : "text-[#555]"}`}>
+          {isUp && <span>▲</span>}
+          {isDown && <span>▼</span>}
+          <span>{fmtPct(item.change)}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function MarketTickerStrip() {
+  const [stocks, setStocks] = useState<TickerItem[]>([]);
+  const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const res = await fetch("/api/scanner", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tickers: LQ45_TICKERS }),
+          cache: "no-store",
+        });
+        if (!res.ok) return;
+        const json = await res.json();
+        const rows = (json?.data || []) as ScannerRow[];
+        const next = rows
+          .filter((row) => row.name && Number.isFinite(row.close))
+          .map((row) => ({
+            name: String(row.name),
+            value: fmtPrice(Number(row.close)),
+            change: Number.isFinite(row.change) ? Number(row.change) : 0,
+          }));
+
+        if (!cancelled && next.length > 0) {
+          setStocks(next.slice(0, 12));
+          setUpdatedAt(new Date());
+        }
+      } catch {
+        // Keep fallback cards silent. Homepage should never break because ticker feed fails.
+      }
+    }
+
+    load();
+    const timer = window.setInterval(load, 60_000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  const visibleStocks = useMemo<TickerItem[]>(() => {
+    if (stocks.length > 0) return stocks;
+    return [
+      { name: "MEDC", value: "1.060", change: -0.47 },
+      { name: "JPFA", value: "1.965", change: -2.24 },
+      { name: "SIDO", value: "374", change: 0 },
+      { name: "HRUM", value: "740", change: -5.13 },
+      { name: "BBCA", value: "9.250", change: 0.27 },
+      { name: "BMRI", value: "5.900", change: 0.43 },
+    ];
+  }, [stocks]);
+
+  return (
+    <section className="border-b border-[#e5e1d8] bg-[#f7f5ef] text-[#151515]">
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-12">
+        <div className="mb-3 grid items-center gap-2 text-xs text-[#777] md:grid-cols-3">
+          <div>Terakhir diperbarui: {updatedAt ? formatTime(updatedAt) : "mengambil data..."}</div>
+          <div className="text-center text-base font-bold text-black">LQ 45</div>
+          <div className="text-left md:text-right">
+            Data pasar live dari <span className="font-semibold text-black">TradingView</span>
+          </div>
+        </div>
+
+        <div className="flex gap-5 overflow-hidden">
+          <div className="hidden shrink-0 gap-3 lg:flex">
+            {BOND_CARDS.map((item) => <TickerCard key={item.name} item={item} />)}
+          </div>
+
+          <div className="relative min-w-0 flex-1 overflow-hidden">
+            <div className="flex w-max animate-[ticker-scroll_36s_linear_infinite] gap-3 hover:[animation-play-state:paused]">
+              {[...visibleStocks, ...visibleStocks].map((item, idx) => (
+                <TickerCard key={`${item.name}-${idx}`} item={item} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-3 flex items-center justify-center gap-2">
+          {[0, 1, 2, 3].map((dot) => (
+            <span key={dot} className={`h-1.5 w-1.5 rounded-full ${dot === 0 ? "bg-[#788495]" : "border border-[#b7b7b7]"}`} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

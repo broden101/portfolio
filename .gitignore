@@ -4,3 +4,4 @@ out/
 .env
 .vercel
 __pycache__/
+.hermes/
