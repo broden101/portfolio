@@ -259,6 +259,17 @@ export const COMMODITY_RESERVES: Record<string, CommodityReserve> = {
     capacityUtilization: 0.93,
     plantLifeYears: 25,
   },
+  BSSR: {
+    ticker: "BSSR", type: "coal", asOf: "2025-12-31",
+    sourceUrl: "data/reserves/BSSR_2025.pdf",
+    sharesOutstandingBn: 2.6165,
+    provenMt: 32.31,            // proven + probable total (AR2025 p.37 — no separate split given)
+    indicatedMt: 0,
+    gradeGAR: 4200,             // mid-LCV thermal coal; conservative estimate (exact GAR not in AR)
+    annualProductionMt: 17.84,  // FY2025 actual production
+    cashCostPerTonUSD: 28,      // derived: COGS $495M / 17.58Mt sales vol
+    stripRatio: 4.0,            // Kalimantan surface mine; not disclosed in AR, estimate
+  },
   // TODO: Seed after downloading annual reports via IR sites
   // ADRO: { ticker: "ADRO", type: "coal", ... } // alamtri.com
   // PTBA: { ticker: "PTBA", type: "coal", ... } // ptba.co.id
