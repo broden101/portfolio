@@ -76,9 +76,11 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#050505] text-[#f2eee6]">
       <Navbar />
-      <MarketTickerStrip />
+      <div className="pt-16">
+        <MarketTickerStrip />
+      </div>
 
-      <section className="relative border-b border-[rgba(214,173,90,0.28)] pt-28 lg:pt-32">
+      <section className="relative border-b border-[rgba(214,173,90,0.28)] pt-12 lg:pt-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_10%,rgba(198,161,91,0.09),transparent_34%)]" />
         <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 pb-20 lg:grid-cols-[1fr_420px] lg:px-12">
           <div className="relative flex gap-8">
