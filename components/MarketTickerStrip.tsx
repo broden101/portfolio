@@ -51,13 +51,13 @@ function TickerCard({ item }: { item: TickerItem }) {
   const isDown = item.change != null && item.change < 0;
 
   return (
-    <div className="min-w-[132px] rounded-2xl border border-black/5 bg-white px-4 py-3 text-[#151515] shadow-[0_10px_24px_rgba(0,0,0,0.08)]">
-      <div className="text-[11px] font-semibold tracking-[0.08em] text-[#2a2a2a]">{item.name}</div>
-      <div className="mt-1 font-mono text-[18px] font-semibold leading-tight text-black">{item.value}</div>
+    <div className="min-w-[130px] border border-[rgba(214,173,90,0.22)] bg-[#0a0a0a] px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#d6ad5a]">{item.name}</div>
+      <div className="mt-1 font-mono text-[17px] font-semibold leading-tight text-[#f2eee6]">{item.value}</div>
       {item.change == null ? (
-        <div className="mt-1 text-[11px] text-[#9a9a9a]">—</div>
+        <div className="mt-1 text-[10px] text-[#aaa295]/50">—</div>
       ) : (
-        <div className={`mt-1 flex items-center gap-1 font-mono text-[11px] font-semibold ${isUp ? "text-emerald-600" : isDown ? "text-red-500" : "text-[#555]"}`}>
+        <div className={`mt-1 flex items-center gap-1 font-mono text-[11px] font-semibold ${isUp ? "text-emerald-400" : isDown ? "text-red-400" : "text-[#aaa295]/60"}`}>
           {isUp && <span>▲</span>}
           {isDown && <span>▼</span>}
           <span>{fmtPct(item.change)}</span>
@@ -98,7 +98,7 @@ export default function MarketTickerStrip() {
           setUpdatedAt(new Date());
         }
       } catch {
-        // Keep fallback cards silent. Homepage should never break because ticker feed fails.
+        // keep silent
       }
     }
 
@@ -123,34 +123,28 @@ export default function MarketTickerStrip() {
   }, [stocks]);
 
   return (
-    <section className="border-b border-[#e5e1d8] bg-[#f7f5ef] text-[#151515]">
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-12">
-        <div className="mb-3 grid items-center gap-2 text-xs text-[#777] md:grid-cols-3">
+    <section className="border-y border-[rgba(214,173,90,0.28)] bg-[#070707] text-[#f2eee6]">
+      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-12">
+        <div className="mb-3 grid items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-[#aaa295]/50 md:grid-cols-3">
           <div>Terakhir diperbarui: {updatedAt ? formatTime(updatedAt) : "mengambil data..."}</div>
-          <div className="text-center text-base font-bold text-black">LQ 45</div>
-          <div className="text-left md:text-right">
-            Data pasar live dari <span className="font-semibold text-black">TradingView</span>
-          </div>
+          <div className="text-center text-[13px] font-semibold tracking-[0.22em] text-[#d6ad5a]">LQ 45</div>
+          <div className="text-left md:text-right">Data pasar live dari TradingView</div>
         </div>
 
-        <div className="flex gap-5 overflow-hidden">
+        <div className="flex gap-4 overflow-hidden">
           <div className="hidden shrink-0 gap-3 lg:flex">
             {BOND_CARDS.map((item) => <TickerCard key={item.name} item={item} />)}
           </div>
 
           <div className="relative min-w-0 flex-1 overflow-hidden">
-            <div className="flex w-max animate-[ticker-scroll_36s_linear_infinite] gap-3 hover:[animation-play-state:paused]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#070707] to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#070707] to-transparent" />
+            <div className="flex w-max animate-[ticker-scroll_38s_linear_infinite] gap-3 hover:[animation-play-state:paused]">
               {[...visibleStocks, ...visibleStocks].map((item, idx) => (
                 <TickerCard key={`${item.name}-${idx}`} item={item} />
               ))}
             </div>
           </div>
-        </div>
-
-        <div className="mt-3 flex items-center justify-center gap-2">
-          {[0, 1, 2, 3].map((dot) => (
-            <span key={dot} className={`h-1.5 w-1.5 rounded-full ${dot === 0 ? "bg-[#788495]" : "border border-[#b7b7b7]"}`} />
-          ))}
         </div>
       </div>
     </section>
