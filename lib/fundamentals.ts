@@ -93,6 +93,7 @@ export interface BankValuation {
   marketPB: number;      // price / BV0
   upside: number;        // %
   ke: number;
+  roeSpread: number;     // ROE - Ke (%)
   roePath: number[];
   bvPath: number[];
   riPath: number[];
@@ -425,8 +426,8 @@ export function computeDcfInputs(sa: SAFinancials, price: number, beta: number):
     findRow(sa.balance, "borrowings");
   const cashRow = findRow(sa.balance, "cash and cash equivalents", "cash & equivalents", "cash and equivalents", "cash");
   const totalDebt = latestValue(totalDebtRow) ?? 0;
-  const cash = latestValue(cashRow) ?? 0;
-  const netDebt = totalDebt - cash; // MILLIONS
+  const cashAndEquivalents = latestValue(cashRow) ?? 0;
+  const netDebt = totalDebt - cashAndEquivalents; // MILLIONS
 
   // Tax rate — effective
   const taxRow = findRow(sa.income, "income tax", "tax provision", "income tax expense");
@@ -655,6 +656,7 @@ export function computeBankValuation(inputs: BankInputs): BankValuation {
     marketPB: Math.round(marketPB * 100) / 100,
     upside: Math.round(upside * 100) / 100,
     ke,
+    roeSpread: Math.round((inputs.roe - inputs.ke) * 100) / 100,
     roePath,
     bvPath,
     riPath,

@@ -105,6 +105,10 @@ async function testSourceHasNoKnownUiRegression() {
   assert.match(topMover, /close_price|closePrice/, 'TopMover must display latest price');
   assert.match(topMover, /total_buy_value|totalBuyValue/, 'TopMover must include buy value for active-value calculation');
   assert.match(topMover, /total_sell_value|totalSellValue/, 'TopMover must include sell value for active-value calculation');
+
+  const dcfPage = await readFile(new URL('../app/calculator/dcf/page.tsx', import.meta.url), 'utf8');
+  assert.match(dcfPage, /VALUATION LAB|Valuation Lab/, 'DCF page must use Valuation Lab branding');
+  assert.doesNotMatch(dcfPage, /DCF Calculator/, 'DCF page must not show generic DCF Calculator label');
 }
 
 const tests = [

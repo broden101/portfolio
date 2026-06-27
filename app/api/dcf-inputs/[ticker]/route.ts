@@ -32,11 +32,24 @@ export async function GET(
       );
     }
 
-    if (sa && isBankTicker(ticker)) {
+    const saTicker = ticker;
+    const saIncomeRows: Set<string> = sa ? new Set(Object.keys(sa.income).map((k) => k.toLowerCase())) : new Set<string>();
+    const isBank = isBankTicker(saTicker) || saIncomeRows.has("net interest income") || Array.from(saIncomeRows).some((k) => k.includes("interest income on loans"));
+    if (sa && isBank) {
       const inputs = computeBankInputs(sa, price, beta);
       const valuation = computeBankValuation(inputs);
+      const warnings = [
+        ...(inputs.roe <= inputs.ke ? ["ROE below Cost of Equity"] : []),
+        ...(inputs.ke - inputs.terminalGrowth < 2 ? ["Terminal growth too close to Cost of Equity"] : []),
+      ];
       return NextResponse.json(
-        { model: "bank", inputs, valuation },
+        {
+          model: "bank",
+          inputs: { ticker: inputs.ticker, price: inputs.price, beta: inputs.beta },
+          bankInputs: inputs,
+          valuation,
+          warnings,
+        },
         { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=600" } },
       );
     }
@@ -123,8 +136,10 @@ export async function GET(
     }
 
     const inputs = computeDcfInputs(sa, price, beta);
+    const warnings: string[] = [];
+    if (inputs.wacc - inputs.terminalGrowth < 2) warnings.push("WACC spread too narrow");
     return NextResponse.json(
-      { model: "fcff", inputs },
+      { model: "fcff", inputs, warnings },
       { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=600" } },
     );
   } catch (err) {

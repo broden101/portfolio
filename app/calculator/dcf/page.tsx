@@ -16,6 +16,12 @@ import {
 } from "./presets";
 
 /* ─── Helpers ─── */
+function getConfidence(warnings: string[] | undefined | null): "High" | "Medium" | "Low" {
+  const count = warnings?.length ?? 0;
+  if (count >= 3) return "Low";
+  if (count >= 1) return "Medium";
+  return "High";
+}
 const fmt = (n: number, d = 2) => n.toLocaleString("id-ID", { maximumFractionDigits: d });
 const fmtIDR = (n: number) => `Rp ${fmt(n, 0)}`;
 const fmtPct = (n: number) => `${fmt(n, 1)}%`;
@@ -23,6 +29,10 @@ const fmtT = (n: number) => `${fmt(n, 1)} T`;
 
 /* ─── Auto-fill API response types ─── */
 interface DcfInputsResponse {
+  ticker?: string;
+  price?: number;
+  warnings?: string[];
+
   model: "fcff";
   inputs: {
     ticker: string;
@@ -68,10 +78,28 @@ interface BankInputsResponse {
     marketPB: number;
     upside: number;
     ke: number;
+    roeSpread: number;
     roePath: number[];
     bvPath: number[];
     riPath: number[];
     dpsPath: number[];
+  };
+  warnings?: string[];
+  bankInputs?: {
+    ticker: string;
+    price: number;
+    beta: number;
+    bvPerShare: number;
+    roe: number;
+    payout: number;
+    eps: number;
+    dps: number;
+    shares: number;
+    ke: number;
+    growthRates: number[];
+    terminalGrowth: number;
+    roeFloor: number;
+    roeTerminal: number;
   };
 }
 
@@ -121,6 +149,7 @@ export default function DCFPage() {
 
   // Commodity NAV state
   const [commodityNav, setCommodityNav] = useState<any>(null);
+  const [warnings, setWarnings] = useState<string[]>([]);
 
   // ── Autofill status ──
   type AutofillStatus = { status: "idle" } | { status: "loading" } | { status: "error"; message: string };
@@ -129,9 +158,10 @@ export default function DCFPage() {
   // runAutofill: receives target ticker, no closure deps on form state
   const runAutofill = useCallback(async (target: string) => {
     if (!target || target === "CUSTOM") return;
+    setWarnings([]);
     setAutofill({ status: "loading" });
     try {
-      const res = await fetch(`/api/dcf-inputs/${target.toUpperCase()}`);
+      const res = await fetch(`/api/dcf-inputs/${target.toUpperCase()}`, { cache: "no-store" });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || `HTTP ${res.status}`);
@@ -139,10 +169,29 @@ export default function DCFPage() {
       const data = await res.json();
 
       if (data.model === "bank") {
-        const inp = data.inputs as BankInputsResponse["inputs"];
+        // If API response uses the legacy shape (no val.kee/bankInputs wrapper), normalize once before state update.
+        if (!("bankInputs" in data)) {
+          const legacy = data as unknown as {
+            model: "bank";
+            inputs: BankInputsResponse["inputs"];
+            valuation: Omit<BankInputsResponse["valuation"], "roeSpread"> & { ke?: number };
+            warnings?: string[];
+          };
+          const spread =
+            (legacy.inputs.roe ?? 0) -
+            (legacy.valuation.ke ?? legacy.inputs.ke ?? 0);
+          data.bankInputs = legacy.inputs;
+          data.valuation = {
+            ...legacy.valuation,
+            ke: legacy.valuation.ke ?? legacy.inputs.ke ?? 0,
+            roeSpread: Math.round(spread * 100) / 100,
+          };
+        }
+        const inp = (data.bankInputs ?? data.inputs) as BankInputsResponse["inputs"];
         setMode("bank");
         setTicker(inp.ticker);
         setCurrentPrice(inp.price);
+        setWarnings(data.warnings ?? []);
         setBvPerShare(inp.bvPerShare);
         setRoe(inp.roe);
         setPayout(inp.payout);
@@ -160,13 +209,17 @@ export default function DCFPage() {
         setMode("commodity");
         setTicker(data.inputs.ticker);
         setCurrentPrice(data.inputs.price);
-        setCommodityNav(data.nav);
+        setCommodityNav({ ...data.nav, warnings: data.warnings ?? data.nav?.warnings ?? [] });
+        setWarnings(data.warnings ?? data.nav?.warnings ?? []);
         if (data.inputs.shares) setShares(data.inputs.shares);
       } else {
         const inp = data.inputs as DcfInputsResponse["inputs"];
         setMode("fcff");
         setTicker(inp.ticker);
         setCurrentPrice(inp.price);
+        const clientWarnings: string[] = [...(data.warnings ?? [])];
+        if (inp.wacc - inp.terminalGrowth < 2) clientWarnings.push("WACC spread too narrow");
+        setWarnings(clientWarnings);
         setBaseRevenue(inp.baseRevenue);
         setEbitMargin(inp.ebitMargin);
         setCapexPct(inp.capexPct);
@@ -183,6 +236,7 @@ export default function DCFPage() {
       }
       setAutofill({ status: "idle" });
     } catch (err: unknown) {
+      setWarnings([]);
       setAutofill({ status: "error", message: err instanceof Error ? err.message : "Gagal mengambil data" });
     }
   }, []);
@@ -366,6 +420,11 @@ export default function DCFPage() {
       justifiedPB: Math.round(justifiedPB * 100) / 100,
       marketPB: Math.round(marketPB * 100) / 100,
       upside: Math.round(upside * 100) / 100,
+      roeSpread: Math.round((roe - ke) * 100) / 100,
+      warnings: [
+        ...(roe <= ke ? ["ROE below Cost of Equity"] : []),
+        ...(keDec - tgDec < 0.02 ? ["Terminal growth too close to Cost of Equity"] : []),
+      ],
       roePath, bvPath, riPath, dpsPath,
       sgr: Math.round(sgr * 100) / 100,
       growthRates: rates,
@@ -419,85 +478,106 @@ export default function DCFPage() {
   const activeUpside = mode === "fcff" ? dcf.upside : mode === "bank" ? bankResult.upside : commodityNav?.scenarios?.[0]?.upside ?? 0;
   const verdict = activeUpside > 20 ? "UNDERVALUED" : activeUpside < -20 ? "OVERVALUED" : "FAIR VALUE";
   const verdictColor = activeUpside > 20 ? "#22C55E" : activeUpside < -20 ? "#EF4444" : "#FACC15";
+  const activeConfidence = mode === "fcff"
+    ? getConfidence(warnings)
+    : mode === "bank"
+      ? getConfidence(bankResult.warnings)
+      : getConfidence(commodityNav?.warnings);
+  const lastFetch = new Date().toLocaleString("id-ID", { hour12: false, timeZone: "Asia/Jakarta" });
 
   return (
-    <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+    <div className="min-h-screen bg-[#050505] pt-24 pb-20">
       <Navbar />
-      <div className="max-w-6xl mx-auto px-6 lg:px-12">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-10">
-          <div className="flex items-center gap-4 mb-3">
-            <div className="w-10 h-px bg-[#C6A15B]/30" />
-            <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">DCF Model</span>
+        <div className="mb-8 rounded-2xl border border-[#352817] bg-[#0B0A08] p-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-4 mb-3">
+                <div className="w-10 h-px bg-[#C8A45D]/30" />
+                <span className="text-[#C8A45D] text-xs tracking-[0.3em] uppercase font-medium">VALUATION LAB</span>
+              </div>
+              <h1 className="font-heading text-3xl md:text-4xl text-[#F5F0E8] font-light mb-3">
+                Sector-Based Intrinsic Value Framework
+              </h1>
+              <p className="text-[#A7A09A] text-sm leading-6 max-w-2xl">
+                Different businesses require different valuation lenses. Banks are valued with Residual Income, operating companies with FCFF DCF, and commodity names with NAV-style assumptions.
+              </p>
+            </div>
+            <div className="shrink-0 rounded-xl border border-[#352817] bg-[#11100D] p-4 text-xs text-[#A7A09A]">
+              <p className="text-[#C8A45D] text-[10px] uppercase tracking-[0.24em]">Model Routing</p>
+              <p className="mt-2 text-[#F5F0E8] font-medium">{ticker}</p>
+              <p className="mt-1">{mode === "bank" ? "Detected Sector Model: Bank Valuation" : mode === "commodity" ? "Detected Sector Model: Commodity NAV" : "Detected Sector Model: Operating Company"}</p>
+              <p className="mt-1">{mode === "bank" ? "Primary Method: Residual Income" : mode === "commodity" ? "Primary Method: Reserve NAV" : "Primary Method: FCFF DCF"}</p>
+              {mode === "bank" && <p className="mt-1">Cross-Check: Dividend Discount Model</p>}
+            </div>
           </div>
-          <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light mb-3">
-            Discounted <span className="text-gold-gradient font-medium">Cash Flow</span>
-          </h1>
-          <p className="text-[#B8AA96]/60 text-sm font-light max-w-xl">
-            {mode === "bank"
-              ? "Model bank: RIM + DDM + Justified P/B. Auto-switch untuk saham perbankan IDX."
-              : mode === "commodity"
-              ? "Commodity NAV: Mine-life DCF based on reserve data, live commodity prices, and cash cost. 3-scenario valuation."
-              : "FCFF-based intrinsic value estimation with editable 5-year projections, terminal value, and WACC sensitivity analysis for IDX stocks."}
-          </p>
         </div>
 
         {/* Ticker Selector */}
-        <div className="card-luxury p-6 mb-8">
-          <p className="text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-4">Pilih Saham</p>
+        <div className="rounded-2xl border border-[#352817] bg-[#0B0A08] p-6 mb-8">
+          <p className="text-[#A7A09A] text-xs tracking-[0.15em] uppercase mb-4">Pilih Emiten</p>
           <div className="flex flex-wrap items-center gap-2">
             {BANK_PRESETS.map((p) => (
               <button
                 key={`bank-${p.ticker}`}
                 onClick={() => selectPreset(p.ticker)}
-                className={`px-4 py-2 text-sm border transition-all ${
+                className={`px-4 py-2.5 text-sm border transition-all ${
                   ticker === p.ticker
-                    ? "border-[#C6A15B] text-[#C6A15B] bg-[#C6A15B]/10"
-                    : "border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B]/30 hover:text-[#B8AA96]"
+                    ? "border-[#C8A45D] text-[#C8A45D] bg-[#C8A45D]/10"
+                    : "border-[#352817] text-[#A7A09A]/70 hover:border-[#C8A45D]/30 hover:text-[#A7A09A]"
                 }`}
               >
-                🏦 {p.ticker}
+                {p.ticker}
+                <span className="ml-2 text-[9px] uppercase tracking-[0.16em] text-[#A7A09A]/45">Bank Model</span>
               </button>
             ))}
-            <div className="w-px bg-[#2C261E] mx-1" />
+            <div className="w-px bg-[#352817] mx-1" />
             {CORPORATE_PRESETS.filter((p) => p.ticker !== "CUSTOM").map((p) => (
               <button
                 key={`corp-${p.ticker}`}
                 onClick={() => selectPreset(p.ticker)}
-                className={`px-4 py-2 text-sm border transition-all ${
+                className={`px-4 py-2.5 text-sm border transition-all ${
                   ticker === p.ticker
-                    ? "border-[#C6A15B] text-[#C6A15B] bg-[#C6A15B]/10"
-                    : "border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B]/30 hover:text-[#B8AA96]"
+                    ? "border-[#C8A45D] text-[#C8A45D] bg-[#C8A45D]/10"
+                    : "border-[#352817] text-[#A7A09A]/70 hover:border-[#C8A45D]/30 hover:text-[#A7A09A]"
                 }`}
               >
                 {p.ticker}
+                <span className="ml-2 text-[9px] uppercase tracking-[0.16em] text-[#A7A09A]/45">{isCommodity(p.ticker) ? "Commodity NAV" : "FCFF DCF"}</span>
               </button>
             ))}
             {/* Free-text ticker input */}
-            <div className="flex items-center border border-[#2C261E] bg-[#0B0B0A] focus-within:border-[#C6A15B]/40">
-              <span className="text-[#C6A15B]/60 text-xs pl-3">✦</span>
+            <div className="flex items-center border border-[#352817] bg-[#0B0A08] focus-within:border-[#C8A45D]/40">
+              <span className="text-[#C8A45D]/60 text-xs pl-3">✦</span>
               <input
                 type="text"
                 value={customInput}
                 onChange={(e) => setCustomInput(e.target.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 5))}
                 onKeyDown={(e) => { if (e.key === "Enter") submitCustomTicker(); }}
                 onBlur={() => { if (customInput && customInput !== ticker) submitCustomTicker(); }}
-                placeholder="Ticker (mis. GOTO)"
-                className="w-36 bg-transparent text-[#F4EFE6] text-sm py-2 px-2 outline-none font-mono uppercase"
+                placeholder="Search IDX ticker, e.g. BBCA, TLKM, ASII"
+                className="w-48 bg-transparent text-[#F5F0E8] text-sm py-2.5 px-2 outline-none font-mono uppercase"
               />
             </div>
             {/* Refresh button */}
             <button
               onClick={() => runAutofill(ticker)}
               disabled={autofill.status === "loading" || !ticker || ticker === "CUSTOM"}
-              className="px-4 py-2 text-sm border border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B]/30 hover:text-[#B8AA96] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-4 py-2.5 text-sm border border-[#352817] text-[#A7A09A]/70 hover:border-[#C8A45D]/30 hover:text-[#A7A09A] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {autofill.status === "loading" ? "Fetching…" : "↻ Refresh"}
+              {autofill.status === "loading" ? "Fetching…" : "Update Valuation Inputs"}
             </button>
           </div>
           {autofill.status === "error" && (
             <div className="flex items-center gap-2 p-2 mt-2 border border-red-400/20 bg-red-400/5 text-xs text-red-400">
               ⚠ {autofill.message}
+            </div>
+          )}
+          {autofill.status === "loading" && (
+            <div className="flex items-center gap-3 p-3 mt-2 border border-[#C8A45D]/20 bg-[#C8A45D]/5 text-xs text-[#A7A09A]">
+              <span className="inline-block w-3 h-3 border border-[#C8A45D] border-t-transparent rounded-full animate-spin" />
+              <span>Loading valuation model... Fetching market quote, financial statements, and sector-specific assumptions.</span>
             </div>
           )}
         </div>
@@ -510,10 +590,30 @@ export default function DCFPage() {
               <div className="mb-6 rounded border border-red-400/30 bg-red-400/5 p-4 text-red-200 text-xs leading-relaxed">Output fair value per share terlihat tidak wajar. Periksa satuan input, terutama shares outstanding dan harga saham.</div>
             )}
 
+        {/* Shared Verdict Cards */}
+        <div className="mb-8 grid gap-4 md:grid-cols-4">
+          <div className="rounded-2xl border border-[#352817] bg-[#0B0A08] p-5">
+            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A7A09A]/60">Market Price</p>
+            <p className="mt-3 text-2xl font-heading text-[#F5F0E8]">{fmtIDR(currentPrice)}</p>
+          </div>
+          <div className="rounded-2xl border border-[#352817] bg-[#0B0A08] p-5">
+            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A7A09A]/60">Fair Value</p>
+            <p className="mt-3 text-2xl font-heading text-[#C8A45D]">{fmtIDR(mode === "fcff" ? Math.round(dcf.fairValuePerShare) : mode === "bank" ? Math.round(bankResult.blended) : Math.round(commodityNav?.scenarios?.[0]?.fairValuePerShare ?? 0))}</p>
+          </div>
+          <div className="rounded-2xl border border-[#352817] bg-[#0B0A08] p-5">
+            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A7A09A]/60">Implied Upside / Downside</p>
+            <p className="mt-3 text-2xl font-heading" style={{ color: verdictColor }}>{fmtPct(activeUpside)}</p>
+          </div>
+          <div className="rounded-2xl border border-[#352817] bg-[#0B0A08] p-5">
+            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A7A09A]/60">Model Confidence</p>
+            <p className="mt-3 text-2xl font-heading text-[#F5F0E8]">{activeConfidence}</p>
+            <p className="mt-2 text-[11px] leading-5 text-[#A7A09A]/70">Confidence reflects data availability, model fit, and assumption sensitivity — not prediction accuracy.</p>
+          </div>
+        </div>
+
             {/* FCFF Mode */}
         {mode === "fcff" && (
           <>
-            {autofill.status === "loading" && <LoadingBanner ticker={ticker} />}
             <div className={`transition-opacity ${autofill.status === "loading" ? "opacity-60" : "opacity-100"}`}>
             <div className="grid lg:grid-cols-3 gap-8">
               {/* Left: Inputs */}
@@ -567,7 +667,7 @@ export default function DCFPage() {
                   <div className="text-4xl font-heading font-medium mb-1" style={{ color: verdictColor }}>
                     {fmtIDR(Math.round(dcf.fairValuePerShare))}
                   </div>
-                  <p className="text-[#B8AA96]/50 text-xs mb-4">Fair Value / Share</p>
+                  <p className="text-[#B8AA96]/50 text-xs mb-4">Intrinsic Value / Share</p>
                   <div className="flex justify-center gap-6 text-sm">
                     <div>
                       <p className="text-[#B8AA96]/40 text-[10px] uppercase">Harga Saat Ini</p>
@@ -601,11 +701,9 @@ export default function DCFPage() {
 
                 <div className="card-luxury p-5">
                   <p className="text-[#B8AA96]/30 text-[10px] leading-relaxed">
-                    <strong className="text-[#B8AA96]/50">Metodologi:</strong> FCFF = NOPAT + D&A − Capex − ΔWC.
-                    Terminal Value via Gordon Growth Model. EV = Σ PV(FCFF) + PV(TV). Equity Value = EV − Net Debt.
-                    Semua angka dalam IDR Triliun. Nilai terminal yang sangat dominan menandakan asumsi sensitif dan perlu diuji ulang.
+                    <strong className="text-[#B8AA96]/50">Metodologi:</strong> FCFF DCF digunakan untuk saham operasional non-keuangan. Model ini mengestimasi enterprise value dari proyeksi arus kas bebas, lalu menyesuaikan net debt untuk mendapatkan equity value.
                   </p>
-                  <SourceNote source="DCF manual / autofill" note="Hasil bersifat teoretis dan sangat sensitif terhadap asumsi pertumbuhan serta WACC." className="mt-2" />
+                  <SourceNote source="Stock Analysis financial statements + TradingView market quote." note={`Terakhir diperbarui: ${lastFetch} WIB`} className="mt-2" />
                   <Disclaimer className="mt-2" />
                 </div>
               </div>
@@ -726,7 +824,6 @@ export default function DCFPage() {
         {/* ─── Bank Mode ─── */}
         {mode === "bank" && (
           <>
-            {autofill.status === "loading" && <LoadingBanner ticker={ticker} />}
             <div className={`transition-opacity ${autofill.status === "loading" ? "opacity-60" : "opacity-100"}`}>
             <div className="grid lg:grid-cols-3 gap-8">
               {/* Left: Bank Inputs */}
@@ -796,11 +893,11 @@ export default function DCFPage() {
 
                 {/* Blended Verdict */}
                 <div className="card-luxury p-6 text-center">
-                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">Blended (RIM + DDM) / 2</p>
+                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">Blended Fair Value</p>
                   <div className="text-4xl font-heading font-medium mb-1" style={{ color: verdictColor }}>
                     {fmtIDR(bankResult.blended)}
                   </div>
-                  <p className="text-[#B8AA96]/50 text-xs mb-4">Fair Value / Share</p>
+                  <p className="text-[#B8AA96]/50 text-xs mb-4">Intrinsic Value / Share</p>
                   <div className="flex justify-center gap-6 text-sm">
                     <div>
                       <p className="text-[#B8AA96]/40 text-[10px] uppercase">Harga</p>
@@ -818,24 +915,24 @@ export default function DCFPage() {
 
                 {/* P/B Comparison */}
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-4 font-medium">P/B Comparison</h3>
+                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-4 font-medium">P/B Sanity Check</h3>
                   <div className="space-y-3 text-sm">
-                    <BreakdownRow label="Justified P/B" value={`${fmt(bankResult.justifiedPB)}x`} highlight />
                     <BreakdownRow label="Market P/B" value={`${fmt(bankResult.marketPB)}x`} />
+                    <BreakdownRow label="Justified P/B" value={`${fmt(bankResult.justifiedPB)}x`} highlight />
                     <BreakdownRow label="BV / Share" value={fmtIDR(bvPerShare)} />
                     <BreakdownRow label="ROE" value={fmtPct(roe)} />
                     <BreakdownRow label="Cost of Equity" value={fmtPct(ke)} />
+                    <BreakdownRow label="ROE Spread" value={fmtPct(bankResult.roeSpread ?? (roe - ke))} />
                     <BreakdownRow label="Terminal Growth" value={fmtPct(bankTG)} />
                   </div>
+                  <p className="mt-3 text-[#B8AA96]/40 text-xs leading-5">If justified P/B is above market P/B, the market may be pricing lower future ROE, higher risk, or slower growth.</p>
                 </div>
 
                 <div className="card-luxury p-5">
                   <p className="text-[#B8AA96]/30 text-[10px] leading-relaxed">
-                    <strong className="text-[#B8AA96]/50">Metodologi Bank:</strong> RIM = BV₀ + Σ PV(RI) + PV(TV).
-                    DDM = Σ PV(DPS) + PV(TV). Justified P/B = (ROE − g) / (Ke − g).
-                    ROE fade: {fmtPct(roe)} → {fmtPct(roeTerminal)}. SGR: {fmtPct(bankResult.sgr)}.
+                    <strong className="text-[#B8AA96]/50">Metodologi Bank:</strong> Bank dinilai dengan model berbasis ekuitas karena deposito dan liabilitas keuangan merupakan bagian dari operasi. FCFF, WACC, capex, working capital, dan net debt bukan driver utama valuasi bank.
                   </p>
-                  <SourceNote source="Bank valuation preset / autofill" note="Nilai bank sangat tergantung pada asumsi ROE fade, cost of equity, dan pertumbuhan residual." className="mt-2" />
+                  <SourceNote source="Stock Analysis financial statements + TradingView market quote." note={`Terakhir diperbarui: ${lastFetch} WIB`} className="mt-2" />
                   <Disclaimer className="mt-2" />
                 </div>
               </div>
@@ -907,7 +1004,6 @@ export default function DCFPage() {
         {/* ─── Commodity Mode ─── */}
         {mode === "commodity" && commodityNav && (
           <div className="card-luxury p-8">
-            {autofill.status === "loading" && <LoadingBanner ticker={ticker} />}
             <div className={`transition-opacity ${autofill.status === "loading" ? "opacity-60" : "opacity-100"}`}>
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-[#C6A15B] text-xs tracking-[0.2em] uppercase">
@@ -955,6 +1051,7 @@ export default function DCFPage() {
               {/* Source */}
               <div className="text-[#B8AA96]/30 text-xs">
                 {commodityNav.valuationMethod ? "Valuasi" : "Data cadangan"} per {commodityNav.asOf} · <a href={commodityNav.sourceUrl} target="_blank" rel="noopener" className="underline hover:text-[#C6A15B]/60">{commodityNav.valuationMethod ? "Research Report" : "Annual Report"}</a>
+                <div className="mt-3 text-[#B8AA96]/25 text-[10px]">Terakhir diperbarui: {lastFetch} WIB</div>
               </div>
             </div>
           </div>
@@ -985,16 +1082,16 @@ function InputField({ label, value, onChange, prefix, suffix, type = "number" }:
 }) {
   return (
     <div>
-      <label className="block text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase mb-1.5">{label}</label>
-      <div className="flex items-center border border-[#2C261E] bg-[#0B0B0A] focus-within:border-[#C6A15B]/40 transition-colors">
-        {prefix && <span className="text-[#B8AA96]/30 text-xs pl-3 pr-1">{prefix}</span>}
+      <label className="block text-[#A7A09A]/40 text-[10px] tracking-[0.1em] uppercase mb-1.5">{label}</label>
+      <div className="flex items-center border border-[#352817] bg-[#0B0A08] focus-within:border-[#C8A45D]/40 transition-colors">
+        {prefix && <span className="text-[#A7A09A]/30 text-xs pl-3 pr-1">{prefix}</span>}
         <input
           type={type}
           value={value}
           onChange={(e) => onChange(type === "number" ? parseFloat(e.target.value) || 0 : e.target.value)}
-          className="w-full bg-transparent text-[#F4EFE6] text-sm py-2.5 px-3 outline-none font-mono"
+          className="w-full bg-transparent text-[#F5F0E8] text-sm py-2.5 px-3 outline-none font-mono"
         />
-        {suffix && <span className="text-[#B8AA96]/30 text-xs pr-3 pl-1">{suffix}</span>}
+        {suffix && <span className="text-[#A7A09A]/30 text-xs pr-3 pl-1">{suffix}</span>}
       </div>
     </div>
   );
@@ -1003,16 +1100,16 @@ function InputField({ label, value, onChange, prefix, suffix, type = "number" }:
 function BreakdownRow({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div className="flex justify-between items-center">
-      <span className={highlight ? "text-[#F4EFE6] text-sm font-medium" : "text-[#B8AA96]/60 text-sm"}>{label}</span>
-      <span className={highlight ? "text-[#C6A15B] font-mono text-sm font-medium" : "text-[#B8AA96]/80 font-mono text-sm"}>{value}</span>
+      <span className={highlight ? "text-[#F5F0E8] text-sm font-medium" : "text-[#A7A09A]/80 text-sm"}>{label}</span>
+      <span className={highlight ? "text-[#C8A45D] font-mono text-sm font-medium" : "text-[#A7A09A] font-mono text-sm"}>{value}</span>
     </div>
   );
 }
 
 function TableRow({ label, values }: { label: string; values: string[] }) {
   return (
-    <tr className="border-b border-[#2C261E]/30">
-      <td className="py-2 pr-4 text-[#B8AA96]/50">{label}</td>
+    <tr className="border-b border-[#352817]/50">
+      <td className="py-2 pr-4 text-[#A7A09A]/80">{label}</td>
       {values.map((v, i) => (
         <td key={i} className="text-right py-2 px-2 font-mono">{v}</td>
       ))}
