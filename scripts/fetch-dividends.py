@@ -24,7 +24,7 @@ KOMPAS_100 = [
     "MEDC.JK", "MIKA.JK", "MKPI.JK", "MNCN.JK", "MTEL.JK", "NISP.JK",
     "PANI.JK", "PGAS.JK", "PGEO.JK", "PTBA.JK", "PTPP.JK", "PWON.JK",
     "SCMA.JK", "SIDO.JK", "SMGR.JK", "SMRA.JK", "SRTG.JK", "TBIG.JK",
-    "TINS.JK", "TKIM.JK", "TLKM.JK", "TOWR.JK", "TPIA.JK", "UNTR.JK",
+    "TINS.JK", "TKIM.JK", "TLKM.JK", "TOWR.JK", "TPIA.JK", "TSPC.JK", "UNTR.JK",
     "UNVR.JK", "WIKA.JK", "WMUU.JK", "WSKT.JK",
 ]
 

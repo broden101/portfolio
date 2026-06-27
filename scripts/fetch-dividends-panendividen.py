@@ -31,7 +31,7 @@ KOMPAS_100 = [
     "MBMA", "MDKA", "MEDC", "MIKA", "MPMX", "MTEL", "MYOR", "NCKL", "PANI",
     "PGAS", "PGEO", "PNLF", "PSAB", "PTBA", "PTRO", "PWON", "RAJA", "RATU",
     "SCMA", "SGER", "SIDO", "SMGR", "SMIL", "SMRA", "SSIA", "TAPG", "TCPI",
-    "TINS", "TLKM", "TOBA", "TOWR", "TPIA", "UNTR", "UNVR", "WIFI", "WIRG",
+    "TINS", "TLKM", "TOBA", "TOWR", "TPIA", "TSPC", "UNTR", "UNVR", "WIFI", "WIRG",
 ]
 
 PANENDIVIDEN_BASE = "https://raw.githubusercontent.com/mitbal/daguerreo-data/main/jkse"
