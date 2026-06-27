@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MarketTickerStrip from "@/components/MarketTickerStrip";
@@ -33,11 +34,11 @@ const articles = [
   },
 ];
 
-const snapshots = [
-  { name: "IHSG", sub: "Index", value: "6.879,12", change: "+0,42%", tone: "up", path: "M0 28 L10 22 L18 24 L28 13 L38 18 L48 8 L58 16 L68 5 L78 10" },
-  { name: "USD/IDR", sub: "Rupiah", value: "16.310", change: "+0,21%", tone: "up", path: "M0 30 L12 27 L24 24 L36 19 L48 17 L60 11 L78 7" },
-  { name: "Foreign Net Buy", sub: "All Market", value: "-642,1 B", change: "–", tone: "down", path: "M0 7 L12 12 L24 10 L36 18 L48 20 L60 27 L78 31" },
-  { name: "BI Rate", sub: "Interest Rate", value: "5,50%", change: "0,00%", tone: "flat", path: "M0 18 L20 18 L20 14 L40 14 L40 14 L78 14" },
+const defaultSnapshots = [
+  { name: "IHSG", sub: "Index", value: "—", change: "—", tone: "flat", path: "M0 28 L10 22 L18 24 L28 13 L38 18 L48 8 L58 16 L68 5 L78 10" },
+  { name: "USD/IDR", sub: "Rupiah", value: "—", change: "—", tone: "flat", path: "M0 30 L12 27 L24 24 L36 19 L48 17 L60 11 L78 7" },
+  { name: "Emas", sub: "Spot USD/Oz", value: "—", change: "—", tone: "flat", path: "M0 18 L20 18 L20 14 L40 14 L40 14 L78 14" },
+  { name: "BI Rate", sub: "Interest Rate", value: "—", change: "—", tone: "flat", path: "M0 18 L20 18 L20 14 L40 14 L40 14 L78 14" },
 ];
 
 const method = [
@@ -47,10 +48,21 @@ const method = [
   { title: "Trading Plan / Investing Plan", desc: "Disiplin manajemen risiko: skenario, downside, dan probabilitas lebih dulu.", icon: "shield" },
 ];
 
-const marketMap = [
-  { sector: "FINANCIAL", move: "+0,42%", tone: "up", rows: [["BBCA", "+0,65%"], ["BMRI", "+0,38%"], ["BBRI", "+0,22%"]] },
-  { sector: "CONSUMER CYCLICAL", move: "+0,18%", tone: "up", rows: [["GGRM", "+0,24%"], ["ICBP", "+0,19%"], ["AMRT", "+0,12%"]] },
-  { sector: "COMMODITIES", move: "-0,27%", tone: "down", rows: [["ANTM", "-0,71%"], ["INCO", "-0,43%"], ["ADRO", "-0,38%"]] },
+type SectorRow = {
+  code: string;
+  name: string;
+  change: number | null;
+};
+
+const marketMapSections = [
+  { id: "IDXFINANCE", name: "FINANCE" },
+  { id: "IDXBASIC", name: "BASIC MATERIALS" },
+  { id: "IDXENERGY", name: "ENERGY" },
+  { id: "IDXHEALTH", name: "HEALTHCARE" },
+  { id: "IDXINDUST", name: "INDUSTRIALS" },
+  { id: "IDXCYC", name: "CONSUMER CYCLICAL" },
+  { id: "IDXTECHNOLOGY", name: "TECHNOLOGY" },
+  { id: "IDXLQ45", name: "LQ 45" },
 ];
 
 function Icon({ type }: { type: string }) {
@@ -73,6 +85,87 @@ function BankSketch() {
 }
 
 export default function Home() {
+  const [snapshots, setSnapshots] = useState(defaultSnapshots);
+  const [updatedAt, setUpdatedAt] = useState<string | "">("");
+  const [sectors, setSectors] = useState<SectorRow[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const res = await fetch("/api/market", { cache: "no-store" });
+        if (!res.ok) return;
+        const d = await res.json();
+
+        const ihsg = d?.ihsg ?? {};
+        const usdidr = d?.macro?.USDIDR ?? {};
+        const gold = d?.macro?.GOLD ?? {};
+        const bi = d?.manualData?.biRate ?? {};
+
+        const num = (v: unknown) => {
+          const n = Number(v);
+          return Number.isFinite(n) ? n : null;
+        };
+        const fmtClose = (v: unknown, decimals = 2) => {
+          const n = num(v);
+          if (n == null) return "—";
+          return n.toLocaleString("id-ID", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+        };
+        const fmtPct = (v: unknown) => {
+          const n = num(v);
+          if (n == null) return "—";
+          return (n > 0 ? "+" : "") + n.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "%";
+        };
+        const tone = (v: unknown): "up" | "down" | "flat" => {
+          const n = num(v);
+          if (n == null || n === 0) return "flat";
+          return n > 0 ? "up" : "down";
+        };
+
+        const nextSnapshots = [
+          { ...defaultSnapshots[0], value: fmtClose(ihsg.close, 2), change: fmtPct(ihsg.change), tone: tone(ihsg.change) },
+          { ...defaultSnapshots[1], value: fmtClose(usdidr.close, 0), change: fmtPct(usdidr.change), tone: tone(usdidr.change) },
+          { ...defaultSnapshots[2], value: fmtClose(gold.close, 2), change: fmtPct(gold.change), tone: tone(gold.change) },
+          { ...defaultSnapshots[3], value: fmtClose(bi.value, 2) + "%", change: bi.note || "—", tone: "flat" },
+        ];
+
+        const rawSectors: Array<Record<string, unknown>> = Array.isArray(d?.sectors) ? d.sectors : [];
+        const sectorMap = new Map(rawSectors.map((s) => [String(s.code), s]));
+        const nextSectors: SectorRow[] = marketMapSections
+          .map((section) => sectorMap.get(section.id))
+          .filter(Boolean)
+          .map((s) => ({ code: String(s!.code), name: String(s!.name), change: num(s!.change) }));
+
+        const ts = d?.timestamp ? new Date(d.timestamp) : new Date();
+        const timePart = ts.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" });
+        const datePart = ts.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric", timeZone: "Asia/Jakarta" });
+
+        if (!cancelled) {
+          setSnapshots(nextSnapshots);
+          setSectors(nextSectors);
+          setUpdatedAt(`${datePart} ${timePart} WIB`);
+        }
+      } catch {
+        // keep fallback
+      }
+    }
+
+    load();
+    const id = window.setInterval(load, 30_000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(id);
+    };
+  }, []);
+
+  const gridSectors = sectors.slice(0, 8);
+  const gridTone = (change: number | null) => change == null || change === 0 ? "text-[#aaa295]/60" : change > 0 ? "text-emerald-400" : "text-red-400";
+  const fmtChange = (change: number | null) => {
+    if (change == null) return "—";
+    return (change > 0 ? "+" : "") + change.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "%";
+  };
+
   return (
     <main className="min-h-screen bg-[#050505] text-[#f2eee6]">
       <Navbar />
@@ -109,8 +202,8 @@ export default function Home() {
           <aside className="border border-[rgba(214,173,90,0.28)] bg-[#101010]/80 p-6 shadow-2xl shadow-black/30">
             <div className="mb-6 flex items-end justify-between border-b border-[rgba(214,173,90,0.28)] pb-4">
               <div>
-                <p className="text-[10px] font-semibold tracking-[0.25em] text-[#d6ad5a]">TODAY'S SNAPSHOT</p>
-                <p className="mt-2 text-xs text-[#aaa295]/50">19 JUNI 2026</p>
+                <p className="text-[10px] font-semibold tracking-[0.25em] text-[#d6ad5a]">KILASAN PASAR</p>
+                <p className="mt-2 text-xs text-[#aaa295]/50">{updatedAt || "mengambil data..."}</p>
               </div>
               <div className="h-2 w-2 rounded-full bg-emerald-400" />
             </div>
@@ -201,22 +294,23 @@ Jangan takut mengakui kesalahan,
 
         <div className="border border-[rgba(214,173,90,0.28)] bg-[#101010] p-7">
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="font-heading text-3xl text-[#f2eee6]">MARKET MAP</h2>
+            <h2 className="font-heading text-3xl text-[#f2eee6]">SEKTOR PASAR</h2>
             <a href="/playbook/ihsg" className="text-[10px] font-semibold tracking-[0.18em] text-[#d6ad5a]">LIHAT DETAIL →</a>
           </div>
-          <div className="space-y-4">
-            {marketMap.map((s) => (
-              <div key={s.sector} className="border border-[rgba(214,173,90,0.28)] p-4">
-                <div className="mb-3 flex justify-between text-xs font-semibold tracking-[0.14em]"><span>{s.sector}</span><span className={s.tone === "up" ? "text-emerald-400" : "text-red-400"}>{s.move}</span></div>
-                <div className="grid grid-cols-3 gap-2">
-                  {s.rows.map(([ticker, move]) => <div key={ticker} className="bg-[#050505] px-3 py-2"><p className="font-mono text-xs">{ticker}</p><p className={move.startsWith("+") ? "font-mono text-xs text-emerald-400" : "font-mono text-xs text-red-400"}>{move}</p></div>)}
+          {sectors.length === 0 ? (
+            <div className="text-sm text-[#aaa295]/60">Mengambil data sektor...</div>
+          ) : (
+            <div className="grid grid-cols-2 gap-2 text-[10px] font-semibold tracking-[0.12em]">
+              {gridSectors.map((s) => (
+                <div key={s.code} className="border border-[rgba(214,173,90,0.28)] bg-[#050505] p-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#aaa295]/80">{s.name}</span>
+                    <span className={gridTone(s.change)}>{fmtChange(s.change)}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
-            <div className="grid grid-cols-2 gap-2 text-[10px] font-semibold tracking-[0.12em] text-[#aaa295]/70">
-              {["INFRASTRUCTURE -0,12%", "PROPERTY -0,31%", "ENERGY -0,58%", "INDUSTRIALS +0,05%"].map((x) => <div key={x} className="border border-[rgba(214,173,90,0.28)] p-3">{x}</div>)}
+              ))}
             </div>
-          </div>
+          )}
         </div>
       </section>
 
