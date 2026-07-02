@@ -45,6 +45,17 @@ const MACRO_SYMBOLS: Record<string, { symbol: string; label: string }> = {
   US10Y: { symbol: "TVC:US10Y", label: "US 10Y" },
   US02Y: { symbol: "TVC:US02Y", label: "US 2Y" },
   AMEX_EIDO: { symbol: "AMEX:EIDO", label: "EIDO (iShares MSCI Indonesia)" },
+  SPX: { symbol: "SP:SPX", label: "S&P 500" },
+  IXIC: { symbol: "NASDAQ:IXIC", label: "Nasdaq" },
+  DJI: { symbol: "DJ:DJI", label: "Dow Jones" },
+  DXY: { symbol: "TVC:DXY", label: "DXY" },
+  VIX: { symbol: "TVC:VIX", label: "VIX" },
+  NI225: { symbol: "TSE:NI225", label: "Nikkei 225" },
+  HSI: { symbol: "HKEX:HSI", label: "Hang Seng" },
+  KOSPI: { symbol: "KRX:KOSPI", label: "KOSPI" },
+  STI: { symbol: "SGX:STI", label: "STI" },
+  NIFTY: { symbol: "NSE:NIFTY", label: "NIFTY 50" },
+  BTC: { symbol: "BITSTAMP:BTCUSD", label: "BTC/USD" },
 };
 
 const COLUMNS = [
