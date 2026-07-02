@@ -126,18 +126,6 @@ export default function IHSGDashboard() {
   const rec = recommendLabel(ihsg.recommend);
   const rsi = rsiLabel(ihsg.rsi);
 
-  const trendRegime = useMemo(() => {
-    const r = ihsg.recommend ?? IHSG_FALLBACK.recommend!;
-    const below50 = ihsg.close != null && ihsg.sma50 != null && ihsg.close < ihsg.sma50;
-    const below200 = ihsg.close != null && ihsg.sma200 != null && ihsg.close < ihsg.sma200;
-    if (r <= -0.5) return { label: "Sell Kuat", color: "text-red-400" };
-    if (below200 && below50) return { label: "Bearish", color: "text-red-400" };
-    if (below50) return { label: "Di Bawah MA50", color: "text-yellow-400" };
-    if (r >= 0.5) return { label: "Buy Kuat", color: "text-emerald-400" };
-    if (r >= 0.1) return { label: "Bullish", color: "text-emerald-400" };
-    return { label: "Netral", color: "text-yellow-400" };
-  }, [ihsg]);
-
   const marketOpen = isMarketOpen();
   const manual: ManualData = data?.manualData ?? FALLBACK_MANUAL;
   const ff = foreignFlow ?? data?.foreignFlow ?? null;
@@ -288,7 +276,7 @@ export default function IHSGDashboard() {
               IHSG <span className="text-gold-gradient font-medium">Dasbor Makro</span>
             </h1>
             <p className="text-[#B8AA96]/50 text-xs tracking-wider uppercase">
-              Makro · Aliran Dana Asing · Rotasi Sektor · Regime Pasar
+              Makro · Aliran Dana Asing · Rotasi Sektor · Indeks Global
             </p>
           </div>
           <div className="text-right">
@@ -714,25 +702,6 @@ function CandleSVG({ o, h, l, c }: { o: number; h: number; l: number; c: number 
 }
 
 /* ── Presentational helpers ── */
-function MaRow({ label, ma, price, color }: { label: string; ma: number | null; price: number; color: "blue" | "cyan" | "green" | "purple" }) {
-  const above = ma != null && price >= ma;
-  const pct = ma != null && ma > 0 ? ((price - ma) / ma) * 100 : null;
-  const colorClass = color === "cyan" ? "text-cyan-400" : color === "blue" ? "text-blue-400" : color === "green" ? "text-lime-400" : "text-purple-400";
-  return (
-    <div className="flex items-center justify-between text-xs">
-      <span className={`${colorClass}/70 font-mono`}>{label}</span>
-      <div className="flex items-center gap-2">
-        <span className={`${colorClass} font-mono`}>{ma != null ? fmtNum(ma) : "—"}</span>
-        {pct != null && (
-          <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${above ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"}`}>
-            {above ? "▲" : "▼"} {Math.abs(pct).toFixed(1)}%
-          </span>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function LevelRow({ label, value, tone, price, sub }: { label: string; value: number; tone: "support" | "resistance" | "ma-blue" | "ma-cyan" | "ma-green" | "ma-purple"; price?: number; sub?: string }) {
   const pct = price != null && price > 0 ? ((value - price) / price) * 100 : null;
   const above = price != null && value >= price;
