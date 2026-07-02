@@ -128,37 +128,6 @@ function readManualData() {
   } catch { return {}; }
 }
 
-/** Read foreign flow history and calc MTD/YTD/dailyNet from daily net data */
-function readFlowMtdYtd(todayStr: string): { mtdNet: number | null; ytdNet: number | null; dailyNet: number | null } {
-  const histPath = join(process.cwd(), "data", "foreign-flow-history.json");
-  if (!existsSync(histPath)) return { mtdNet: null, ytdNet: null, dailyNet: null };
-  try {
-    const hist = JSON.parse(readFileSync(histPath, "utf-8"));
-    const days: { date: string; dailyNet: number }[] = hist?.days ?? [];
-    if (!days.length) return { mtdNet: null, ytdNet: null, dailyNet: null };
-
-    const today = new Date(todayStr);
-    const todayDate = todayStr.slice(0, 10);
-    const currMonth = today.getMonth(); // 0-indexed
-    const currYear = today.getFullYear();
-
-    let mtdSum = 0;
-    let ytdSum = 0;
-    let todayNet: number | null = null;
-    for (const d of days) {
-      const dt = new Date(d.date);
-      if (d.date === todayDate) todayNet = d.dailyNet;
-      if (dt.getFullYear() === currYear) {
-        ytdSum += d.dailyNet;
-        if (dt.getMonth() === currMonth) mtdSum += d.dailyNet;
-      }
-    }
-    return { mtdNet: mtdSum, ytdNet: ytdSum, dailyNet: todayNet };
-  } catch {
-    return { mtdNet: null, ytdNet: null, dailyNet: null };
-  }
-}
-
 export async function GET() {
   const timestamp = new Date().toISOString();
 
@@ -197,13 +166,6 @@ export async function GET() {
 
     // Extract foreign flow and manual data from the file
     const foreignFlow = manualData?.foreignFlow ?? null;
-    if (foreignFlow) {
-      const mtdYtd = readFlowMtdYtd(foreignFlow.date || new Date().toISOString());
-      foreignFlow.mtdNet = mtdYtd.mtdNet;
-      foreignFlow.ytdNet = mtdYtd.ytdNet;
-      // Use all-stocks daily net from history instead of top-10 weekNet
-      if (mtdYtd.dailyNet != null) foreignFlow.weekNet = mtdYtd.dailyNet;
-    }
     const manualDataClean = {
       biRate: manualData?.biRate ?? { value: 5.50, note: "BI RDG" },
       tradeBalance: manualData?.tradeBalance ?? { value: 3.32, note: "Surplus" },
