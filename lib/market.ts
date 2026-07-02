@@ -166,8 +166,9 @@ export function fmtMiliar(n: number): string {
 }
 
 export function fmtTriliun(n: number): string {
-  const abs = Math.abs(n) / 1000;
-  return `${n >= 0 ? "+" : "-"}Rp ${abs.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}T`;
+  const abs = Math.abs(n);
+  const t = abs / 1_000_000;
+  return `${n >= 0 ? "+" : "-"}Rp ${t.toLocaleString("id-ID", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}T`;
 }
 
 export async function fetchMarketData(): Promise<MarketData> {
