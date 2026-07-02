@@ -11,7 +11,7 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { label: "Profile", href: "/#about" },
   { label: "Research", href: "/articles" },
-  { label: "Market Playbook", href: "/playbook" },
+  { label: "Dashboard IHSG", href: "/playbook/ihsg" },
   { label: "Valuation Lab", href: "/calculator" },
   {
     label: "Tools",

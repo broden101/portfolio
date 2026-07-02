@@ -3,7 +3,7 @@
 const links = {
   JELAJAHI: [
     { label: "Riset Terbaru", href: "/articles" },
-    { label: "Market Playbook", href: "/playbook" },
+    { label: "Dashboard IHSG", href: "/playbook/ihsg" },
     { label: "Valuation Lab", href: "/calculator" },
     { label: "Data Room", href: "/screener" },
   ],

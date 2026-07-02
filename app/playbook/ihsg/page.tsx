@@ -281,7 +281,7 @@ export default function IHSGDashboard() {
           <div>
             <div className="flex items-center gap-4 mb-3">
               <div className="w-10 h-px bg-[#C6A15B]/30" />
-              <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Market Playbook</span>
+              <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Dashboard IHSG</span>
             </div>
             <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light mb-2">
               IHSG <span className="text-gold-gradient font-medium">Dasbor Makro</span>
