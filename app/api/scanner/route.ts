@@ -5,16 +5,14 @@ const TV_SCANNER_URL = "https://scanner.tradingview.com/indonesia/scan";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { tickers } = body;
+    const { tickers, sector } = body;
 
-    if (!tickers || !Array.isArray(tickers) || tickers.length === 0) {
-      return NextResponse.json({ error: "tickers array required" }, { status: 400 });
+    // Support either ticker list or sector filter
+    if (!tickers && !sector) {
+      return NextResponse.json({ error: "tickers or sector required" }, { status: 400 });
     }
 
-    // Deduplicate and uppercase
-    const unique = [...new Set(tickers.map((t: string) => t.toUpperCase()))];
-
-    const payload = {
+    const payload: Record<string, unknown> = {
       columns: [
         "name", "description", "close", "open", "high", "low",
         "market_cap_basic", "volume",
@@ -23,15 +21,25 @@ export async function POST(req: NextRequest) {
         "VWAP", "average_volume_10d_calc", "average_volume_30d_calc",
         "High.All", "Low.All", "RSI", "MACD.macd", "MACD.signal",
       ],
-      filter: [
-        { left: "name", operation: "in_range", right: unique },
-        { left: "is_primary", operation: "equal", right: true },
-      ],
       range: [0, 200],
       sort: { sortBy: "market_cap_basic", sortOrder: "desc" },
       symbols: { query: { types: ["stock"] } },
       markets: ["id"],
     };
+
+    if (tickers && Array.isArray(tickers) && tickers.length > 0) {
+      const unique = Array.from(new Set(tickers.map((t: string) => t.toUpperCase())));
+      payload.filter = [
+        { left: "name", operation: "in_range", right: unique },
+        { left: "is_primary", operation: "equal", right: true },
+      ];
+    } else if (sector) {
+      payload.filter = [
+        { left: "sector", operation: "equal", right: sector },
+        { left: "is_primary", operation: "equal", right: true },
+        { left: "market_cap_basic", operation: "greater", right: 0 },
+      ];
+    }
 
     const r = await fetch(TV_SCANNER_URL, {
       method: "POST",

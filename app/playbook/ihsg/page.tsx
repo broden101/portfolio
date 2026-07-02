@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Navbar from "@/components/Navbar";
 import { TopMoverPanel } from "./TopMoverPanel";
 import Footer from "@/components/Footer";
+import SectorStocksPanel from "@/components/SectorStocksPanel";
 import { Disclaimer, SourceNote, EmptyState } from "@/components/DataState";
 import {
   fetchMarketData,
@@ -88,6 +89,7 @@ export default function IHSGDashboard() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [live, setLive] = useState(false);
   const [flowHistory, setFlowHistory] = useState<{ date: string; dailyNet: number; totalForeignBuy: number; totalForeignSell: number }[]>([]);
+  const [selectedSector, setSelectedSector] = useState<{ code: string; name: string; color: string } | null>(null);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -637,11 +639,12 @@ export default function IHSGDashboard() {
                 </thead>
                 <tbody className="font-mono">
                   {sectors.map((s) => (
-                    <tr key={s.code} className="border-b border-[#2C261E]/30">
+                    <tr key={s.code} className="border-b border-[#2C261E]/30 cursor-pointer hover:bg-[#2C261E]/40 transition-colors" onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color })}>
                       <td className="py-2 text-[#F4EFE6] font-sans flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
                         {s.name}
                         {s.type === "basket" && <span className="text-[8px] text-[#B8AA96]/40 uppercase">basket</span>}
+                        <span className="text-[#B8AA96]/30 text-[9px]">→</span>
                       </td>
                       <PerfCell v={s.change} />
                       <PerfCell v={s.perfWeek} />
@@ -664,6 +667,15 @@ export default function IHSGDashboard() {
       <div className="mx-auto max-w-7xl px-6 pb-10 lg:px-12">
         <Disclaimer />
       </div>
+
+      {selectedSector && (
+        <SectorStocksPanel
+          sectorCode={selectedSector.code}
+          sectorName={selectedSector.name}
+          sectorColor={selectedSector.color}
+          onClose={() => setSelectedSector(null)}
+        />
+      )}
 
       <Footer />
     </div>
