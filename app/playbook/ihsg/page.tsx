@@ -17,6 +17,7 @@ import {
   fmtPct,
   fmtNum,
   fmtMiliar,
+  fmtTriliun,
   isMarketOpen,
   IHSG_FALLBACK,
   SECTOR_META,
@@ -367,7 +368,7 @@ export default function IHSGDashboard() {
                   ].map((f) => (
                     <div key={f.label} className="border border-[#2C261E] p-3 text-center">
                       <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{f.label}</div>
-                      <div className={`text-xs font-mono font-medium ${f.color}`}>{fmtMiliar(f.value)}</div>
+                      <div className={`text-xs font-mono font-medium ${f.color}`}>{f.label === "YTD" ? fmtTriliun(f.value) : fmtMiliar(f.value)}</div>
                     </div>
                   ))}
                 </div>

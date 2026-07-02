@@ -165,6 +165,11 @@ export function fmtMiliar(n: number): string {
   return `${n >= 0 ? "+" : "-"}Rp ${abs.toLocaleString("id-ID")}M`;
 }
 
+export function fmtTriliun(n: number): string {
+  const abs = Math.abs(n) / 1000;
+  return `${n >= 0 ? "+" : "-"}Rp ${abs.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}T`;
+}
+
 export async function fetchMarketData(): Promise<MarketData> {
   const res = await fetch("/api/market", { cache: "no-store" });
   if (!res.ok) throw new Error("market fetch failed");
