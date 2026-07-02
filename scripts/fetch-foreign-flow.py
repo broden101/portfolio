@@ -94,7 +94,12 @@ def main():
     print(f"Top foreign buy: {buy_str}")
     print(f"Top foreign sell: {sell_str}")
 
-    # 3) Update history file
+    # --- CRITICAL: skip check BEFORE touching any files ---
+    if daily_net == 0 and total_net_raw == 0:
+        print(f"WARN: sector-rotation returned 0 for {today_str} — market likely closed. Skipping.")
+        return 0
+
+    # --- Update history file ---
     existing_hist = {"lastUpdated": None, "days": []}
     if HIST_FILE.exists():
         try:
@@ -103,13 +108,9 @@ def main():
             pass
 
     # Check if today already exists
-    hist_dates = [d["date"] for d in existing_hist.get("days", [])]
     api_date = today_str
+    hist_dates = [d["date"] for d in existing_hist.get("days", [])]
 
-    # Skip if total is 0 — market closed or data not yet available
-    if daily_net == 0 and total_net_raw == 0:
-        print(f"WARN: sector-rotation returned 0 for {api_date} — market likely closed. Skipping.")
-        return 0
 
     if api_date not in hist_dates:
         # Get correct buy/sell totals (approximate from foreign-flow top-20)
