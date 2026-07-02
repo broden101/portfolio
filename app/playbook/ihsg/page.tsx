@@ -318,38 +318,40 @@ export default function IHSGDashboard() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 mb-8">
-          {/* MARKET REGIME */}
+          {/* INDEKS GLOBAL */}
           <div className="card-luxury p-6">
-            <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">Regime Pasar</h2>
-            <div className="space-y-4">
-              {[
-                { label: "Tren", value: trendRegime.label, color: trendRegime.color },
-                { label: "Momentum", value: rsi.label, color: rsi.color },
-                { label: "MA20", value: ihsg.sma20 != null ? fmtNum(ihsg.sma20) : "—", color: "text-[#B8AA96]" },
-                { label: "MA50", value: ihsg.sma50 != null ? fmtNum(ihsg.sma50) : "—", color: "text-[#B8AA96]" },
-                { label: "MA100", value: ihsg.sma100 != null ? fmtNum(ihsg.sma100) : "—", color: "text-[#B8AA96]" },
-                { label: "MA200", value: ihsg.sma200 != null ? fmtNum(ihsg.sma200) : "—", color: "text-[#B8AA96]" },
-                { label: "Sinyal", value: rec.label, color: rec.color },
-              ].map((r) => (
-                <div key={r.label} className="flex items-center justify-between border-b border-[#2C261E]/50 pb-3">
-                  <span className="text-[#B8AA96]/50 text-[11px] tracking-wider uppercase">{r.label}</span>
-                  <span className={`text-sm font-medium ${r.color}`}>{r.value}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-5 pt-4 border-t border-[#2C261E]">
-              <div className="text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase mb-3">Posisi vs Moving Average</div>
-              <div className="space-y-2">
-                <MaRow label="MA20" ma={ihsg.sma20} price={ihsgClose} color="cyan" />
-                <MaRow label="MA50" ma={ihsg.sma50} price={ihsgClose} color="blue" />
-                <MaRow label="MA100" ma={ihsg.sma100} price={ihsgClose} color="green" />
-                <MaRow label="MA200" ma={ihsg.sma200} price={ihsgClose} color="purple" />
-              </div>
-              <div className="mt-3 text-[9px] text-[#B8AA96]/40 leading-relaxed">
-                {ihsgClose < (ihsg.sma200 ?? Infinity) ? "Di bawah MA200 — tren jangka panjang turun." : "Di atas MA200 — tren jangka panjang naik."}{" "}
-                {ihsgClose < (ihsg.sma50 ?? Infinity) ? "Di bawah MA50 — jangka menengah lemah." : "Di atas MA50 — jangka menengah kuat."}
-              </div>
-            </div>
+            <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">Indeks Global</h2>
+            {(() => {
+              const m = data?.macro ?? {};
+              const q = (k: string) => m[k] ?? null;
+              const row = (label: string, quote: {close?: number|null, change?: number|null}|null, fmt: (n:number)=>string = n=>`${n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})}`) => {
+                if (!quote || quote.close == null) return <div key={label} className="flex justify-between py-1.5 border-b border-[#2C261E]/30"><span className="text-[#B8AA96]/50 text-[11px]">{label}</span><span className="text-[#B8AA96]/30 text-[11px]">—</span></div>;
+                const up = (quote.change ?? 0) >= 0;
+                return <div key={label} className="flex justify-between py-1.5 border-b border-[#2C261E]/30">
+                  <span className="text-[#B8AA96]/70 text-[11px]">{label}</span>
+                  <span className="text-[11px] font-mono">
+                    <span className="text-[#F4EFE6]">{fmt(quote.close)}</span>
+                    <span className={`ml-1.5 ${up ? "text-emerald-400" : "text-red-400"}`}>{up ? "▲" : "▼"} {(quote.change ?? 0) >= 0 ? "+" : ""}{(quote.change ?? 0).toFixed(2)}%</span>
+                  </span>
+                </div>;
+              };
+              const usFmt = (n:number) => n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1});
+              const asiaFmt = (n:number) => n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1});
+              return <>
+                <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-1">US</div>
+                {["SPX","IXIC","DJI","DXY","VIX"].map(k => row(k === "SPX" ? "S&P 500" : k === "IXIC" ? "Nasdaq" : k === "DJI" ? "Dow Jones" : k, q(k), k === "DXY" ? n=>n.toFixed(2) : k === "VIX" ? n=>n.toFixed(2) : usFmt))}
+                <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">ASIA</div>
+                {[
+                  ["NI225","Nikkei 225"],
+                  ["HSI","Hang Seng"],
+                  ["KOSPI","KOSPI"],
+                  ["STI","STI"],
+                  ["NIFTY","NIFTY 50"],
+                ].map(([k,label]) => row(label, q(k), asiaFmt))}
+                <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">CRYPTO</div>
+                {row("BTC", q("BTC"), n=>`$${n.toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:0})}`)}
+              </>;
+            })()}
           </div>
 
           {/* FOREIGN FLOW — auto from Tradersaham */}
