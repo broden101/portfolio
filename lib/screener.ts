@@ -109,13 +109,22 @@ export function screenStock(
     };
   }
 
-  // Calculate composite score from all enabled filters
-  const totalScore = enabledFilters.reduce(
-    (sum, f) => sum + applyFilter(stock, f),
-    0
-  );
-  const maxScore = enabledFilters.length;
-  const normalized = maxScore > 0 ? totalScore / maxScore : 0;
+  // Combo: all enabled filters must pass (score > 0)
+  const scores = enabledFilters.map((f) => applyFilter(stock, f));
+  const allPass = scores.every((s) => s > 0);
+
+  if (!allPass) {
+    return {
+      ...stock,
+      action: "AVOID",
+      status: "FILTER MISS",
+      trend_score: 0,
+    };
+  }
+
+  // Average score of passed filters (higher = stronger signal)
+  const totalScore = scores.reduce((a, b) => a + b, 0);
+  const normalized = totalScore / enabledFilters.length;
 
   let action: ScreenResult["action"];
   let status: string;
@@ -148,5 +157,6 @@ export function screenAll(
 ): ScreenResult[] {
   return stocks
     .map((s) => screenStock(s, filters))
+    .filter((r) => r.action !== "AVOID") // combo filter: only show pass-all
     .sort((a, b) => b.trend_score - a.trend_score || (b.mcap || 0) - (a.mcap || 0));
 }
