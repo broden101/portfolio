@@ -38,6 +38,7 @@ const articles = [
 const defaultSnapshots = [
   { name: "IHSG", sub: "Index", value: "—", change: "—", tone: "flat", path: "M0 28 L10 22 L18 24 L28 13 L38 18 L48 8 L58 16 L68 5 L78 10" },
   { name: "USD/IDR", sub: "Rupiah", value: "—", change: "—", tone: "flat", path: "M0 30 L12 27 L24 24 L36 19 L48 17 L60 11 L78 7" },
+  { name: "Minyak Mentah", sub: "Brent USD/barel", value: "—", change: "—", tone: "flat", path: "M0 18 L20 18 L20 14 L40 14 L40 14 L78 14" },
   { name: "Emas", sub: "Spot USD/Oz", value: "—", change: "—", tone: "flat", path: "M0 18 L20 18 L20 14 L40 14 L40 14 L78 14" },
   { name: "BI Rate", sub: "Interest Rate", value: "—", change: "—", tone: "flat", path: "M0 18 L20 18 L20 14 L40 14 L40 14 L78 14" },
 ];
@@ -103,6 +104,7 @@ export default function Home() {
         const ihsg = d?.ihsg ?? {};
         const usdidr = d?.macro?.USDIDR ?? {};
         const gold = d?.macro?.GOLD ?? {};
+        const oil = d?.macro?.UKOIL ?? {};
         const bi = d?.manualData?.biRate ?? {};
 
         const num = (v: unknown) => {
@@ -128,8 +130,9 @@ export default function Home() {
         const nextSnapshots = [
           { ...defaultSnapshots[0], value: fmtClose(ihsg.close, 2), change: fmtPct(ihsg.change), tone: tone(ihsg.change) },
           { ...defaultSnapshots[1], value: fmtClose(usdidr.close, 0), change: fmtPct(usdidr.change), tone: tone(usdidr.change) },
-          { ...defaultSnapshots[2], value: fmtClose(gold.close, 2), change: fmtPct(gold.change), tone: tone(gold.change) },
-          { ...defaultSnapshots[3], value: fmtClose(bi.value, 2) + "%", change: bi.note || "—", tone: "flat" },
+          { ...defaultSnapshots[2], value: fmtClose(oil.close, 2), change: fmtPct(oil.change), tone: tone(oil.change) },
+          { ...defaultSnapshots[3], value: fmtClose(gold.close, 2), change: fmtPct(gold.change), tone: tone(gold.change) },
+          { ...defaultSnapshots[4], value: fmtClose(bi.value, 2) + "%", change: bi.note || "—", tone: "flat" },
         ];
 
         const rawSectors: Array<Record<string, unknown>> = Array.isArray(d?.sectors) ? d.sectors : [];
