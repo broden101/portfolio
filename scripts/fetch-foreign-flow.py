@@ -106,6 +106,11 @@ def main():
     hist_dates = [d["date"] for d in existing_hist.get("days", [])]
     api_date = today_str
 
+    # Skip if total is 0 — market closed or data not yet available
+    if daily_net == 0 and total_net_raw == 0:
+        print(f"WARN: sector-rotation returned 0 for {api_date} — market likely closed. Skipping.")
+        return 0
+
     if api_date not in hist_dates:
         # Get correct buy/sell totals (approximate from foreign-flow top-20)
         total_buy = sum(s.get("total_buy_value", 0) for s in all_stocks_top)
