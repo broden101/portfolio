@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import { ScannerButton } from "@/components/ScannerButton";
 import { StockTable } from "@/components/StockTable";
 import ReversalScreener from "@/components/ReversalScreener";
+import BsjpScreener from "@/components/BsjpScreener";
 import { EmptyState, ErrorState, Disclaimer } from "@/components/DataState";
 import { getSettings, saveSettings, getCachedResults } from "@/lib/storage";
 import type { ScreenResult, FilterConfig } from "@/lib/types";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-type ScreenerMode = "standard" | "reversal";
+type ScreenerMode = "standard" | "reversal" | "bsjp";
 
 export default function ScreenerPage() {
   const [mode, setMode] = useState<ScreenerMode>("standard");
@@ -101,6 +102,7 @@ export default function ScreenerPage() {
           {([
             { key: "standard" as ScreenerMode, label: "Screener utama" },
             { key: "reversal" as ScreenerMode, label: "Reversal watch" },
+            { key: "bsjp" as ScreenerMode, label: "BSJP" },
           ]).map((tab) => (
             <button
               key={tab.key}
@@ -118,6 +120,7 @@ export default function ScreenerPage() {
 
         {/* Reversal mode */}
         {mode === "reversal" && <ReversalScreener />}
+        {mode === "bsjp" && <BsjpScreener />}
 
         {/* Standard mode */}
         {mode === "standard" && (
