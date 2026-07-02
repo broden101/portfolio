@@ -468,11 +468,6 @@ export default function IHSGDashboard() {
                 </div>
               </div>
             )}
-            <div className="mt-4 pt-3 border-t border-[#2C261E]">
-              <p className="text-[#B8AA96]/30 text-[9px] leading-relaxed">
-                Sumber: TradingView ({live ? "live" : "offline"}). RSI {rsi.label}. Sinyal {rec.label}. Rentang 52 minggu {fmtNum(ihsg.low)}–{fmtNum(ihsg.high)}.
-              </p>
-              <SourceNote source="TradingView" updatedAt={live ? "live feed" : "offline fallback"} note="Kekuatan sinyal menurun ketika data tidak lengkap." className="mt-2" />
             </div>
           </div>
         </div>
