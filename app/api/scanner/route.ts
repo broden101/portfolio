@@ -16,7 +16,8 @@ export async function POST(req: NextRequest) {
 
     const payload = {
       columns: [
-        "name", "description", "close", "market_cap_basic", "volume",
+        "name", "description", "close", "open", "high", "low",
+        "market_cap_basic", "volume",
         "SMA20", "SMA50", "SMA200",
         "change", "Perf.1M", "Perf.3M", "sector",
         "VWAP", "average_volume_10d_calc", "average_volume_30d_calc",
@@ -47,7 +48,8 @@ export async function POST(req: NextRequest) {
 
     const data = await r.json();
     const keys = [
-      "name", "desc", "close", "mcap", "volume",
+      "name", "desc", "close", "open", "high", "low",
+      "mcap", "volume",
       "sma20", "sma50", "sma200", "change", "perf1m", "perf3m", "sector",
       "vwap", "avg_vol_10d", "avg_vol_30d",
       "high_all", "low_all", "rsi", "macd", "macd_signal",

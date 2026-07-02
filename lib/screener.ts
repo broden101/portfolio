@@ -57,6 +57,28 @@ function applyFilter(stock: StockData, filter: FilterConfig): number {
       if (diff < -belowPct * 2 && diff >= -belowPct * 3) return 0.5;
       return 0;
     }
+    case "hammer": {
+      const o = stock.open, h = stock.high, l = stock.low;
+      if (o == null || h == null || l == null) return 0;
+      const body = Math.abs(p - o);
+      const lowerWick = Math.min(o, p) - l;
+      const upperWick = h - Math.max(o, p);
+      if (body <= 0) return 0;
+      // Hammer: small body at top, long lower wick (>=2x body), short upper wick
+      if (lowerWick >= 2 * body && upperWick <= body * 0.5) return 1;
+      if (lowerWick >= 1.5 * body && upperWick <= body) return 0.5;
+      return 0;
+    }
+    case "doji": {
+      const o2 = stock.open;
+      if (o2 == null) return 0;
+      const bodyPct = filter.params.body_pct || 0.1;
+      if (p <= 0) return 0;
+      const bodyRatio = Math.abs(p - o2) / p;
+      if (bodyRatio <= bodyPct) return 1;
+      if (bodyRatio <= bodyPct * 2) return 0.5;
+      return 0;
+    }
     default:
       return 0;
   }

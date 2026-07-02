@@ -3,6 +3,9 @@ export interface StockData {
   name: string;
   desc: string;
   close: number;
+  open?: number;
+  high?: number;
+  low?: number;
   mcap: number;
   volume: number;
   sma20: number;
@@ -118,6 +121,20 @@ export const DEFAULT_FILTERS: FilterConfig[] = [
     description: "Price below SMA20 (oversold bounce)",
     enabled: false,
     params: { below_pct: 3 },
+  },
+  {
+    id: "hammer",
+    name: "Hammer",
+    description: "Candle dg body kecil & lower wick panjang (≥2× body)",
+    enabled: false,
+    params: {},
+  },
+  {
+    id: "doji",
+    name: "Doji",
+    description: "Candle dg body sangat kecil (open≈close)",
+    enabled: false,
+    params: { body_pct: 0.1 },
   },
 ];
 
