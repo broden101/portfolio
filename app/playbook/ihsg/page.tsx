@@ -468,7 +468,6 @@ export default function IHSGDashboard() {
                 </div>
               </div>
             )}
-            </div>
           </div>
         </div>
 
