@@ -50,10 +50,10 @@ const MACRO_SYMBOLS: Record<string, { symbol: string; label: string }> = {
   DJI: { symbol: "DJ:DJI", label: "Dow Jones" },
   DXY: { symbol: "TVC:DXY", label: "DXY" },
   VIX: { symbol: "TVC:VIX", label: "VIX" },
-  NI225: { symbol: "TSE:NI225", label: "Nikkei 225" },
-  HSI: { symbol: "HKEX:HSI", label: "Hang Seng" },
+  NI225: { symbol: "TVC:NI225", label: "Nikkei 225" },
+  HSI: { symbol: "TVC:HSI", label: "Hang Seng" },
   KOSPI: { symbol: "KRX:KOSPI", label: "KOSPI" },
-  STI: { symbol: "SGX:STI", label: "STI" },
+  STI: { symbol: "TVC:STI", label: "STI" },
   NIFTY: { symbol: "NSE:NIFTY", label: "NIFTY 50" },
   BTC: { symbol: "BITSTAMP:BTCUSD", label: "BTC/USD" },
 };
