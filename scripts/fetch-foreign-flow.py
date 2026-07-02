@@ -1,28 +1,47 @@
 #!/usr/bin/env python3
 """Fetch foreign flow data from Tradersaham API and update ragaplaybook.com.
 
+Daily net from sector-rotation endpoint (covers ALL IDX stocks).
+Top-20 breakdown from foreign-flow endpoint.
 Runs as cron job after market close (host 19:00 = 18:00 WIB).
-Data stored in data/manual-market.json + data/foreign-flow-history.json, pushed to GitHub.
 """
 import json
 import os
 import sys
 import requests
-from datetime import datetime, timezone
+import urllib.request
+from datetime import datetime, timezone, date
 from pathlib import Path
 import subprocess
 
-TSAHAM_API = "https://apiv2.tradersaham.com/api/market-insight/foreign-flow"
+API_BASE = "https://apiv2.tradersaham.com/api/market-insight"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
     "Accept": "application/json",
     "Origin": "https://www.tradersaham.com",
-    "Referer": "https://www.tradersaham.com/market-overview",
+    "Referer": "https://www.tradersaham.com/foreign-flow",
 }
 
 REPO_DIR = Path("/home/ubuntu/ragaplaybook")
 DATA_FILE = REPO_DIR / "data" / "manual-market.json"
 HIST_FILE = REPO_DIR / "data" / "foreign-flow-history.json"
+
+
+def fetch_json(url):
+    req = urllib.request.Request(url, headers=HEADERS)
+    with urllib.request.urlopen(req, timeout=15) as r:
+        return json.loads(r.read())
+
+
+def get_correct_daily_net(target_date):
+    """Get total foreign net across ALL IDX stocks via sector-rotation endpoint."""
+    url = f"{API_BASE}/sector-rotation?type=foreign&date={target_date}"
+    try:
+        d = fetch_json(url)
+        return sum(s["net_foreign_value"] for s in d["sectors"])
+    except Exception as e:
+        print(f"  WARN: sector-rotation failed for {target_date}: {e}")
+        return None
 
 
 def calc_mtd_ytd(days, today_str):
@@ -43,35 +62,39 @@ def calc_mtd_ytd(days, today_str):
 
 
 def main():
-    print(f"[{datetime.now(timezone.utc).isoformat()}] Fetching foreign flow...")
+    today_str = date.today().strftime("%Y-%m-%d")
+    print(f"[{datetime.now(timezone.utc).isoformat()}] Fetching foreign flow for {today_str}...")
 
-    # Fetch from Tradersaham
-    try:
-        resp = requests.get(TSAHAM_API, headers=HEADERS, timeout=10)
-        resp.raise_for_status()
-        data = resp.json()
-    except Exception as e:
-        print(f"ERROR: Failed to fetch foreign flow: {e}")
+    # 1) Get CORRECT total from sector-rotation (ALL stocks)
+    total_net_raw = get_correct_daily_net(today_str)
+    if total_net_raw is None:
+        print("ERROR: No daily total available, exiting")
         return 1
 
-    api_date = data.get("date", datetime.now().strftime("%Y-%m-%d"))[:10]
-    accumulation = data.get("accumulation", [])
-    distribution = data.get("distribution", [])
+    daily_net = round(total_net_raw / 1_000_000)  # in millions
+    print(f"Total foreign net (all stocks): {daily_net:+,d}M ({total_net_raw/1e9:+.2f}B)")
 
-    # Calculate all-stocks daily net
-    all_stocks = accumulation + distribution
-    daily_net = round(sum(s.get("net_value", 0) for s in all_stocks) / 1_000_000)
+    # 2) Get per-stock breakdown from foreign-flow (top 20 per side)
+    ff_url = f"{API_BASE}/foreign-flow?date={today_str}"
+    try:
+        ff_data = fetch_json(ff_url)
+    except Exception as e:
+        print(f"WARN: foreign-flow endpoint failed: {e}")
+        ff_data = {"date": today_str, "accumulation": [], "distribution": []}
 
-    # Top 10 for display
-    top_buy = [(a['stock_code'], a['net_value']) for a in accumulation[:10]]
-    top_sell = [(d['stock_code'], d['net_value']) for d in distribution[:10]]
+    accumulation = ff_data.get("accumulation", [])
+    distribution = ff_data.get("distribution", [])
+    all_stocks_top = accumulation + distribution
+
+    top_buy = [(a["stock_code"], a["net_value"]) for a in accumulation[:10]]
+    top_sell = [(d["stock_code"], d["net_value"]) for d in distribution[:10]]
 
     buy_str = ", ".join([b[0] for b in top_buy[:3]])
     sell_str = ", ".join([s[0] for s in top_sell[:3]])
-    print(f"Foreign flow: {buy_str} (buy), {sell_str} (sell)")
-    print(f"Daily net (all stocks): {daily_net:+,d}M")
+    print(f"Top foreign buy: {buy_str}")
+    print(f"Top foreign sell: {sell_str}")
 
-    # --- Update history file ---
+    # 3) Update history file
     existing_hist = {"lastUpdated": None, "days": []}
     if HIST_FILE.exists():
         try:
@@ -79,32 +102,49 @@ def main():
         except:
             pass
 
+    # Check if today already exists
     hist_dates = [d["date"] for d in existing_hist.get("days", [])]
+    api_date = today_str
+
     if api_date not in hist_dates:
-        total_buy = sum(s.get("total_buy_value", 0) for s in all_stocks)
-        total_sell = sum(s.get("total_sell_value", 0) for s in all_stocks)
+        # Get correct buy/sell totals (approximate from foreign-flow top-20)
+        total_buy = sum(s.get("total_buy_value", 0) for s in all_stocks_top)
+        total_sell = sum(s.get("total_sell_value", 0) for s in all_stocks_top)
+
         existing_hist["days"].append({
             "date": api_date,
             "dailyNet": daily_net,
+            "sectorTotal": total_net_raw,  # the correct total
             "totalForeignBuy": total_buy,
             "totalForeignSell": total_sell,
         })
-        existing_hist["days"] = sorted(existing_hist["days"], key=lambda d: d["date"])[-60:]
+        existing_hist["days"] = sorted(existing_hist["days"], key=lambda d: d["date"])[-120:]
         existing_hist["lastUpdated"] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
         HIST_FILE.parent.mkdir(parents=True, exist_ok=True)
         HIST_FILE.write_text(json.dumps(existing_hist, indent=2))
         print(f"History: added {api_date} net={daily_net:+,d}M")
+    else:
+        # Update existing record with correct net
+        for d in existing_hist["days"]:
+            if d["date"] == api_date:
+                d["dailyNet"] = daily_net
+                d["sectorTotal"] = total_net_raw
+                break
+        existing_hist["lastUpdated"] = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+        HIST_FILE.write_text(json.dumps(existing_hist, indent=2))
+        print(f"History: updated {api_date} net={daily_net:+,d}M")
 
-    # --- Calculate MTD/YTD ---
+    # 4) Calculate MTD/YTD from history
     mtd_net, ytd_net = calc_mtd_ytd(existing_hist["days"], f"{api_date}T00:00:00")
     print(f"MTD: {mtd_net:+,d}M, YTD: {ytd_net:+,d}M")
 
-    # --- Build foreign flow object ---
+    # 5) Build foreign flow object
     foreign_flow = {
         "date": api_date,
         "weekNet": daily_net,
         "mtdNet": mtd_net,
         "ytdNet": ytd_net,
+        "dailyNetCorrect": total_net_raw,  # raw value in rupiah
         "topBuy": [{"ticker": t, "net": round(v / 1_000_000)} for t, v in top_buy],
         "topSell": [{"ticker": t, "net": round(v / 1_000_000)} for t, v in top_sell],
         "rawAccumulation": [
@@ -124,7 +164,7 @@ def main():
         "fetchedAt": datetime.now(timezone.utc).isoformat(),
     }
 
-    # --- Update manual-market.json ---
+    # 6) Update manual-market.json
     existing = {}
     if DATA_FILE.exists():
         try:
@@ -132,17 +172,17 @@ def main():
         except:
             pass
 
-    existing['foreignFlow'] = foreign_flow
-    if 'biRate' not in existing:
-        existing['biRate'] = {"value": 5.50, "note": "BI RDG - auto"}
-    if 'tradeBalance' not in existing:
-        existing['tradeBalance'] = {"value": 3.32, "note": "Surplus"}
+    existing["foreignFlow"] = foreign_flow
+    if "biRate" not in existing:
+        existing["biRate"] = {"value": 5.50, "note": "BI RDG - auto"}
+    if "tradeBalance" not in existing:
+        existing["tradeBalance"] = {"value": 3.32, "note": "Surplus"}
 
     DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
     DATA_FILE.write_text(json.dumps(existing, indent=2))
     print(f"Saved to {DATA_FILE}")
 
-    # --- Push to GitHub ---
+    # 7) Push to GitHub
     os.chdir(str(REPO_DIR))
 
     def run(cmd):
@@ -160,7 +200,7 @@ def main():
         print("No changes")
         return 0
 
-    commit = run(["git", "commit", "-m", "data: update foreign flow + history from Tradersaham"])
+    commit = run(["git", "commit", "-m", "data: foreign flow fix — use sector-rotation total instead of top-20"])
     print(commit.stdout + commit.stderr)
     if commit.returncode != 0:
         print("ERROR: git commit failed")
