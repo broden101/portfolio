@@ -9,7 +9,13 @@ export function getSettings(): AppSettings {
   const raw = localStorage.getItem(SETTINGS_KEY);
   if (!raw) return defaultSettings();
   try {
-    return { ...defaultSettings(), ...JSON.parse(raw) };
+    const saved = JSON.parse(raw);
+    // Merge filters by ID so new defaults (hammer, doji) aren't lost
+    const mergedFilters = DEFAULT_FILTERS.map((def) => {
+      const existing = (saved.defaultFilters || []).find((f: any) => f.id === def.id);
+      return existing ? { ...def, enabled: existing.enabled, params: { ...def.params, ...existing.params } } : def;
+    });
+    return { ...defaultSettings(), ...saved, defaultFilters: mergedFilters };
   } catch {
     return defaultSettings();
   }
