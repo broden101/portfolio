@@ -10,10 +10,10 @@
     "lastUpdated": null
   },
   "foreignFlow": {
-    "date": "2026-07-02T00:00:00.000Z",
-    "weekNet": -65259,
-    "mtdNet": null,
-    "ytdNet": null,
+    "date": "2026-07-02",
+    "weekNet": -152704,
+    "mtdNet": -152704,
+    "ytdNet": -34755303,
     "topBuy": [
       {
         "ticker": "BBCA",
@@ -502,6 +502,6 @@
         "close_price": 22475
       }
     ],
-    "fetchedAt": "2026-07-02T11:00:24.044985+00:00"
+    "fetchedAt": "2026-07-02T16:00:37.867064+00:00"
   }
 }
