@@ -607,7 +607,7 @@ export default function IHSGDashboard() {
                 const bg = perf == null ? "rgba(184, 170, 150, 0.05)" : perf >= 0 ? `rgba(34, 197, 94, ${0.08 + intensity * 0.25})` : `rgba(239, 68, 68, ${0.08 + intensity * 0.25})`;
                 const borderColor = perf == null ? "rgba(44, 38, 30, 0.5)" : perf >= 0 ? `rgba(34, 197, 94, ${0.15 + intensity * 0.3})` : `rgba(239, 68, 68, ${0.15 + intensity * 0.3})`;
                 return (
-                  <div key={s.code} className="p-4 border transition-all hover:scale-[1.03]" style={{ backgroundColor: bg, borderColor }}>
+                  <div key={s.code} className="p-4 border transition-all hover:scale-[1.03] cursor-pointer" style={{ backgroundColor: bg, borderColor }} onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color })}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-[#F4EFE6] text-xs font-medium">{s.name}</span>
                       <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
