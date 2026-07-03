@@ -136,6 +136,13 @@ export const DEFAULT_FILTERS: FilterConfig[] = [
     enabled: false,
     params: { body_pct: 0.1 },
   },
+  {
+    id: "macd_divergence",
+    name: "MACD Divergence",
+    description: "MACD bullish tapi harga masih di bawah SMA20 (potensi reversal)",
+    enabled: false,
+    params: {},
+  },
 ];
 
 export const STOCK_UNIVERSES: Record<string, string[]> = {

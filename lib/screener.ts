@@ -79,6 +79,16 @@ function applyFilter(stock: StockData, filter: FilterConfig): number {
       if (bodyRatio <= bodyPct * 2) return 0.5;
       return 0;
     }
+    case "macd_divergence": {
+      const macd = stock.macd ?? 0;
+      const signal = stock.macd_signal ?? 0;
+      // Bullish divergence: MACD > signal (momentum turning up) while price below SMA20 (weakness)
+      const macdBullish = macd > signal;
+      const priceWeak = s20 > 0 && p < s20;
+      if (macdBullish && priceWeak) return 1;    // true divergence
+      if (macdBullish) return 0.5;               // MACD bullish but no price weakness
+      return 0;
+    }
     default:
       return 0;
   }
