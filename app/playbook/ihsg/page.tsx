@@ -283,7 +283,7 @@ export default function IHSGDashboard() {
               <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Dashboard IHSG</span>
             </div>
             <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light mb-2">
-              IHSG <span className="text-gold-gradient font-medium">Dasbor Makro</span>
+              Dashboard <span className="text-gold-gradient font-medium">IHSG</span>
             </h1>
             <p className="text-[#B8AA96]/50 text-xs tracking-wider uppercase">
               Makro · Aliran Dana Asing · Rotasi Sektor · Indeks Global
