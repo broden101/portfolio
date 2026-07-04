@@ -24,7 +24,6 @@ const navLinks: NavLink[] = [
       { label: "Dividend Tracker", href: "/dividend" },
     ],
   },
-  { label: "Contact", href: "/#contact" },
 ];
 
 function DropdownLink({ link }: { link: NavLink }) {
