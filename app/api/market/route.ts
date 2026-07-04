@@ -184,13 +184,39 @@ export async function GET() {
       tradeBalance: manualData?.tradeBalance ?? { value: 3.32, note: "Surplus" },
     };
 
+    // Fetch total market volume (sum all stocks)
+    let totalMarketVolume: number | null = null;
+    try {
+      const volResp = await fetch(INDONESIA_SCANNER, {
+        method: "POST", headers: TV_HEADERS,
+        body: JSON.stringify({
+          columns: ["name", "volume"],
+          range: [0, 2000],
+          sort: { sortBy: "market_cap_basic", sortOrder: "desc" },
+          filter: [
+            { left: "is_primary", operation: "equal", right: true },
+            { left: "market_cap_basic", operation: "greater", right: 0 },
+          ],
+          symbols: { query: { types: ["stock"] } },
+          markets: ["id"],
+        }),
+        cache: "no-store",
+      });
+      if (volResp.ok) {
+        const volData = await volResp.json();
+        totalMarketVolume = (volData?.data ?? []).reduce(
+          (sum: number, row: RawRow) => sum + (num(row.d[1]) ?? 0), 0
+        );
+      }
+    } catch (e) { console.error("volume fetch error:", e); }
+
     const indexCount = sectors.filter((s) => s.type === "index").length;
     const basketCount = sectors.filter((s) => s.type === "basket").length;
 
     return NextResponse.json(
       {
         timestamp, ok: ihsgQuote != null,
-        ihsg: ihsgQuote,
+        ihsg: ihsgQuote ? { ...ihsgQuote, volume: totalMarketVolume || null } : null,
         eido: macro.AMEX_EIDO ?? null, kompas100: buildSub("IDX:KOMPAS100"), idx30: buildSub("IDX:IDX30"),
         sectors, macro,
         foreignFlow, // from VPS cron → manual-market.json
