@@ -85,7 +85,7 @@ export default function IHSGDashboard() {
   const [data, setData] = useState<MarketData | null>(null);
   const [foreignFlow, setForeignFlow] = useState<ForeignFlowData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<PerfTab>("1M");
+  const [activeTab, setActiveTab] = useState<PerfTab>("Day");
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [live, setLive] = useState(false);
   const [flowHistory, setFlowHistory] = useState<{ date: string; dailyNet: number; totalForeignBuy: number; totalForeignSell: number }[]>([]);
