@@ -499,8 +499,8 @@ export default function IHSGDashboard() {
               <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Net Flow Asing Kumulatif</h3>
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: "Today", value: ff?.weekNet ?? null, unit: "Miliar", div: 1e3 },
-                  { label: "MTD", value: ff?.mtdNet ?? null, unit: "Miliar", div: 1e3 },
+                  { label: "Today", value: ff?.weekNet ?? null, unit: "M", div: 1e3 },
+                  { label: "MTD", value: ff?.mtdNet ?? null, unit: "M", div: 1e3 },
                   { label: "YTD", value: ff?.ytdNet ?? null, unit: "T", div: 1e6 },
                 ].map((r) => (
                   <div key={r.label} className="border border-[#2C261E] p-3 text-center">
