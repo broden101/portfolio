@@ -224,16 +224,6 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
             {sectors.map((s) => (<option key={s} value={s}>{s}</option>))}
           </select>
           <button
-            onClick={() => setShariahOnly(!shariahOnly)}
-            className={`px-3 py-2 text-xs border transition-all ${
-              shariahOnly
-                ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400"
-                : "bg-transparent border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B] hover:text-[#C6A15B]"
-            }`}
-          >
-            ☪ Syariah
-          </button>
-          <button
             onClick={() => setHidiv20Only(!hidiv20Only)}
             className={`px-3 py-2 text-xs border transition-all ${
               hidiv20Only
@@ -242,6 +232,16 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
             }`}
           >
             IDX HIDIV20
+          </button>
+          <button
+            onClick={() => setShariahOnly(!shariahOnly)}
+            className={`px-3 py-2 text-xs border transition-all ${
+              shariahOnly
+                ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400"
+                : "bg-transparent border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B] hover:text-[#C6A15B]"
+            }`}
+          >
+            ☪ Syariah
           </button>
         </div>
       </div>
