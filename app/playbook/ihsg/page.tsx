@@ -554,10 +554,10 @@ export default function IHSGDashboard() {
               )}
               {txnHistory.length > 1 && (
                 <div className="mt-4 pt-3 border-t border-[#2C261E]">
-                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">5 Hari Terakhir (Triliun Rp)</div>
+                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">7 Hari Terakhir (Triliun Rp)</div>
                   <div className="flex items-end gap-1 h-16">
-                    {txnHistory.slice(0, 5).map((d, i) => {
-                      const maxVal = Math.max(...txnHistory.slice(0, 5).map(x => x.value), 1);
+                    {txnHistory.slice(0, 7).map((d, i) => {
+                      const maxVal = Math.max(...txnHistory.slice(0, 7).map(x => x.value), 1);
                       const h = Math.min(d.value / maxVal * 100, 100);
                       const dateStr = new Date(d.date).toLocaleDateString("id-ID", { day: "2-digit", month: "short" });
                       return (
