@@ -111,20 +111,22 @@ export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor,
       }} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div style={{
-          padding: "16px 20px", borderBottom: "1px solid rgba(255,255,255,0.1)",
+          padding: "16px 20px",
+          borderBottom: `1px solid ${sectorColor}30`,
+          background: `linear-gradient(135deg, ${sectorColor}10 0%, transparent 100%)`,
           display: "flex", alignItems: "center", justifyContent: "space-between",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{
               width: 10, height: 10, borderRadius: "50%",
-              background: sectorColor, boxShadow: `0 0 8px ${sectorColor}`,
+              background: sectorColor, boxShadow: `0 0 8px ${sectorColor}80`,
             }} />
             <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff" }}>
               IDX {sectorName}
             </span>
             <span style={{
-              fontSize: "0.7rem", color: "#666", background: "rgba(255,255,255,0.05)",
-              padding: "2px 8px", borderRadius: 4,
+              fontSize: "0.7rem", color: sectorColor, background: `${sectorColor}15`,
+              padding: "2px 8px", borderRadius: 4, border: `1px solid ${sectorColor}30`,
             }}>
               {stocks.length} saham
             </span>
@@ -142,9 +144,11 @@ export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor,
         }}>
           {(["mcap", "change", "volume"] as const).map((k) => (
             <button key={k} onClick={() => toggleSort(k)} style={{
-              background: sortKey === k ? "rgba(255,255,255,0.1)" : "transparent",
-              border: "1px solid rgba(255,255,255,0.1)", borderRadius: 4,
-              color: "#999", fontSize: "0.7rem", padding: "3px 8px",
+              background: sortKey === k ? `${sectorColor}20` : "transparent",
+              border: `1px solid ${sortKey === k ? sectorColor + "40" : "rgba(255,255,255,0.1)"}`,
+              borderRadius: 4,
+              color: sortKey === k ? sectorColor : "#999",
+              fontSize: "0.7rem", padding: "3px 8px",
               cursor: "pointer", display: "flex", alignItems: "center",
             }}>
               {k === "mcap" ? "Kapitalisasi" : k === "change" ? "Perubahan" : "Volume"}
@@ -156,7 +160,7 @@ export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor,
         {/* Stock list */}
         <div style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
           {loading ? (
-            <div style={{ textAlign: "center", padding: 40, color: "#555" }}>
+            <div style={{ textAlign: "center", padding: 40, color: sectorColor }}>
               Memuat data saham...
             </div>
           ) : sorted.length === 0 ? (
@@ -171,12 +175,12 @@ export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor,
                 <div key={s.name} style={{
                   display: "flex", alignItems: "center",
                   padding: "8px 20px", gap: 12,
-                  borderBottom: "1px solid rgba(255,255,255,0.03)",
-                  background: i % 2 === 0 ? "transparent" : "rgba(255,255,255,0.01)",
+                  borderBottom: `1px solid ${sectorColor}08`,
+                  background: i % 2 === 0 ? "transparent" : `${sectorColor}05`,
                 }}>
                   {/* Ticker */}
                   <div style={{ minWidth: 56 }}>
-                    <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#fff" }}>
+                    <div style={{ fontSize: "0.8rem", fontWeight: 600, color: sectorColor }}>
                       {s.name}
                     </div>
                     <div style={{ fontSize: "0.6rem", color: "#555", marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 100 }}>
