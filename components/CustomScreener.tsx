@@ -50,6 +50,10 @@ const FIELD_DOCS: { field: string; label: string; example: string }[] = [
 
 const SCRIPT_EXAMPLES = [
   {
+    name: "Early Accumulation",
+    script: "volume > avg_vol_10d * 1.2 and volume < avg_vol_30d * 1.5 and rsi < 50 and close < sma20 and change < 5 and change > -3",
+  },
+  {
     name: "Golden Cross (MA20 > MA50)",
     script: "close > sma20 and sma20 > sma50 and volume > avg_vol_10d",
   },
