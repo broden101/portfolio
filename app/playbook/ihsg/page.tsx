@@ -537,19 +537,16 @@ export default function IHSGDashboard() {
               )}
             </div>
 
-            {/* Volume IHSG */}
+            {/* Nilai Transaksi IHSG */}
             <div className="card-luxury p-6">
-              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Volume IHSG</h3>
+              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Nilai Transaksi IHSG</h3>
               {ihsg.volume != null ? (
                 <div className="text-center">
-                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">Volume Hari Ini</div>
+                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">Hari Ini</div>
                   <div className="font-heading text-3xl font-medium text-[#F4EFE6]">
-                    {ihsg.volume >= 1e12 ? `${(ihsg.volume / 1e12).toFixed(2)}T` :
-                     ihsg.volume >= 1e9 ? `${(ihsg.volume / 1e9).toFixed(2)}M` :
-                     ihsg.volume >= 1e6 ? `${(ihsg.volume / 1e6).toFixed(2)}jt` :
-                     ihsg.volume.toLocaleString("id-ID")}
+                    Rp {(ihsg.volume / 1e12).toFixed(2).replace(".", ",")}T
                   </div>
-                  <div className="text-[#B8AA96]/30 text-[9px] mt-1">saham</div>
+                  <div className="text-[#B8AA96]/30 text-[9px] mt-1">total nilai transaksi</div>
                 </div>
               ) : (
                 <div className="text-[#B8AA96]/30 text-sm text-center">—</div>

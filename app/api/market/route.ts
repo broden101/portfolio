@@ -184,13 +184,13 @@ export async function GET() {
       tradeBalance: manualData?.tradeBalance ?? { value: 3.32, note: "Surplus" },
     };
 
-    // Fetch total market volume (sum all stocks)
-    let totalMarketVolume: number | null = null;
+    // Fetch total market transaction value (sum volume * close for all stocks)
+    let totalMarketValue: number | null = null;
     try {
       const volResp = await fetch(INDONESIA_SCANNER, {
         method: "POST", headers: TV_HEADERS,
         body: JSON.stringify({
-          columns: ["name", "volume"],
+          columns: ["name", "volume", "close"],
           range: [0, 2000],
           sort: { sortBy: "market_cap_basic", sortOrder: "desc" },
           filter: [
@@ -204,11 +204,15 @@ export async function GET() {
       });
       if (volResp.ok) {
         const volData = await volResp.json();
-        totalMarketVolume = (volData?.data ?? []).reduce(
-          (sum: number, row: RawRow) => sum + (num(row.d[1]) ?? 0), 0
+        totalMarketValue = (volData?.data ?? []).reduce(
+          (sum: number, row: RawRow) => {
+            const vol = num(row.d[1]) ?? 0;
+            const close = num(row.d[2]) ?? 0;
+            return sum + (vol * close);
+          }, 0
         );
       }
-    } catch (e) { console.error("volume fetch error:", e); }
+    } catch (e) { console.error("value fetch error:", e); }
 
     const indexCount = sectors.filter((s) => s.type === "index").length;
     const basketCount = sectors.filter((s) => s.type === "basket").length;
@@ -216,7 +220,7 @@ export async function GET() {
     return NextResponse.json(
       {
         timestamp, ok: ihsgQuote != null,
-        ihsg: ihsgQuote ? { ...ihsgQuote, volume: totalMarketVolume || null } : null,
+        ihsg: ihsgQuote ? { ...ihsgQuote, volume: totalMarketValue || null } : null,
         eido: macro.AMEX_EIDO ?? null, kompas100: buildSub("IDX:KOMPAS100"), idx30: buildSub("IDX:IDX30"),
         sectors, macro,
         foreignFlow, // from VPS cron → manual-market.json
