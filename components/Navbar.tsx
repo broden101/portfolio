@@ -11,13 +11,13 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { label: "Profile", href: "/#about" },
   { label: "Research", href: "/articles" },
-  { label: "Dashboard IHSG", href: "/playbook/ihsg" },
   { label: "Valuation Lab", href: "/calculator" },
+  { label: "Dashboard IHSG", href: "/playbook/ihsg" },
+  { label: "IDX Screener", href: "/screener" },
   {
     label: "Tools",
     href: "#",
     children: [
-      { label: "IDX Screener", href: "/screener" },
       { label: "Reversal Watch", href: "/screener" },
       { label: "Backtest Running Trade", href: "/tradebook" },
       { label: "Rights Issue Calculator", href: "/calculator" },
