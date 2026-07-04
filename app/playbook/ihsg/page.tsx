@@ -507,8 +507,8 @@ export default function IHSGDashboard() {
                     <div className={`text-sm font-mono font-medium ${r.value == null ? "text-[#B8AA96]/30" : r.value >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                       {r.value != null ? fmtMiliar(r.value) : "—"}
                     </div>
-                    {r.label === "MTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">bulan ini</div>}
-                    {r.label === "YTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">tahun ini</div>}
+                    {r.label === "MTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{new Date().toLocaleDateString("id-ID", { month: "long" })}</div>}
+                    {r.label === "YTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{new Date().getFullYear()}</div>}
                   </div>
                 ))}
               </div>
