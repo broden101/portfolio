@@ -18,10 +18,9 @@ const navLinks: NavLink[] = [
     label: "Tools",
     href: "#",
     children: [
-      { label: "Reversal Watch", href: "/screener" },
-      { label: "Backtest Running Trade", href: "/tradebook" },
-      { label: "Rights Issue Calculator", href: "/calculator" },
       { label: "Dividend Tracker", href: "/dividend" },
+      { label: "Rights Issue Calculator", href: "/calculator/rights-issue" },
+      { label: "Backtest Running Trade", href: "/tradebook" },
     ],
   },
 ];
