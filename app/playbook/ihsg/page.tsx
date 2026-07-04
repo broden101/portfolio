@@ -92,11 +92,11 @@ export default function IHSGDashboard() {
   const [selectedSector, setSelectedSector] = useState<{ code: string; name: string; color: string; type?: string; tickers?: string[] } | null>(null);
 
   const BASKET_TICKERS: Record<string, string[]> = {
-    IDXTECHNO: ["BUKA", "GOTO", "EMTK", "MCAS", "BELI"],
-    IDXINFRA: ["JSMR", "PTPP", "ADHI", "WIKA", "TOWR"],
-    IDXCYCLIC: ["ASII", "MAPI", "ACES", "AMRT", "RALS"],
-    IDXNONCYC: ["ICBP", "UNVR", "INDF", "MYOR", "SIDO"],
-    IDXTRANS: ["GIAA", "TPIA", "SMDR", "BBHI"],
+    IDXTECHNO: ["DCII", "ASII", "GOTO", "MLPT", "WIFI", "CYBR", "MTDL", "MSTI", "ASGR", "IRSX", "PTSN", "ATIC", "NFCX", "CHIP", "AXIO"],
+    IDXINFRA: ["BREN", "MORA", "TLKM", "DNET", "CDIA", "ISAT", "EXCL", "MTEL", "PGEO", "RAJA", "POWR", "INET", "LINK", "KEEN", "DATA"],
+    IDXCYCLIC: ["AMRT", "BELI", "CMRY", "EMTK", "MSIN", "MAPI", "AKRA", "VKTR", "MDIY", "BUVA", "FILM", "MAPA", "MGLV", "SCMA", "CITA"],
+    IDXNONCYC: ["PANI", "ICBP", "HMSP", "UNVR", "INDF", "MYOR", "GGRM", "FAPA", "ADES", "MLBI", "STTP", "ULTJ", "GOOD", "YUPI", "POLU"],
+    IDXTRANS: ["TCPI", "GIAA", "JSMR", "ELPI", "RMKE", "CMNP", "TMAS", "GMFI", "BULL", "MBSS", "SHIP", "SMDR", "CASS", "BIRD", "HATM"],
   };
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -537,48 +537,22 @@ export default function IHSGDashboard() {
               )}
             </div>
 
-            {/* Composition Foreign Buy vs Sell */}
+            {/* Volume IHSG */}
             <div className="card-luxury p-6">
-              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Komposisi Transaksi Asing</h3>
-              {ff?.totalForeignBuy != null && ff?.totalForeignSell != null ? (
-                <>
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">Total Beli Asing</div>
-                      <div className="text-emerald-400 text-sm font-mono font-medium">Rp {(ff.totalForeignBuy / 1e9).toFixed(1)}T</div>
-                    </div>
-                    <div>
-                      <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">Total Jual Asing</div>
-                      <div className="text-red-400 text-sm font-mono font-medium">Rp {(ff.totalForeignSell / 1e9).toFixed(1)}T</div>
-                    </div>
+              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Volume IHSG</h3>
+              {ihsg.volume != null ? (
+                <div className="text-center">
+                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">Volume Hari Ini</div>
+                  <div className="font-heading text-3xl font-medium text-[#F4EFE6]">
+                    {ihsg.volume >= 1e12 ? `${(ihsg.volume / 1e12).toFixed(2)}T` :
+                     ihsg.volume >= 1e9 ? `${(ihsg.volume / 1e9).toFixed(2)}M` :
+                     ihsg.volume >= 1e6 ? `${(ihsg.volume / 1e6).toFixed(2)}jt` :
+                     ihsg.volume.toLocaleString("id-ID")}
                   </div>
-                  <div className="mb-3">
-                    <div className="flex h-4 rounded-sm overflow-hidden">
-                      {(() => {
-                        const total = ff.totalForeignBuy + ff.totalForeignSell;
-                        const buyPct = total > 0 ? (ff.totalForeignBuy / total * 100) : 50;
-                        return (
-                          <>
-                            <div className="bg-emerald-400/70 transition-all" style={{ width: `${buyPct}%` }} />
-                            <div className="bg-red-400/70 transition-all" style={{ width: `${100 - buyPct}%` }} />
-                          </>
-                        );
-                      })()}
-                    </div>
-                    <div className="flex justify-between text-[#B8AA96]/40 text-[9px] mt-1">
-                      <span className="text-emerald-400/70">{(() => { const t = ff.totalForeignBuy + ff.totalForeignSell; return t > 0 ? `${(ff.totalForeignBuy / t * 100).toFixed(1)}%` : "50%"; })()}</span>
-                      <span className="text-red-400/70">{(() => { const t = ff.totalForeignBuy + ff.totalForeignSell; return t > 0 ? `${(ff.totalForeignSell / t * 100).toFixed(1)}%` : "50%"; })()}</span>
-                    </div>
-                  </div>
-                  <div className="border-t border-[#2C261E] pt-3">
-                    <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-1">Net Hari Ini</div>
-                    <div className={`font-heading text-lg font-medium ${((ff.totalForeignBuy - ff.totalForeignSell) >= 0) ? "text-emerald-400" : "text-red-400"}`}>
-                      {fmtMiliar(((ff.totalForeignBuy - ff.totalForeignSell) / 1e6))}
-                    </div>
-                  </div>
-                </>
+                  <div className="text-[#B8AA96]/30 text-[9px] mt-1">saham</div>
+                </div>
               ) : (
-                <EmptyState title="Data komposisi tidak tersedia" description="Komposisi transaksi akan muncul ketika feed market tersedia." />
+                <div className="text-[#B8AA96]/30 text-sm text-center">—</div>
               )}
             </div>
           </div>

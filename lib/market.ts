@@ -31,6 +31,7 @@ export interface Quote {
   low3M: number | null;
   high1M: number | null;
   low1M: number | null;
+  volume: number | null;
 }
 
 export interface SectorQuote extends Quote {
@@ -124,6 +125,7 @@ export const IHSG_FALLBACK: Quote = {
   perfYTD: -29.4, perf1Y: -15.2,
   high: 9174, low: 5408,
   high6M: 9174, low6M: 5318, high3M: 7774, low3M: 5318, high1M: 6460, low1M: 5318,
+  volume: 15000000000,
 };
 
 /* ── Fallback manual data ── */
