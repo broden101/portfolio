@@ -89,7 +89,15 @@ export default function IHSGDashboard() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [live, setLive] = useState(false);
   const [flowHistory, setFlowHistory] = useState<{ date: string; dailyNet: number; totalForeignBuy: number; totalForeignSell: number }[]>([]);
-  const [selectedSector, setSelectedSector] = useState<{ code: string; name: string; color: string } | null>(null);
+  const [selectedSector, setSelectedSector] = useState<{ code: string; name: string; color: string; type?: string; tickers?: string[] } | null>(null);
+
+  const BASKET_TICKERS: Record<string, string[]> = {
+    IDXTECHNO: ["BUKA", "GOTO", "EMTK", "MCAS", "BELI"],
+    IDXINFRA: ["JSMR", "PTPP", "ADHI", "WIKA", "TOWR"],
+    IDXCYCLIC: ["ASII", "MAPI", "ACES", "AMRT", "RALS"],
+    IDXNONCYC: ["ICBP", "UNVR", "INDF", "MYOR", "SIDO"],
+    IDXTRANS: ["GIAA", "TPIA", "SMDR", "BBHI"],
+  };
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -607,7 +615,7 @@ export default function IHSGDashboard() {
                 const bg = perf == null ? "rgba(184, 170, 150, 0.05)" : perf >= 0 ? `rgba(34, 197, 94, ${0.08 + intensity * 0.25})` : `rgba(239, 68, 68, ${0.08 + intensity * 0.25})`;
                 const borderColor = perf == null ? "rgba(44, 38, 30, 0.5)" : perf >= 0 ? `rgba(34, 197, 94, ${0.15 + intensity * 0.3})` : `rgba(239, 68, 68, ${0.15 + intensity * 0.3})`;
                 return (
-                  <div key={s.code} className="p-4 border transition-all hover:scale-[1.03] cursor-pointer" style={{ backgroundColor: bg, borderColor }} onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color })}>
+                  <div key={s.code} className="p-4 border transition-all hover:scale-[1.03] cursor-pointer" style={{ backgroundColor: bg, borderColor }} onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: s.type, tickers: BASKET_TICKERS[s.code] })}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-[#F4EFE6] text-xs font-medium">{s.name}</span>
                       <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
@@ -639,7 +647,7 @@ export default function IHSGDashboard() {
                 </thead>
                 <tbody className="font-mono">
                   {sectors.map((s) => (
-                    <tr key={s.code} className="border-b border-[#2C261E]/30 cursor-pointer hover:bg-[#2C261E]/40 transition-colors" onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color })}>
+                    <tr key={s.code} className="border-b border-[#2C261E]/30 cursor-pointer hover:bg-[#2C261E]/40 transition-colors" onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: s.type, tickers: BASKET_TICKERS[s.code] })}>
                       <td className="py-2 text-[#F4EFE6] font-sans flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
                         {s.name}
@@ -673,6 +681,8 @@ export default function IHSGDashboard() {
           sectorCode={selectedSector.code}
           sectorName={selectedSector.name}
           sectorColor={selectedSector.color}
+          sectorType={selectedSector.type as "index" | "basket" | undefined}
+          sectorTickers={selectedSector.tickers}
           onClose={() => setSelectedSector(null)}
         />
       )}

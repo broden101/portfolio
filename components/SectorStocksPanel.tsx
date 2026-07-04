@@ -17,10 +17,12 @@ type Props = {
   sectorCode: string;
   sectorName: string;
   sectorColor: string;
+  sectorType?: "index" | "basket";
+  sectorTickers?: string[];
   onClose: () => void;
 };
 
-export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor, onClose }: Props) {
+export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor, sectorType, sectorTickers, onClose }: Props) {
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortKey, setSortKey] = useState<"mcap" | "change" | "volume">("mcap");
@@ -29,27 +31,29 @@ export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor,
   const fetchStocks = useCallback(async () => {
     setLoading(true);
     try {
-      // Map sector code to TradingView sector name
-      const sectorMap: Record<string, string> = {
-        IDXFINANCE: "Finance",
-        IDXBASIC: "Basic Materials",
-        IDXENERGY: "Energy",
-        IDXINDUST: "Industrials",
-        IDXHEALTH: "Healthcare",
-        IDXPROPERT: "Properties & Real Estate",
-        IDXTECHNO: "Technology",
-        IDXINFRA: "Infrastructure",
-        IDXCYCLIC: "Consumer Cyclical",
-        IDXNONCYC: "Consumer Non-Cyclical",
-        IDXTRANS: "Transportation",
-      };
+      let body: Record<string, unknown>;
 
-      const tvSector = sectorMap[sectorCode] || sectorName;
+      if (sectorType === "basket" && sectorTickers && sectorTickers.length > 0) {
+        // Basket sectors: use explicit ticker list (just ticker, not IDX:TICKER)
+        body = { tickers: sectorTickers };
+      } else {
+        // Index sectors: filter by TradingView sector name
+        const sectorMap: Record<string, string> = {
+          IDXFINANCE: "Finance",
+          IDXBASIC: "Basic Materials",
+          IDXENERGY: "Energy",
+          IDXINDUST: "Industrials",
+          IDXHEALTH: "Healthcare",
+          IDXPROPERT: "Properties & Real Estate",
+        };
+        const tvSector = sectorMap[sectorCode] || sectorName;
+        body = { sector: tvSector };
+      }
 
       const resp = await fetch("/api/scanner", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sector: tvSector }),
+        body: JSON.stringify(body),
       });
 
       if (!resp.ok) throw new Error("Failed");
@@ -60,7 +64,7 @@ export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor,
     } finally {
       setLoading(false);
     }
-  }, [sectorCode, sectorName]);
+  }, [sectorCode, sectorName, sectorType, sectorTickers]);
 
   useEffect(() => {
     fetchStocks();
