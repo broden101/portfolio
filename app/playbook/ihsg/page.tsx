@@ -495,19 +495,20 @@ export default function IHSGDashboard() {
           <div className="grid lg:grid-cols-2 gap-6 mb-6">
             {/* Net Flow 7d / 14d / 30d */}
             <div className="card-luxury p-6">
-              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Net Flow Kumulatif</h3>
+              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Net Flow Asing Kumulatif</h3>
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: "7 Hari", data: rollingNetFlow.net7d },
-                  { label: "14 Hari", data: rollingNetFlow.net14d },
-                  { label: "30 Hari", data: rollingNetFlow.net30d },
+                  { label: "Today", value: flowHistory.length > 0 ? flowHistory[flowHistory.length - 1].dailyNet : null },
+                  { label: "MTD", value: ff?.mtdNet ?? null },
+                  { label: "YTD", value: ff?.ytdNet ?? null },
                 ].map((r) => (
                   <div key={r.label} className="border border-[#2C261E] p-3 text-center">
                     <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
-                    <div className={`text-sm font-mono font-medium ${r.data.total >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                      {fmtMiliar(r.data.total)}
+                    <div className={`text-sm font-mono font-medium ${r.value == null ? "text-[#B8AA96]/30" : r.value >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                      {r.value != null ? fmtMiliar(r.value) : "—"}
                     </div>
-                    <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{r.data.count} hari data</div>
+                    {r.label === "MTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">bulan ini</div>}
+                    {r.label === "YTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">tahun ini</div>}
                   </div>
                 ))}
               </div>
