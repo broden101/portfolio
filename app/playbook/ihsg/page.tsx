@@ -131,6 +131,7 @@ export default function IHSGDashboard() {
 
   const ihsg: Quote = data?.ihsg ?? IHSG_FALLBACK;
   const ihsgClose = ihsg.close ?? IHSG_FALLBACK.close!;
+  const txnHistory = data?.txnHistory ?? [];
   const ihsgChange = ihsg.change ?? 0;
   const ihsgUp = ihsgChange >= 0;
   const rec = recommendLabel(ihsg.recommend);
@@ -498,14 +499,14 @@ export default function IHSGDashboard() {
               <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Net Flow Asing Kumulatif</h3>
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: "Today", value: flowHistory.length > 0 ? flowHistory[flowHistory.length - 1].dailyNet : null },
-                  { label: "MTD", value: ff?.mtdNet ?? null },
-                  { label: "YTD", value: ff?.ytdNet ?? null },
+                  { label: "Today", value: ff?.weekNet ?? null, unit: "Miliar", div: 1e3 },
+                  { label: "MTD", value: ff?.mtdNet ?? null, unit: "Miliar", div: 1e3 },
+                  { label: "YTD", value: ff?.ytdNet ?? null, unit: "T", div: 1e6 },
                 ].map((r) => (
                   <div key={r.label} className="border border-[#2C261E] p-3 text-center">
                     <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
                     <div className={`text-sm font-mono font-medium ${r.value == null ? "text-[#B8AA96]/30" : r.value >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                      {r.value != null ? `${r.value >= 0 ? "" : "-"}Rp ${Math.abs(r.value / 1e3).toFixed(2).replace(".", ",")}T` : "—"}
+                      {r.value != null ? `${r.value >= 0 ? "" : "-"}Rp ${Math.abs(r.value / r.div).toFixed(2).replace(".", ",")}${r.unit}` : "—"}
                     </div>
                     {r.label === "MTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{new Date().toLocaleDateString("id-ID", { month: "long" })}</div>}
                     {r.label === "YTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{new Date().getFullYear()}</div>}
@@ -550,6 +551,25 @@ export default function IHSGDashboard() {
                 </div>
               ) : (
                 <div className="text-[#B8AA96]/30 text-sm text-center">—</div>
+              )}
+              {txnHistory.length > 1 && (
+                <div className="mt-4 pt-3 border-t border-[#2C261E]">
+                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">5 Hari Terakhir (Triliun Rp)</div>
+                  <div className="flex items-end gap-1 h-16">
+                    {txnHistory.slice(0, 5).map((d, i) => {
+                      const maxVal = Math.max(...txnHistory.slice(0, 5).map(x => x.value), 1);
+                      const h = Math.min(d.value / maxVal * 100, 100);
+                      const dateStr = new Date(d.date).toLocaleDateString("id-ID", { day: "2-digit", month: "short" });
+                      return (
+                        <div key={i} className="flex-1 flex flex-col items-center justify-end" title={`${dateStr}: Rp ${(d.value / 1e12).toFixed(2)}T`}>
+                          <div className="text-[#B8AA96]/40 text-[7px] mb-0.5">{(d.value / 1e12).toFixed(1)}T</div>
+                          <div className="w-full bg-[#C6A15B]/40 rounded-t-sm" style={{ height: `${Math.max(h, 4)}%` }} />
+                          <div className="text-[#B8AA96]/30 text-[7px] mt-0.5">{dateStr}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               )}
             </div>
           </div>

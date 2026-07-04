@@ -88,6 +88,7 @@ export interface MarketData {
   sectors: SectorQuote[];
   macro: Record<string, MacroQuote>;
   foreignFlow: ForeignFlowData | null;
+  txnHistory: { date: string; value: number }[];
   manualData: ManualData;
   coverage?: {
     ihsg: boolean;

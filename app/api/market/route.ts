@@ -141,6 +141,15 @@ function readManualData() {
   } catch { return {}; }
 }
 
+function readTxnHistory() {
+  const txnPath = join(process.cwd(), "data", "txn-history.json");
+  if (!existsSync(txnPath)) return [];
+  try {
+    const data = JSON.parse(readFileSync(txnPath, "utf-8"));
+    return (data.history || []).slice(-5).reverse(); // last 5, newest first
+  } catch { return []; }
+}
+
 export async function GET() {
   const timestamp = new Date().toISOString();
 
@@ -217,6 +226,8 @@ export async function GET() {
     const indexCount = sectors.filter((s) => s.type === "index").length;
     const basketCount = sectors.filter((s) => s.type === "basket").length;
 
+    const txnHistory = readTxnHistory();
+
     return NextResponse.json(
       {
         timestamp, ok: ihsgQuote != null,
@@ -224,6 +235,7 @@ export async function GET() {
         eido: macro.AMEX_EIDO ?? null, kompas100: buildSub("IDX:KOMPAS100"), idx30: buildSub("IDX:IDX30"),
         sectors, macro,
         foreignFlow, // from VPS cron → manual-market.json
+        txnHistory, // last 5 days transaction value
         manualData: manualDataClean, // BI Rate, trade balance
         coverage: { ihsg: !!ihsgQuote, sectorIndices: indexCount, sectorBaskets: basketCount, macro: Object.keys(macro).length },
       },
