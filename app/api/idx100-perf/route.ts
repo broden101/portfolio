@@ -27,7 +27,7 @@ export async function GET() {
       method: "POST",
       headers: TV_HEADERS,
       body: JSON.stringify({
-        columns: ["name", "Perf.W", "Perf.1M"],
+        columns: ["name", "Perf", "Perf.W", "Perf.1M"],
         symbols: { tickers: IDX100.map((t) => `IDX:${t}`) },
         range: [0, IDX100.length],
       }),
@@ -42,8 +42,9 @@ export async function GET() {
     const rows = (data.data ?? []).map((row: { s: string; d: (string | number | null)[] }) => ({
       ticker: row.s.replace("IDX:", ""),
       name: row.d[0] ?? "",
-      perfWeek: row.d[1] != null ? Number(row.d[1]) : null,
-      perf1M: row.d[2] != null ? Number(row.d[2]) : null,
+      perfDay: row.d[1] != null ? Number(row.d[1]) : null,
+      perfWeek: row.d[2] != null ? Number(row.d[2]) : null,
+      perf1M: row.d[3] != null ? Number(row.d[3]) : null,
     }));
 
     return NextResponse.json(
