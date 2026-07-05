@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Navbar from "@/components/Navbar";
 import { TopMoverPanel } from "./TopMoverPanel";
+import { CommodityPricesPanel } from "./CommodityPricesPanel";
 import { Idx100Panel } from "./Idx100Panel";
 import Footer from "@/components/Footer";
 import SectorStocksPanel from "@/components/SectorStocksPanel";
@@ -92,6 +93,7 @@ export default function IHSGDashboard() {
   const [flowHistory, setFlowHistory] = useState<{ date: string; dailyNet: number; totalForeignBuy: number; totalForeignSell: number }[]>([]);
   const [showVolumeHistory, setShowVolumeHistory] = useState(false);
   const [selectedSector, setSelectedSector] = useState<{ code: string; name: string; color: string; type?: string; tickers?: string[] } | null>(null);
+  const [commodityData, setCommodityData] = useState<{ symbol: string; name: string; price: number; change: number | null; unit: string }[] | null>(null);
 
   const BASKET_TICKERS: Record<string, string[]> = {
     IDXAGRI: ["AALI", "TAPG", "LSIP", "SGRO", "PALM", "TBLA", "BWPT", "BISI", "JAWA", "SSMS", "ANJT", "PNGO", "TLDN", "UDNG", "MSJA", "STAA", "BRAM", "ALDO", "FPNI", "GZCO", "PDPP", "TALF", "ADMG", "IPOL", "GULA", "MOLI", "SMKL", "YPAS", "AMMS", "IGAR", "APLI", "MYTX", "AKPI", "PTPS", "ESTI", "INOV", "ACRO", "NPGF", "ERTX", "ANDI", "PSDN", "AYLS", "INCI", "OBMD", "SBMA", "CHEM", "OILS", "PICO", "FLMC"],
@@ -129,6 +131,14 @@ export default function IHSGDashboard() {
     fetch("/api/foreign-flow-history")
       .then((r) => r.json())
       .then((d) => setFlowHistory(d.days ?? []))
+      .catch(() => {});
+  }, []);
+
+  // Fetch commodity prices
+  useEffect(() => {
+    fetch("/api/commodities")
+      .then((r) => r.json())
+      .then((d) => setCommodityData(d))
       .catch(() => {});
   }, []);
 
@@ -356,57 +366,8 @@ export default function IHSGDashboard() {
             })()}
           </div>
 
-          {/* FOREIGN FLOW — auto from Tradersaham */}
-          <div className="card-luxury p-6">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium">Aliran Dana Asing</h2>
-              <span className="text-[9px] text-emerald-400/50 uppercase tracking-wider border border-emerald-500/20 px-1.5 py-0.5">Auto</span>
-            </div>
-            {ff ? (
-              <>
-                <div className="grid grid-cols-3 gap-3 mb-5">
-                  {[
-                    { label: "Hari Ini", value: ff.weekNet, color: ff.weekNet >= 0 ? "text-emerald-400" : "text-red-400" },
-                    { label: "MTD", value: ff.mtdNet ?? 0, color: (ff.mtdNet ?? 0) >= 0 ? "text-emerald-400" : "text-red-400" },
-                    { label: "YTD", value: ff.ytdNet ?? 0, color: (ff.ytdNet ?? 0) >= 0 ? "text-emerald-400" : "text-red-400" },
-                  ].map((f) => (
-                    <div key={f.label} className="border border-[#2C261E] p-3 text-center">
-                      <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{f.label}</div>
-                      <div className={`text-xs font-mono font-medium ${f.color}`}>{f.label === "YTD" ? fmtTriliun(f.value) : fmtMiliar(f.value)}</div>
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="text-emerald-400/70 text-[10px] tracking-[0.1em] uppercase mb-2">Net Buy Terbesar</div>
-                    <div className="space-y-1.5">
-                      {ff.topBuy.map((b) => (
-                        <div key={b.ticker} className="flex justify-between items-center">
-                          <span className="text-[#F4EFE6] text-xs font-mono">{b.ticker}</span>
-                          <span className="text-emerald-400 text-[10px] font-mono">+{b.net}M</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-red-400/70 text-[10px] tracking-[0.1em] uppercase mb-2">Net Sell Terbesar</div>
-                    <div className="space-y-1.5">
-                      {ff.topSell.map((s) => (
-                        <div key={s.ticker} className="flex justify-between items-center">
-                          <span className="text-[#F4EFE6] text-xs font-mono">{s.ticker}</span>
-                          <span className="text-red-400 text-[10px] font-mono">{s.net}M</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <EmptyState title="Data aliran dana asing tidak tersedia" description="Data bisa muncul kembali saat sumber market insight aktif.">
-                <SourceNote source="Tradersaham Market Insight" note="Gunakan konteks ini sebagai referensi, bukan sinyal tunggal." />
-              </EmptyState>
-            )}
-          </div>
+          {/* COMMODITY PRICES — fetched from /api/commodities */}
+          <CommodityPricesPanel data={commodityData} live={live} />
 
           {/* KEY LEVELS */}
           <div className="card-luxury p-6">
