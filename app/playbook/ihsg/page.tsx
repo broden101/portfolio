@@ -479,43 +479,43 @@ export default function IHSGDashboard() {
                 </div>
               </div>
             )}
-          </div>
 
-          {/* Volume Transaksi */}
-          <div className="mt-4 pt-4 border-t border-[#2C261E]/30">
-            <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-3">Volume Transaksi IHSG</div>
-            {ihsg.volume != null ? (
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase">Hari Ini</div>
-                  <div className="font-heading text-lg font-medium text-[#F4EFE6] mt-0.5">
-                    Rp {(ihsg.volume / 1e12).toFixed(2).replace(".", ",")}T
+            {/* Volume Transaksi */}
+            <div className="mt-4 pt-4 border-t border-[#2C261E]/30">
+              <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-3">Volume Transaksi IHSG</div>
+              {ihsg.volume != null ? (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase">Hari Ini</div>
+                    <div className="font-heading text-lg font-medium text-[#F4EFE6] mt-0.5">
+                      Rp {(ihsg.volume / 1e12).toFixed(2).replace(".", ",")}T
+                    </div>
                   </div>
+                  {txnHistory.length > 1 && (
+                    <div className="flex-1 max-w-[200px] ml-4">
+                      <div className="flex items-end gap-0.5 h-10">
+                        {txnHistory.slice(0, 7).map((d, i) => {
+                          const maxVal = Math.max(...txnHistory.slice(0, 7).map(x => x.value), 1);
+                          const h = Math.min(d.value / maxVal * 100, 100);
+                          const dateStr = new Date(d.date).toLocaleDateString("id-ID", { day: "2-digit", month: "short" });
+                          return (
+                            <div key={i} className="flex-1 flex flex-col items-center justify-end" title={`${dateStr}: Rp ${(d.value / 1e12).toFixed(2)}T`}>
+                              <div className="w-full bg-[#C6A15B]/40 rounded-t-sm" style={{ height: `${Math.max(h, 4)}%` }} />
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div className="flex justify-between text-[#B8AA96]/30 text-[7px] mt-1">
+                        <span>{new Date(txnHistory.slice(-7)[0]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
+                        <span>{new Date(txnHistory.slice(-1)[0]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                {txnHistory.length > 1 && (
-                  <div className="flex-1 max-w-[200px] ml-4">
-                    <div className="flex items-end gap-0.5 h-10">
-                      {txnHistory.slice(0, 7).map((d, i) => {
-                        const maxVal = Math.max(...txnHistory.slice(0, 7).map(x => x.value), 1);
-                        const h = Math.min(d.value / maxVal * 100, 100);
-                        const dateStr = new Date(d.date).toLocaleDateString("id-ID", { day: "2-digit", month: "short" });
-                        return (
-                          <div key={i} className="flex-1 flex flex-col items-center justify-end" title={`${dateStr}: Rp ${(d.value / 1e12).toFixed(2)}T`}>
-                            <div className="w-full bg-[#C6A15B]/40 rounded-t-sm" style={{ height: `${Math.max(h, 4)}%` }} />
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div className="flex justify-between text-[#B8AA96]/30 text-[7px] mt-1">
-                      <span>{new Date(txnHistory.slice(-7)[0]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
-                      <span>{new Date(txnHistory.slice(-1)[0]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="text-[#B8AA96]/30 text-sm">—</div>
-            )}
+              ) : (
+                <div className="text-[#B8AA96]/30 text-sm">—</div>
+              )}
+            </div>
           </div>
         </div>
 
