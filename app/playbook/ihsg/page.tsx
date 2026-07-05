@@ -164,9 +164,9 @@ export default function IHSGDashboard() {
       { label: "IHSG", value: fmtNum(ihsg.close), change: fmtPct(ihsg.change), up: ihsgUp, note: ihsg.perfYTD != null ? `YTD ${fmtPct(ihsg.perfYTD)}` : "Komposit" },
       { label: "USD/IDR", value: usdIdr?.close != null ? fmtNum(usdIdr.close) : "—", change: usdIdr?.change != null ? fmtPct(usdIdr.change) : "", up: (usdIdr?.change ?? 0) >= 0, note: "Spot" },
       { label: "BI Rate", value: `${(manual.biRate?.value ?? 5.50).toFixed(2)}%`, change: "Otomatis", up: true, note: manual.biRate?.note ?? "" },
-      { label: "US 10Y", value: us10y?.close != null ? `${us10y.close.toFixed(3)}%` : "—", change: us10y?.change != null ? fmtPct(us10y.change) : "", up: (us10y?.change ?? 0) >= 0, note: "Yield Treasury" },
-      { label: "Emas", value: gold?.close != null ? `$${fmtNum(gold.close, 0)}` : "—", change: gold?.change != null ? fmtPct(gold.change) : "", up: (gold?.change ?? 0) >= 0, note: "Safe haven" },
-      { label: "Minyak Brent", value: brent?.close != null ? `$${fmtNum(brent.close, 2)}` : "—", change: brent?.change != null ? fmtPct(brent.change) : "", up: (brent?.change ?? 0) >= 0, note: "Risiko energi" },
+      { label: "Inflasi", value: `${(manual.inflation?.value ?? 1.5).toFixed(1)}%`, change: manual.inflation?.note ?? "yoy", up: (manual.inflation?.value ?? 0) > 0, note: manual.inflation?.month ? `${manual.inflation.month} (BPS)` : "BPS" },
+      { label: "APBN", value: `Rp${(manual.apbn?.realized ?? 1580).toFixed(0)}${manual.apbn?.unit ?? "T"}`, change: `vs target Rp${(manual.apbn?.target ?? 3100).toFixed(0)}${manual.apbn?.unit ?? "T"}`, up: false, note: manual.apbn?.note ?? "" },
+      { label: "GDP", value: `${(manual.gdp?.growth ?? 5.1).toFixed(1)}%`, change: manual.gdp?.note ?? "yoy", up: true, note: manual.gdp?.quarter ?? "Q1-2026" },
       { label: "EIDO", value: data?.eido?.close != null ? `$${fmtNum(data.eido.close, 2)}` : "—", change: fmtPct(data?.eido?.change), up: (data?.eido?.change ?? 0) >= 0, note: "iShares MSCI Indonesia" },
       { label: "Neraca Dagang", value: `$${(manual.tradeBalance?.value ?? 3.32).toFixed(2)}B`, change: manual.tradeBalance?.note ?? "", up: (manual.tradeBalance?.value ?? 3.32) >= 0, note: "Manual" },
     ];
@@ -352,7 +352,7 @@ export default function IHSGDashboard() {
               return <>
                 <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-1">US</div>
                 {["SPX","IXIC","DJI","DXY","VIX"].map(k => row(k === "SPX" ? "S&P 500" : k === "IXIC" ? "Nasdaq" : k === "DJI" ? "Dow Jones" : k, q(k), k === "DXY" ? n=>n.toFixed(2) : k === "VIX" ? n=>n.toFixed(2) : usFmt))}
-                {(() => { const e = q("AMEX_EIDO") ?? data?.eido; return row("EIDO", e, n=>n.toFixed(2)); })()}
+                {(() => { const inf = manual.inflation; if (!inf) return null; const up = (inf.value ?? 0) >= 0; return <div key="Inflasi" className="flex justify-between py-1.5 border-b border-[#2C261E]/30"><span className="text-[#B8AA96]/70 text-[11px]">Inflasi BPS Bulanan</span><span className="text-[11px] font-mono"><span className="text-[#F4EFE6]">{inf.value?.toFixed(1)}%</span><span className={`ml-1.5 ${up ? "text-emerald-400" : "text-red-400"}`}>{inf.month ?? ""}</span></span></div>; })()}
                 <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">ASIA</div>
                 {[
                   ["NI225","Nikkei 225"],

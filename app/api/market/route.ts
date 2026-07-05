@@ -243,6 +243,9 @@ export async function GET() {
     const manualDataClean = {
       biRate: manualData?.biRate ?? { value: 5.50, note: "BI RDG" },
       tradeBalance: manualData?.tradeBalance ?? { value: 3.32, note: "Surplus" },
+      inflation: manualData?.inflation ?? { value: 1.5, note: "yoy", month: "Mei" },
+      apbn: manualData?.apbn ?? { realized: 1580, target: 3100, unit: "T", note: "Realisasi 2026" },
+      gdp: manualData?.gdp ?? { growth: 5.1, note: "yoy", quarter: "Q1-2026" },
     };
 
     // Fetch total market transaction value (sum volume * close for all stocks)
