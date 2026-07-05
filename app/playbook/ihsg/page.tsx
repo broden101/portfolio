@@ -90,6 +90,7 @@ export default function IHSGDashboard() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [live, setLive] = useState(false);
   const [flowHistory, setFlowHistory] = useState<{ date: string; dailyNet: number; totalForeignBuy: number; totalForeignSell: number }[]>([]);
+  const [showVolumeHistory, setShowVolumeHistory] = useState(false);
   const [selectedSector, setSelectedSector] = useState<{ code: string; name: string; color: string; type?: string; tickers?: string[] } | null>(null);
 
   const BASKET_TICKERS: Record<string, string[]> = {
@@ -514,6 +515,49 @@ export default function IHSGDashboard() {
                 </div>
               ) : (
                 <div className="text-[#B8AA96]/30 text-sm">—</div>
+              )}
+
+              {/* Toggle History */}
+              {txnHistory.length > 0 && (
+                <button
+                  onClick={() => setShowVolumeHistory((v) => !v)}
+                  className="mt-3 w-full flex items-center justify-center gap-1.5 text-[10px] tracking-[0.12em] uppercase text-[#C6A15B]/60 hover:text-[#C6A15B] transition-colors py-1"
+                >
+                  <span>{showVolumeHistory ? "▲" : "▼"}</span>
+                  {showVolumeHistory ? "Sembunyikan" : "Lihat History"}
+                </button>
+              )}
+              {showVolumeHistory && txnHistory.length > 0 && (
+                <div className="mt-2 max-h-[280px] overflow-y-auto">
+                  <div className="flex justify-between text-[9px] tracking-wide text-[#B8AA96]/30 uppercase mb-1 px-1">
+                    <span>Tanggal</span>
+                    <span>Volume</span>
+                    <span>Δ</span>
+                  </div>
+                  {txnHistory.map((d, i) => {
+                    const vol = d.value / 1e12;
+                    const prev = txnHistory[i + 1]?.value;
+                    const delta = prev != null ? ((d.value - prev) / prev) * 100 : null;
+                    const up = delta != null && delta >= 0;
+                    return (
+                      <div key={d.date} className="flex justify-between items-center py-1.5 px-1 border-t border-[#2C261E]/40">
+                        <span className="text-[#B8AA96]/50 text-[11px] font-mono">
+                          {new Date(d.date).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" })}
+                        </span>
+                        <span className="text-[#F4EFE6] text-[11px] font-mono">
+                          Rp {vol.toFixed(2).replace(".", ",")}T
+                        </span>
+                        {delta != null ? (
+                          <span className={`text-[10px] font-mono ${up ? "text-emerald-400" : "text-red-400"}`}>
+                            {up ? "+" : ""}{delta.toFixed(1)}%
+                          </span>
+                        ) : (
+                          <span className="text-[#B8AA96]/20 text-[10px]">—</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               )}
             </div>
           </div>

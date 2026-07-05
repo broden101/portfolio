@@ -198,7 +198,7 @@ function readTxnHistory() {
   if (!existsSync(txnPath)) return [];
   try {
     const data = JSON.parse(readFileSync(txnPath, "utf-8"));
-    return (data.history || []).slice(-7).reverse(); // last 7, newest first
+    return (data.history || []).reverse(); // all, newest first
   } catch { return []; }
 }
 
