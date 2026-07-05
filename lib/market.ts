@@ -77,7 +77,7 @@ export interface ManualData {
   biRate?: { value: number; note: string; lastUpdated?: string };
   tradeBalance?: { value: number; note: string };
   inflation?: { value: number; note: string; month?: string };
-  apbn?: { deficit: number; unit: string; note?: string };  // deficit bulanan
+  apbn?: { pendapatan: number; belanja: number; deficit: number; unit: string; note?: string };
   gdp?: { growth: number; note: string; quarter?: string };
   bondYield10y?: { value: number; change?: number; note?: string };
 }
@@ -139,7 +139,7 @@ export const FALLBACK_MANUAL: ManualData = {
   biRate: { value: 5.50, note: "BI RDG" },
   tradeBalance: { value: 4.03, note: "Surplus Jan-Mei 2026" },
   inflation: { value: 3.08, note: "yoy", month: "Mei" },
-  apbn: { deficit: 180.4, unit: "T", note: "Defisit Mei" },
+  apbn: { pendapatan: 1185.0, belanja: 1365.4, deficit: 180.4, unit: "T", note: "Mei" },
   gdp: { growth: 5.6, note: "yoy", quarter: "Q1-2026" },
   bondYield10y: { value: 6.85, change: -0.02, note: "SBN FR" },
 };

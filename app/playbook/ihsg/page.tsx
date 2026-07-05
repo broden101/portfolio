@@ -165,7 +165,11 @@ export default function IHSGDashboard() {
       { label: "USD/IDR", value: usdIdr?.close != null ? fmtNum(usdIdr.close) : "—", change: usdIdr?.change != null ? fmtPct(usdIdr.change) : "", up: (usdIdr?.change ?? 0) >= 0, note: "Spot" },
       { label: "BI Rate", value: `${(manual.biRate?.value ?? 5.50).toFixed(2)}%`, change: "Otomatis", up: true, note: manual.biRate?.note ?? "" },
       { label: "Yield SBN 10Th", value: `${(manual.bondYield10y?.value ?? 6.85).toFixed(2)}%`, change: manual.bondYield10y?.change != null ? `${manual.bondYield10y.change >= 0 ? "+" : ""}${manual.bondYield10y.change.toFixed(2)}%` : "", up: (manual.bondYield10y?.change ?? 0) >= 0, note: manual.bondYield10y?.note ?? "SBN FR" },
-      { label: "APBN", value: `Defisit Rp${(manual.apbn?.deficit ?? 180.4).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"}`, change: "", up: false, note: manual.apbn?.note ?? "Defisit Mei" },
+      { label: "APBN", value: `Rp${(manual.apbn?.belanja ?? 1365.4).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"}`, change: "", up: false, note: manual.apbn?.note ?? "Mei", detail: { lines: [
+        { label: "Pendapatan", value: `Rp${(manual.apbn?.pendapatan ?? 1185.0).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"}`, up: true },
+        { label: "Belanja", value: `Rp${(manual.apbn?.belanja ?? 1365.4).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"}`, up: false },
+        { label: "APBN", value: `(Rp${(manual.apbn?.deficit ?? 180.4).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"})`, up: false },
+      ] } },
       { label: "GDP", value: `${(manual.gdp?.growth ?? 5.6).toFixed(1)}%`, change: manual.gdp?.note ?? "yoy", up: true, note: manual.gdp?.quarter ?? "Q1-2026" },
       { label: "Inflasi", value: `${(manual.inflation?.value ?? 3.08).toFixed(2)}%`, change: manual.inflation?.note ?? "yoy", up: (manual.inflation?.value ?? 0) > 0, note: manual.inflation?.month ? `${manual.inflation.month} (BPS)` : "BPS" },
       { label: "Neraca Dagang", value: `$${(manual.tradeBalance?.value ?? 3.32).toFixed(2)}B`, change: manual.tradeBalance?.note ?? "", up: (manual.tradeBalance?.value ?? 3.32) >= 0, note: "Manual" },
@@ -317,16 +321,30 @@ export default function IHSGDashboard() {
 
         {/* MACRO INDICATORS BAR */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          {macroRows.map((m) => (
+          {macroRows.map((m) => {
+            const hasDetail = "detail" in m;
+            return (
             <div key={m.label} className="card-luxury p-4">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase">{m.label}</span>
                 <span className={`text-[10px] font-mono ${m.up ? "text-emerald-400" : "text-red-400"}`}>{m.change}</span>
               </div>
+              {hasDetail ? (
+                <div className="space-y-0.5 mt-1">
+                  {(m as any).detail.lines.map((l: { label: string; value: string; up: boolean }, i: number) => (
+                    <div key={i} className="flex justify-between items-center">
+                      <span className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em]">{l.label}</span>
+                      <span className={`text-[11px] font-mono ${l.up ? "text-emerald-400/80" : "text-red-400/80"}`}>{l.value}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
               <div className="font-heading text-xl text-[#F4EFE6] font-medium">{m.value}</div>
+              )}
               <div className="text-[#B8AA96]/30 text-[9px] mt-0.5">{m.note}</div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 mb-8">
