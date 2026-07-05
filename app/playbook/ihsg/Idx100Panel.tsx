@@ -13,6 +13,8 @@ interface StockRow {
 export function Idx100Panel() {
   const [stocks, setStocks] = useState<StockRow[] | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showFullWeek, setShowFullWeek] = useState(false);
+  const [showFullMonth, setShowFullMonth] = useState(false);
 
   useEffect(() => {
     fetch("/api/idx100-perf")
@@ -114,6 +116,28 @@ export function Idx100Panel() {
               </div>
             ))}
           </div>
+          <button
+            onClick={() => setShowFullWeek((v) => !v)}
+            className="mt-2 w-full flex items-center justify-center gap-1.5 text-[9px] tracking-[0.1em] uppercase text-[#C6A15B]/50 hover:text-[#C6A15B] transition-colors py-1 border-t border-[#2C261E]/40"
+          >
+            {showFullWeek ? "▲ Sembunyikan" : "▼ Lihat Semua"}
+          </button>
+          {showFullWeek && (
+            <div className="mt-2 max-h-[300px] overflow-y-auto">
+              {stocks!.filter((s) => s.perfWeek != null).sort((a, b) => b.perfWeek! - a.perfWeek!).map((s, i) => {
+                const v = s.perfWeek!;
+                return (
+                  <div key={s.ticker} className={`flex justify-between items-center py-1 px-1 ${i % 2 === 0 ? "bg-[#2C261E]/20" : ""}`}>
+                    <span className="text-[#B8AA96]/40 text-[9px] w-5 text-right mr-2">{i + 1}</span>
+                    <span className="text-[#F4EFE6] text-[11px] font-mono flex-1">{s.ticker}</span>
+                    <span className={`text-[10px] font-mono ${v >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                      {v >= 0 ? "+" : ""}{v.toFixed(2)}%
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* 1 Bulan */}
@@ -136,6 +160,28 @@ export function Idx100Panel() {
               </div>
             ))}
           </div>
+          <button
+            onClick={() => setShowFullMonth((v) => !v)}
+            className="mt-2 w-full flex items-center justify-center gap-1.5 text-[9px] tracking-[0.1em] uppercase text-[#C6A15B]/50 hover:text-[#C6A15B] transition-colors py-1 border-t border-[#2C261E]/40"
+          >
+            {showFullMonth ? "▲ Sembunyikan" : "▼ Lihat Semua"}
+          </button>
+          {showFullMonth && (
+            <div className="mt-2 max-h-[300px] overflow-y-auto">
+              {stocks!.filter((s) => s.perf1M != null).sort((a, b) => b.perf1M! - a.perf1M!).map((s, i) => {
+                const v = s.perf1M!;
+                return (
+                  <div key={s.ticker} className={`flex justify-between items-center py-1 px-1 ${i % 2 === 0 ? "bg-[#2C261E]/20" : ""}`}>
+                    <span className="text-[#B8AA96]/40 text-[9px] w-5 text-right mr-2">{i + 1}</span>
+                    <span className="text-[#F4EFE6] text-[11px] font-mono flex-1">{s.ticker}</span>
+                    <span className={`text-[10px] font-mono ${v >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                      {v >= 0 ? "+" : ""}{v.toFixed(2)}%
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>
