@@ -1,0 +1,6884 @@
+{
+  "lastUpdated": "2026-07-04",
+  "total": 847,
+  "sectors": {
+    "Finance": {
+      "count": 181,
+      "stocks": [
+        "BBCA",
+        "BBRI",
+        "BMRI",
+        "SMMA",
+        "BBNI",
+        "CASA",
+        "MPRO",
+        "BNLI",
+        "BRIS",
+        "MEGA",
+        "BNGA",
+        "BDMN",
+        "TBIG",
+        "NISP",
+        "BINA",
+        "BTPN",
+        "TOWR",
+        "PNBN",
+        "SRTG",
+        "BBHI",
+        "MKPI",
+        "CBDK",
+        "SUPA",
+        "BBSI",
+        "BBTN",
+        "XSPI",
+        "BNII",
+        "RISE",
+        "BSIM",
+        "JRPT",
+        "ARTO",
+        "PWON",
+        "LIFE",
+        "BSDE",
+        "CTRA",
+        "BFIN",
+        "BKSL",
+        "ADMF",
+        "BBKP",
+        "BMAS",
+        "BJBR",
+        "APIC",
+        "KPIG",
+        "BBMD",
+        "BJTM",
+        "BTPS",
+        "DUTI",
+        "DMAS",
+        "MAYA",
+        "BSWD",
+        "YULE",
+        "MASB",
+        "SMRA",
+        "LPKR",
+        "TUGU",
+        "BANK",
+        "TRIM",
+        "MTLA",
+        "AMAR",
+        "RDTX",
+        "AGRO",
+        "NOBU",
+        "SDRA",
+        "AGRS",
+        "NIRO",
+        "SMDM",
+        "SKRN",
+        "SFAN",
+        "INPC",
+        "BGTG",
+        "VICO",
+        "UANG",
+        "MCOR",
+        "LPCK",
+        "BBYB",
+        "BNBA",
+        "SMIL",
+        "ROCK",
+        "APLN",
+        "KIJA",
+        "BABP",
+        "BCIC",
+        "ASRI",
+        "BCAP",
+        "ABDA",
+        "LPGI",
+        "MMLP",
+        "BACA",
+        "AMAG",
+        "PNBS",
+        "DNAR",
+        "BKSW",
+        "FMII",
+        "TRIN",
+        "IMJS",
+        "BVIC",
+        "GMTD",
+        "STAR",
+        "CFIN",
+        "BSBK",
+        "GSMF",
+        "PADI",
+        "JGLE",
+        "DILD",
+        "BEKS",
+        "PPRO",
+        "PANS",
+        "AMAN",
+        "ELTY",
+        "JIHD",
+        "KOTA",
+        "GWSA",
+        "RELI",
+        "BBLD",
+        "CITY",
+        "WOMF",
+        "GRIA",
+        "MTWI",
+        "TIFA",
+        "INDO",
+        "AMOR",
+        "URBN",
+        "BPFI",
+        "NICK",
+        "BKDP",
+        "MDLN",
+        "HDFA",
+        "ATAP",
+        "SWID",
+        "TRUS",
+        "MREI",
+        "KOCI",
+        "AHAP",
+        "MTFN",
+        "VRNA",
+        "TRUE",
+        "PEGE",
+        "SATU",
+        "CBPE",
+        "DADA",
+        "VAST",
+        "REAL",
+        "NASA",
+        "ASRM",
+        "GOLD",
+        "NZIA",
+        "MGNA",
+        "TARA",
+        "YOII",
+        "HOMI",
+        "ASPI",
+        "CSIS",
+        "BIPP",
+        "FUJI",
+        "KBAG",
+        "BPTR",
+        "JMAS",
+        "EMDE",
+        "KREN",
+        "ASJT",
+        "VINS",
+        "XCID",
+        "ASDM",
+        "RELF",
+        "PUDP",
+        "SAGE",
+        "LPPS",
+        "POLA",
+        "PAMG",
+        "TRJA",
+        "AKSI",
+        "ASBI",
+        "IPAC",
+        "PURI",
+        "WINR",
+        "ASMI",
+        "IBFN",
+        "BAPI",
+        "BCIP",
+        "DEFI",
+        "WIDI"
+      ]
+    },
+    "Process Industries": {
+      "count": 93,
+      "stocks": [
+        "TPIA",
+        "CPIN",
+        "PGUN",
+        "INKP",
+        "TAPG",
+        "JPFA",
+        "AVIA",
+        "TKIM",
+        "JARR",
+        "NSSS",
+        "SMAR",
+        "AALI",
+        "STAA",
+        "LSIP",
+        "AGII",
+        "PACK",
+        "SSMS",
+        "TLDN",
+        "SGRO",
+        "PALM",
+        "ANJT",
+        "TBLA",
+        "PBID",
+        "TFCO",
+        "ARGO",
+        "CPRO",
+        "SAMF",
+        "PNGO",
+        "UDNG",
+        "NEST",
+        "MGRO",
+        "MSJA",
+        "BWPT",
+        "BRAM",
+        "BISI",
+        "JAWA",
+        "ALDO",
+        "FPNI",
+        "DGWG",
+        "MLIA",
+        "CSRA",
+        "MAIN",
+        "AYAM",
+        "TRST",
+        "TRGU",
+        "AMFG",
+        "SIPD",
+        "INDR",
+        "BUDI",
+        "SPMA",
+        "GZCO",
+        "PDPP",
+        "TALF",
+        "ADMG",
+        "KDSI",
+        "IPOL",
+        "GULA",
+        "MOLI",
+        "WMUU",
+        "PBRX",
+        "EKAD",
+        "BRNA",
+        "WMPP",
+        "BTEK",
+        "HOKI",
+        "NIKL",
+        "SSTM",
+        "CLPI",
+        "MDKI",
+        "SMKL",
+        "YPAS",
+        "AMMS",
+        "IGAR",
+        "APLI",
+        "MYTX",
+        "AKPI",
+        "PTPS",
+        "ASHA",
+        "ESTI",
+        "INOV",
+        "ACRO",
+        "NPGF",
+        "ERTX",
+        "ANDI",
+        "PSDN",
+        "AYLS",
+        "INCI",
+        "OBMD",
+        "SBMA",
+        "CHEM",
+        "OILS",
+        "PICO",
+        "FLMC"
+      ]
+    },
+    "Consumer Non-Durables": {
+      "count": 64,
+      "stocks": [
+        "PANI",
+        "ICBP",
+        "HMSP",
+        "UNVR",
+        "INDF",
+        "MYOR",
+        "GGRM",
+        "FAPA",
+        "ADES",
+        "MLBI",
+        "STTP",
+        "ULTJ",
+        "GOOD",
+        "YUPI",
+        "POLU",
+        "CLEO",
+        "SIMP",
+        "DMND",
+        "UNIC",
+        "EURO",
+        "VICI",
+        "PSGO",
+        "ROTI",
+        "WIIM",
+        "KEJU",
+        "FISH",
+        "CBUT",
+        "BEEF",
+        "KINO",
+        "DLTA",
+        "UCID",
+        "CEKA",
+        "SKLT",
+        "TCID",
+        "CAMP",
+        "COCO",
+        "AISA",
+        "STRK",
+        "SKBM",
+        "BELL",
+        "TRIS",
+        "ZONE",
+        "MAXI",
+        "WINE",
+        "CRAB",
+        "SRSN",
+        "GUNA",
+        "SURI",
+        "BEER",
+        "BOBA",
+        "ITIC",
+        "ENZO",
+        "NAYZ",
+        "WAPO",
+        "DSFI",
+        "MBTO",
+        "NASI",
+        "ISEA",
+        "BATA",
+        "IKAN",
+        "TAYS",
+        "RICY",
+        "PCAR",
+        "SOUL"
+      ]
+    },
+    "Transportation": {
+      "count": 60,
+      "stocks": [
+        "TCPI",
+        "GIAA",
+        "JSMR",
+        "ELPI",
+        "RMKE",
+        "CMNP",
+        "TMAS",
+        "GMFI",
+        "BULL",
+        "MBSS",
+        "SHIP",
+        "SMDR",
+        "CASS",
+        "BIRD",
+        "HATM",
+        "BESS",
+        "CBRE",
+        "SOCI",
+        "WINS",
+        "PORT",
+        "ASSA",
+        "HUMI",
+        "IPCC",
+        "GTSI",
+        "IPCM",
+        "TPMA",
+        "PSSI",
+        "PSAT",
+        "BLOG",
+        "BBRM",
+        "BSML",
+        "BLTA",
+        "CMPP",
+        "TAMU",
+        "MITI",
+        "NELY",
+        "HAIS",
+        "RIGS",
+        "BOAT",
+        "GTRA",
+        "MPXL",
+        "SAFE",
+        "KLAS",
+        "PURA",
+        "SDMU",
+        "TRUK",
+        "SAPX",
+        "HELI",
+        "PTIS",
+        "PPGL",
+        "WEHA",
+        "LAJU",
+        "TAXI",
+        "KARW",
+        "CANI",
+        "JAYA",
+        "LRNA",
+        "TNCA",
+        "KJEN",
+        "ARKA"
+      ]
+    },
+    "Consumer Services": {
+      "count": 57,
+      "stocks": [
+        "EMTK",
+        "MSIN",
+        "BUVA",
+        "FILM",
+        "SCMA",
+        "ALII",
+        "INPP",
+        "CNMA",
+        "CLAY",
+        "FORE",
+        "NATO",
+        "SINI",
+        "OMRE",
+        "JSPT",
+        "PNIN",
+        "MDIA",
+        "MINA",
+        "BLTZ",
+        "MAPB",
+        "BHIT",
+        "PSKT",
+        "BMTR",
+        "IPTV",
+        "RAAM",
+        "ARTA",
+        "FAST",
+        "BOLA",
+        "KDTN",
+        "PJAA",
+        "VERN",
+        "SHID",
+        "ENAK",
+        "SOTS",
+        "IBOS",
+        "PANR",
+        "PZZA",
+        "VIVA",
+        "FITT",
+        "ESTA",
+        "PNSE",
+        "BAYU",
+        "EAST",
+        "PDES",
+        "HAJJ",
+        "HRME",
+        "PTSP",
+        "DFAM",
+        "RBMS",
+        "KBLV",
+        "MARI",
+        "ABBA",
+        "ICON",
+        "TMPO",
+        "SNLK",
+        "PGLI",
+        "CSMI",
+        "PLAN"
+      ]
+    },
+    "Distribution Services": {
+      "count": 53,
+      "stocks": [
+        "CMRY",
+        "AKRA",
+        "TSPC",
+        "EPMT",
+        "ERAA",
+        "TGKA",
+        "MPMX",
+        "HEXA",
+        "DAAZ",
+        "MMIX",
+        "VISI",
+        "MDLA",
+        "IATA",
+        "CSAP",
+        "SPTO",
+        "BLUE",
+        "LTLS",
+        "BUAH",
+        "LIVE",
+        "FOLK",
+        "ASLC",
+        "SMGA",
+        "IRRA",
+        "LABS",
+        "PEVE",
+        "UNSP",
+        "GRPM",
+        "PMUI",
+        "GLVA",
+        "KMDS",
+        "DPUM",
+        "TIRA",
+        "BMSR",
+        "KOBX",
+        "MICE",
+        "IOTF",
+        "SMLE",
+        "SDPC",
+        "AGAR",
+        "INTA",
+        "PEHA",
+        "MRAT",
+        "PTMP",
+        "SLIS",
+        "YELO",
+        "BAUT",
+        "KOPI",
+        "FOOD",
+        "AIMS",
+        "OPMS",
+        "KOIN",
+        "LUCK",
+        "HADE"
+      ]
+    },
+    "Non-Energy Minerals": {
+      "count": 46,
+      "stocks": [
+        "AMMN",
+        "BRPT",
+        "EMAS",
+        "BRMS",
+        "ANTM",
+        "CUAN",
+        "MDKA",
+        "MBMA",
+        "NCKL",
+        "BUMI",
+        "INCO",
+        "TINS",
+        "ARCI",
+        "INTP",
+        "CMNT",
+        "DSNG",
+        "PSAB",
+        "SMGR",
+        "SGER",
+        "NICL",
+        "KRAS",
+        "MARK",
+        "DKFT",
+        "GGRP",
+        "IFSH",
+        "ISSP",
+        "IFII",
+        "NICE",
+        "SMBR",
+        "BLES",
+        "MINE",
+        "WSBP",
+        "SQMI",
+        "GDST",
+        "TIRT",
+        "SULI",
+        "SOFA",
+        "BAJA",
+        "ALKA",
+        "BTON",
+        "OKAS",
+        "HILL",
+        "FWCT",
+        "CTTH",
+        "LABA",
+        "INAI"
+      ]
+    },
+    "Industrial Services": {
+      "count": 40,
+      "stocks": [
+        "PTRO",
+        "BNBR",
+        "ARKO",
+        "SSIA",
+        "BALI",
+        "CTBN",
+        "PKPK",
+        "TOTL",
+        "PBSA",
+        "KETR",
+        "ACST",
+        "TEBE",
+        "ASLI",
+        "ADHI",
+        "RONY",
+        "PTPP",
+        "PTPW",
+        "JKON",
+        "NRCA",
+        "PPRE",
+        "BEST",
+        "DGIK",
+        "BDKR",
+        "WTON",
+        "IDPR",
+        "LEAD",
+        "WEGE",
+        "MHKI",
+        "BBSS",
+        "APEX",
+        "KOKA",
+        "SOLA",
+        "UNIQ",
+        "ATLA",
+        "RGAS",
+        "RUIS",
+        "WOWS",
+        "LCKM",
+        "SMKM",
+        "MIRA"
+      ]
+    },
+    "Energy Minerals": {
+      "count": 38,
+      "stocks": [
+        "BYAN",
+        "DSSA",
+        "UNTR",
+        "ADRO",
+        "AADI",
+        "ADMR",
+        "GEMS",
+        "PGAS",
+        "ENRG",
+        "MEDC",
+        "PTBA",
+        "ITMG",
+        "DEWA",
+        "MCOL",
+        "BSSR",
+        "INDY",
+        "HRUM",
+        "ESSA",
+        "BIPI",
+        "ABMM",
+        "SMMT",
+        "ELSA",
+        "SURE",
+        "TOBA",
+        "MYOH",
+        "MAHA",
+        "DWGL",
+        "MBAP",
+        "SUNI",
+        "DOID",
+        "ITMA",
+        "KKGI",
+        "ARII",
+        "RMKO",
+        "GTBO",
+        "CNKO",
+        "FIRE",
+        "COAL"
+      ]
+    },
+    "Producer Manufacturing": {
+      "count": 36,
+      "stocks": [
+        "IMPC",
+        "AUTO",
+        "SMSM",
+        "DRMA",
+        "MKAP",
+        "ARNA",
+        "BUKK",
+        "TOTO",
+        "KMTR",
+        "BOLT",
+        "SCCO",
+        "INDS",
+        "KBLI",
+        "TBMS",
+        "VOKS",
+        "JECC",
+        "ASPR",
+        "HALO",
+        "CCSI",
+        "KBLM",
+        "PART",
+        "HOPE",
+        "AMIN",
+        "IKAI",
+        "BINO",
+        "APII",
+        "LION",
+        "OBAT",
+        "CINT",
+        "ESIP",
+        "GEMA",
+        "SEMA",
+        "KUAS",
+        "KRYA",
+        "ISAP",
+        "INCF"
+      ]
+    },
+    "Technology Services": {
+      "count": 32,
+      "stocks": [
+        "DCII",
+        "ASII",
+        "GOTO",
+        "MLPT",
+        "WIFI",
+        "CYBR",
+        "MSTI",
+        "ASGR",
+        "IRSX",
+        "ATIC",
+        "NFCX",
+        "CHIP",
+        "PGJO",
+        "AREA",
+        "AWAN",
+        "ELIT",
+        "VTNY",
+        "TFAS",
+        "JATI",
+        "WGSH",
+        "TRON",
+        "LPLI",
+        "CASH",
+        "TOSK",
+        "UVCR",
+        "EPAC",
+        "GPSO",
+        "DIVA",
+        "MCAS",
+        "RUNS",
+        "DIGI",
+        "INDX"
+      ]
+    },
+    "Retail Trade": {
+      "count": 30,
+      "stocks": [
+        "AMRT",
+        "BELI",
+        "MAPI",
+        "MDIY",
+        "MAPA",
+        "BUKA",
+        "MIDI",
+        "BOGA",
+        "ACES",
+        "LPPF",
+        "RALS",
+        "DAYA",
+        "DEPO",
+        "SONA",
+        "ERAL",
+        "PMJS",
+        "MLPL",
+        "HERO",
+        "CARS",
+        "RANC",
+        "KONI",
+        "MPPA",
+        "BABY",
+        "ZATA",
+        "UFOE",
+        "DEWI",
+        "DOSS",
+        "MDRN",
+        "ECII",
+        "KIOS"
+      ]
+    },
+    "Commercial Services": {
+      "count": 30,
+      "stocks": [
+        "BHAT",
+        "PNLF",
+        "MNCN",
+        "BPII",
+        "JTPE",
+        "GOLF",
+        "OASA",
+        "FORU",
+        "FUTR",
+        "MKTR",
+        "DMMX",
+        "LUCY",
+        "DOOH",
+        "LFLO",
+        "KING",
+        "SOSS",
+        "NETV",
+        "MUTU",
+        "HYGN",
+        "PADA",
+        "DYAN",
+        "CRSN",
+        "NAIK",
+        "MEJA",
+        "MPIX",
+        "MERI",
+        "NANO",
+        "HDIT",
+        "IDEA",
+        "BMBL"
+      ]
+    },
+    "Consumer Durables": {
+      "count": 26,
+      "stocks": [
+        "VKTR",
+        "MGLV",
+        "CITA",
+        "HRTA",
+        "GJTL",
+        "IMAS",
+        "WOOD",
+        "POLI",
+        "RODA",
+        "KSIX",
+        "UNTD",
+        "GDYR",
+        "GPRA",
+        "DART",
+        "SCNP",
+        "TYRE",
+        "BAPA",
+        "TAMA",
+        "CAKK",
+        "MANG",
+        "LAND",
+        "LMPI",
+        "NTBK",
+        "INTD",
+        "OLIV",
+        "KICI"
+      ]
+    },
+    "Health Services": {
+      "count": 16,
+      "stocks": [
+        "SRAJ",
+        "SILO",
+        "MIKA",
+        "CARE",
+        "HEAL",
+        "PRAY",
+        "SAME",
+        "PRDA",
+        "MTMH",
+        "BMHS",
+        "RSGK",
+        "RSCH",
+        "WIRG",
+        "DGNS",
+        "PRIM",
+        "DKHH"
+      ]
+    },
+    "Communications": {
+      "count": 13,
+      "stocks": [
+        "MORA",
+        "TLKM",
+        "DNET",
+        "ISAT",
+        "EXCL",
+        "MTEL",
+        "INET",
+        "LINK",
+        "DATA",
+        "CENT",
+        "GHON",
+        "MSKY",
+        "JAST"
+      ]
+    },
+    "Health Technology": {
+      "count": 12,
+      "stocks": [
+        "KLBF",
+        "SOHO",
+        "SIDO",
+        "RLCO",
+        "OMED",
+        "KAEF",
+        "PYFA",
+        "DVLA",
+        "MERK",
+        "CHEK",
+        "IKPM",
+        "MEDS"
+      ]
+    },
+    "Utilities": {
+      "count": 11,
+      "stocks": [
+        "BREN",
+        "CDIA",
+        "PGEO",
+        "RAJA",
+        "POWR",
+        "KEEN",
+        "HGII",
+        "INPS",
+        "CGAS",
+        "LAPD",
+        "MPOW"
+      ]
+    },
+    "Electronic Technology": {
+      "count": 7,
+      "stocks": [
+        "MTDL",
+        "PTSN",
+        "AXIO",
+        "IKBI",
+        "LPIN",
+        "ZYRX",
+        "RCCC"
+      ]
+    },
+    "Miscellaneous": {
+      "count": 2,
+      "stocks": [
+        "RATU",
+        "COIN"
+      ]
+    }
+  },
+  "stocks": [
+    {
+      "ticker": "BBCA",
+      "name": "PT Bank Central Asia Tbk",
+      "sector": "Finance",
+      "close": 6050,
+      "mcap": 745814033593750
+    },
+    {
+      "ticker": "BREN",
+      "name": "PT Barito Renewables Energy Tbk",
+      "sector": "Utilities",
+      "close": 3400,
+      "mcap": 454873143750000
+    },
+    {
+      "ticker": "DCII",
+      "name": "PT DCI Indonesia Tbk",
+      "sector": "Technology Services",
+      "close": 189775,
+      "mcap": 452375414941406
+    },
+    {
+      "ticker": "BBRI",
+      "name": "PT Bank Rakyat Indonesia (Persero) Tbk Class B",
+      "sector": "Finance",
+      "close": 2710,
+      "mcap": 409529060158960
+    },
+    {
+      "ticker": "BYAN",
+      "name": "PT Bayan Resources Tbk",
+      "sector": "Energy Minerals",
+      "close": 11600,
+      "mcap": 386666696875000
+    },
+    {
+      "ticker": "BMRI",
+      "name": "PT Bank Mandiri (Persero) Tbk",
+      "sector": "Finance",
+      "close": 4010,
+      "mcap": 374124729379010
+    },
+    {
+      "ticker": "MORA",
+      "name": "PT Ekamas Mora Republik Tbk",
+      "sector": "Communications",
+      "close": 6625,
+      "mcap": 316504018066406
+    },
+    {
+      "ticker": "AMMN",
+      "name": "PT Amman Mineral Internasional Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 3500,
+      "mcap": 253813765625000
+    },
+    {
+      "ticker": "TLKM",
+      "name": "PT Telkom Indonesia (Persero) Tbk Class B",
+      "sector": "Communications",
+      "close": 2520,
+      "mcap": 249636791252520
+    },
+    {
+      "ticker": "ASII",
+      "name": "PT Astra International Tbk",
+      "sector": "Technology Services",
+      "close": 4810,
+      "mcap": 194725879257812
+    },
+    {
+      "ticker": "DSSA",
+      "name": "PT Dian Swastatika Sentosa Tbk",
+      "sector": "Energy Minerals",
+      "close": 820,
+      "mcap": 157963224062500
+    },
+    {
+      "ticker": "TPIA",
+      "name": "PT Chandra Asri Pacific Tbk",
+      "sector": "Process Industries",
+      "close": 1785,
+      "mcap": 154423111171875
+    },
+    {
+      "ticker": "DNET",
+      "name": "PT Indoritel Makmur Internasional Tbk",
+      "sector": "Communications",
+      "close": 9825,
+      "mcap": 139357790405272.98
+    },
+    {
+      "ticker": "BRPT",
+      "name": "PT Barito Pacific Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 1485,
+      "mcap": 138382903828125
+    },
+    {
+      "ticker": "SMMA",
+      "name": "PT Sinar Mas Multiartha Tbk Class A",
+      "sector": "Finance",
+      "close": 21550,
+      "mcap": 137223174920578
+    },
+    {
+      "ticker": "SRAJ",
+      "name": "PT Sejahteraraya Anugrahjaya Tbk",
+      "sector": "Health Services",
+      "close": 11000,
+      "mcap": 134628559570312
+    },
+    {
+      "ticker": "BBNI",
+      "name": "PT Bank Negara Indonesia (Persero) Tbk Class B",
+      "sector": "Finance",
+      "close": 3250,
+      "mcap": 121152624026688
+    },
+    {
+      "ticker": "PANI",
+      "name": "PT Pantai Indah Kapuk Dua Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 5975,
+      "mcap": 108682274169922
+    },
+    {
+      "ticker": "CASA",
+      "name": "PT Capital Financial Indonesia Tbk",
+      "sector": "Finance",
+      "close": 1800,
+      "mcap": 98057285156250
+    },
+    {
+      "ticker": "MPRO",
+      "name": "PT Maha Properti Indonesia Tbk",
+      "sector": "Finance",
+      "close": 9000,
+      "mcap": 89482500000000
+    },
+    {
+      "ticker": "EMAS",
+      "name": "PT Merdeka Gold Resources Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 5925,
+      "mcap": 87283344799805
+    },
+    {
+      "ticker": "UNTR",
+      "name": "PT United Tractors Tbk",
+      "sector": "Energy Minerals",
+      "close": 24000,
+      "mcap": 87163423828125
+    },
+    {
+      "ticker": "BNLI",
+      "name": "PT Bank Permata Tbk Class A",
+      "sector": "Finance",
+      "close": 2330,
+      "mcap": 84302458125000
+    },
+    {
+      "ticker": "IMPC",
+      "name": "PT Impack Pratama Industri Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 1510,
+      "mcap": 82909570000000
+    },
+    {
+      "ticker": "ICBP",
+      "name": "PT Indofood CBP Sukses Makmur Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 6950,
+      "mcap": 81050262011719
+    },
+    {
+      "ticker": "BRIS",
+      "name": "PT Bank Syariah Indonesia (Persero) Tbk",
+      "sector": "Finance",
+      "close": 1750,
+      "mcap": 80726208007812
+    },
+    {
+      "ticker": "HMSP",
+      "name": "PT Hanjaya Mandala Sampoerna Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 660,
+      "mcap": 76769931562500
+    },
+    {
+      "ticker": "CDIA",
+      "name": "PT Chandra Daya Investasi Tbk.",
+      "sector": "Utilities",
+      "close": 610,
+      "mcap": 76145918750000
+    },
+    {
+      "ticker": "BRMS",
+      "name": "PT Bumi Resources Minerals Tbk Class A",
+      "sector": "Non-Energy Minerals",
+      "close": 498,
+      "mcap": 70608455343750
+    },
+    {
+      "ticker": "ANTM",
+      "name": "PT ANTAM (Persero) Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 2930,
+      "mcap": 70410143284180
+    },
+    {
+      "ticker": "CUAN",
+      "name": "PT Petrindo Jaya Kreasi Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 610,
+      "mcap": 68575528046875
+    },
+    {
+      "ticker": "UNVR",
+      "name": "PT Unilever Indonesia Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 1800,
+      "mcap": 68366214843750
+    },
+    {
+      "ticker": "MDKA",
+      "name": "PT Merdeka Copper Gold Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 2700,
+      "mcap": 65898330468750
+    },
+    {
+      "ticker": "ADRO",
+      "name": "PT Alamtri Resources Indonesia Tbk",
+      "sector": "Energy Minerals",
+      "close": 2300,
+      "mcap": 64773507421875
+    },
+    {
+      "ticker": "ISAT",
+      "name": "PT Indosat Tbk Class B",
+      "sector": "Communications",
+      "close": 1985,
+      "mcap": 64017858937532
+    },
+    {
+      "ticker": "AADI",
+      "name": "Pt Adaro Andalan Indonesia Tbk",
+      "sector": "Energy Minerals",
+      "close": 7975,
+      "mcap": 62100464416504
+    },
+    {
+      "ticker": "INDF",
+      "name": "PT Indofood Sukses Makmur Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 6925,
+      "mcap": 60804448535156
+    },
+    {
+      "ticker": "ADMR",
+      "name": "PT Alamtri Minerals Indonesia Tbk",
+      "sector": "Energy Minerals",
+      "close": 1445,
+      "mcap": 59074969785156
+    },
+    {
+      "ticker": "AMRT",
+      "name": "PT Sumber Alfaria Trijaya",
+      "sector": "Retail Trade",
+      "close": 1395,
+      "mcap": 57926682949219
+    },
+    {
+      "ticker": "MBMA",
+      "name": "PT Merdeka Battery Materials Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 520,
+      "mcap": 56157615312500
+    },
+    {
+      "ticker": "NCKL",
+      "name": "PT Trimegah Bangun Persada Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 860,
+      "mcap": 54264797343750
+    },
+    {
+      "ticker": "GOTO",
+      "name": "PT GoTo Gojek Tokopedia Tbk",
+      "sector": "Technology Services",
+      "close": 50,
+      "mcap": 52920725000000
+    },
+    {
+      "ticker": "BUMI",
+      "name": "PT Bumi Resources Tbk Class A",
+      "sector": "Non-Energy Minerals",
+      "close": 139,
+      "mcap": 51615621468750
+    },
+    {
+      "ticker": "CPIN",
+      "name": "PT Charoen Pokphand Indonesia Tbk",
+      "sector": "Process Industries",
+      "close": 3080,
+      "mcap": 50505840000000
+    },
+    {
+      "ticker": "INCO",
+      "name": "PT Vale Indonesia Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 4580,
+      "mcap": 48272216015625
+    },
+    {
+      "ticker": "MEGA",
+      "name": "PT Bank Mega Tbk",
+      "sector": "Finance",
+      "close": 2000,
+      "mcap": 46963691406250
+    },
+    {
+      "ticker": "EXCL",
+      "name": "PT XLSMART Telecom Sejahtera Tbk",
+      "sector": "Communications",
+      "close": 2530,
+      "mcap": 45902733808594
+    },
+    {
+      "ticker": "MTEL",
+      "name": "PT Dayamitra Telekomunikasi Tbk",
+      "sector": "Communications",
+      "close": 490,
+      "mcap": 40944243046875
+    },
+    {
+      "ticker": "PGUN",
+      "name": "PT Pradiksi Gunatama Tbk",
+      "sector": "Process Industries",
+      "close": 7000,
+      "mcap": 40164943847656
+    },
+    {
+      "ticker": "MYOR",
+      "name": "PT Mayora Indah Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 1785,
+      "mcap": 39910278105469
+    },
+    {
+      "ticker": "PTRO",
+      "name": "PT Petrosea Tbk",
+      "sector": "Industrial Services",
+      "close": 3860,
+      "mcap": 38866762187500
+    },
+    {
+      "ticker": "INKP",
+      "name": "PT Indah Kiat Pulp & Paper Tbk",
+      "sector": "Process Industries",
+      "close": 7075,
+      "mcap": 38707204089355
+    },
+    {
+      "ticker": "BNGA",
+      "name": "PT Bank CIMB Niaga Tbk Class A",
+      "sector": "Finance",
+      "close": 1545,
+      "mcap": 38516409433594
+    },
+    {
+      "ticker": "BELI",
+      "name": "PT Global Digital Niaga Tbk",
+      "sector": "Retail Trade",
+      "close": 274,
+      "mcap": 37598001718750
+    },
+    {
+      "ticker": "BDMN",
+      "name": "PT Bank Danamon Indonesia Tbk Class A",
+      "sector": "Finance",
+      "close": 3830,
+      "mcap": 37432706972656
+    },
+    {
+      "ticker": "PGEO",
+      "name": "PT Pertamina Geothermal Energy Tbk",
+      "sector": "Utilities",
+      "close": 875,
+      "mcap": 36662093261719
+    },
+    {
+      "ticker": "GEMS",
+      "name": "PT Golden Energy Mines Tbk",
+      "sector": "Energy Minerals",
+      "close": 6150,
+      "mcap": 36176471118164
+    },
+    {
+      "ticker": "KLBF",
+      "name": "PT Kalbe Farma Tbk",
+      "sector": "Health Technology",
+      "close": 750,
+      "mcap": 35108411132812
+    },
+    {
+      "ticker": "TCPI",
+      "name": "PT Transcoal Pacific",
+      "sector": "Transportation",
+      "close": 6950,
+      "mcap": 34750000000000
+    },
+    {
+      "ticker": "CMRY",
+      "name": "PT Cisarua Mountain Dairy Tbk",
+      "sector": "Distribution Services",
+      "close": 4360,
+      "mcap": 34595218339844.004
+    },
+    {
+      "ticker": "MLPT",
+      "name": "PT Multipolar Technology Tbk",
+      "sector": "Technology Services",
+      "close": 18275,
+      "mcap": 34265627230835
+    },
+    {
+      "ticker": "PGAS",
+      "name": "PT Perusahaan Gas Negara (Persero) Tbk Class B",
+      "sector": "Energy Minerals",
+      "close": 1390,
+      "mcap": 33695695860765.004
+    },
+    {
+      "ticker": "TBIG",
+      "name": "PT Tower Bersama Infrastructure Tbk",
+      "sector": "Finance",
+      "close": 1450,
+      "mcap": 32852650000000
+    },
+    {
+      "ticker": "EMTK",
+      "name": "PT Elang Mahkota Teknologi Tbk",
+      "sector": "Consumer Services",
+      "close": 525,
+      "mcap": 31798277929688
+    },
+    {
+      "ticker": "TAPG",
+      "name": "PT Triputra Agro Persada Tbk",
+      "sector": "Process Industries",
+      "close": 1550,
+      "mcap": 30771435546875
+    },
+    {
+      "ticker": "GGRM",
+      "name": "PT Gudang Garam Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 15775,
+      "mcap": 30352490325928
+    },
+    {
+      "ticker": "SILO",
+      "name": "PT Siloam International Hospitals Tbk Reg-S",
+      "sector": "Health Services",
+      "close": 2210,
+      "mcap": 28729022333984
+    },
+    {
+      "ticker": "ENRG",
+      "name": "PT Energi Mega Persada Tbk",
+      "sector": "Energy Minerals",
+      "close": 1075,
+      "mcap": 28556885791016
+    },
+    {
+      "ticker": "MSIN",
+      "name": "PT MNC Digital Entertainment Tbk",
+      "sector": "Consumer Services",
+      "close": 460,
+      "mcap": 27826932734375
+    },
+    {
+      "ticker": "BNBR",
+      "name": "PT Bakrie & Brothers Tbk Class A",
+      "sector": "Industrial Services",
+      "close": 105,
+      "mcap": 27650358750000
+    },
+    {
+      "ticker": "MEDC",
+      "name": "PT Medco Energi Internasional Tbk",
+      "sector": "Energy Minerals",
+      "close": 1100,
+      "mcap": 27572511914062
+    },
+    {
+      "ticker": "NISP",
+      "name": "PT Bank OCBC NISP Tbk",
+      "sector": "Finance",
+      "close": 1185,
+      "mcap": 27190176796875
+    },
+    {
+      "ticker": "FAPA",
+      "name": "PT FAP Agri Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 7350,
+      "mcap": 26676177209473
+    },
+    {
+      "ticker": "PTBA",
+      "name": "PT Bukit Asam (Persero) Tbk",
+      "sector": "Energy Minerals",
+      "close": 2310,
+      "mcap": 26535455021316
+    },
+    {
+      "ticker": "TINS",
+      "name": "PT Timah (Persero) Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 3430,
+      "mcap": 25545792552258
+    },
+    {
+      "ticker": "ITMG",
+      "name": "PT Indo Tambangraya Megah Tbk",
+      "sector": "Energy Minerals",
+      "close": 22525,
+      "mcap": 25451561724854
+    },
+    {
+      "ticker": "ARCI",
+      "name": "PT Archi Indonesia Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 1005,
+      "mcap": 25361175000000
+    },
+    {
+      "ticker": "MAPI",
+      "name": "PT Mitra Adiperkasa Tbk",
+      "sector": "Retail Trade",
+      "close": 1515,
+      "mcap": 25057514121094
+    },
+    {
+      "ticker": "AKRA",
+      "name": "PT AKR Corporindo Tbk",
+      "sector": "Distribution Services",
+      "close": 1255,
+      "mcap": 24770148251953
+    },
+    {
+      "ticker": "BINA",
+      "name": "PT Bank Ina Perdana Tbk",
+      "sector": "Finance",
+      "close": 3970,
+      "mcap": 24354823745117
+    },
+    {
+      "ticker": "MIKA",
+      "name": "PT Mitra Keluarga Karyasehat Tbk",
+      "sector": "Health Services",
+      "close": 1720,
+      "mcap": 23783563710938
+    },
+    {
+      "ticker": "JPFA",
+      "name": "PT Japfa Comfeed Indonesia Tbk Class A",
+      "sector": "Process Industries",
+      "close": 2030,
+      "mcap": 23589226445312
+    },
+    {
+      "ticker": "VKTR",
+      "name": "PT VKTR Teknologi Mobilitas Tbk",
+      "sector": "Consumer Durables",
+      "close": 520,
+      "mcap": 22750000000000
+    },
+    {
+      "ticker": "BTPN",
+      "name": "PT Bank SMBC Indonesia Tbk",
+      "sector": "Finance",
+      "close": 2140,
+      "mcap": 22584232949219
+    },
+    {
+      "ticker": "MDIY",
+      "name": "PT Daya Intiguna Yasa Tbk",
+      "sector": "Retail Trade",
+      "close": 885,
+      "mcap": 22293497431641
+    },
+    {
+      "ticker": "GIAA",
+      "name": "PT Garuda Indonesia (Persero) Tbk Class B",
+      "sector": "Transportation",
+      "close": 54,
+      "mcap": 21982952812554
+    },
+    {
+      "ticker": "TOWR",
+      "name": "PT Sarana Menara Nusantara Tbk",
+      "sector": "Finance",
+      "close": 372,
+      "mcap": 21620718468750
+    },
+    {
+      "ticker": "PNBN",
+      "name": "PT Bank Pan Indonesia Tbk",
+      "sector": "Finance",
+      "close": 885,
+      "mcap": 21312168984375
+    },
+    {
+      "ticker": "SRTG",
+      "name": "PT Saratoga Investama Sedaya Tbk",
+      "sector": "Finance",
+      "close": 1555,
+      "mcap": 20988241972656
+    },
+    {
+      "ticker": "BBHI",
+      "name": "PT Allo Bank Indonesia Tbk",
+      "sector": "Finance",
+      "close": 930,
+      "mcap": 20209137949219
+    },
+    {
+      "ticker": "JSMR",
+      "name": "PT Jasa Marga (Persero) Tbk Class B",
+      "sector": "Transportation",
+      "close": 2740,
+      "mcap": 19886568137506
+    },
+    {
+      "ticker": "AVIA",
+      "name": "PT Avia Avian Tbk",
+      "sector": "Process Industries",
+      "close": 320,
+      "mcap": 19825137500000
+    },
+    {
+      "ticker": "MKPI",
+      "name": "PT Metropolitan Kentjana Tbk",
+      "sector": "Finance",
+      "close": 20850,
+      "mcap": 19769844268799
+    },
+    {
+      "ticker": "CBDK",
+      "name": "PT Bangun Kosambi Sukses Tbk",
+      "sector": "Finance",
+      "close": 3480,
+      "mcap": 19727926289062
+    },
+    {
+      "ticker": "ADES",
+      "name": "PT Akasha Wira International Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 32500,
+      "mcap": 19171645660400
+    },
+    {
+      "ticker": "BUVA",
+      "name": "PT Bukit Uluwatu Villa Tbk",
+      "sector": "Consumer Services",
+      "close": 765,
+      "mcap": 18832046835938
+    },
+    {
+      "ticker": "DEWA",
+      "name": "PT Darma Henwa Tbk",
+      "sector": "Energy Minerals",
+      "close": 314,
+      "mcap": 18689637316928
+    },
+    {
+      "ticker": "SUPA",
+      "name": "PT Super Bank Indonesia Tbk",
+      "sector": "Finance",
+      "close": 550,
+      "mcap": 18456925850000
+    },
+    {
+      "ticker": "FILM",
+      "name": "PT MD Entertainment Tbk",
+      "sector": "Consumer Services",
+      "close": 1660,
+      "mcap": 17767741914062
+    },
+    {
+      "ticker": "MAPA",
+      "name": "PT MAP Aktif Adiperkasa Tbk",
+      "sector": "Retail Trade",
+      "close": 615,
+      "mcap": 17529960000000
+    },
+    {
+      "ticker": "TKIM",
+      "name": "PT Pabrik Kertas Tjiwi Kimia Tbk",
+      "sector": "Process Industries",
+      "close": 5500,
+      "mcap": 17122728637695
+    },
+    {
+      "ticker": "JARR",
+      "name": "PT Jhonlin Agro Raya Tbk",
+      "sector": "Process Industries",
+      "close": 1840,
+      "mcap": 16984423671875
+    },
+    {
+      "ticker": "BBSI",
+      "name": "PT Krom Bank Indonesia Tbk",
+      "sector": "Finance",
+      "close": 4600,
+      "mcap": 16734689941406
+    },
+    {
+      "ticker": "RAJA",
+      "name": "PT Rukun Raharja Tbk",
+      "sector": "Utilities",
+      "close": 3940,
+      "mcap": 16654705126953
+    },
+    {
+      "ticker": "MGLV",
+      "name": "PT Panca Anugrah Wisesa Tbk",
+      "sector": "Consumer Durables",
+      "close": 8600,
+      "mcap": 16381997436523
+    },
+    {
+      "ticker": "BBTN",
+      "name": "PT Bank Tabungan Negara (Persero) Tbk",
+      "sector": "Finance",
+      "close": 1160,
+      "mcap": 16279955430847
+    },
+    {
+      "ticker": "XSPI",
+      "name": "Dana Investasi Real Estat Simas Plaza Indonesia",
+      "sector": "Finance",
+      "close": 725,
+      "mcap": 15080000000000
+    },
+    {
+      "ticker": "NSSS",
+      "name": "PT Nusantara Sawit Sejahtera Tbk",
+      "sector": "Process Industries",
+      "close": 620,
+      "mcap": 14756972382812
+    },
+    {
+      "ticker": "INTP",
+      "name": "PT Indocement Tunggal Prakarsa Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 4160,
+      "mcap": 14624907578125
+    },
+    {
+      "ticker": "RATU",
+      "name": "PT Raharja Energi Cepu Tbk",
+      "sector": "Miscellaneous",
+      "close": 5325,
+      "mcap": 14457661010742
+    },
+    {
+      "ticker": "BNII",
+      "name": "PT Bank Maybank Indonesia Tbk Class A",
+      "sector": "Finance",
+      "close": 188,
+      "mcap": 14328456718750
+    },
+    {
+      "ticker": "RISE",
+      "name": "PT Jaya Sukses Makmur Sentosa Tbk",
+      "sector": "Finance",
+      "close": 880,
+      "mcap": 14254767656250
+    },
+    {
+      "ticker": "ARKO",
+      "name": "PT Arkora Hydro Tbk",
+      "sector": "Industrial Services",
+      "close": 4840,
+      "mcap": 14173916367188
+    },
+    {
+      "ticker": "CARE",
+      "name": "PT Metro Healthcare Indonesia Tbk",
+      "sector": "Health Services",
+      "close": 422,
+      "mcap": 14031500000000
+    },
+    {
+      "ticker": "MCOL",
+      "name": "PT Prima Andalan Mandiri Tbk",
+      "sector": "Energy Minerals",
+      "close": 3910,
+      "mcap": 13902239829102
+    },
+    {
+      "ticker": "SMAR",
+      "name": "PT Sinar Mas Agro Resources & Technology Tbk",
+      "sector": "Process Industries",
+      "close": 4820,
+      "mcap": 13843971992188
+    },
+    {
+      "ticker": "BSIM",
+      "name": "PT Bank Sinarmas Tbk",
+      "sector": "Finance",
+      "close": 700,
+      "mcap": 13801313476562
+    },
+    {
+      "ticker": "SOHO",
+      "name": "PT Soho Global Health Tbk",
+      "sector": "Health Technology",
+      "close": 1085,
+      "mcap": 13770474580078
+    },
+    {
+      "ticker": "CMNT",
+      "name": "PT Cemindo Gemilang Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 795,
+      "mcap": 13614775605469
+    },
+    {
+      "ticker": "JRPT",
+      "name": "PT Jaya Real Property Tbk",
+      "sector": "Finance",
+      "close": 1080,
+      "mcap": 13540751015625
+    },
+    {
+      "ticker": "MLBI",
+      "name": "PT Multi Bintang Indonesia Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 6300,
+      "mcap": 13274100000000
+    },
+    {
+      "ticker": "SCMA",
+      "name": "PT Surya Citra Media Tbk",
+      "sector": "Consumer Services",
+      "close": 210,
+      "mcap": 13273548750000
+    },
+    {
+      "ticker": "HEAL",
+      "name": "PT Medikaloka Hermina Tbk",
+      "sector": "Health Services",
+      "close": 875,
+      "mcap": 13256206420898
+    },
+    {
+      "ticker": "STTP",
+      "name": "PT Siantar Top Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 9800,
+      "mcap": 12838000000000
+    },
+    {
+      "ticker": "ARTO",
+      "name": "PT Bank Jago Tbk",
+      "sector": "Finance",
+      "close": 920,
+      "mcap": 12752424570312
+    },
+    {
+      "ticker": "ELPI",
+      "name": "PT Pelayaran Nasional Ekalya Purnamasari Tbk",
+      "sector": "Transportation",
+      "close": 1330,
+      "mcap": 12667478496094
+    },
+    {
+      "ticker": "ULTJ",
+      "name": "PT Ultrajaya Milk Industry & Trading Co. Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 1360,
+      "mcap": 12570238281250
+    },
+    {
+      "ticker": "PWON",
+      "name": "PT Pakuwon Jati Tbk",
+      "sector": "Finance",
+      "close": 254,
+      "mcap": 12232538796875
+    },
+    {
+      "ticker": "LIFE",
+      "name": "PT MSIG Life Insurance Indonesia Tbk",
+      "sector": "Finance",
+      "close": 5825,
+      "mcap": 12232500000000
+    },
+    {
+      "ticker": "DSNG",
+      "name": "PT Dharma Satya Nusantara Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 1145,
+      "mcap": 11974889692383
+    },
+    {
+      "ticker": "BSDE",
+      "name": "PT Bumi Serpong Damai Tbk",
+      "sector": "Finance",
+      "close": 570,
+      "mcap": 11920635996094
+    },
+    {
+      "ticker": "CITA",
+      "name": "PT Cita Mineral Investindo Tbk",
+      "sector": "Consumer Durables",
+      "close": 2990,
+      "mcap": 11841480371094
+    },
+    {
+      "ticker": "AALI",
+      "name": "PT Astra Agro Lestari Tbk",
+      "sector": "Process Industries",
+      "close": 6025,
+      "mcap": 11596247335815
+    },
+    {
+      "ticker": "AUTO",
+      "name": "PT Astra Otoparts Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 2390,
+      "mcap": 11519161655273
+    },
+    {
+      "ticker": "TSPC",
+      "name": "PT Tempo Scan Pacific Tbk",
+      "sector": "Distribution Services",
+      "close": 2470,
+      "mcap": 11139364716797
+    },
+    {
+      "ticker": "GOOD",
+      "name": "PT Garudafood Putra Putri Jaya Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 304,
+      "mcap": 11113545312500
+    },
+    {
+      "ticker": "POWR",
+      "name": "PT Cikarang Listrindo Tbk",
+      "sector": "Utilities",
+      "close": 705,
+      "mcap": 11109543530273
+    },
+    {
+      "ticker": "ALII",
+      "name": "PT Ancara Logistics Indonesia Tbk",
+      "sector": "Consumer Services",
+      "close": 695,
+      "mcap": 10998930864258
+    },
+    {
+      "ticker": "SIDO",
+      "name": "PT Industri Jamu dan Farmasi Sido Muncul Tbk",
+      "sector": "Health Technology",
+      "close": 368,
+      "mcap": 10954796500000
+    },
+    {
+      "ticker": "STAA",
+      "name": "PT Sumber Tani Agung Resources Tbk",
+      "sector": "Process Industries",
+      "close": 995,
+      "mcap": 10846921567383
+    },
+    {
+      "ticker": "PSAB",
+      "name": "PT J Resources Asia Pasifik Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 408,
+      "mcap": 10795680000000
+    },
+    {
+      "ticker": "CTRA",
+      "name": "PT Ciputra Development Tbk",
+      "sector": "Finance",
+      "close": 575,
+      "mcap": 10643875537109
+    },
+    {
+      "ticker": "BSSR",
+      "name": "PT Baramulti Suksessarana Tbk",
+      "sector": "Energy Minerals",
+      "close": 4030,
+      "mcap": 10544495000000
+    },
+    {
+      "ticker": "BFIN",
+      "name": "PT BFI Finance Indonesia Tbk",
+      "sector": "Finance",
+      "close": 745,
+      "mcap": 10513180996094
+    },
+    {
+      "ticker": "YUPI",
+      "name": "Pt Yupi Indo Jelly Gum Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 1225,
+      "mcap": 10466999340820
+    },
+    {
+      "ticker": "BUKA",
+      "name": "PT Bukalapak.com Tbk",
+      "sector": "Retail Trade",
+      "close": 100,
+      "mcap": 10316708593750
+    },
+    {
+      "ticker": "BKSL",
+      "name": "PT Sentul City Tbk",
+      "sector": "Finance",
+      "close": 61,
+      "mcap": 10230242328125
+    },
+    {
+      "ticker": "INDY",
+      "name": "PT Indika Energy Tbk",
+      "sector": "Energy Minerals",
+      "close": 1950,
+      "mcap": 10145249194336
+    },
+    {
+      "ticker": "RLCO",
+      "name": "PT Abadi Lestari Indonesia Tbk",
+      "sector": "Health Technology",
+      "close": 3170,
+      "mcap": 9906250000000
+    },
+    {
+      "ticker": "ADMF",
+      "name": "PT Adira Dinamika Multi Finance Tbk",
+      "sector": "Finance",
+      "close": 7975,
+      "mcap": 9855529727173
+    },
+    {
+      "ticker": "COIN",
+      "name": "PT Indokripto Koin Semesta Tbk",
+      "sector": "Miscellaneous",
+      "close": 665,
+      "mcap": 9779411420898
+    },
+    {
+      "ticker": "HRUM",
+      "name": "PT Harum Energy Tbk",
+      "sector": "Energy Minerals",
+      "close": 725,
+      "mcap": 9730766625977
+    },
+    {
+      "ticker": "SMGR",
+      "name": "PT Semen Indonesia (Persero) Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 1425,
+      "mcap": 9620944557089
+    },
+    {
+      "ticker": "BBKP",
+      "name": "PT Bank KB Indonesia Tbk Class B",
+      "sector": "Finance",
+      "close": 51,
+      "mcap": 9582264093750
+    },
+    {
+      "ticker": "RMKE",
+      "name": "PT RMK Energy Tbk",
+      "sector": "Transportation",
+      "close": 2180,
+      "mcap": 9537500000000
+    },
+    {
+      "ticker": "SMSM",
+      "name": "PT Selamat Sempurna Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 1645,
+      "mcap": 9473020856934
+    },
+    {
+      "ticker": "POLU",
+      "name": "PT Golden Flower Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 12600,
+      "mcap": 9450000000000
+    },
+    {
+      "ticker": "ESSA",
+      "name": "PT ESSA Industries Indonesia Tbk",
+      "sector": "Energy Minerals",
+      "close": 540,
+      "mcap": 9302567343750
+    },
+    {
+      "ticker": "MIDI",
+      "name": "PT Midi Utama Indonesia Tbk",
+      "sector": "Retail Trade",
+      "close": 276,
+      "mcap": 9228140859375
+    },
+    {
+      "ticker": "CLEO",
+      "name": "PT Sariguna Primatirta Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 382,
+      "mcap": 9152715523438
+    },
+    {
+      "ticker": "WIFI",
+      "name": "PT Solusi Sinergi Digital Tbk",
+      "sector": "Technology Services",
+      "close": 1720,
+      "mcap": 9130703984375
+    },
+    {
+      "ticker": "PRAY",
+      "name": "PT Famon Awal Bros Sedaya Tbk",
+      "sector": "Health Services",
+      "close": 650,
+      "mcap": 9073624218750
+    },
+    {
+      "ticker": "LSIP",
+      "name": "PT Perusahaan Perkebunan London Sumatra Indonesia Tbk",
+      "sector": "Process Industries",
+      "close": 1330,
+      "mcap": 9066695073242
+    },
+    {
+      "ticker": "CMNP",
+      "name": "PT Citra Marga Nusaphala Persada Tbk",
+      "sector": "Transportation",
+      "close": 1335,
+      "mcap": 8939633247070
+    },
+    {
+      "ticker": "BHAT",
+      "name": "PT Bhakti Multi Artha Tbk",
+      "sector": "Commercial Services",
+      "close": 1770,
+      "mcap": 8850000000000
+    },
+    {
+      "ticker": "BMAS",
+      "name": "PT Bank Maspion Indonesia Tbk",
+      "sector": "Finance",
+      "close": 474,
+      "mcap": 8580661839844
+    },
+    {
+      "ticker": "HRTA",
+      "name": "PT Hartadinata Abadi Tbk",
+      "sector": "Consumer Durables",
+      "close": 1815,
+      "mcap": 8358551791992
+    },
+    {
+      "ticker": "SIMP",
+      "name": "PT Salim Ivomas Pratama Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 550,
+      "mcap": 8352470263672
+    },
+    {
+      "ticker": "CYBR",
+      "name": "PT ITSEC Asia Tbk",
+      "sector": "Technology Services",
+      "close": 600,
+      "mcap": 8081898632812
+    },
+    {
+      "ticker": "BJBR",
+      "name": "PT Bank Pembangunan Daerah Jawa Barat & Banten Tbk",
+      "sector": "Finance",
+      "close": 765,
+      "mcap": 8048904916992
+    },
+    {
+      "ticker": "APIC",
+      "name": "PT Pacific Strategic Financial Tbk Class A",
+      "sector": "Finance",
+      "close": 670,
+      "mcap": 7883430683594
+    },
+    {
+      "ticker": "AGII",
+      "name": "PT Samator Indo Gas Tbk",
+      "sector": "Process Industries",
+      "close": 2590,
+      "mcap": 7883079172363
+    },
+    {
+      "ticker": "KPIG",
+      "name": "PT MNC Tourism Indonesia Tbk",
+      "sector": "Finance",
+      "close": 73,
+      "mcap": 7833837593750
+    },
+    {
+      "ticker": "BIPI",
+      "name": "PT Astrindo Nusantara Infrastruktur Tbk",
+      "sector": "Energy Minerals",
+      "close": 121,
+      "mcap": 7708933632812
+    },
+    {
+      "ticker": "BBMD",
+      "name": "PT Bank Mestika Dharma Tbk",
+      "sector": "Finance",
+      "close": 1905,
+      "mcap": 7671566154785
+    },
+    {
+      "ticker": "BJTM",
+      "name": "PT Bank Pembangunan Daerah Jawa Timur Tbk Class B",
+      "sector": "Finance",
+      "close": 510,
+      "mcap": 7657904003906
+    },
+    {
+      "ticker": "BTPS",
+      "name": "PT Bank BTPN Syariah Tbk",
+      "sector": "Finance",
+      "close": 990,
+      "mcap": 7624586997070
+    },
+    {
+      "ticker": "PACK",
+      "name": "PT Abadi Nusantara Hijau Investama Tbk",
+      "sector": "Process Industries",
+      "close": 232,
+      "mcap": 7510948343750
+    },
+    {
+      "ticker": "DUTI",
+      "name": "PT Duta Pertiwi Tbk",
+      "sector": "Finance",
+      "close": 4050,
+      "mcap": 7492500000000
+    },
+    {
+      "ticker": "SSMS",
+      "name": "PT Sawit Sumbermas Sarana Tbk",
+      "sector": "Process Industries",
+      "close": 765,
+      "mcap": 7286625000000
+    },
+    {
+      "ticker": "INPP",
+      "name": "PT Indonesian Paradise Property Tbk",
+      "sector": "Consumer Services",
+      "close": 645,
+      "mcap": 7212371103516
+    },
+    {
+      "ticker": "CNMA",
+      "name": "PT Nusantara Sejahtera Raya Tbk",
+      "sector": "Consumer Services",
+      "close": 86,
+      "mcap": 7167670000000
+    },
+    {
+      "ticker": "CLAY",
+      "name": "PT Citra Putra Realty Tbk",
+      "sector": "Consumer Services",
+      "close": 2700,
+      "mcap": 6938999340820
+    },
+    {
+      "ticker": "SSIA",
+      "name": "PT Surya Semesta Internusa Tbk",
+      "sector": "Industrial Services",
+      "close": 1505,
+      "mcap": 6845552023926
+    },
+    {
+      "ticker": "PNLF",
+      "name": "PT Panin Financial Tbk",
+      "sector": "Commercial Services",
+      "close": 212,
+      "mcap": 6788679734375
+    },
+    {
+      "ticker": "TLDN",
+      "name": "PT Teladan Prima Agro Tbk",
+      "sector": "Process Industries",
+      "close": 520,
+      "mcap": 6732195742188
+    },
+    {
+      "ticker": "DMAS",
+      "name": "PT Puradelta Lestari Tbk",
+      "sector": "Finance",
+      "close": 138,
+      "mcap": 6651339632812
+    },
+    {
+      "ticker": "TMAS",
+      "name": "PT Temas Tbk",
+      "sector": "Transportation",
+      "close": 114,
+      "mcap": 6503871000000
+    },
+    {
+      "ticker": "EPMT",
+      "name": "PT Enseval Putera Megatrading Tbk",
+      "sector": "Distribution Services",
+      "close": 2400,
+      "mcap": 6500735742188
+    },
+    {
+      "ticker": "GMFI",
+      "name": "PT Garuda Maintenance Facility Aero Asia Tbk",
+      "sector": "Transportation",
+      "close": 52,
+      "mcap": 6491433406250
+    },
+    {
+      "ticker": "SGER",
+      "name": "PT Sumber Global Energy Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 408,
+      "mcap": 6359458945312
+    },
+    {
+      "ticker": "ABMM",
+      "name": "PT ABM Investama Tbk",
+      "sector": "Energy Minerals",
+      "close": 2280,
+      "mcap": 6277216289062
+    },
+    {
+      "ticker": "MTDL",
+      "name": "PT Metrodata Electronics Tbk",
+      "sector": "Electronic Technology",
+      "close": 505,
+      "mcap": 6199826313477
+    },
+    {
+      "ticker": "SMMT",
+      "name": "PT Golden Eagle Energy Tbk",
+      "sector": "Energy Minerals",
+      "close": 1790,
+      "mcap": 6130750000000
+    },
+    {
+      "ticker": "BOGA",
+      "name": "PT Apollo Global Interactive Tbk",
+      "sector": "Retail Trade",
+      "close": 1575,
+      "mcap": 5990554028320
+    },
+    {
+      "ticker": "DMND",
+      "name": "PT Diamond Food Indonesia Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 615,
+      "mcap": 5823041015625
+    },
+    {
+      "ticker": "ERAA",
+      "name": "PT Erajaya Swasembada Tbk",
+      "sector": "Distribution Services",
+      "close": 366,
+      "mcap": 5818836345703
+    },
+    {
+      "ticker": "ACES",
+      "name": "PT Aspirasi Hidup Indonesia Tbk",
+      "sector": "Retail Trade",
+      "close": 338,
+      "mcap": 5776683402344
+    },
+    {
+      "ticker": "SAME",
+      "name": "PT Sarana Meditama Metropolitan Tbk",
+      "sector": "Health Services",
+      "close": 328,
+      "mcap": 5629999562500
+    },
+    {
+      "ticker": "FORE",
+      "name": "PT Fore Kopi Indonesia Tbk",
+      "sector": "Consumer Services",
+      "close": 625,
+      "mcap": 5573974609375
+    },
+    {
+      "ticker": "NICL",
+      "name": "PT PAM Mineral Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 500,
+      "mcap": 5317822265625
+    },
+    {
+      "ticker": "OMED",
+      "name": "PT Jayamas Medica Industri Tbk",
+      "sector": "Health Technology",
+      "close": 195,
+      "mcap": 5274421699219
+    },
+    {
+      "ticker": "SGRO",
+      "name": "PT Prime Agri Resources Tbk",
+      "sector": "Process Industries",
+      "close": 2990,
+      "mcap": 5224259615479
+    },
+    {
+      "ticker": "BULL",
+      "name": "PT Buana Lintas Lautan Tbk",
+      "sector": "Transportation",
+      "close": 324,
+      "mcap": 5009845886719
+    },
+    {
+      "ticker": "MAYA",
+      "name": "PT Bank Mayapada Internasional Tbk Class A",
+      "sector": "Finance",
+      "close": 190,
+      "mcap": 4971892910156
+    },
+    {
+      "ticker": "BSWD",
+      "name": "PT Bank of India Indonesia Tbk",
+      "sector": "Finance",
+      "close": 1360,
+      "mcap": 4966690449219
+    },
+    {
+      "ticker": "UNIC",
+      "name": "PT Unggul Indah Cahaya Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 12700,
+      "mcap": 4868308270264
+    },
+    {
+      "ticker": "BALI",
+      "name": "PT Bali Towerindo Sentra Tbk",
+      "sector": "Industrial Services",
+      "close": 1220,
+      "mcap": 4800202885742
+    },
+    {
+      "ticker": "YULE",
+      "name": "PT Yulie Sekuritas Indonesia Tbk",
+      "sector": "Finance",
+      "close": 3200,
+      "mcap": 4796221875000
+    },
+    {
+      "ticker": "MASB",
+      "name": "PT Bank Multiarta Sentosa Tbk",
+      "sector": "Finance",
+      "close": 3390,
+      "mcap": 4752816416016
+    },
+    {
+      "ticker": "NATO",
+      "name": "PT Olympus Strategic Indonesia Tbk",
+      "sector": "Consumer Services",
+      "close": 590,
+      "mcap": 4720655683594
+    },
+    {
+      "ticker": "PALM",
+      "name": "PT Provident Investasi Bersama Tbk",
+      "sector": "Process Industries",
+      "close": 300,
+      "mcap": 4706751562500
+    },
+    {
+      "ticker": "ANJT",
+      "name": "PT Austindo Nusantara Jaya Tbk",
+      "sector": "Process Industries",
+      "close": 1415,
+      "mcap": 4686395017090
+    },
+    {
+      "ticker": "MBSS",
+      "name": "PT Mitrabahtera Segara Sejati Tbk",
+      "sector": "Transportation",
+      "close": 2660,
+      "mcap": 4655070786133
+    },
+    {
+      "ticker": "SHIP",
+      "name": "PT Sillo Maritime Perdana Tbk",
+      "sector": "Transportation",
+      "close": 1695,
+      "mcap": 4610044116211
+    },
+    {
+      "ticker": "SMRA",
+      "name": "PT Summarecon Agung Tbk",
+      "sector": "Finance",
+      "close": 278,
+      "mcap": 4589382003906
+    },
+    {
+      "ticker": "EURO",
+      "name": "PT Estee Gold Feet Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 1795,
+      "mcap": 4575143416748
+    },
+    {
+      "ticker": "SMDR",
+      "name": "PT Samudera Indonesia Tbk",
+      "sector": "Transportation",
+      "close": 272,
+      "mcap": 4454163093750
+    },
+    {
+      "ticker": "INET",
+      "name": "PT Sinergi Inti Andalan Prima Tbk",
+      "sector": "Communications",
+      "close": 196,
+      "mcap": 4385325820312
+    },
+    {
+      "ticker": "TGKA",
+      "name": "PT Tigaraksa Satria Tbk",
+      "sector": "Distribution Services",
+      "close": 4770,
+      "mcap": 4381210354614
+    },
+    {
+      "ticker": "SINI",
+      "name": "PT Singaraja Putra Tbk",
+      "sector": "Consumer Services",
+      "close": 9075,
+      "mcap": 4365075000000
+    },
+    {
+      "ticker": "CTBN",
+      "name": "PT Citra Tubindo Tbk",
+      "sector": "Industrial Services",
+      "close": 5450,
+      "mcap": 4362024789428.9995
+    },
+    {
+      "ticker": "LPKR",
+      "name": "PT Lippo Karawaci Tbk",
+      "sector": "Finance",
+      "close": 61,
+      "mcap": 4320579960938
+    },
+    {
+      "ticker": "TUGU",
+      "name": "PT Asuransi Tugu Pratama Indonesia Tbk",
+      "sector": "Finance",
+      "close": 1205,
+      "mcap": 4284468404541
+    },
+    {
+      "ticker": "MNCN",
+      "name": "PT Media Nusantara Citra Tbk",
+      "sector": "Commercial Services",
+      "close": 202,
+      "mcap": 4192373371114
+    },
+    {
+      "ticker": "BPII",
+      "name": "PT Batavia Prosperindo Internasional Tbk",
+      "sector": "Commercial Services",
+      "close": 424,
+      "mcap": 4190881007812
+    },
+    {
+      "ticker": "DRMA",
+      "name": "PT Dharma Polimetal Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 890,
+      "mcap": 4188235268555
+    },
+    {
+      "ticker": "LINK",
+      "name": "PT Link Net Tbk",
+      "sector": "Communications",
+      "close": 1520,
+      "mcap": 4182403203125
+    },
+    {
+      "ticker": "JTPE",
+      "name": "PT Jasuindo Tiga Perkasa Tbk",
+      "sector": "Commercial Services",
+      "close": 610,
+      "mcap": 4179750380859
+    },
+    {
+      "ticker": "ELSA",
+      "name": "PT Elnusa Tbk",
+      "sector": "Energy Minerals",
+      "close": 565,
+      "mcap": 4123652500000
+    },
+    {
+      "ticker": "BANK",
+      "name": "PT Bank Aladin Syariah Tbk",
+      "sector": "Finance",
+      "close": 276,
+      "mcap": 4123365878906
+    },
+    {
+      "ticker": "SURE",
+      "name": "PT Super Energy Tbk",
+      "sector": "Energy Minerals",
+      "close": 2720,
+      "mcap": 4073409179688
+    },
+    {
+      "ticker": "MPMX",
+      "name": "PT Mitra Pinasthika Mustika Tbk",
+      "sector": "Distribution Services",
+      "close": 960,
+      "mcap": 4070131875000
+    },
+    {
+      "ticker": "TRIM",
+      "name": "PT Trimegah Sekuritas Indonesia Tbk",
+      "sector": "Finance",
+      "close": 565,
+      "mcap": 4016754389648
+    },
+    {
+      "ticker": "VICI",
+      "name": "PT Victoria Care Indonesia Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 595,
+      "mcap": 3991260000000
+    },
+    {
+      "ticker": "PKPK",
+      "name": "PT Paragon Karya Perkasa Tbk",
+      "sector": "Industrial Services",
+      "close": 3310,
+      "mcap": 3972000000000
+    },
+    {
+      "ticker": "MKAP",
+      "name": "PT Multikarya Asia Pasifik Raya Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 1210,
+      "mcap": 3932500000000
+    },
+    {
+      "ticker": "MTLA",
+      "name": "PT Metropolitan Land Tbk",
+      "sector": "Finance",
+      "close": 510,
+      "mcap": 3904114497070
+    },
+    {
+      "ticker": "GJTL",
+      "name": "PT Gajah Tunggal Tbk",
+      "sector": "Consumer Durables",
+      "close": 1120,
+      "mcap": 3902537460938
+    },
+    {
+      "ticker": "KRAS",
+      "name": "PT Krakatau Steel (Persero) Tbk Class B",
+      "sector": "Non-Energy Minerals",
+      "close": 199,
+      "mcap": 3849932900590
+    },
+    {
+      "ticker": "CASS",
+      "name": "PT Cahaya Aero Services Tbk",
+      "sector": "Transportation",
+      "close": 1840,
+      "mcap": 3839987910156
+    },
+    {
+      "ticker": "MSTI",
+      "name": "PT Mastersystem Infotama Tbk",
+      "sector": "Technology Services",
+      "close": 1220,
+      "mcap": 3830087836914
+    },
+    {
+      "ticker": "BIRD",
+      "name": "PT Blue Bird Tbk",
+      "sector": "Transportation",
+      "close": 1515,
+      "mcap": 3790681647949
+    },
+    {
+      "ticker": "AMAR",
+      "name": "PT Bank Amar Indonesia Tbk",
+      "sector": "Finance",
+      "close": 206,
+      "mcap": 3786505312500
+    },
+    {
+      "ticker": "MARK",
+      "name": "PT Mark Dynamics Indonesia Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 990,
+      "mcap": 3762000241699
+    },
+    {
+      "ticker": "RDTX",
+      "name": "PT Roda Vivatex Tbk",
+      "sector": "Finance",
+      "close": 13825,
+      "mcap": 3716159831238
+    },
+    {
+      "ticker": "PSGO",
+      "name": "PT Palma Serasih Tbk.",
+      "sector": "Consumer Non-Durables",
+      "close": 196,
+      "mcap": 3694600000000
+    },
+    {
+      "ticker": "ROTI",
+      "name": "PT Nippon Indosari Corpindo Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 610,
+      "mcap": 3692694272461
+    },
+    {
+      "ticker": "HEXA",
+      "name": "PT Hexindo Adiperkasa Tbk",
+      "sector": "Distribution Services",
+      "close": 4270,
+      "mcap": 3586800000000
+    },
+    {
+      "ticker": "TBLA",
+      "name": "PT Tunas Baru Lampung Tbk",
+      "sector": "Process Industries",
+      "close": 610,
+      "mcap": 3559464375000
+    },
+    {
+      "ticker": "TOTL",
+      "name": "PT Total Bangun Persada Tbk",
+      "sector": "Industrial Services",
+      "close": 1040,
+      "mcap": 3546399746094
+    },
+    {
+      "ticker": "DKFT",
+      "name": "PT Central Omega Resources Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 645,
+      "mcap": 3530398051758
+    },
+    {
+      "ticker": "PBID",
+      "name": "PT Panca Budi Idaman Tbk",
+      "sector": "Process Industries",
+      "close": 470,
+      "mcap": 3525000229492
+    },
+    {
+      "ticker": "GGRP",
+      "name": "PT Gunung Raja Paksi Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 290,
+      "mcap": 3512299033203
+    },
+    {
+      "ticker": "HATM",
+      "name": "PT Habco Trans Maritima Tbk",
+      "sector": "Transportation",
+      "close": 404,
+      "mcap": 3506720000000
+    },
+    {
+      "ticker": "AGRO",
+      "name": "PT Bank Raya Indonesia Tbk",
+      "sector": "Finance",
+      "close": 137,
+      "mcap": 3389447697266
+    },
+    {
+      "ticker": "GOLF",
+      "name": "PT Intra Golflink Resorts Tbk",
+      "sector": "Commercial Services",
+      "close": 172,
+      "mcap": 3351722679688
+    },
+    {
+      "ticker": "WIIM",
+      "name": "PT Wismilak Inti Makmur Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 1570,
+      "mcap": 3296801833496
+    },
+    {
+      "ticker": "TFCO",
+      "name": "PT Tifico Fiber Indonesia, Tbk",
+      "sector": "Process Industries",
+      "close": 680,
+      "mcap": 3279692128906
+    },
+    {
+      "ticker": "ARNA",
+      "name": "PT Arwana Citramulia Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 450,
+      "mcap": 3272039428711
+    },
+    {
+      "ticker": "LPPF",
+      "name": "PT MDS Retailing Tbk Class A",
+      "sector": "Retail Trade",
+      "close": 1485,
+      "mcap": 3264343604736
+    },
+    {
+      "ticker": "BESS",
+      "name": "PT Batulicin Nusantara Maritim Tbk",
+      "sector": "Transportation",
+      "close": 945,
+      "mcap": 3251230510254
+    },
+    {
+      "ticker": "IMAS",
+      "name": "PT Indomobil Sukses Internasional Tbk",
+      "sector": "Consumer Durables",
+      "close": 800,
+      "mcap": 3195432812500
+    },
+    {
+      "ticker": "OMRE",
+      "name": "PT Indonesia Prima Property Tbk",
+      "sector": "Consumer Services",
+      "close": 1080,
+      "mcap": 3180827812500
+    },
+    {
+      "ticker": "CBRE",
+      "name": "PT Cakra Buana Resources Energi Tbk",
+      "sector": "Transportation",
+      "close": 700,
+      "mcap": 3176647180000
+    },
+    {
+      "ticker": "NOBU",
+      "name": "PT Bank Nationalnobu Tbk",
+      "sector": "Finance",
+      "close": 426,
+      "mcap": 3153959018555
+    },
+    {
+      "ticker": "TOBA",
+      "name": "PT TBS Energi Utama Tbk",
+      "sector": "Energy Minerals",
+      "close": 376,
+      "mcap": 3128136773438
+    },
+    {
+      "ticker": "SDRA",
+      "name": "PT Bank Woori Saudara Indonesia 1906 Tbk",
+      "sector": "Finance",
+      "close": 212,
+      "mcap": 3114744371094
+    },
+    {
+      "ticker": "JSPT",
+      "name": "PT Jakarta Setiabudi Internasional Tbk",
+      "sector": "Consumer Services",
+      "close": 1340,
+      "mcap": 3107106025391
+    },
+    {
+      "ticker": "DAAZ",
+      "name": "PT Daaz Bara Lestari Tbk",
+      "sector": "Distribution Services",
+      "close": 1555,
+      "mcap": 3105335000000
+    },
+    {
+      "ticker": "ARGO",
+      "name": "PT Argo Pantes Tbk",
+      "sector": "Process Industries",
+      "close": 970,
+      "mcap": 3079108937988
+    },
+    {
+      "ticker": "KEJU",
+      "name": "PT Mulia Boga Raya Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 545,
+      "mcap": 3065625000000
+    },
+    {
+      "ticker": "KEEN",
+      "name": "PT Kencana Energi Lestari Tbk",
+      "sector": "Utilities",
+      "close": 835,
+      "mcap": 3061370937500
+    },
+    {
+      "ticker": "CPRO",
+      "name": "PT Central Proteina Prima Tbk",
+      "sector": "Process Industries",
+      "close": 50,
+      "mcap": 2978619140625
+    },
+    {
+      "ticker": "AGRS",
+      "name": "PT Bank IBK Indonesia Tbk",
+      "sector": "Finance",
+      "close": 62,
+      "mcap": 2967591734375
+    },
+    {
+      "ticker": "BUKK",
+      "name": "PT Bukaka Teknik Utama Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 1115,
+      "mcap": 2944103873291
+    },
+    {
+      "ticker": "NIRO",
+      "name": "PT City Retail Developments Tbk",
+      "sector": "Finance",
+      "close": 132,
+      "mcap": 2930250984375
+    },
+    {
+      "ticker": "MMIX",
+      "name": "PT Multi Medika Internasional Tbk",
+      "sector": "Distribution Services",
+      "close": 610,
+      "mcap": 2928259428711
+    },
+    {
+      "ticker": "VISI",
+      "name": "PT Satu Visi Putra Tbk",
+      "sector": "Distribution Services",
+      "close": 950,
+      "mcap": 2921250000000
+    },
+    {
+      "ticker": "PNIN",
+      "name": "PT Paninvest Tbk",
+      "sector": "Consumer Services",
+      "close": 710,
+      "mcap": 2888509848633
+    },
+    {
+      "ticker": "FISH",
+      "name": "PT FKS Multi Agro Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 600,
+      "mcap": 2880000000000
+    },
+    {
+      "ticker": "SAMF",
+      "name": "PT Saraswanti Anugerah Makmur Tbk",
+      "sector": "Process Industries",
+      "close": 280,
+      "mcap": 2870000000000
+    },
+    {
+      "ticker": "MDLA",
+      "name": "PT Medela Potentia Tbk",
+      "sector": "Distribution Services",
+      "close": 204,
+      "mcap": 2858616339844
+    },
+    {
+      "ticker": "IFSH",
+      "name": "PT Ifishdeco Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 1335,
+      "mcap": 2836875000000
+    },
+    {
+      "ticker": "MDIA",
+      "name": "PT Intermedia Capital Tbk",
+      "sector": "Consumer Services",
+      "close": 71,
+      "mcap": 2784303273438
+    },
+    {
+      "ticker": "DATA",
+      "name": "PT Remala Abadi Tbk",
+      "sector": "Communications",
+      "close": 2000,
+      "mcap": 2750000000000
+    },
+    {
+      "ticker": "SMDM",
+      "name": "PT Suryamas Dutamakmur Tbk",
+      "sector": "Finance",
+      "close": 575,
+      "mcap": 2743979455566
+    },
+    {
+      "ticker": "ISSP",
+      "name": "PT Steel Pipe Industry of Indonesia Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 384,
+      "mcap": 2713090875000
+    },
+    {
+      "ticker": "SKRN",
+      "name": "PT Superkrane Mitra Utama",
+      "sector": "Finance",
+      "close": 368,
+      "mcap": 2702408000000
+    },
+    {
+      "ticker": "PNGO",
+      "name": "PT Pinago Utama Tbk",
+      "sector": "Process Industries",
+      "close": 3430,
+      "mcap": 2679687500000
+    },
+    {
+      "ticker": "SFAN",
+      "name": "PT Surya Fajar Capital Tbk",
+      "sector": "Finance",
+      "close": 1970,
+      "mcap": 2679069901123
+    },
+    {
+      "ticker": "INPC",
+      "name": "PT Bank Artha Graha Internasional Tbk",
+      "sector": "Finance",
+      "close": 132,
+      "mcap": 2669490398438
+    },
+    {
+      "ticker": "SOCI",
+      "name": "PT Soechi Lines Tbk",
+      "sector": "Transportation",
+      "close": 318,
+      "mcap": 2639840044922
+    },
+    {
+      "ticker": "BGTG",
+      "name": "PT Bank Ganesha Tbk",
+      "sector": "Finance",
+      "close": 110,
+      "mcap": 2636809785156
+    },
+    {
+      "ticker": "VICO",
+      "name": "PT Victoria Investama Tbk",
+      "sector": "Finance",
+      "close": 131,
+      "mcap": 2623732476562
+    },
+    {
+      "ticker": "UANG",
+      "name": "PT Pakuan Tbk",
+      "sector": "Finance",
+      "close": 2150,
+      "mcap": 2601500000000
+    },
+    {
+      "ticker": "MINA",
+      "name": "PT Sanurhasta Mitra Tbk.",
+      "sector": "Consumer Services",
+      "close": 262,
+      "mcap": 2579062500000
+    },
+    {
+      "ticker": "MCOR",
+      "name": "PT Bank China Construction Bank Indonesia Tbk",
+      "sector": "Finance",
+      "close": 68,
+      "mcap": 2578541671875
+    },
+    {
+      "ticker": "LPCK",
+      "name": "PT Lippo Cikarang Tbk",
+      "sector": "Finance",
+      "close": 498,
+      "mcap": 2557073402344
+    },
+    {
+      "ticker": "BBYB",
+      "name": "PT Bank Neo Commerce Tbk",
+      "sector": "Finance",
+      "close": 212,
+      "mcap": 2552406710938
+    },
+    {
+      "ticker": "BNBA",
+      "name": "PT Bank Bumi Arta Tbk",
+      "sector": "Finance",
+      "close": 760,
+      "mcap": 2549131289062
+    },
+    {
+      "ticker": "SMIL",
+      "name": "PT Sarana Mitra Luas Tbk",
+      "sector": "Finance",
+      "close": 290,
+      "mcap": 2537983710938
+    },
+    {
+      "ticker": "BLTZ",
+      "name": "PT Graha Layar Prima Tbk Class C",
+      "sector": "Consumer Services",
+      "close": 2870,
+      "mcap": 2508199573975
+    },
+    {
+      "ticker": "CBUT",
+      "name": "PT Citra Borneo Utama Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 800,
+      "mcap": 2500000000000
+    },
+    {
+      "ticker": "ROCK",
+      "name": "PT Rockfields Properti Indonesia Tbk",
+      "sector": "Finance",
+      "close": 1735,
+      "mcap": 2490046288452
+    },
+    {
+      "ticker": "PBSA",
+      "name": "PT Paramita Bangun Sarana Tbk",
+      "sector": "Industrial Services",
+      "close": 830,
+      "mcap": 2490000000000
+    },
+    {
+      "ticker": "KAEF",
+      "name": "PT Kimia Farma (Persero) Tbk Class B",
+      "sector": "Health Technology",
+      "close": 446,
+      "mcap": 2482698852985
+    },
+    {
+      "ticker": "UDNG",
+      "name": "PT Agro Bahari Nusantara Tbk",
+      "sector": "Process Industries",
+      "close": 1410,
+      "mcap": 2467556627197
+    },
+    {
+      "ticker": "APLN",
+      "name": "PT Agung Podomoro Land Tbk",
+      "sector": "Finance",
+      "close": 107,
+      "mcap": 2428828109375
+    },
+    {
+      "ticker": "KIJA",
+      "name": "PT Kawasan Industri Jababeka Tbk Class A",
+      "sector": "Finance",
+      "close": 118,
+      "mcap": 2422822093750
+    },
+    {
+      "ticker": "TOTO",
+      "name": "PT Surya Toto Indonesia Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 234,
+      "mcap": 2414880000000
+    },
+    {
+      "ticker": "NEST",
+      "name": "PT Esta Indonesia Tbk",
+      "sector": "Process Industries",
+      "close": 585,
+      "mcap": 2405812500000
+    },
+    {
+      "ticker": "RALS",
+      "name": "PT Ramayana Lestari Sentosa Tbk",
+      "sector": "Retail Trade",
+      "close": 374,
+      "mcap": 2398560248047
+    },
+    {
+      "ticker": "MGRO",
+      "name": "PT Mahkota Group Tbk",
+      "sector": "Process Industries",
+      "close": 680,
+      "mcap": 2397197226562
+    },
+    {
+      "ticker": "MSJA",
+      "name": "PT Multi Spunindo Jaya Tbk",
+      "sector": "Process Industries",
+      "close": 416,
+      "mcap": 2384605437500
+    },
+    {
+      "ticker": "WINS",
+      "name": "PT Wintermar Offshore Marine Tbk",
+      "sector": "Transportation",
+      "close": 525,
+      "mcap": 2375004895020
+    },
+    {
+      "ticker": "DAYA",
+      "name": "PT Duta Intidaya Tbk",
+      "sector": "Retail Trade",
+      "close": 975,
+      "mcap": 2360033441162
+    },
+    {
+      "ticker": "PRDA",
+      "name": "PT Prodia Widyahusada Tbk",
+      "sector": "Health Services",
+      "close": 2510,
+      "mcap": 2353125000000
+    },
+    {
+      "ticker": "BWPT",
+      "name": "PT Eagle High Plantations Tbk.",
+      "sector": "Process Industries",
+      "close": 74,
+      "mcap": 2332871390625
+    },
+    {
+      "ticker": "PORT",
+      "name": "PT Nusantara Pelabuhan Handal Tbk",
+      "sector": "Transportation",
+      "close": 820,
+      "mcap": 2307432353516
+    },
+    {
+      "ticker": "PYFA",
+      "name": "PT Pyridam Farma Tbk",
+      "sector": "Health Technology",
+      "close": 202,
+      "mcap": 2269823302734
+    },
+    {
+      "ticker": "MYOH",
+      "name": "PT Samindo Resources Tbk",
+      "sector": "Energy Minerals",
+      "close": 1020,
+      "mcap": 2250438750000
+    },
+    {
+      "ticker": "CENT",
+      "name": "PT Centratama Telekomunikasi Indonesia Tbk",
+      "sector": "Communications",
+      "close": 72,
+      "mcap": 2245209468750
+    },
+    {
+      "ticker": "MAHA",
+      "name": "PT Mandiri Herindo Adiperkasa Tbk",
+      "sector": "Energy Minerals",
+      "close": 134,
+      "mcap": 2214148476562
+    },
+    {
+      "ticker": "BABP",
+      "name": "PT Bank MNC Internasional Tbk",
+      "sector": "Finance",
+      "close": 50,
+      "mcap": 2200716601562
+    },
+    {
+      "ticker": "BCIC",
+      "name": "PT Bank JTrust Indonesia Tbk",
+      "sector": "Finance",
+      "close": 121,
+      "mcap": 2191300546875
+    },
+    {
+      "ticker": "ASSA",
+      "name": "PT Adi Sarana Armada Tbk",
+      "sector": "Transportation",
+      "close": 590,
+      "mcap": 2177771096191.0002
+    },
+    {
+      "ticker": "ASRI",
+      "name": "PT Alam Sutera Realty Tbk",
+      "sector": "Finance",
+      "close": 109,
+      "mcap": 2141785919921.9998
+    },
+    {
+      "ticker": "HUMI",
+      "name": "PT Humpuss Maritim Internasional Tbk",
+      "sector": "Transportation",
+      "close": 118,
+      "mcap": 2131394820312
+    },
+    {
+      "ticker": "MAPB",
+      "name": "PT Map Boga Adiperkasa Tbk",
+      "sector": "Consumer Services",
+      "close": 890,
+      "mcap": 2125251555176
+    },
+    {
+      "ticker": "IPCC",
+      "name": "PT Indonesia Kendaraan Terminal Tbk",
+      "sector": "Transportation",
+      "close": 1160,
+      "mcap": 2109326328125
+    },
+    {
+      "ticker": "BCAP",
+      "name": "PT MNC Kapital Indonesia Tbk",
+      "sector": "Finance",
+      "close": 50,
+      "mcap": 2106013085938
+    },
+    {
+      "ticker": "BHIT",
+      "name": "PT MNC Asia Holding Tbk",
+      "sector": "Consumer Services",
+      "close": 25,
+      "mcap": 2088568554688
+    },
+    {
+      "ticker": "ASGR",
+      "name": "PT Astra Graphia Tbk",
+      "sector": "Technology Services",
+      "close": 1525,
+      "mcap": 2056890289307
+    },
+    {
+      "ticker": "ABDA",
+      "name": "PT Asuransi Bina Dana Arta Tbk Class A",
+      "sector": "Finance",
+      "close": 3310,
+      "mcap": 2054869980469
+    },
+    {
+      "ticker": "GTSI",
+      "name": "PT GTS Internasional",
+      "sector": "Transportation",
+      "close": 129,
+      "mcap": 2040669392578
+    },
+    {
+      "ticker": "LPGI",
+      "name": "PT Lippo General Insurance Tbk",
+      "sector": "Finance",
+      "close": 680,
+      "mcap": 2040000000000
+    },
+    {
+      "ticker": "DWGL",
+      "name": "PT Dwi Guna Laksana Tbk",
+      "sector": "Energy Minerals",
+      "close": 220,
+      "mcap": 2035620683594
+    },
+    {
+      "ticker": "MMLP",
+      "name": "PT Mega Manunggal Property Tbk",
+      "sector": "Finance",
+      "close": 294,
+      "mcap": 2025405477539
+    },
+    {
+      "ticker": "BRAM",
+      "name": "PT Indo Kordsa Tbk",
+      "sector": "Process Industries",
+      "close": 4500,
+      "mcap": 2025256393433
+    },
+    {
+      "ticker": "BACA",
+      "name": "PT Bank Capital Indonesia Tbk",
+      "sector": "Finance",
+      "close": 101,
+      "mcap": 2015255367188
+    },
+    {
+      "ticker": "AMAG",
+      "name": "PT Asuransi Multi Artha Guna Tbk",
+      "sector": "Finance",
+      "close": 394,
+      "mcap": 1970520587891
+    },
+    {
+      "ticker": "IATA",
+      "name": "PT MNC Energy Investments Tbk",
+      "sector": "Distribution Services",
+      "close": 63,
+      "mcap": 1970377294922
+    },
+    {
+      "ticker": "IFII",
+      "name": "PT Indonesia Fibreboard Industry Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 208,
+      "mcap": 1957696000000
+    },
+    {
+      "ticker": "DEPO",
+      "name": "PT Caturkarda Depo Bangunan Tbk",
+      "sector": "Retail Trade",
+      "close": 286,
+      "mcap": 1941940000000
+    },
+    {
+      "ticker": "PNBS",
+      "name": "PT Bank Panin Dubai Syariah Tbk",
+      "sector": "Finance",
+      "close": 50,
+      "mcap": 1940682031250
+    },
+    {
+      "ticker": "BISI",
+      "name": "PT BISI International Tbk",
+      "sector": "Process Industries",
+      "close": 640,
+      "mcap": 1920000000000
+    },
+    {
+      "ticker": "PSKT",
+      "name": "PT Red Planet Indonesia Tbk",
+      "sector": "Consumer Services",
+      "close": 184,
+      "mcap": 1904626765625
+    },
+    {
+      "ticker": "MTMH",
+      "name": "PT Murni Sadar Tbk",
+      "sector": "Health Services",
+      "close": 910,
+      "mcap": 1898739660645
+    },
+    {
+      "ticker": "BMTR",
+      "name": "PT Global Mediacom Tbk",
+      "sector": "Consumer Services",
+      "close": 115,
+      "mcap": 1880538847656
+    },
+    {
+      "ticker": "KMTR",
+      "name": "PT Kirana Megatara Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 228,
+      "mcap": 1873103496094
+    },
+    {
+      "ticker": "JAWA",
+      "name": "PT Jaya Agra Wattie Tbk",
+      "sector": "Process Industries",
+      "close": 114,
+      "mcap": 1850556544922
+    },
+    {
+      "ticker": "DNAR",
+      "name": "PT Bank Oke Indonesia Tbk",
+      "sector": "Finance",
+      "close": 110,
+      "mcap": 1842168925781
+    },
+    {
+      "ticker": "BKSW",
+      "name": "PT Bank QNB Indonesia Tbk",
+      "sector": "Finance",
+      "close": 52,
+      "mcap": 1828218437500
+    },
+    {
+      "ticker": "IRSX",
+      "name": "PT Folago Global Nusantara Tbk",
+      "sector": "Technology Services",
+      "close": 294,
+      "mcap": 1821343924805
+    },
+    {
+      "ticker": "ALDO",
+      "name": "PT Alkindo Naratama Tbk",
+      "sector": "Process Industries",
+      "close": 675,
+      "mcap": 1811919506836
+    },
+    {
+      "ticker": "BOLT",
+      "name": "PT Garuda Metalindo Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 770,
+      "mcap": 1804687500000
+    },
+    {
+      "ticker": "SCCO",
+      "name": "PT Supreme Cable Manufacturing & Commerce Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 2170,
+      "mcap": 1784463951416
+    },
+    {
+      "ticker": "FPNI",
+      "name": "PT Lotte Chemical Titan Tbk",
+      "sector": "Process Industries",
+      "close": 316,
+      "mcap": 1758986843750
+    },
+    {
+      "ticker": "DGWG",
+      "name": "PT Delta Giri Wacana Tbk",
+      "sector": "Process Industries",
+      "close": 296,
+      "mcap": 1741176496094
+    },
+    {
+      "ticker": "MBAP",
+      "name": "PT Mitrabara Adiperdana Tbk",
+      "sector": "Energy Minerals",
+      "close": 1380,
+      "mcap": 1693635153809
+    },
+    {
+      "ticker": "DVLA",
+      "name": "PT Darya-Varia Laboratoria Tbk",
+      "sector": "Health Technology",
+      "close": 1510,
+      "mcap": 1691200000000
+    },
+    {
+      "ticker": "MERK",
+      "name": "PT Merck Tbk",
+      "sector": "Health Technology",
+      "close": 3720,
+      "mcap": 1666560000000
+    },
+    {
+      "ticker": "BEEF",
+      "name": "PT Estika Tata Tiara Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 204,
+      "mcap": 1656530923514
+    },
+    {
+      "ticker": "INDS",
+      "name": "PT Indospring Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 252,
+      "mcap": 1653749261719
+    },
+    {
+      "ticker": "OASA",
+      "name": "PT Maharaksa Biru Energi Tbk",
+      "sector": "Commercial Services",
+      "close": 260,
+      "mcap": 1650277255859
+    },
+    {
+      "ticker": "CSAP",
+      "name": "PT Catur Sentosa Adiprana Tbk",
+      "sector": "Distribution Services",
+      "close": 290,
+      "mcap": 1648120693359
+    },
+    {
+      "ticker": "IPCM",
+      "name": "PT Jasa Armada Indonesia Tbk",
+      "sector": "Transportation",
+      "close": 308,
+      "mcap": 1625245617188
+    },
+    {
+      "ticker": "KINO",
+      "name": "PT Kino Indonesia Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 1130,
+      "mcap": 1614285832520
+    },
+    {
+      "ticker": "FMII",
+      "name": "PT Fortune Mate Indonesia Tbk",
+      "sector": "Finance",
+      "close": 252,
+      "mcap": 1612800000000
+    },
+    {
+      "ticker": "MLIA",
+      "name": "PT Mulia Industrindo Tbk",
+      "sector": "Process Industries",
+      "close": 240,
+      "mcap": 1587600000000
+    },
+    {
+      "ticker": "TPMA",
+      "name": "PT Trans Power Marine Tbk",
+      "sector": "Transportation",
+      "close": 454,
+      "mcap": 1587402021973
+    },
+    {
+      "ticker": "FORU",
+      "name": "PT Fortune Indonesia, Tbk",
+      "sector": "Commercial Services",
+      "close": 3400,
+      "mcap": 1581761596680
+    },
+    {
+      "ticker": "NICE",
+      "name": "PT Adhi Kartiko Pratama Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 258,
+      "mcap": 1569161165039
+    },
+    {
+      "ticker": "TRIN",
+      "name": "PT Perintis Triniti Properti Tbk",
+      "sector": "Finance",
+      "close": 342,
+      "mcap": 1556598638672
+    },
+    {
+      "ticker": "SPTO",
+      "name": "PT Surya Pertiwi Tbk",
+      "sector": "Distribution Services",
+      "close": 570,
+      "mcap": 1539000000000
+    },
+    {
+      "ticker": "CSRA",
+      "name": "PT Cisadane Sawit Raya Tbk",
+      "sector": "Process Industries",
+      "close": 750,
+      "mcap": 1537500000000
+    },
+    {
+      "ticker": "DLTA",
+      "name": "PT Delta Djakarta Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 1905,
+      "mcap": 1525255504761
+    },
+    {
+      "ticker": "UCID",
+      "name": "PT Uni-Charm Indonesia Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 366,
+      "mcap": 1516452375000
+    },
+    {
+      "ticker": "IMJS",
+      "name": "PT Indomobil Multi Jasa Tbk",
+      "sector": "Finance",
+      "close": 138,
+      "mcap": 1497198117188
+    },
+    {
+      "ticker": "SMBR",
+      "name": "PT Semen Baturaja (Persero) Tbk Class B",
+      "sector": "Non-Energy Minerals",
+      "close": 150,
+      "mcap": 1489880273587
+    },
+    {
+      "ticker": "SUNI",
+      "name": "PT Sunindo Pratama Tbk",
+      "sector": "Energy Minerals",
+      "close": 615,
+      "mcap": 1479935939941
+    },
+    {
+      "ticker": "BVIC",
+      "name": "PT Bank Victoria International Tbk",
+      "sector": "Finance",
+      "close": 80,
+      "mcap": 1473553437500
+    },
+    {
+      "ticker": "BMHS",
+      "name": "PT Bundamedik Tbk",
+      "sector": "Health Services",
+      "close": 171,
+      "mcap": 1471184138672
+    },
+    {
+      "ticker": "SONA",
+      "name": "PT Sona Topas Tourism Industry Tbk",
+      "sector": "Retail Trade",
+      "close": 2220,
+      "mcap": 1470528054199
+    },
+    {
+      "ticker": "MAIN",
+      "name": "PT Malindo Feedmill Tbk",
+      "sector": "Process Industries",
+      "close": 655,
+      "mcap": 1466381250000
+    },
+    {
+      "ticker": "ERAL",
+      "name": "PT Sinar Eka Selaras Tbk",
+      "sector": "Retail Trade",
+      "close": 282,
+      "mcap": 1462875000000
+    },
+    {
+      "ticker": "FUTR",
+      "name": "PT Futura Energi Global Tbk",
+      "sector": "Commercial Services",
+      "close": 220,
+      "mcap": 1459821386719
+    },
+    {
+      "ticker": "PSSI",
+      "name": "PT IMC Pelita Logistik Tbk",
+      "sector": "Transportation",
+      "close": 270,
+      "mcap": 1454413403320
+    },
+    {
+      "ticker": "KETR",
+      "name": "PT Ketrosden Triasmitra Tbk",
+      "sector": "Industrial Services",
+      "close": 510,
+      "mcap": 1449043974609
+    },
+    {
+      "ticker": "IPTV",
+      "name": "PT MNC Vision Networks Tbk Class A",
+      "sector": "Consumer Services",
+      "close": 34,
+      "mcap": 1434730406250
+    },
+    {
+      "ticker": "RAAM",
+      "name": "PT Tripar Multivision Plus Tbk",
+      "sector": "Consumer Services",
+      "close": 208,
+      "mcap": 1417232984375
+    },
+    {
+      "ticker": "PMJS",
+      "name": "PT Putra Mandiri Jembar Tbk",
+      "sector": "Retail Trade",
+      "close": 103,
+      "mcap": 1416826759766
+    },
+    {
+      "ticker": "DOID",
+      "name": "PT BUMA Internasional Grup Tbk",
+      "sector": "Energy Minerals",
+      "close": 190,
+      "mcap": 1414731650391
+    },
+    {
+      "ticker": "MKTR",
+      "name": "PT Menthobi Karyatama Raya Tbk",
+      "sector": "Commercial Services",
+      "close": 117,
+      "mcap": 1411070159180
+    },
+    {
+      "ticker": "WOOD",
+      "name": "PT Integra Indocabinet Tbk",
+      "sector": "Consumer Durables",
+      "close": 218,
+      "mcap": 1403375000000
+    },
+    {
+      "ticker": "AYAM",
+      "name": "PT Janu Putra Sejahtera Tbk",
+      "sector": "Process Industries",
+      "close": 350,
+      "mcap": 1400000000000
+    },
+    {
+      "ticker": "ITMA",
+      "name": "PT Sumber Energi Andalan Tbk",
+      "sector": "Energy Minerals",
+      "close": 1400,
+      "mcap": 1398674426270
+    },
+    {
+      "ticker": "POLI",
+      "name": "PT Pollux Hotels Group Tbk",
+      "sector": "Consumer Durables",
+      "close": 675,
+      "mcap": 1357105380249
+    },
+    {
+      "ticker": "TRST",
+      "name": "PT Trias Sentosa, Tbk",
+      "sector": "Process Industries",
+      "close": 480,
+      "mcap": 1347840000000
+    },
+    {
+      "ticker": "ACST",
+      "name": "PT Acset Indonusa Tbk",
+      "sector": "Industrial Services",
+      "close": 76,
+      "mcap": 1343312171875
+    },
+    {
+      "ticker": "GMTD",
+      "name": "PT Gowa Makassar Tourism Development Tbk",
+      "sector": "Finance",
+      "close": 1300,
+      "mcap": 1319994006348
+    },
+    {
+      "ticker": "TRGU",
+      "name": "PT Cerestar Indonesia Tbk",
+      "sector": "Process Industries",
+      "close": 166,
+      "mcap": 1318938491211
+    },
+    {
+      "ticker": "STAR",
+      "name": "PT Calculus Global Ventures Tbk.",
+      "sector": "Finance",
+      "close": 274,
+      "mcap": 1315200133789
+    },
+    {
+      "ticker": "AMFG",
+      "name": "PT Asahimas Flat Glass Tbk",
+      "sector": "Process Industries",
+      "close": 3030,
+      "mcap": 1315020000000
+    },
+    {
+      "ticker": "SIPD",
+      "name": "PT Sreeya Sewu Indonesia Tbk Class A",
+      "sector": "Process Industries",
+      "close": 715,
+      "mcap": 1314957966309
+    },
+    {
+      "ticker": "PTSN",
+      "name": "PT Sat Nusapersada Tbk",
+      "sector": "Electronic Technology",
+      "close": 244,
+      "mcap": 1296699994141
+    },
+    {
+      "ticker": "TEBE",
+      "name": "PT Dana Brata Luhur Tbk",
+      "sector": "Industrial Services",
+      "close": 1005,
+      "mcap": 1291424877319
+    },
+    {
+      "ticker": "ASLI",
+      "name": "PT Asri Karya Lestari Tbk",
+      "sector": "Industrial Services",
+      "close": 206,
+      "mcap": 1287500000000
+    },
+    {
+      "ticker": "ADHI",
+      "name": "PT Adhi Karya (Persero) Tbk",
+      "sector": "Industrial Services",
+      "close": 153,
+      "mcap": 1286364234528
+    },
+    {
+      "ticker": "MLPL",
+      "name": "PT Multipolar Tbk Class A",
+      "sector": "Retail Trade",
+      "close": 82,
+      "mcap": 1284802585938
+    },
+    {
+      "ticker": "CFIN",
+      "name": "PT Clipan Finance Indonesia Tbk",
+      "sector": "Finance",
+      "close": 322,
+      "mcap": 1283015603516
+    },
+    {
+      "ticker": "BSBK",
+      "name": "PT Wulandari Bangun Laksana Tbk",
+      "sector": "Finance",
+      "close": 51,
+      "mcap": 1279686023438
+    },
+    {
+      "ticker": "KBLI",
+      "name": "PT KMI Wire & Cable Tbk Class A",
+      "sector": "Producer Manufacturing",
+      "close": 318,
+      "mcap": 1274300764160
+    },
+    {
+      "ticker": "HERO",
+      "name": "PT DFI Retail Nusantara Tbk",
+      "sector": "Retail Trade",
+      "close": 304,
+      "mcap": 1271824671875
+    },
+    {
+      "ticker": "CEKA",
+      "name": "PT Wilmar Cahaya Indonesia Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 2130,
+      "mcap": 1267350000000
+    },
+    {
+      "ticker": "INDR",
+      "name": "PT Indo-Rama Synthetics Tbk",
+      "sector": "Process Industries",
+      "close": 1935,
+      "mcap": 1266170509644
+    },
+    {
+      "ticker": "KKGI",
+      "name": "PT Resource Alam Indonesia Tbk",
+      "sector": "Energy Minerals",
+      "close": 258,
+      "mcap": 1264433938477
+    },
+    {
+      "ticker": "BLUE",
+      "name": "PT Berkah Prima Perkasa Tbk",
+      "sector": "Distribution Services",
+      "close": 2990,
+      "mcap": 1249820000000
+    },
+    {
+      "ticker": "CARS",
+      "name": "PT Industri dan Perdagangan Bintraco Dharma Tbk",
+      "sector": "Retail Trade",
+      "close": 83,
+      "mcap": 1245000081055
+    },
+    {
+      "ticker": "GSMF",
+      "name": "PT Equity Development Investment Tbk Class A",
+      "sector": "Finance",
+      "close": 80,
+      "mcap": 1236545234375
+    },
+    {
+      "ticker": "BLES",
+      "name": "PT Superior Prima Sukses Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 139,
+      "mcap": 1235738641602
+    },
+    {
+      "ticker": "ARTA",
+      "name": "PT Arthavest Tbk",
+      "sector": "Consumer Services",
+      "close": 2730,
+      "mcap": 1219420550537
+    },
+    {
+      "ticker": "SKLT",
+      "name": "PT Sekar Laut Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 177,
+      "mcap": 1210384596680
+    },
+    {
+      "ticker": "PADI",
+      "name": "PT Minna Padi Investama Sekuritas Tbk",
+      "sector": "Finance",
+      "close": 89,
+      "mcap": 1207613969727
+    },
+    {
+      "ticker": "LTLS",
+      "name": "PT Lautan Luas Tbk",
+      "sector": "Distribution Services",
+      "close": 775,
+      "mcap": 1186914865112
+    },
+    {
+      "ticker": "RONY",
+      "name": "PT Aracord Nusantara Group Tbk",
+      "sector": "Industrial Services",
+      "close": 935,
+      "mcap": 1168750000000
+    },
+    {
+      "ticker": "FAST",
+      "name": "PT Fast Food Indonesia Tbk",
+      "sector": "Consumer Services",
+      "close": 258,
+      "mcap": 1166263804688
+    },
+    {
+      "ticker": "PSAT",
+      "name": "PT Pancaran Samudera Transport Tbk",
+      "sector": "Transportation",
+      "close": 775,
+      "mcap": 1148823596191
+    },
+    {
+      "ticker": "BLOG",
+      "name": "PT Trimitra Trans Persada Tbk",
+      "sector": "Transportation",
+      "close": 338,
+      "mcap": 1142266708984
+    },
+    {
+      "ticker": "DMMX",
+      "name": "PT Digital Mediatama Maxima Tbk",
+      "sector": "Commercial Services",
+      "close": 157,
+      "mcap": 1139731304199
+    },
+    {
+      "ticker": "ATIC",
+      "name": "PT Anabatic Technologies Tbk",
+      "sector": "Technology Services",
+      "close": 492,
+      "mcap": 1139157773438
+    },
+    {
+      "ticker": "JGLE",
+      "name": "PT Graha Andrasentra Propertindo Tbk",
+      "sector": "Finance",
+      "close": 50,
+      "mcap": 1129095507812
+    },
+    {
+      "ticker": "TCID",
+      "name": "PT Mandom Indonesia Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 2760,
+      "mcap": 1109887994385
+    },
+    {
+      "ticker": "DILD",
+      "name": "PT Intiland Development Tbk",
+      "sector": "Finance",
+      "close": 107,
+      "mcap": 1109146326172
+    },
+    {
+      "ticker": "PTPP",
+      "name": "PT PP (Persero) Tbk",
+      "sector": "Industrial Services",
+      "close": 178,
+      "mcap": 1103581748225
+    },
+    {
+      "ticker": "PTPW",
+      "name": "PT Pratama Widya Tbk",
+      "sector": "Industrial Services",
+      "close": 1250,
+      "mcap": 1097734375000
+    },
+    {
+      "ticker": "RSGK",
+      "name": "PT Kedoya Adyaraya Tbk",
+      "sector": "Health Services",
+      "close": 1175,
+      "mcap": 1092368125000
+    },
+    {
+      "ticker": "BEKS",
+      "name": "PT Bank Pembangunan Daerah Banten (Perseroda) Tbk Class A",
+      "sector": "Finance",
+      "close": 21,
+      "mcap": 1089279269531
+    },
+    {
+      "ticker": "LUCY",
+      "name": "PT Lima Dua Lima Tiga Tbk",
+      "sector": "Commercial Services",
+      "close": 715,
+      "mcap": 1083060550000
+    },
+    {
+      "ticker": "JKON",
+      "name": "PT Jaya Konstruksi Manggala Pratama Tbk",
+      "sector": "Industrial Services",
+      "close": 66,
+      "mcap": 1076362289062.0001
+    },
+    {
+      "ticker": "NFCX",
+      "name": "PT NFC Indonesia Tbk",
+      "sector": "Technology Services",
+      "close": 1595,
+      "mcap": 1056547606506
+    },
+    {
+      "ticker": "PPRO",
+      "name": "PT PP Properti Tbk",
+      "sector": "Finance",
+      "close": 17,
+      "mcap": 1048486421875
+    },
+    {
+      "ticker": "PANS",
+      "name": "PT Panin Sekuritas Tbk",
+      "sector": "Finance",
+      "close": 1465,
+      "mcap": 1046860976868
+    },
+    {
+      "ticker": "BUAH",
+      "name": "PT Segar Kumala Indonesia Tbk",
+      "sector": "Distribution Services",
+      "close": 515,
+      "mcap": 1030000000000
+    },
+    {
+      "ticker": "NRCA",
+      "name": "PT Nusa Raya Cipta Tbk",
+      "sector": "Industrial Services",
+      "close": 426,
+      "mcap": 1029675385254
+    },
+    {
+      "ticker": "BBRM",
+      "name": "PT Pelayaran Nasional Bina Buana Raya Tbk",
+      "sector": "Transportation",
+      "close": 121,
+      "mcap": 1022175362366
+    },
+    {
+      "ticker": "PPRE",
+      "name": "PT PP Presisi Tbk",
+      "sector": "Industrial Services",
+      "close": 101,
+      "mcap": 1021737501953
+    },
+    {
+      "ticker": "ARII",
+      "name": "PT Atlas Resources Tbk",
+      "sector": "Energy Minerals",
+      "close": 272,
+      "mcap": 1020000000000
+    },
+    {
+      "ticker": "AMAN",
+      "name": "PT Makmur Berkah Amanda Tbk",
+      "sector": "Finance",
+      "close": 260,
+      "mcap": 1007110000000
+    },
+    {
+      "ticker": "ELTY",
+      "name": "PT Bakrieland Development Tbk Class A",
+      "sector": "Finance",
+      "close": 23,
+      "mcap": 1001003933594
+    },
+    {
+      "ticker": "CAMP",
+      "name": "PT Campina Ice Cream Industry Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 166,
+      "mcap": 976910000000
+    },
+    {
+      "ticker": "LIVE",
+      "name": "PT Homeco Victoria Makmur Tbk",
+      "sector": "Distribution Services",
+      "close": 206,
+      "mcap": 946159005859
+    },
+    {
+      "ticker": "JIHD",
+      "name": "PT Jakarta International Hotels & Development Tbk",
+      "sector": "Finance",
+      "close": 404,
+      "mcap": 940932373047
+    },
+    {
+      "ticker": "BSML",
+      "name": "PT Bintang Samudera Mandiri Lines Tbk",
+      "sector": "Transportation",
+      "close": 505,
+      "mcap": 934363612671
+    },
+    {
+      "ticker": "KOTA",
+      "name": "PT DMS Propertindo Tbk",
+      "sector": "Finance",
+      "close": 88,
+      "mcap": 928064328125
+    },
+    {
+      "ticker": "BEST",
+      "name": "PT Bekasi Fajar Industrial Estate Tbk",
+      "sector": "Industrial Services",
+      "close": 96,
+      "mcap": 926141812500
+    },
+    {
+      "ticker": "BUDI",
+      "name": "PT Budi Starch & Sweetener Tbk",
+      "sector": "Process Industries",
+      "close": 204,
+      "mcap": 917795402344
+    },
+    {
+      "ticker": "COCO",
+      "name": "PT Wahana Interfood Nusantara Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 290,
+      "mcap": 915230229492
+    },
+    {
+      "ticker": "AISA",
+      "name": "PT FKS Food Sejahtera Tbk Class A",
+      "sector": "Consumer Non-Durables",
+      "close": 98,
+      "mcap": 912556380859
+    },
+    {
+      "ticker": "TBMS",
+      "name": "PT Tembaga Mulia Semanan Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 1240,
+      "mcap": 911003190918
+    },
+    {
+      "ticker": "DOOH",
+      "name": "PT Era Media Sejahtera Tbk",
+      "sector": "Commercial Services",
+      "close": 116,
+      "mcap": 897711369141
+    },
+    {
+      "ticker": "GWSA",
+      "name": "PT Greenwood Sejahtera Tbk",
+      "sector": "Finance",
+      "close": 115,
+      "mcap": 897087373047
+    },
+    {
+      "ticker": "RELI",
+      "name": "PT Reliance Sekuritas Indonesia Tbk",
+      "sector": "Finance",
+      "close": 494,
+      "mcap": 889200000000
+    },
+    {
+      "ticker": "BOLA",
+      "name": "PT Bali Bintang Sejahtera Tbk",
+      "sector": "Consumer Services",
+      "close": 147,
+      "mcap": 882000000000
+    },
+    {
+      "ticker": "GHON",
+      "name": "PT Gihon Telekomunikasi Indonesia",
+      "sector": "Communications",
+      "close": 1600,
+      "mcap": 880000000000
+    },
+    {
+      "ticker": "FOLK",
+      "name": "PT Multi Garam Utama Tbk",
+      "sector": "Distribution Services",
+      "close": 212,
+      "mcap": 867367773438
+    },
+    {
+      "ticker": "MINE",
+      "name": "PT Sinar Terang Mandiri TBK",
+      "sector": "Non-Energy Minerals",
+      "close": 212,
+      "mcap": 865900284180
+    },
+    {
+      "ticker": "BBLD",
+      "name": "PT Buana Finance Tbk",
+      "sector": "Finance",
+      "close": 520,
+      "mcap": 855813994141
+    },
+    {
+      "ticker": "SPMA",
+      "name": "PT Suparma Tbk",
+      "sector": "Process Industries",
+      "close": 208,
+      "mcap": 852866015625
+    },
+    {
+      "ticker": "CITY",
+      "name": "PT Natura City Developments Tbk",
+      "sector": "Finance",
+      "close": 157,
+      "mcap": 848614667480
+    },
+    {
+      "ticker": "WOMF",
+      "name": "PT Wahana Ottomitra Multiartha Tbk",
+      "sector": "Finance",
+      "close": 240,
+      "mcap": 835555546875
+    },
+    {
+      "ticker": "BLTA",
+      "name": "PT Berlian Laju Tanker Tbk",
+      "sector": "Transportation",
+      "close": 32,
+      "mcap": 829093125000
+    },
+    {
+      "ticker": "GZCO",
+      "name": "PT Gozco Plantations Tbk",
+      "sector": "Process Industries",
+      "close": 138,
+      "mcap": 828000000000
+    },
+    {
+      "ticker": "PDPP",
+      "name": "PT Primadaya Plastisindo Tbk",
+      "sector": "Process Industries",
+      "close": 270,
+      "mcap": 826562219238
+    },
+    {
+      "ticker": "LFLO",
+      "name": "PT Imago Mulia Persada Tbk",
+      "sector": "Commercial Services",
+      "close": 625,
+      "mcap": 817334289551
+    },
+    {
+      "ticker": "KING",
+      "name": "PT Hoffmen Cleanindo Tbk",
+      "sector": "Commercial Services",
+      "close": 314,
+      "mcap": 817295620605
+    },
+    {
+      "ticker": "RANC",
+      "name": "PT Supra Boga Lestari Tbk",
+      "sector": "Retail Trade",
+      "close": 520,
+      "mcap": 813533525391
+    },
+    {
+      "ticker": "VOKS",
+      "name": "PT Voksel Electric Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 194,
+      "mcap": 806186892578
+    },
+    {
+      "ticker": "TALF",
+      "name": "PT Tunas Alfin Tbk",
+      "sector": "Process Industries",
+      "close": 595,
+      "mcap": 805293859863
+    },
+    {
+      "ticker": "HGII",
+      "name": "PT Hero Global Investment Tbk",
+      "sector": "Utilities",
+      "close": 122,
+      "mcap": 793000000000
+    },
+    {
+      "ticker": "KONI",
+      "name": "PT Perdana Bangun Pusaka Tbk",
+      "sector": "Retail Trade",
+      "close": 2540,
+      "mcap": 792480000000
+    },
+    {
+      "ticker": "GRIA",
+      "name": "PT Ingria Pratama Capitalindo Tbk",
+      "sector": "Finance",
+      "close": 107,
+      "mcap": 789202115234
+    },
+    {
+      "ticker": "ADMG",
+      "name": "PT Polychem Indonesia Tbk",
+      "sector": "Process Industries",
+      "close": 199,
+      "mcap": 773946757812
+    },
+    {
+      "ticker": "MTWI",
+      "name": "PT Malacca Trust Wuwungan Insurance Tbk",
+      "sector": "Finance",
+      "close": 264,
+      "mcap": 772064519531
+    },
+    {
+      "ticker": "WSBP",
+      "name": "PT Waskita Beton Precast Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 14,
+      "mcap": 769092734375
+    },
+    {
+      "ticker": "ASLC",
+      "name": "PT Autopedia Sukses Lestari Tbk",
+      "sector": "Distribution Services",
+      "close": 60,
+      "mcap": 764781328125
+    },
+    {
+      "ticker": "TIFA",
+      "name": "PT KDB Tifa Finance Tbk",
+      "sector": "Finance",
+      "close": 214,
+      "mcap": 760173558594
+    },
+    {
+      "ticker": "STRK",
+      "name": "PT Lovina Beach Brewery Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 70,
+      "mcap": 750528520000
+    },
+    {
+      "ticker": "CHIP",
+      "name": "PT Pelita Teknologi Global Tbk",
+      "sector": "Technology Services",
+      "close": 930,
+      "mcap": 749580000000
+    },
+    {
+      "ticker": "RSCH",
+      "name": "PT Charlie Hospital Semarang Tbk",
+      "sector": "Health Services",
+      "close": 282,
+      "mcap": 747300000000
+    },
+    {
+      "ticker": "SQMI",
+      "name": "PT Wilton Makmur Indonesia Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 48,
+      "mcap": 745804359375
+    },
+    {
+      "ticker": "SKBM",
+      "name": "PT Sekar Bumi Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 430,
+      "mcap": 743944406738
+    },
+    {
+      "ticker": "KDTN",
+      "name": "PT Puri Sentul Permai Tbk",
+      "sector": "Consumer Services",
+      "close": 595,
+      "mcap": 743763863500
+    },
+    {
+      "ticker": "SOSS",
+      "name": "PT Shield On Service Tbk",
+      "sector": "Commercial Services",
+      "close": 760,
+      "mcap": 740639575195
+    },
+    {
+      "ticker": "CMPP",
+      "name": "PT AirAsia Indonesia Tbk",
+      "sector": "Transportation",
+      "close": 69,
+      "mcap": 737273625000
+    },
+    {
+      "ticker": "INDO",
+      "name": "PT Royalindo Investa Wijaya Tbk",
+      "sector": "Finance",
+      "close": 162,
+      "mcap": 725880155273
+    },
+    {
+      "ticker": "PJAA",
+      "name": "PT Pembangunan Jaya Ancol Tbk",
+      "sector": "Consumer Services",
+      "close": 448,
+      "mcap": 716800000896
+    },
+    {
+      "ticker": "AMOR",
+      "name": "PT Ashmore Asset Management Indonesia Tbk",
+      "sector": "Finance",
+      "close": 318,
+      "mcap": 706666727051
+    },
+    {
+      "ticker": "KDSI",
+      "name": "PT Kedawung Setia Industrial Tbk",
+      "sector": "Process Industries",
+      "close": 432,
+      "mcap": 699840000000
+    },
+    {
+      "ticker": "BELL",
+      "name": "PT Trisula Textile Industries Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 96,
+      "mcap": 696000000000
+    },
+    {
+      "ticker": "RODA",
+      "name": "PT Pikko Land Development Tbk",
+      "sector": "Consumer Durables",
+      "close": 50,
+      "mcap": 679606445312
+    },
+    {
+      "ticker": "IPOL",
+      "name": "PT Indopoly Swakarsa Industry Tbk",
+      "sector": "Process Industries",
+      "close": 105,
+      "mcap": 676554836426
+    },
+    {
+      "ticker": "TAMU",
+      "name": "PT Pelayaran Tamarin Samudra Tbk",
+      "sector": "Transportation",
+      "close": 18,
+      "mcap": 675000000000
+    },
+    {
+      "ticker": "DGIK",
+      "name": "PT Nusa Konstruksi Enjiniring Tbk",
+      "sector": "Industrial Services",
+      "close": 122,
+      "mcap": 673650878906
+    },
+    {
+      "ticker": "GDST",
+      "name": "PT Gunawan Dianjaya Steel Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 79,
+      "mcap": 671170036133
+    },
+    {
+      "ticker": "URBN",
+      "name": "PT Urban Jakarta Propertindo Tbk",
+      "sector": "Finance",
+      "close": 214,
+      "mcap": 667594002930
+    },
+    {
+      "ticker": "KSIX",
+      "name": "PT Kentanix Supra International Tbk",
+      "sector": "Consumer Durables",
+      "close": 310,
+      "mcap": 662727854004
+    },
+    {
+      "ticker": "GULA",
+      "name": "PT Aman Agrindo Tbk",
+      "sector": "Process Industries",
+      "close": 615,
+      "mcap": 658272967529
+    },
+    {
+      "ticker": "BDKR",
+      "name": "PT Berdikari Pondasi Perkasa Tbk",
+      "sector": "Industrial Services",
+      "close": 145,
+      "mcap": 653880615234
+    },
+    {
+      "ticker": "BPFI",
+      "name": "PT Woori Finance Indonesia Tbk",
+      "sector": "Finance",
+      "close": 244,
+      "mcap": 652454868164
+    },
+    {
+      "ticker": "MOLI",
+      "name": "PT Madusari Murni Indah Tbk",
+      "sector": "Process Industries",
+      "close": 238,
+      "mcap": 648320715820
+    },
+    {
+      "ticker": "WMUU",
+      "name": "PT Widodo Makmur Unggas Tbk",
+      "sector": "Process Industries",
+      "close": 50,
+      "mcap": 647058789062
+    },
+    {
+      "ticker": "VERN",
+      "name": "PT Verona Indah Pictures Tbk",
+      "sector": "Consumer Services",
+      "close": 135,
+      "mcap": 643362473145
+    },
+    {
+      "ticker": "SHID",
+      "name": "PT Hotel Sahid Jaya International Tbk",
+      "sector": "Consumer Services",
+      "close": 570,
+      "mcap": 638015987549
+    },
+    {
+      "ticker": "ENAK",
+      "name": "PT Champ Resto Indonesia Tbk",
+      "sector": "Consumer Services",
+      "close": 294,
+      "mcap": 637000023926
+    },
+    {
+      "ticker": "AXIO",
+      "name": "PT Tera Data Indonusa Tbk",
+      "sector": "Electronic Technology",
+      "close": 109,
+      "mcap": 636573784668
+    },
+    {
+      "ticker": "IKBI",
+      "name": "PT Sumi Indo Kabel Tbk",
+      "sector": "Electronic Technology",
+      "close": 520,
+      "mcap": 636480000000
+    },
+    {
+      "ticker": "WIRG",
+      "name": "PT WIR Asia Tbk",
+      "sector": "Health Services",
+      "close": 53,
+      "mcap": 632746969727
+    },
+    {
+      "ticker": "NICK",
+      "name": "PT Charnic Capital Tbk",
+      "sector": "Finance",
+      "close": 960,
+      "mcap": 625104023438
+    },
+    {
+      "ticker": "BKDP",
+      "name": "PT Bukit Darmo Property Tbk",
+      "sector": "Finance",
+      "close": 83,
+      "mcap": 623661351562
+    },
+    {
+      "ticker": "WTON",
+      "name": "PT Wijaya Karya Beton Tbk",
+      "sector": "Industrial Services",
+      "close": 71,
+      "mcap": 618798142578
+    },
+    {
+      "ticker": "SOTS",
+      "name": "PT Satria Mega Kencana Tbk",
+      "sector": "Consumer Services",
+      "close": 610,
+      "mcap": 610002457275
+    },
+    {
+      "ticker": "PBRX",
+      "name": "PT Pan Brothers Tbk",
+      "sector": "Process Industries",
+      "close": 28,
+      "mcap": 601496765625
+    },
+    {
+      "ticker": "MDLN",
+      "name": "PT Modernland Realty Tbk Class A",
+      "sector": "Finance",
+      "close": 50,
+      "mcap": 597365869141
+    },
+    {
+      "ticker": "TIRT",
+      "name": "PT Tirta Mahakam Resources Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 590,
+      "mcap": 596947120361
+    },
+    {
+      "ticker": "EKAD",
+      "name": "PT Ekadharma International Tbk",
+      "sector": "Process Industries",
+      "close": 170,
+      "mcap": 593958750000
+    },
+    {
+      "ticker": "IDPR",
+      "name": "PT Indonesia Pondasi Raya Tbk",
+      "sector": "Industrial Services",
+      "close": 296,
+      "mcap": 592888036133
+    },
+    {
+      "ticker": "MITI",
+      "name": "PT Mitra Investindo Tbk Class A",
+      "sector": "Transportation",
+      "close": 157,
+      "mcap": 588832677979
+    },
+    {
+      "ticker": "HDFA",
+      "name": "PT Radana Bhaskara Finance Tbk",
+      "sector": "Finance",
+      "close": 90,
+      "mcap": 588820122070
+    },
+    {
+      "ticker": "NETV",
+      "name": "PT MDTV Media Technologies Tbk",
+      "sector": "Commercial Services",
+      "close": 50,
+      "mcap": 586329443359
+    },
+    {
+      "ticker": "SMGA",
+      "name": "PT Sumber Mineral Global Abadi Tbk",
+      "sector": "Distribution Services",
+      "close": 67,
+      "mcap": 586250000000
+    },
+    {
+      "ticker": "MPPA",
+      "name": "PT Matahari Putra Prima Tbk",
+      "sector": "Retail Trade",
+      "close": 45,
+      "mcap": 583498784180
+    },
+    {
+      "ticker": "PGJO",
+      "name": "PT Bahtera Bumi Raya Tbk",
+      "sector": "Technology Services",
+      "close": 730,
+      "mcap": 580977165527
+    },
+    {
+      "ticker": "IBOS",
+      "name": "PT Indo Boga Sukses Tbk",
+      "sector": "Consumer Services",
+      "close": 72,
+      "mcap": 580736847656
+    },
+    {
+      "ticker": "AREA",
+      "name": "PT Dunia Virtual Online Tbk",
+      "sector": "Technology Services",
+      "close": 224,
+      "mcap": 568870640625
+    },
+    {
+      "ticker": "BRNA",
+      "name": "PT Berlina Tbk",
+      "sector": "Process Industries",
+      "close": 580,
+      "mcap": 567883791504
+    },
+    {
+      "ticker": "PANR",
+      "name": "PT Panorama Sentrawisata Tbk",
+      "sector": "Consumer Services",
+      "close": 408,
+      "mcap": 566100000000
+    },
+    {
+      "ticker": "IRRA",
+      "name": "PT Itama Ranoraya Tbk",
+      "sector": "Distribution Services",
+      "close": 374,
+      "mcap": 561000000000
+    },
+    {
+      "ticker": "PZZA",
+      "name": "PT Sarimelati Kencana Tbk",
+      "sector": "Consumer Services",
+      "close": 184,
+      "mcap": 553010292969
+    },
+    {
+      "ticker": "LABS",
+      "name": "PT UBC Medical Indonesia Tbk",
+      "sector": "Distribution Services",
+      "close": 140,
+      "mcap": 553000000000
+    },
+    {
+      "ticker": "PEVE",
+      "name": "PT Penta Valent Tbk",
+      "sector": "Distribution Services",
+      "close": 308,
+      "mcap": 543812500000
+    },
+    {
+      "ticker": "VIVA",
+      "name": "PT Visi Media Asia Tbk Class A",
+      "sector": "Consumer Services",
+      "close": 33,
+      "mcap": 543320894531.00006
+    },
+    {
+      "ticker": "LEAD",
+      "name": "PT Logindo Samudramakmur Tbk",
+      "sector": "Industrial Services",
+      "close": 93,
+      "mcap": 537888068848
+    },
+    {
+      "ticker": "WMPP",
+      "name": "PT Widodo Makmur Perkasa Tbk",
+      "sector": "Process Industries",
+      "close": 18,
+      "mcap": 529542000000
+    },
+    {
+      "ticker": "ATAP",
+      "name": "PT Trimitra Prawara Goldland Tbk",
+      "sector": "Finance",
+      "close": 420,
+      "mcap": 525000000000
+    },
+    {
+      "ticker": "UNSP",
+      "name": "PT Bakrie Sumatera Plantations Tbk",
+      "sector": "Distribution Services",
+      "close": 206,
+      "mcap": 515033444824
+    },
+    {
+      "ticker": "CHEK",
+      "name": "PT Diastika Biotekindo Tbk",
+      "sector": "Health Technology",
+      "close": 125,
+      "mcap": 514166442871
+    },
+    {
+      "ticker": "BTEK",
+      "name": "PT Bumi Teknokultura Unggul Tbk",
+      "sector": "Process Industries",
+      "close": 11,
+      "mcap": 509052457031
+    },
+    {
+      "ticker": "FITT",
+      "name": "PT Hotel Fitra International Tbk",
+      "sector": "Consumer Services",
+      "close": 390,
+      "mcap": 508666069336
+    },
+    {
+      "ticker": "TRIS",
+      "name": "PT Trisula International Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 160,
+      "mcap": 502228789062
+    },
+    {
+      "ticker": "ZONE",
+      "name": "PT Mega Perintis Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 570,
+      "mcap": 495997725220
+    },
+    {
+      "ticker": "JECC",
+      "name": "PT Jembo Cable Co. Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 650,
+      "mcap": 491400000000
+    },
+    {
+      "ticker": "AWAN",
+      "name": "PT Era Digital Media Tbk",
+      "sector": "Technology Services",
+      "close": 142,
+      "mcap": 487770000000
+    },
+    {
+      "ticker": "RMKO",
+      "name": "PT Royaltama Mulia Kontraktorindo Tbk",
+      "sector": "Energy Minerals",
+      "close": 390,
+      "mcap": 487500000000
+    },
+    {
+      "ticker": "UNTD",
+      "name": "PT Terang Dunia Internusa Tbk",
+      "sector": "Consumer Durables",
+      "close": 73,
+      "mcap": 486666654785
+    },
+    {
+      "ticker": "SWID",
+      "name": "PT Saraswanti Indoland Development Tbk",
+      "sector": "Finance",
+      "close": 90,
+      "mcap": 484651713867
+    },
+    {
+      "ticker": "HOKI",
+      "name": "PT Buyung Poetra Sembada Tbk",
+      "sector": "Process Industries",
+      "close": 50,
+      "mcap": 483887646484
+    },
+    {
+      "ticker": "MAXI",
+      "name": "PT Maxindo Karya Anugerah Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 50,
+      "mcap": 480504980469
+    },
+    {
+      "ticker": "SULI",
+      "name": "PT SLJ Global Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 76,
+      "mcap": 480379041016
+    },
+    {
+      "ticker": "TRUS",
+      "name": "PT Trust Finance Indonesia Tbk",
+      "sector": "Finance",
+      "close": 600,
+      "mcap": 480000000000
+    },
+    {
+      "ticker": "BABY",
+      "name": "PT Multitrend Indo Tbk",
+      "sector": "Retail Trade",
+      "close": 168,
+      "mcap": 479610837891
+    },
+    {
+      "ticker": "WEGE",
+      "name": "PT Wijaya Karya Bangunan Gedung Tbk",
+      "sector": "Industrial Services",
+      "close": 50,
+      "mcap": 478600000000
+    },
+    {
+      "ticker": "GRPM",
+      "name": "PT Graha Prima Mentari Tbk",
+      "sector": "Distribution Services",
+      "close": 308,
+      "mcap": 477158897600
+    },
+    {
+      "ticker": "MREI",
+      "name": "PT Maskapai Reasuransi Indonesia Tbk",
+      "sector": "Finance",
+      "close": 920,
+      "mcap": 476368352051
+    },
+    {
+      "ticker": "NELY",
+      "name": "PT Pelayaran Nelly Dwi Putri Tbk",
+      "sector": "Transportation",
+      "close": 197,
+      "mcap": 462950048096
+    },
+    {
+      "ticker": "PMUI",
+      "name": "PT Prima Multi Usaha Indonesia Tbk",
+      "sector": "Distribution Services",
+      "close": 79,
+      "mcap": 458200000000
+    },
+    {
+      "ticker": "NIKL",
+      "name": "PT Pelat Timah Nusantara Tbk",
+      "sector": "Process Industries",
+      "close": 179,
+      "mcap": 451679667480
+    },
+    {
+      "ticker": "GDYR",
+      "name": "PT Goodyear Indonesia Tbk",
+      "sector": "Consumer Durables",
+      "close": 1100,
+      "mcap": 451000000000
+    },
+    {
+      "ticker": "MHKI",
+      "name": "PT Multi Hanna Kreasindo Tbk",
+      "sector": "Industrial Services",
+      "close": 120,
+      "mcap": 450000000000
+    },
+    {
+      "ticker": "SSTM",
+      "name": "PT Sunson Textile Manufacturer Tbk",
+      "sector": "Process Industries",
+      "close": 384,
+      "mcap": 449629125000
+    },
+    {
+      "ticker": "HAIS",
+      "name": "PT Hasnur Internasional Shipping Tbk",
+      "sector": "Transportation",
+      "close": 171,
+      "mcap": 449088750000
+    },
+    {
+      "ticker": "CLPI",
+      "name": "PT Colorpak Indonesia Tbk",
+      "sector": "Process Industries",
+      "close": 1465,
+      "mcap": 448785903931
+    },
+    {
+      "ticker": "MDKI",
+      "name": "PT Emdeki Utama Tbk",
+      "sector": "Process Industries",
+      "close": 177,
+      "mcap": 447836532715
+    },
+    {
+      "ticker": "SMKL",
+      "name": "PT Satyamitra Kemas Lestari Tbk",
+      "sector": "Process Industries",
+      "close": 131,
+      "mcap": 447769161865
+    },
+    {
+      "ticker": "BBSS",
+      "name": "PT Bumi Benowo Sukses Sejahtera Tbk",
+      "sector": "Industrial Services",
+      "close": 93,
+      "mcap": 446401498535
+    },
+    {
+      "ticker": "ESTA",
+      "name": "PT Esta Multi Usaha Tbk",
+      "sector": "Consumer Services",
+      "close": 180,
+      "mcap": 436563764648
+    },
+    {
+      "ticker": "GLVA",
+      "name": "PT Galva Technologies Tbk",
+      "sector": "Distribution Services",
+      "close": 290,
+      "mcap": 435000000000
+    },
+    {
+      "ticker": "KOCI",
+      "name": "PT Kokoh Exa Nusantara Tbk",
+      "sector": "Finance",
+      "close": 97,
+      "mcap": 433340157100
+    },
+    {
+      "ticker": "APEX",
+      "name": "PT Apexindo Pratama Duta Tbk",
+      "sector": "Industrial Services",
+      "close": 122,
+      "mcap": 432668949219
+    },
+    {
+      "ticker": "KMDS",
+      "name": "PT Kurniamitra Duta Sentosa Tbk",
+      "sector": "Distribution Services",
+      "close": 540,
+      "mcap": 432000000000
+    },
+    {
+      "ticker": "AHAP",
+      "name": "PT Asuransi Harta Aman Pratama Tbk",
+      "sector": "Finance",
+      "close": 87,
+      "mcap": 426300000000
+    },
+    {
+      "ticker": "GTBO",
+      "name": "PT Garda Tujuh Buana Tbk",
+      "sector": "Energy Minerals",
+      "close": 170,
+      "mcap": 425000000000
+    },
+    {
+      "ticker": "ZATA",
+      "name": "PT Bersama Zatta Jaya Tbk",
+      "sector": "Retail Trade",
+      "close": 50,
+      "mcap": 424800000000
+    },
+    {
+      "ticker": "GPRA",
+      "name": "PT Perdana Gapuraprima Tbk",
+      "sector": "Consumer Durables",
+      "close": 98,
+      "mcap": 419112216797
+    },
+    {
+      "ticker": "PNSE",
+      "name": "PT Pudjiadi & Sons Tbk",
+      "sector": "Consumer Services",
+      "close": 520,
+      "mcap": 414863007812
+    },
+    {
+      "ticker": "MTFN",
+      "name": "PT Capitalinc Investment Tbk Class A",
+      "sector": "Finance",
+      "close": 13,
+      "mcap": 413947066406
+    },
+    {
+      "ticker": "INPS",
+      "name": "PT Indah Prakasa Sentosa Tbk",
+      "sector": "Utilities",
+      "close": 635,
+      "mcap": 412750000000
+    },
+    {
+      "ticker": "RIGS",
+      "name": "PT Rig Tenders Indonesia Tbk",
+      "sector": "Transportation",
+      "close": 670,
+      "mcap": 408117103271
+    },
+    {
+      "ticker": "WINE",
+      "name": "PT Hatten Bali Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 150,
+      "mcap": 406500000000
+    },
+    {
+      "ticker": "CRAB",
+      "name": "PT Toba Surimi Industries Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 208,
+      "mcap": 405600000000
+    },
+    {
+      "ticker": "YPAS",
+      "name": "PT Yanaprima Hastapersada Tbk",
+      "sector": "Process Industries",
+      "close": 605,
+      "mcap": 404140036926
+    },
+    {
+      "ticker": "SRSN",
+      "name": "PT Indo Acidatama Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 67,
+      "mcap": 403339967285
+    },
+    {
+      "ticker": "BAYU",
+      "name": "PT Bayu Buana Tbk",
+      "sector": "Consumer Services",
+      "close": 1130,
+      "mcap": 399139497986
+    },
+    {
+      "ticker": "ASPR",
+      "name": "PT Asia Pramulia Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 147,
+      "mcap": 398664000000
+    },
+    {
+      "ticker": "VRNA",
+      "name": "PT Mizuho Leasing Indonesia Tbk",
+      "sector": "Finance",
+      "close": 70,
+      "mcap": 398114780273
+    },
+    {
+      "ticker": "AMMS",
+      "name": "PT Agung Menjangan Mas Tbk",
+      "sector": "Process Industries",
+      "close": 316,
+      "mcap": 390353788800
+    },
+    {
+      "ticker": "UFOE",
+      "name": "PT Damai Sejahtera Abadi Tbk",
+      "sector": "Retail Trade",
+      "close": 134,
+      "mcap": 388367070312
+    },
+    {
+      "ticker": "GUNA",
+      "name": "PT Gunanusa Eramandiri Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 155,
+      "mcap": 387500000000
+    },
+    {
+      "ticker": "SURI",
+      "name": "PT Maja Agung Latexindo Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 61,
+      "mcap": 386396875000
+    },
+    {
+      "ticker": "KOKA",
+      "name": "PT Koka Indonesia Tbk",
+      "sector": "Industrial Services",
+      "close": 135,
+      "mcap": 386279956055
+    },
+    {
+      "ticker": "IGAR",
+      "name": "PT Champion Pacific Indonesia Tbk",
+      "sector": "Process Industries",
+      "close": 412,
+      "mcap": 382245623535
+    },
+    {
+      "ticker": "MUTU",
+      "name": "PT Mutuagung Lestari Tbk",
+      "sector": "Commercial Services",
+      "close": 110,
+      "mcap": 379745190430
+    },
+    {
+      "ticker": "DPUM",
+      "name": "PT Dua Putra Utama Makmur Tbk",
+      "sector": "Distribution Services",
+      "close": 91,
+      "mcap": 378973143555
+    },
+    {
+      "ticker": "TRUE",
+      "name": "PT Triniti Dinamik Tbk",
+      "sector": "Finance",
+      "close": 50,
+      "mcap": 378555395508
+    },
+    {
+      "ticker": "DART",
+      "name": "PT Duta Anggada Realty Tbk",
+      "sector": "Consumer Durables",
+      "close": 120,
+      "mcap": 376966904297
+    },
+    {
+      "ticker": "PEGE",
+      "name": "PT Panca Global Kapital Tbk",
+      "sector": "Finance",
+      "close": 132,
+      "mcap": 374011042969
+    },
+    {
+      "ticker": "SATU",
+      "name": "PT Kota Satu Properti Tbk",
+      "sector": "Finance",
+      "close": 272,
+      "mcap": 374000000000
+    },
+    {
+      "ticker": "CBPE",
+      "name": "PT Citra Buana Prasida Tbk",
+      "sector": "Finance",
+      "close": 274,
+      "mcap": 371612500000
+    },
+    {
+      "ticker": "DADA",
+      "name": "PT Diamond Citra Propertindo Tbk",
+      "sector": "Finance",
+      "close": 50,
+      "mcap": 371576538086
+    },
+    {
+      "ticker": "BOAT",
+      "name": "PT Newport Marine Services Tbk",
+      "sector": "Transportation",
+      "close": 105,
+      "mcap": 367676392822
+    },
+    {
+      "ticker": "EAST",
+      "name": "PT Eastparc Hotel Tbk",
+      "sector": "Consumer Services",
+      "close": 88,
+      "mcap": 360793898438
+    },
+    {
+      "ticker": "SCNP",
+      "name": "PT Selaras Citra Nusantara Perkasa Tbk",
+      "sector": "Consumer Durables",
+      "close": 143,
+      "mcap": 357500000000
+    },
+    {
+      "ticker": "HYGN",
+      "name": "PT Ecocare Indo Pasifik Tbk",
+      "sector": "Commercial Services",
+      "close": 141,
+      "mcap": 356025000000
+    },
+    {
+      "ticker": "TYRE",
+      "name": "PT King Tire Indonesia Tbk",
+      "sector": "Consumer Durables",
+      "close": 102,
+      "mcap": 355019342285
+    },
+    {
+      "ticker": "VAST",
+      "name": "PT Vastland Indonesia Tbk",
+      "sector": "Finance",
+      "close": 115,
+      "mcap": 351409761963
+    },
+    {
+      "ticker": "GTRA",
+      "name": "PT Grahaprima Suksesmandiri Tbk",
+      "sector": "Transportation",
+      "close": 185,
+      "mcap": 350459375000
+    },
+    {
+      "ticker": "ELIT",
+      "name": "PT Data Sinergitama Jaya Tbk",
+      "sector": "Technology Services",
+      "close": 172,
+      "mcap": 347433197266
+    },
+    {
+      "ticker": "TIRA",
+      "name": "PT Tira Austenite Tbk",
+      "sector": "Distribution Services",
+      "close": 590,
+      "mcap": 346920000000
+    },
+    {
+      "ticker": "HALO",
+      "name": "PT Haloni Jane Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 57,
+      "mcap": 346487553223
+    },
+    {
+      "ticker": "VTNY",
+      "name": "PT Venteny Fortuna International Tbk",
+      "sector": "Technology Services",
+      "close": 55,
+      "mcap": 344585634766
+    },
+    {
+      "ticker": "SOFA",
+      "name": "PT Solusi Environment Asia Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 208,
+      "mcap": 343943488281
+    },
+    {
+      "ticker": "BMSR",
+      "name": "PT Bintang Mitra Semestaraya Tbk",
+      "sector": "Distribution Services",
+      "close": 290,
+      "mcap": 336167985840
+    },
+    {
+      "ticker": "REAL",
+      "name": "PT Repower Asia Indonesia Tbk",
+      "sector": "Finance",
+      "close": 50,
+      "mcap": 331680493164
+    },
+    {
+      "ticker": "CNKO",
+      "name": "PT Exploitasi Energi Indonesia Tbk Class A",
+      "sector": "Energy Minerals",
+      "close": 37,
+      "mcap": 331385369141
+    },
+    {
+      "ticker": "PADA",
+      "name": "PT Personel Alih Daya Tbk",
+      "sector": "Commercial Services",
+      "close": 105,
+      "mcap": 330750000000
+    },
+    {
+      "ticker": "APLI",
+      "name": "PT Asiaplast Industries Tbk",
+      "sector": "Process Industries",
+      "close": 242,
+      "mcap": 329766475586
+    },
+    {
+      "ticker": "DYAN",
+      "name": "PT Dyandra Media International Tbk",
+      "sector": "Commercial Services",
+      "close": 77,
+      "mcap": 329018255371
+    },
+    {
+      "ticker": "SOLA",
+      "name": "PT Xolare Rcr Energy Tbk",
+      "sector": "Industrial Services",
+      "close": 100,
+      "mcap": 328737500000
+    },
+    {
+      "ticker": "CCSI",
+      "name": "PT Communication Cable Systems Indonesia Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 246,
+      "mcap": 328000010010
+    },
+    {
+      "ticker": "TFAS",
+      "name": "PT Telefast Indonesia Tbk",
+      "sector": "Technology Services",
+      "close": 197,
+      "mcap": 326392928223
+    },
+    {
+      "ticker": "KOBX",
+      "name": "PT Kobexindo Tractors Tbk",
+      "sector": "Distribution Services",
+      "close": 142,
+      "mcap": 322695000000
+    },
+    {
+      "ticker": "KBLM",
+      "name": "PT Kabelindo Murni Tbk Class A",
+      "sector": "Producer Manufacturing",
+      "close": 286,
+      "mcap": 320320000000
+    },
+    {
+      "ticker": "NASA",
+      "name": "PT Andalan Perkasa Abadi Tbk",
+      "sector": "Finance",
+      "close": 29,
+      "mcap": 319142932617
+    },
+    {
+      "ticker": "MYTX",
+      "name": "PT Asia Pacific Investama Tbk Class A",
+      "sector": "Process Industries",
+      "close": 41,
+      "mcap": 317638571289
+    },
+    {
+      "ticker": "UNIQ",
+      "name": "PT Ulima Nitra Tbk",
+      "sector": "Industrial Services",
+      "close": 101,
+      "mcap": 317037273926
+    },
+    {
+      "ticker": "DGNS",
+      "name": "PT Diagnos Laboratorium Utama Tbk",
+      "sector": "Health Services",
+      "close": 230,
+      "mcap": 316250000000
+    },
+    {
+      "ticker": "BEER",
+      "name": "PT Jobubu Jarum Minahasa Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 79,
+      "mcap": 316000000000
+    },
+    {
+      "ticker": "ASRM",
+      "name": "PT Asuransi Ramayana Tbk",
+      "sector": "Finance",
+      "close": 244,
+      "mcap": 311830034180
+    },
+    {
+      "ticker": "ATLA",
+      "name": "PT Atlantis Subsea Indonesia Tbk",
+      "sector": "Industrial Services",
+      "close": 50,
+      "mcap": 309978881836
+    },
+    {
+      "ticker": "BOBA",
+      "name": "PT Formosa Ingredient Factory Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 268,
+      "mcap": 309741000000
+    },
+    {
+      "ticker": "GOLD",
+      "name": "PT Visi Telekomunikasi Infrastruktur Tbk",
+      "sector": "Finance",
+      "close": 242,
+      "mcap": 309100792236
+    },
+    {
+      "ticker": "NZIA",
+      "name": "PT Nusantara Almazia Tbk",
+      "sector": "Finance",
+      "close": 140,
+      "mcap": 307655708008
+    },
+    {
+      "ticker": "PART",
+      "name": "PT Cipta Perdana Lancar Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 109,
+      "mcap": 307228075928
+    },
+    {
+      "ticker": "MGNA",
+      "name": "PT Magna Investama Mandiri Tbk",
+      "sector": "Finance",
+      "close": 89,
+      "mcap": 303587191650
+    },
+    {
+      "ticker": "IKPM",
+      "name": "PT Ikapharmindo Putramas Tbk",
+      "sector": "Health Technology",
+      "close": 180,
+      "mcap": 303239245605
+    },
+    {
+      "ticker": "PRIM",
+      "name": "PT Royal Prima Tbk",
+      "sector": "Health Services",
+      "close": 89,
+      "mcap": 301868292236
+    },
+    {
+      "ticker": "JATI",
+      "name": "PT Informasi Teknologi Indonesia Tbk",
+      "sector": "Technology Services",
+      "close": 91,
+      "mcap": 296889321777
+    },
+    {
+      "ticker": "MPXL",
+      "name": "PT MPX Logistics International Tbk",
+      "sector": "Transportation",
+      "close": 147,
+      "mcap": 294002153320
+    },
+    {
+      "ticker": "MICE",
+      "name": "PT Multi Indocitra Tbk",
+      "sector": "Distribution Services",
+      "close": 496,
+      "mcap": 293584379883
+    },
+    {
+      "ticker": "TARA",
+      "name": "PT Agung Semesta Sejahtera Tbk",
+      "sector": "Finance",
+      "close": 29,
+      "mcap": 292019691406
+    },
+    {
+      "ticker": "PDES",
+      "name": "PT Destinasi Tirta Nusantara Tbk",
+      "sector": "Consumer Services",
+      "close": 408,
+      "mcap": 291720000000
+    },
+    {
+      "ticker": "YOII",
+      "name": "PT Asuransi Digital Bersama Tbk",
+      "sector": "Finance",
+      "close": 85,
+      "mcap": 291098437500
+    },
+    {
+      "ticker": "HOPE",
+      "name": "PT Harapan Duta Pertiwi Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 136,
+      "mcap": 289729007812
+    },
+    {
+      "ticker": "AKPI",
+      "name": "PT Argha Karya Prima Industry Tbk",
+      "sector": "Process Industries",
+      "close": 472,
+      "mcap": 288981049316
+    },
+    {
+      "ticker": "WGSH",
+      "name": "PT Wira Global Solusi Tbk",
+      "sector": "Technology Services",
+      "close": 137,
+      "mcap": 285645000000
+    },
+    {
+      "ticker": "HOMI",
+      "name": "PT Grand House Mulia Tbk",
+      "sector": "Finance",
+      "close": 181,
+      "mcap": 285075000000
+    },
+    {
+      "ticker": "CRSN",
+      "name": "PT Carsurin Tbk",
+      "sector": "Commercial Services",
+      "close": 98,
+      "mcap": 283416000000
+    },
+    {
+      "ticker": "TRON",
+      "name": "PT Teknologi Karya Digital Nusa Tbk",
+      "sector": "Technology Services",
+      "close": 96,
+      "mcap": 283327546875
+    },
+    {
+      "ticker": "ASPI",
+      "name": "PT Andalan Sakti Primaindo Tbk",
+      "sector": "Finance",
+      "close": 414,
+      "mcap": 282274847534
+    },
+    {
+      "ticker": "BAJA",
+      "name": "PT Saranacentral Bajatama Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 155,
+      "mcap": 279000000000
+    },
+    {
+      "ticker": "LPLI",
+      "name": "PT Star Pacific Tbk Class A",
+      "sector": "Technology Services",
+      "close": 236,
+      "mcap": 276222126465
+    },
+    {
+      "ticker": "CSIS",
+      "name": "PT Cahayasakti Investindo Sukses Tbk",
+      "sector": "Finance",
+      "close": 150,
+      "mcap": 274470007324
+    },
+    {
+      "ticker": "RGAS",
+      "name": "PT Kian Santang Muliatama Tbk",
+      "sector": "Industrial Services",
+      "close": 188,
+      "mcap": 274336010800
+    },
+    {
+      "ticker": "CASH",
+      "name": "PT.Cashlez Worldwide Indonesia Tbk",
+      "sector": "Technology Services",
+      "close": 191,
+      "mcap": 273344968262
+    },
+    {
+      "ticker": "BIPP",
+      "name": "PT Bhuwanatala Indah Permai Tbk Class A",
+      "sector": "Finance",
+      "close": 54,
+      "mcap": 271548149414
+    },
+    {
+      "ticker": "SAFE",
+      "name": "PT Steady Safe Tbk",
+      "sector": "Transportation",
+      "close": 330,
+      "mcap": 270998481444.99997
+    },
+    {
+      "ticker": "IOTF",
+      "name": "PT Sumber Sinergi Makmur Tbk",
+      "sector": "Distribution Services",
+      "close": 51,
+      "mcap": 269805190430.00003
+    },
+    {
+      "ticker": "PTPS",
+      "name": "PT Pulau Subur Tbk",
+      "sector": "Process Industries",
+      "close": 124,
+      "mcap": 268771816406
+    },
+    {
+      "ticker": "ALKA",
+      "name": "PT Alakasa Industrindo, Tbk Class A",
+      "sector": "Non-Energy Minerals",
+      "close": 525,
+      "mcap": 266524161529.99997
+    },
+    {
+      "ticker": "NAIK",
+      "name": "PT Adiwarna Anugerah Abadi Tbk",
+      "sector": "Commercial Services",
+      "close": 80,
+      "mcap": 266353769531
+    },
+    {
+      "ticker": "AMIN",
+      "name": "PT Ateliers Mecaniques D'Indonesie Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 246,
+      "mcap": 265680000000
+    },
+    {
+      "ticker": "HAJJ",
+      "name": "PT Arsy Buana Travelindo Tbk",
+      "sector": "Consumer Services",
+      "close": 106,
+      "mcap": 261663924316
+    },
+    {
+      "ticker": "FUJI",
+      "name": "PT Fuji Finance Indonesia Tbk.",
+      "sector": "Finance",
+      "close": 199,
+      "mcap": 258700000000
+    },
+    {
+      "ticker": "TOSK",
+      "name": "PT Topindo Solusi Komunika Tbk",
+      "sector": "Technology Services",
+      "close": 59,
+      "mcap": 258141363281
+    },
+    {
+      "ticker": "UVCR",
+      "name": "PT Trimegah Karya Pratama Tbk",
+      "sector": "Technology Services",
+      "close": 129,
+      "mcap": 258018691772
+    },
+    {
+      "ticker": "KBAG",
+      "name": "PT Karya Bersama Anugerah Tbk",
+      "sector": "Finance",
+      "close": 36,
+      "mcap": 257400087891
+    },
+    {
+      "ticker": "HRME",
+      "name": "PT Menteng Heritage Realty Tbk",
+      "sector": "Consumer Services",
+      "close": 43,
+      "mcap": 256226250000
+    },
+    {
+      "ticker": "ASHA",
+      "name": "PT Cilacap Samudera Fishing Industry Tbk",
+      "sector": "Process Industries",
+      "close": 51,
+      "mcap": 255000000000
+    },
+    {
+      "ticker": "CGAS",
+      "name": "PT Citra Nusantara Gemilang Tbk",
+      "sector": "Utilities",
+      "close": 143,
+      "mcap": 253324360352
+    },
+    {
+      "ticker": "BAPA",
+      "name": "PT Bekasi Asri Pemula Tbk",
+      "sector": "Consumer Durables",
+      "close": 378,
+      "mcap": 250154535278
+    },
+    {
+      "ticker": "BTON",
+      "name": "PT Betonjaya Manunggal Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 346,
+      "mcap": 249120000000
+    },
+    {
+      "ticker": "EPAC",
+      "name": "PT Megalestari Epack Sentosaraya Tbk",
+      "sector": "Technology Services",
+      "close": 73,
+      "mcap": 241148192871
+    },
+    {
+      "ticker": "KLAS",
+      "name": "PT Pelayaran Kurnia Lautan Semesta Tbk",
+      "sector": "Transportation",
+      "close": 66,
+      "mcap": 240531457031
+    },
+    {
+      "ticker": "DEWI",
+      "name": "PT Dewi Shri Farmindo Tbk",
+      "sector": "Retail Trade",
+      "close": 119,
+      "mcap": 238000000000
+    },
+    {
+      "ticker": "OKAS",
+      "name": "PT Ancora Indonesia Resources Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 100,
+      "mcap": 237344921875
+    },
+    {
+      "ticker": "HILL",
+      "name": "PT Hillcon Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 16,
+      "mcap": 235864000000
+    },
+    {
+      "ticker": "ESTI",
+      "name": "PT Ever Shine Textile Tbk",
+      "sector": "Process Industries",
+      "close": 117,
+      "mcap": 235779422607
+    },
+    {
+      "ticker": "SMLE",
+      "name": "PT Sinergi Multi Lestarindo Tbk",
+      "sector": "Distribution Services",
+      "close": 101,
+      "mcap": 235143460693
+    },
+    {
+      "ticker": "BPTR",
+      "name": "PT Batavia Prosperindo Trans Tbk",
+      "sector": "Finance",
+      "close": 66,
+      "mcap": 233244000000
+    },
+    {
+      "ticker": "SDPC",
+      "name": "PT Millennium Pharmacon International Tbk",
+      "sector": "Distribution Services",
+      "close": 182,
+      "mcap": 231868000000
+    },
+    {
+      "ticker": "LAPD",
+      "name": "PT Leyand International Tbk",
+      "sector": "Utilities",
+      "close": 58,
+      "mcap": 230048305664
+    },
+    {
+      "ticker": "JMAS",
+      "name": "PT Asuransi Jiwa Syariah Jasa Mitra Abadi Tbk",
+      "sector": "Finance",
+      "close": 228,
+      "mcap": 228000000000
+    },
+    {
+      "ticker": "EMDE",
+      "name": "PT Megapolitan Developments Tbk",
+      "sector": "Finance",
+      "close": 68,
+      "mcap": 227800016602
+    },
+    {
+      "ticker": "IKAI",
+      "name": "PT Intikeramik Alamasri Industri Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 17,
+      "mcap": 226198596680
+    },
+    {
+      "ticker": "MEJA",
+      "name": "PT Harta Djaya Karya Tbk",
+      "sector": "Commercial Services",
+      "close": 86,
+      "mcap": 224294970703
+    },
+    {
+      "ticker": "DOSS",
+      "name": "PT Global Sukses Digital Tbk",
+      "sector": "Retail Trade",
+      "close": 130,
+      "mcap": 224250000000
+    },
+    {
+      "ticker": "KREN",
+      "name": "PT Quantum Clovera Investama Tbk",
+      "sector": "Finance",
+      "close": 12,
+      "mcap": 218470101562
+    },
+    {
+      "ticker": "ASJT",
+      "name": "PT Asuransi Jasa Tania Tbk",
+      "sector": "Finance",
+      "close": 156,
+      "mcap": 218400000000
+    },
+    {
+      "ticker": "BINO",
+      "name": "PT Perma Plasindo Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 95,
+      "mcap": 216155012207
+    },
+    {
+      "ticker": "VINS",
+      "name": "PT Victoria Insurance Tbk",
+      "sector": "Finance",
+      "close": 136,
+      "mcap": 211266586914
+    },
+    {
+      "ticker": "AGAR",
+      "name": "PT Asia Sejahtera Mina Tbk",
+      "sector": "Distribution Services",
+      "close": 206,
+      "mcap": 206000000000
+    },
+    {
+      "ticker": "INOV",
+      "name": "PT Inocycle Technology Group Tbk",
+      "sector": "Process Industries",
+      "close": 113,
+      "mcap": 204329091187
+    },
+    {
+      "ticker": "XCID",
+      "name": "DIRE CIPTADANA PROPERTI RITEL INDONESIA",
+      "sector": "Finance",
+      "close": 51,
+      "mcap": 204000000000
+    },
+    {
+      "ticker": "INTA",
+      "name": "PT Intraco Penta Tbk",
+      "sector": "Distribution Services",
+      "close": 61,
+      "mcap": 203980038574
+    },
+    {
+      "ticker": "ASDM",
+      "name": "PT Asuransi Dayin Mitra Tbk",
+      "sector": "Finance",
+      "close": 520,
+      "mcap": 199680000000
+    },
+    {
+      "ticker": "MDRN",
+      "name": "PT Modern Internasional Tbk",
+      "sector": "Retail Trade",
+      "close": 26,
+      "mcap": 198436367188
+    },
+    {
+      "ticker": "PEHA",
+      "name": "PT Phapros Tbk",
+      "sector": "Distribution Services",
+      "close": 236,
+      "mcap": 198240000000
+    },
+    {
+      "ticker": "APII",
+      "name": "PT Arita Prima Indonesia Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 182,
+      "mcap": 195788321777
+    },
+    {
+      "ticker": "PURA",
+      "name": "PT Putra Rajawali Kencana Tbk",
+      "sector": "Transportation",
+      "close": 31,
+      "mcap": 195359865723
+    },
+    {
+      "ticker": "RELF",
+      "name": "PT Graha Mitra Asia Tbk",
+      "sector": "Finance",
+      "close": 34,
+      "mcap": 194746289062
+    },
+    {
+      "ticker": "ACRO",
+      "name": "PT Samcro Hyosung Adilestari Tbk Class A",
+      "sector": "Process Industries",
+      "close": 56,
+      "mcap": 194283345703
+    },
+    {
+      "ticker": "SDMU",
+      "name": "PT Sidomulyo Selaras Tbk",
+      "sector": "Transportation",
+      "close": 85,
+      "mcap": 191308728027
+    },
+    {
+      "ticker": "PUDP",
+      "name": "PT Pudjiadi Prestige Tbk Class A",
+      "sector": "Finance",
+      "close": 290,
+      "mcap": 191144798584
+    },
+    {
+      "ticker": "PTSP",
+      "name": "PT Pioneerindo Gourmet International Tbk",
+      "sector": "Consumer Services",
+      "close": 865,
+      "mcap": 190998918839
+    },
+    {
+      "ticker": "GPSO",
+      "name": "PT Geoprima Solusi Tbk",
+      "sector": "Technology Services",
+      "close": 286,
+      "mcap": 190687968872
+    },
+    {
+      "ticker": "TRUK",
+      "name": "PT Guna Timur Raya Tbk",
+      "sector": "Transportation",
+      "close": 430,
+      "mcap": 187050000000
+    },
+    {
+      "ticker": "MRAT",
+      "name": "PT Mustika Ratu Tbk",
+      "sector": "Distribution Services",
+      "close": 436,
+      "mcap": 186608000000
+    },
+    {
+      "ticker": "ITIC",
+      "name": "PT Indonesian Tobacco Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 198,
+      "mcap": 186262554199
+    },
+    {
+      "ticker": "TAMA",
+      "name": "PT Lancartama Sejati Tbk",
+      "sector": "Consumer Durables",
+      "close": 154,
+      "mcap": 184800112793
+    },
+    {
+      "ticker": "SAGE",
+      "name": "PT Saptausaha Gemilangindah Tbk",
+      "sector": "Finance",
+      "close": 23,
+      "mcap": 184771128906
+    },
+    {
+      "ticker": "NPGF",
+      "name": "PT Nusa Palapa Gemilang Tbk",
+      "sector": "Process Industries",
+      "close": 56,
+      "mcap": 181453207031
+    },
+    {
+      "ticker": "LPPS",
+      "name": "PT Lenox Pasifik InvestamaTbk Class A",
+      "sector": "Finance",
+      "close": 70,
+      "mcap": 181177500000
+    },
+    {
+      "ticker": "POLA",
+      "name": "PT Pool Advista Finance Tbk",
+      "sector": "Finance",
+      "close": 54,
+      "mcap": 180958073730
+    },
+    {
+      "ticker": "ECII",
+      "name": "PT Electronic City Indonesia Tbk",
+      "sector": "Retail Trade",
+      "close": 153,
+      "mcap": 178703514404
+    },
+    {
+      "ticker": "SAPX",
+      "name": "PT Satria Antaran Prima Tbk",
+      "sector": "Transportation",
+      "close": 210,
+      "mcap": 174999995728
+    },
+    {
+      "ticker": "LPIN",
+      "name": "PT Multi Prima Sejahtera Tbk",
+      "sector": "Electronic Technology",
+      "close": 400,
+      "mcap": 170000000000
+    },
+    {
+      "ticker": "ERTX",
+      "name": "PT Eratex Djaja Tbk",
+      "sector": "Process Industries",
+      "close": 132,
+      "mcap": 169823252930
+    },
+    {
+      "ticker": "ZYRX",
+      "name": "PT Zyrexindo Mandiri Buana Tbk",
+      "sector": "Electronic Technology",
+      "close": 127,
+      "mcap": 169333478027
+    },
+    {
+      "ticker": "PTMP",
+      "name": "PT Mitra Pack Tbk",
+      "sector": "Distribution Services",
+      "close": 53,
+      "mcap": 167967597412
+    },
+    {
+      "ticker": "CAKK",
+      "name": "PT Cahayaputra Asa Keramik Tbk",
+      "sector": "Consumer Durables",
+      "close": 136,
+      "mcap": 163648839844
+    },
+    {
+      "ticker": "LION",
+      "name": "PT Lion Metal Works Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 310,
+      "mcap": 161249591675
+    },
+    {
+      "ticker": "OBAT",
+      "name": "PT Brigit Biofarmaka Teknologi Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 238,
+      "mcap": 160561214844
+    },
+    {
+      "ticker": "PAMG",
+      "name": "PT Bima Sakti Pertiwi Tbk",
+      "sector": "Finance",
+      "close": 51,
+      "mcap": 159375000000
+    },
+    {
+      "ticker": "ANDI",
+      "name": "PT Andira Agro Tbk",
+      "sector": "Process Industries",
+      "close": 17,
+      "mcap": 158950000000
+    },
+    {
+      "ticker": "TRJA",
+      "name": "PT Transkon Jaya Tbk",
+      "sector": "Finance",
+      "close": 105,
+      "mcap": 158570994873
+    },
+    {
+      "ticker": "PSDN",
+      "name": "PT Prasidha Aneka Niaga Tbk",
+      "sector": "Process Industries",
+      "close": 110,
+      "mcap": 158400000000
+    },
+    {
+      "ticker": "CINT",
+      "name": "PT Chitose Internasional Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 158,
+      "mcap": 158000000000
+    },
+    {
+      "ticker": "DFAM",
+      "name": "PT Dafam Property Indonesia Tbk",
+      "sector": "Consumer Services",
+      "close": 82,
+      "mcap": 155787938232
+    },
+    {
+      "ticker": "RBMS",
+      "name": "PT Ristia Bintang Mahkotasejati Tbk",
+      "sector": "Consumer Services",
+      "close": 58,
+      "mcap": 154060333496
+    },
+    {
+      "ticker": "HELI",
+      "name": "PT Jaya Trishindo Tbk",
+      "sector": "Transportation",
+      "close": 184,
+      "mcap": 153246675293
+    },
+    {
+      "ticker": "MPIX",
+      "name": "PT Mitra Pedagang Indonesia Tbk",
+      "sector": "Commercial Services",
+      "close": 98,
+      "mcap": 153132273438
+    },
+    {
+      "ticker": "MANG",
+      "name": "PT Manggung Polahraya Tbk",
+      "sector": "Consumer Durables",
+      "close": 40,
+      "mcap": 152504150391
+    },
+    {
+      "ticker": "DKHH",
+      "name": "Pt Cipta Sarana Medika Tbk.",
+      "sector": "Health Services",
+      "close": 59,
+      "mcap": 150468437500
+    },
+    {
+      "ticker": "PTIS",
+      "name": "PT Indo Straits Tbk",
+      "sector": "Transportation",
+      "close": 272,
+      "mcap": 149644957031
+    },
+    {
+      "ticker": "PPGL",
+      "name": "PT Prima Globalindo Logistik Tbk",
+      "sector": "Transportation",
+      "close": 194,
+      "mcap": 149608532000
+    },
+    {
+      "ticker": "FIRE",
+      "name": "PT Alfa Energi Investama Tbk",
+      "sector": "Energy Minerals",
+      "close": 101,
+      "mcap": 148633841431
+    },
+    {
+      "ticker": "WEHA",
+      "name": "PT WEHA Transportasi Indonesia Tbk",
+      "sector": "Transportation",
+      "close": 100,
+      "mcap": 148606848145
+    },
+    {
+      "ticker": "AKSI",
+      "name": "PT Mineral Sumberdaya Mandiri Tbk",
+      "sector": "Finance",
+      "close": 206,
+      "mcap": 148320000000
+    },
+    {
+      "ticker": "FWCT",
+      "name": "PT Wijaya Cahaya Timber Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 75,
+      "mcap": 147225000000
+    },
+    {
+      "ticker": "ENZO",
+      "name": "PT Morenzo Abadi Perkasa Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 68,
+      "mcap": 147053204102
+    },
+    {
+      "ticker": "ESIP",
+      "name": "PT Sinergi Inti Plastindo Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 132,
+      "mcap": 146513909180
+    },
+    {
+      "ticker": "KBLV",
+      "name": "PT First Media Tbk",
+      "sector": "Consumer Services",
+      "close": 84,
+      "mcap": 146342099121
+    },
+    {
+      "ticker": "DIVA",
+      "name": "PT Distribusi Voucher Nusantara Tbk",
+      "sector": "Technology Services",
+      "close": 104,
+      "mcap": 145598717773
+    },
+    {
+      "ticker": "CTTH",
+      "name": "PT Citatah Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 118,
+      "mcap": 145239087158
+    },
+    {
+      "ticker": "NAYZ",
+      "name": "PT Hassana Boga Sejahtera Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 56,
+      "mcap": 142800644000
+    },
+    {
+      "ticker": "MCAS",
+      "name": "PT M Cash Integrasi Tbk",
+      "sector": "Technology Services",
+      "close": 164,
+      "mcap": 142341059326
+    },
+    {
+      "ticker": "ASBI",
+      "name": "PT Asuransi Bintang Tbk",
+      "sector": "Finance",
+      "close": 406,
+      "mcap": 141444908691
+    },
+    {
+      "ticker": "SLIS",
+      "name": "PT Gaya Abadi Sempurna Tbk",
+      "sector": "Distribution Services",
+      "close": 57,
+      "mcap": 140410524170
+    },
+    {
+      "ticker": "RUIS",
+      "name": "PT Radiant Utama Interinsco Tbk",
+      "sector": "Industrial Services",
+      "close": 182,
+      "mcap": 140140000000
+    },
+    {
+      "ticker": "LAND",
+      "name": "PT Trimitra Propertindo Tbk",
+      "sector": "Consumer Durables",
+      "close": 50,
+      "mcap": 139631005859
+    },
+    {
+      "ticker": "WOWS",
+      "name": "PT Ginting Jaya Energi Tbk",
+      "sector": "Industrial Services",
+      "close": 56,
+      "mcap": 138640318359
+    },
+    {
+      "ticker": "LAJU",
+      "name": "PT Jasa Berdikari Logistics Tbk",
+      "sector": "Transportation",
+      "close": 64,
+      "mcap": 137596359375
+    },
+    {
+      "ticker": "COAL",
+      "name": "PT Black Diamond Resources Tbk",
+      "sector": "Energy Minerals",
+      "close": 22,
+      "mcap": 137500000000
+    },
+    {
+      "ticker": "LMPI",
+      "name": "PT Langgeng Makmur Industri Tbk",
+      "sector": "Consumer Durables",
+      "close": 135,
+      "mcap": 136149889526.00002
+    },
+    {
+      "ticker": "AYLS",
+      "name": "PT Arkayana Lestari Grup Tbk",
+      "sector": "Process Industries",
+      "close": 159,
+      "mcap": 135694301331
+    },
+    {
+      "ticker": "NTBK",
+      "name": "PT Nusatama Berkah Tbk",
+      "sector": "Consumer Durables",
+      "close": 50,
+      "mcap": 135003250000
+    },
+    {
+      "ticker": "IPAC",
+      "name": "PT Era Graharealty Tbk",
+      "sector": "Finance",
+      "close": 142,
+      "mcap": 134881331299.00002
+    },
+    {
+      "ticker": "PURI",
+      "name": "PT Puri Global Sukses Tbk",
+      "sector": "Finance",
+      "close": 134,
+      "mcap": 134000000000
+    },
+    {
+      "ticker": "INCI",
+      "name": "PT Intanwijaya Internasional Tbk",
+      "sector": "Process Industries",
+      "close": 645,
+      "mcap": 133938517456
+    },
+    {
+      "ticker": "TAXI",
+      "name": "PT Express Transindo Utama Tbk",
+      "sector": "Transportation",
+      "close": 13,
+      "mcap": 132907416992.00002
+    },
+    {
+      "ticker": "YELO",
+      "name": "PT Yelooo Integra Datanet Tbk",
+      "sector": "Distribution Services",
+      "close": 69,
+      "mcap": 131981434570.00002
+    },
+    {
+      "ticker": "WAPO",
+      "name": "PT Wahana Pronatural Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 105,
+      "mcap": 130296925049
+    },
+    {
+      "ticker": "BAUT",
+      "name": "PT Mitra Angkasa Sejahtera Tbk",
+      "sector": "Distribution Services",
+      "close": 27,
+      "mcap": 129604943848
+    },
+    {
+      "ticker": "OBMD",
+      "name": "PT OBM Drilchem Tbk",
+      "sector": "Process Industries",
+      "close": 160,
+      "mcap": 128958864000
+    },
+    {
+      "ticker": "KOPI",
+      "name": "PT Mitra Energi Persada Tbk",
+      "sector": "Distribution Services",
+      "close": 182,
+      "mcap": 126902532593
+    },
+    {
+      "ticker": "INTD",
+      "name": "PT Inter-Delta Tbk",
+      "sector": "Consumer Durables",
+      "close": 214,
+      "mcap": 126651179565
+    },
+    {
+      "ticker": "WINR",
+      "name": "PT Winner Nusantara Jaya Tbk",
+      "sector": "Finance",
+      "close": 24,
+      "mcap": 125647582031
+    },
+    {
+      "ticker": "ASMI",
+      "name": "PT Asuransi Maximus Graha Persada Tbk",
+      "sector": "Finance",
+      "close": 14,
+      "mcap": 125417318359
+    },
+    {
+      "ticker": "GEMA",
+      "name": "PT Gema Grahasarana Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 78,
+      "mcap": 124800000000
+    },
+    {
+      "ticker": "KARW",
+      "name": "PT Meratus Jasa Prima Tbk",
+      "sector": "Transportation",
+      "close": 212,
+      "mcap": 124476374512
+    },
+    {
+      "ticker": "DSFI",
+      "name": "PT Dharma Samudera Fishing Industries Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 67,
+      "mcap": 124428078369
+    },
+    {
+      "ticker": "SEMA",
+      "name": "PT Semacom Integrated Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 90,
+      "mcap": 121253302002
+    },
+    {
+      "ticker": "MARI",
+      "name": "PT Mahaka Radio Integra Tbk",
+      "sector": "Consumer Services",
+      "close": 23,
+      "mcap": 120810812988
+    },
+    {
+      "ticker": "ABBA",
+      "name": "PT Mahaka Media Tbk",
+      "sector": "Consumer Services",
+      "close": 30,
+      "mcap": 118076784668
+    },
+    {
+      "ticker": "MSKY",
+      "name": "PT MNC Vision Network",
+      "sector": "Communications",
+      "close": 58,
+      "mcap": 115673488037
+    },
+    {
+      "ticker": "FOOD",
+      "name": "PT Sentra Food Indonesia Tbk",
+      "sector": "Distribution Services",
+      "close": 176,
+      "mcap": 114400000000
+    },
+    {
+      "ticker": "ICON",
+      "name": "PT Island Concepts Indonesia Tbk",
+      "sector": "Consumer Services",
+      "close": 104,
+      "mcap": 113334000000
+    },
+    {
+      "ticker": "CANI",
+      "name": "PT Capitol Nusantara Indonesia Tbk",
+      "sector": "Transportation",
+      "close": 135,
+      "mcap": 112514400330
+    },
+    {
+      "ticker": "KUAS",
+      "name": "PT Ace Oldfields Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 86,
+      "mcap": 111181496600
+    },
+    {
+      "ticker": "MERI",
+      "name": "PT Merry Riana Edukasi Tbk",
+      "sector": "Commercial Services",
+      "close": 106,
+      "mcap": 109724039307
+    },
+    {
+      "ticker": "MBTO",
+      "name": "PT Martina Berto Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 102,
+      "mcap": 109140000000
+    },
+    {
+      "ticker": "TMPO",
+      "name": "PT Tempo Inti Media Tbk",
+      "sector": "Consumer Services",
+      "close": 101,
+      "mcap": 106891658447
+    },
+    {
+      "ticker": "MEDS",
+      "name": "PT Hetzer Medical Indonesia Tbk",
+      "sector": "Health Technology",
+      "close": 68,
+      "mcap": 106250000000
+    },
+    {
+      "ticker": "LCKM",
+      "name": "PT LCK Global Kedaton Tbk",
+      "sector": "Industrial Services",
+      "close": 106,
+      "mcap": 106000000000
+    },
+    {
+      "ticker": "SNLK",
+      "name": "PT Sunter Lakeside Hotel Tbk",
+      "sector": "Consumer Services",
+      "close": 228,
+      "mcap": 102600000000
+    },
+    {
+      "ticker": "SBMA",
+      "name": "PT Surya Biru Murni Acetylene Tbk",
+      "sector": "Process Industries",
+      "close": 107,
+      "mcap": 99502117371
+    },
+    {
+      "ticker": "LABA",
+      "name": "PT Green Power Group Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 89,
+      "mcap": 98202819458
+    },
+    {
+      "ticker": "OLIV",
+      "name": "PT Oscar Mitra Sukses Sejahtera Tbk",
+      "sector": "Consumer Durables",
+      "close": 51,
+      "mcap": 96903743400
+    },
+    {
+      "ticker": "CHEM",
+      "name": "PT Chemstar Indonesia Tbk",
+      "sector": "Process Industries",
+      "close": 57,
+      "mcap": 96900832200
+    },
+    {
+      "ticker": "IBFN",
+      "name": "PT Intan Baru Prana Tbk",
+      "sector": "Finance",
+      "close": 63,
+      "mcap": 95591941040
+    },
+    {
+      "ticker": "BAPI",
+      "name": "PT Bhakti Agung Propertindo Tbk",
+      "sector": "Finance",
+      "close": 17,
+      "mcap": 95063659668
+    },
+    {
+      "ticker": "NANO",
+      "name": "PT Nanotech Indonesia Global Tbk",
+      "sector": "Commercial Services",
+      "close": 22,
+      "mcap": 94279689453
+    },
+    {
+      "ticker": "JAYA",
+      "name": "PT Armada Berjaya Trans Tbk",
+      "sector": "Transportation",
+      "close": 118,
+      "mcap": 94222927979
+    },
+    {
+      "ticker": "KIOS",
+      "name": "PT Kioson Komersial Indonesia Tbk",
+      "sector": "Retail Trade",
+      "close": 86,
+      "mcap": 92524221191
+    },
+    {
+      "ticker": "AIMS",
+      "name": "PT Artha Mahiya Investama Tbk",
+      "sector": "Distribution Services",
+      "close": 410,
+      "mcap": 90200000000
+    },
+    {
+      "ticker": "KRYA",
+      "name": "PT Bangun Karya Perkasa Jaya Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 54,
+      "mcap": 89852947998
+    },
+    {
+      "ticker": "NASI",
+      "name": "PT Wahana Inti Makmur Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 111,
+      "mcap": 89621402710
+    },
+    {
+      "ticker": "ISAP",
+      "name": "PT Isra Presisi Indonesia Tbk",
+      "sector": "Producer Manufacturing",
+      "close": 22,
+      "mcap": 88447777344
+    },
+    {
+      "ticker": "OILS",
+      "name": "PT Indo Oil Perkasa Tbk",
+      "sector": "Process Industries",
+      "close": 186,
+      "mcap": 84454518300
+    },
+    {
+      "ticker": "PGLI",
+      "name": "PT Pembangunan Graha Lestari Indah Tbk",
+      "sector": "Consumer Services",
+      "close": 173,
+      "mcap": 84424000000
+    },
+    {
+      "ticker": "INAI",
+      "name": "PT Indal Aluminium Industry Tbk",
+      "sector": "Non-Energy Minerals",
+      "close": 133,
+      "mcap": 84268796753
+    },
+    {
+      "ticker": "ISEA",
+      "name": "PT Indo American Seafoods Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 60,
+      "mcap": 83400805664
+    },
+    {
+      "ticker": "JAST",
+      "name": "PT Jasnita Telekomindo Tbk",
+      "sector": "Communications",
+      "close": 76,
+      "mcap": 82275761230
+    },
+    {
+      "ticker": "BCIP",
+      "name": "PT Bumi Citra Permai Tbk",
+      "sector": "Finance",
+      "close": 56,
+      "mcap": 80075269531
+    },
+    {
+      "ticker": "OPMS",
+      "name": "PT Optima Prima Metal Sinergi Tbk",
+      "sector": "Distribution Services",
+      "close": 97,
+      "mcap": 77757820374
+    },
+    {
+      "ticker": "BATA",
+      "name": "PT Sepatu Bata Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 59,
+      "mcap": 76700000000
+    },
+    {
+      "ticker": "KOIN",
+      "name": "PT Kokoh Inti Arebama Tbk",
+      "sector": "Distribution Services",
+      "close": 78,
+      "mcap": 76505807739
+    },
+    {
+      "ticker": "SMKM",
+      "name": "PT Sumber Mas Konstruksi Tbk",
+      "sector": "Industrial Services",
+      "close": 61,
+      "mcap": 76433000000
+    },
+    {
+      "ticker": "HDIT",
+      "name": "PT Hensel Davest Indonesia Tbk",
+      "sector": "Commercial Services",
+      "close": 50,
+      "mcap": 76233996582
+    },
+    {
+      "ticker": "DEFI",
+      "name": "PT Danasupra Erapacific Tbk",
+      "sector": "Finance",
+      "close": 108,
+      "mcap": 74224799561
+    },
+    {
+      "ticker": "RCCC",
+      "name": "PT Utama Radar Cahaya Tbk",
+      "sector": "Electronic Technology",
+      "close": 93,
+      "mcap": 73237500000
+    },
+    {
+      "ticker": "MPOW",
+      "name": "PT Megapower Makmur Tbk",
+      "sector": "Utilities",
+      "close": 89,
+      "mcap": 72712739258
+    },
+    {
+      "ticker": "INCF",
+      "name": "PT Indo Komoditi Korpora Tbk Class A",
+      "sector": "Producer Manufacturing",
+      "close": 50,
+      "mcap": 71918518066
+    },
+    {
+      "ticker": "MIRA",
+      "name": "PT Mitra International Resources Tbk",
+      "sector": "Industrial Services",
+      "close": 18,
+      "mcap": 71306134277
+    },
+    {
+      "ticker": "RUNS",
+      "name": "PT Global Sukses Solusi Tbk",
+      "sector": "Technology Services",
+      "close": 70,
+      "mcap": 68535810547
+    },
+    {
+      "ticker": "PICO",
+      "name": "PT Pelangi Indah Canindo Tbk",
+      "sector": "Process Industries",
+      "close": 120,
+      "mcap": 68205000000
+    },
+    {
+      "ticker": "LUCK",
+      "name": "PT Sentral Mitra Informatika Tbk",
+      "sector": "Distribution Services",
+      "close": 95,
+      "mcap": 67996215209.99999
+    },
+    {
+      "ticker": "CSMI",
+      "name": "PT Cipta Selera Murni Tbk",
+      "sector": "Consumer Services",
+      "close": 82,
+      "mcap": 66917044922
+    },
+    {
+      "ticker": "LRNA",
+      "name": "PT Eka Sari Lorena Transport Tbk",
+      "sector": "Transportation",
+      "close": 174,
+      "mcap": 60900005310
+    },
+    {
+      "ticker": "IDEA",
+      "name": "PT Idea Indonesia Akademi Tbk",
+      "sector": "Commercial Services",
+      "close": 57,
+      "mcap": 60558937500
+    },
+    {
+      "ticker": "IKAN",
+      "name": "PT Era Mandiri Cemerlang Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 71,
+      "mcap": 59166643555
+    },
+    {
+      "ticker": "TNCA",
+      "name": "PT Trimuda Nuansa Citra Tbk",
+      "sector": "Transportation",
+      "close": 133,
+      "mcap": 56078121948
+    },
+    {
+      "ticker": "KJEN",
+      "name": "PT Krida Jaringan Nusantara Tbk",
+      "sector": "Transportation",
+      "close": 110,
+      "mcap": 55000000000
+    },
+    {
+      "ticker": "TAYS",
+      "name": "PT Jaya Swarasa Agung Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 50,
+      "mcap": 54946002197
+    },
+    {
+      "ticker": "KICI",
+      "name": "PT Kedaung Indah Can Tbk",
+      "sector": "Consumer Durables",
+      "close": 189,
+      "mcap": 52164000000
+    },
+    {
+      "ticker": "RICY",
+      "name": "PT Ricky Putra Globalindo Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 78,
+      "mcap": 50053967285
+    },
+    {
+      "ticker": "DIGI",
+      "name": "PT Arkadia Digital Media Tbk",
+      "sector": "Technology Services",
+      "close": 29,
+      "mcap": 47125000000
+    },
+    {
+      "ticker": "PCAR",
+      "name": "PT Prima Cakrawala Abadi Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 39,
+      "mcap": 45500003174
+    },
+    {
+      "ticker": "ARKA",
+      "name": "PT Arkha Jayanti Persada Tbk",
+      "sector": "Transportation",
+      "close": 22,
+      "mcap": 44000000000
+    },
+    {
+      "ticker": "WIDI",
+      "name": "PT Widiant Jaya Krenindo Tbk",
+      "sector": "Finance",
+      "close": 27,
+      "mcap": 43200853638
+    },
+    {
+      "ticker": "FLMC",
+      "name": "PT Falmaco Nonwoven Industri Tbk",
+      "sector": "Process Industries",
+      "close": 52,
+      "mcap": 40625000000
+    },
+    {
+      "ticker": "SOUL",
+      "name": "PT Mitra Tirta Buwana Tbk",
+      "sector": "Consumer Non-Durables",
+      "close": 37,
+      "mcap": 40053469400
+    },
+    {
+      "ticker": "BMBL",
+      "name": "PT Lavender Bina Cendikia Tbk",
+      "sector": "Commercial Services",
+      "close": 33,
+      "mcap": 33992673000.000004
+    },
+    {
+      "ticker": "PLAN",
+      "name": "PT Planet Properindo Jaya Tbk",
+      "sector": "Consumer Services",
+      "close": 37,
+      "mcap": 33178255005
+    },
+    {
+      "ticker": "HADE",
+      "name": "PT Himalaya Energi Perkasa Tbk",
+      "sector": "Distribution Services",
+      "close": 15,
+      "mcap": 31800000000
+    },
+    {
+      "ticker": "INDX",
+      "name": "PT Tanah Laut Tbk",
+      "sector": "Technology Services",
+      "close": 60,
+      "mcap": 26274816284
+    }
+  ]
+}

@@ -111,6 +111,7 @@ export const SECTOR_META: Record<string, { weight: number; color: string }> = {
   IDXCYCLIC: { weight: 5.5, color: "#06B6D4" },
   IDXPROPERT: { weight: 4.0, color: "#EC4899" },
   IDXHEALTH: { weight: 2.0, color: "#8B5CF6" },
+  IDXAGRI: { weight: 2.5, color: "#84CC16" },
 };
 
 export const KEY_LEVELS_FALLBACK = {

@@ -60,11 +60,15 @@ const marketMapSections = [
   { id: "IDXFINANCE", name: "FINANCE" },
   { id: "IDXBASIC", name: "BASIC MATERIALS" },
   { id: "IDXENERGY", name: "ENERGY" },
-  { id: "IDXHEALTH", name: "HEALTHCARE" },
   { id: "IDXINDUST", name: "INDUSTRIALS" },
-  { id: "IDXCYC", name: "CONSUMER CYCLICAL" },
-  { id: "IDXTECHNOLOGY", name: "TECHNOLOGY" },
-  { id: "IDXLQ45", name: "LQ 45" },
+  { id: "IDXPROPERT", name: "PROPERTIES" },
+  { id: "IDXHEALTH", name: "HEALTHCARE" },
+  { id: "IDXCYCLIC", name: "CONSUMER CYCLICAL" },
+  { id: "IDXNONCYC", name: "NON-CYCLICALS" },
+  { id: "IDXTECHNO", name: "TECHNOLOGY" },
+  { id: "IDXINFRA", name: "INFRASTRUCTURE" },
+  { id: "IDXAGRI", name: "AGRICULTURE" },
+  { id: "IDXTRANS", name: "TRANSPORTATION" },
 ];
 
 function Icon({ type }: { type: string }) {
@@ -165,7 +169,7 @@ export default function Home() {
     };
   }, []);
 
-  const gridSectors = sectors.slice(0, 8);
+  const gridSectors = sectors.slice(0, 12);
   const gridTone = (change: number | null) => change == null || change === 0 ? "text-[#aaa295]/60" : change > 0 ? "text-emerald-400" : "text-red-400";
   const fmtChange = (change: number | null) => {
     if (change == null) return "—";
