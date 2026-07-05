@@ -2,17 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 const TV_URL = "https://scanner.tradingview.com/indonesia/scan";
 
-// Year → TV performance column map + CAGR type
-const YEAR_MAP: Record<number, { col: string; years: number }> = {
-  2026: { col: "Perf.YTD", years: 1 },
-  2025: { col: "Perf.Y", years: 1 },
-  2023: { col: "Perf.3Y", years: 3 },
-  2021: { col: "Perf.5Y", years: 5 },
-  2016: { col: "Perf.10Y", years: 10 },
-  2011: { col: "Perf.15Y", years: 15 },
+// Year → priority-ordered performance columns (fallback cascade for null data)
+const YEAR_FALLBACKS: Record<number, { cols: string[]; label: string; years: number }> = {
+  2026: { cols: ["Perf.YTD", "Perf.Y"], label: "YTD", years: 1 },
+  2025: { cols: ["Perf.Y", "Perf.YTD"], label: "1Y", years: 1 },
+  2023: { cols: ["Perf.3Y", "Perf.5Y", "Perf.10Y"], label: "3Y", years: 3 },
+  2021: { cols: ["Perf.5Y", "Perf.3Y", "Perf.10Y"], label: "5Y", years: 5 },
+  2016: { cols: ["Perf.10Y", "Perf.5Y", "Perf.3Y"], label: "10Y", years: 10 },
+  2011: { cols: ["Perf.15Y", "Perf.10Y", "Perf.5Y"], label: "15Y", years: 15 },
 };
 
-const YEAR_LABELS = Object.keys(YEAR_MAP).map(Number).sort((a, b) => b - a);
+const YEAR_LABELS = Object.keys(YEAR_FALLBACKS).map(Number).sort((a, b) => b - a);
 
 const PERF_COLUMNS = [
   "close",
@@ -104,32 +104,19 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // Find closest available year for backtest
-  const sortedYears = Object.keys(YEAR_MAP).map(Number).sort((a, b) => a - b);
-  let lookupYear = startYear;
-  if (!YEAR_MAP[startYear]) {
-    // Find nearest available start year ≤ user's year
-    for (const y of sortedYears.reverse()) {
-      if (y <= startYear) {
-        lookupYear = y;
-        break;
-      }
-    }
-    if (lookupYear === startYear && !YEAR_MAP[startYear]) {
-      lookupYear = sortedYears[0]; // fallback to oldest
-    }
-  }
+  // Find best year with fallback cascade for null data
+  const lookupYear = startYear;
+  const perfInfo = YEAR_FALLBACKS[startYear] || YEAR_FALLBACKS[2023];
+  const yearLabel = perfInfo.label;
+  const perfYears = perfInfo.years;
 
-  const perfInfo = YEAR_MAP[lookupYear];
-  const perfCol = perfInfo?.col;
-  const perfYears = perfInfo?.years;
-
-  // Compute backtest results per stock
-  const backtestResults = tickers
+  const perStockData = tickers
     .filter((t) => stocks[t])
     .map((t) => {
       const s = stocks[t];
-      const totalReturnPct = perfCol ? s.perf[perfCol] : null;
+      // Try each performance column in priority order, use first non-null
+      const useCol = perfInfo.cols.find((c) => s.perf[c] !== null) || perfInfo.cols[0];
+      const totalReturnPct = s.perf[useCol];
       const capitalGainPct = totalReturnPct;
       const annualReturnPct =
         totalReturnPct !== null && perfYears
@@ -209,7 +196,7 @@ export async function GET(req: NextRequest) {
     });
 
   // Aggregated portfolio (equal weight)
-  const validB = backtestResults.filter((r) => r.totalReturnPct !== null);
+  const validB = perStockData.filter((r) => r.totalReturnPct !== null);
   const avgReturn =
     validB.length > 0
       ? validB.reduce((s, r) => s + (r.totalReturnPct ?? 0), 0) / validB.length
@@ -238,11 +225,12 @@ export async function GET(req: NextRequest) {
   };
 
   return NextResponse.json({
-    availableYears: Object.keys(YEAR_MAP).map(Number).sort((a, b) => b - a),
+    availableYears: Object.keys(YEAR_FALLBACKS).map(Number).sort((a, b) => b - a),
     backtest: {
       startYear: lookupYear,
       periodYears: perfYears,
-      perStock: backtestResults,
+      yearLabel,
+      perStock: perStockData,
       portfolio: portfolioBacktest,
     },
     forecast: {
