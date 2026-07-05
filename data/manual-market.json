@@ -510,10 +510,9 @@
     "month": "Mei"
   },
   "apbn": {
-    "realized": 1580,
-    "target": 3100,
+    "deficit": 180.4,
     "unit": "T",
-    "note": "Realisasi 2026"
+    "note": "Defisit Mei"
   },
   "gdp": {
     "growth": 5.6,
