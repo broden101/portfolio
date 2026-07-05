@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 /* ---------- types ---------- */
 
@@ -11,6 +11,14 @@ interface StockMover {
   net_volume: number;
   total_buy_value: number;
   total_sell_value: number;
+}
+
+interface AggResult {
+  topBuy: StockMover[];
+  topSell: StockMover[];
+  topActive: StockMover[];
+  dateRange: string;
+  days: number;
 }
 
 export interface TopMoverData {
@@ -25,18 +33,31 @@ interface Props {
   live: boolean;
 }
 
+type Period = "1d" | "1w" | "1m";
+
+const PERIODS: { key: Period; label: string }[] = [
+  { key: "1d", label: "1D" },
+  { key: "1w", label: "1W" },
+  { key: "1m", label: "1M" },
+];
+
 /* ---------- helpers ---------- */
 
 function autoScale(val: number): string {
   const abs = Math.abs(val);
   if (abs >= 1e12) return (val / 1e12).toFixed(1) + "T";
-  if (abs >= 1e9) return (val / 1e9).toFixed(1) + "M"; // Indonesian: Miliar
-  if (abs >= 1e6) return (val / 1e6).toFixed(0) + "jt"; // juta
+  if (abs >= 1e9) return (val / 1e9).toFixed(1) + "M";
+  if (abs >= 1e6) return (val / 1e6).toFixed(0) + "jt";
   if (abs >= 1e3) return (val / 1e3).toFixed(0) + "rb";
   return val.toFixed(0);
 }
 
-/* ---------- sub-components ---------- */
+function fmtRupiah(val: number): string {
+  if (val >= 0) return "+Rp" + autoScale(val);
+  return "-Rp" + autoScale(Math.abs(val));
+}
+
+/* ---------- column sub-component ---------- */
 
 interface ColumnDef {
   title: string;
@@ -44,8 +65,8 @@ interface ColumnDef {
   titleClass: string;
   barClass: string;
   items: StockMover[];
-  valueFn: (s: StockMover) => number; // value for density bar
-  labelFn: (s: StockMover) => React.ReactNode; // right-side value label
+  valueFn: (s: StockMover) => number;
+  labelFn: (s: StockMover) => React.ReactNode;
 }
 
 function MoverColumn({ col }: { col: ColumnDef }) {
@@ -54,60 +75,32 @@ function MoverColumn({ col }: { col: ColumnDef }) {
 
   return (
     <div className="flex-1 min-w-0">
-      {/* column header */}
       <h4
         className={`text-[10px] tracking-[0.15em] uppercase ${col.titleClass} font-medium mb-2 flex items-center gap-2`}
       >
-        <span
-          className={`inline-block w-1.5 h-1.5 rounded-full ${col.dotClass}`}
-        />
+        <span className={`inline-block w-1.5 h-1.5 rounded-full ${col.dotClass}`} />
         {col.title}
       </h4>
 
-      {/* rows */}
       {sliced.length === 0 ? (
-        <div className="py-4 text-[#B8AA96]/40 text-[10px] text-center">
-          —
-        </div>
+        <div className="py-4 text-[#B8AA96]/40 text-[10px] text-center">—</div>
       ) : (
         <div className="space-y-0">
           {sliced.map((s, i) => {
             const raw = col.valueFn(s);
             const pct = Math.min((Math.abs(raw) / maxVal) * 100, 100);
-
             return (
-              <div
-                key={s.stock_code}
-                className="flex items-center gap-2 py-1 border-b border-[#2C261E]/30"
-              >
-                {/* rank */}
-                <span className="w-4 text-right text-[10px] text-[#B8AA96]/40 font-mono shrink-0">
-                  {i + 1}
-                </span>
-
-                {/* ticker */}
-                <span className="w-12 text-xs text-[#F4EFE6] font-sans font-medium shrink-0 truncate">
-                  {s.stock_code}
-                </span>
-
-                {/* price */}
+              <div key={s.stock_code} className="flex items-center gap-2 py-1 border-b border-[#2C261E]/30">
+                <span className="w-4 text-right text-[10px] text-[#B8AA96]/40 font-mono shrink-0">{i + 1}</span>
+                <span className="w-12 text-xs text-[#F4EFE6] font-sans font-medium shrink-0 truncate">{s.stock_code}</span>
                 <span className="w-14 text-right text-[10px] text-[#B8AA96]/60 font-mono shrink-0">
-                  {s.close_price > 0
-                    ? s.close_price.toLocaleString("id-ID")
-                    : "—"}
+                  {s.close_price > 0 ? s.close_price.toLocaleString("id-ID") : "—"}
                 </span>
-
-                {/* density bar + value label */}
                 <div className="flex-1 min-w-0 flex items-center gap-1.5">
                   <div className="flex-1 h-1.5 rounded-full bg-[#1E1C18] overflow-hidden">
-                    <div
-                      className={`h-full rounded-full ${col.barClass}`}
-                      style={{ width: `${pct}%` }}
-                    />
+                    <div className={`h-full rounded-full ${col.barClass}`} style={{ width: `${pct}%` }} />
                   </div>
-                  <span
-                    className={`text-[10px] font-mono shrink-0 w-12 text-right ${col.barClass.replace("bg-", "text-")}`}
-                  >
+                  <span className={`text-[10px] font-mono shrink-0 w-14 text-right ${col.barClass.replace("bg-", "text-")}`}>
                     {col.labelFn(s)}
                   </span>
                 </div>
@@ -123,91 +116,135 @@ function MoverColumn({ col }: { col: ColumnDef }) {
 /* ---------- main panel ---------- */
 
 export function TopMoverPanel({ data, live }: Props) {
-  if (!data) {
-    return (
-      <div className="card-luxury p-6">
-        <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium mb-3">
-          Top Mover Saham
-        </h3>
-        <div className="text-center py-8 text-[#B8AA96]/40 text-sm">
-          Data top mover tidak tersedia.
-        </div>
-      </div>
-    );
-  }
+  const [period, setPeriod] = useState<Period>("1d");
+  const [aggData, setAggData] = useState<AggResult | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const columns: ColumnDef[] = [
-    {
-      title: "Beli Asing",
-      dotClass: "bg-emerald-400/60",
-      titleClass: "text-emerald-400/80",
-      barClass: "bg-emerald-400",
-      items: data.topBuy,
-      valueFn: (s) => s.net_value,
-      labelFn: (s) => (
-        <>
-          {s.net_value >= 0 ? "+" : ""}
-          {autoScale(s.net_value)}
-        </>
-      ),
-    },
-    {
-      title: "Jual Asing",
-      dotClass: "bg-red-400/60",
-      titleClass: "text-red-400/80",
-      barClass: "bg-red-400",
-      items: data.topSell,
-      valueFn: (s) => s.net_value,
-      labelFn: (s) => (
-        <>
-          {s.net_value >= 0 ? "+" : ""}
-          {autoScale(s.net_value)}
-        </>
-      ),
-    },
-    {
-      title: "Paling Aktif",
-      dotClass: "bg-[#C6A15B]/60",
-      titleClass: "text-[#C6A15B]/80",
-      barClass: "bg-[#C6A15B]",
-      items: data.topActive,
-      valueFn: (s) => s.total_buy_value + s.total_sell_value,
-      labelFn: (s) => autoScale(s.total_buy_value + s.total_sell_value),
-    },
-  ];
+  const fetchPeriod = useCallback(async (p: Period) => {
+    setLoading(true);
+    try {
+      const r = await fetch(`/api/top-movers?period=${p}`);
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const json: AggResult = await r.json();
+      setAggData(json);
+    } catch {
+      setAggData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (period === "1d") {
+      setAggData(null);
+    } else {
+      fetchPeriod(period);
+    }
+  }, [period, fetchPeriod]);
+
+  // Determine which data to show
+  const displayData = period === "1d" && data
+    ? { topBuy: data.topBuy, topSell: data.topSell, topActive: data.topActive }
+    : aggData;
+
+  const columns: ColumnDef[] = displayData
+    ? [
+        {
+          title: "Beli Asing",
+          dotClass: "bg-emerald-400/60",
+          titleClass: "text-emerald-400/80",
+          barClass: "bg-emerald-400",
+          items: displayData.topBuy,
+          valueFn: (s) => s.net_value,
+          labelFn: (s) => <>{fmtRupiah(s.net_value)}</>,
+        },
+        {
+          title: "Jual Asing",
+          dotClass: "bg-red-400/60",
+          titleClass: "text-red-400/80",
+          barClass: "bg-red-400",
+          items: displayData.topSell,
+          valueFn: (s) => s.net_value,
+          labelFn: (s) => <>{fmtRupiah(s.net_value)}</>,
+        },
+        {
+          title: "Paling Aktif",
+          dotClass: "bg-[#C6A15B]/60",
+          titleClass: "text-[#C6A15B]/80",
+          barClass: "bg-[#C6A15B]",
+          items: displayData.topActive,
+          valueFn: (s) => s.total_buy_value + s.total_sell_value,
+          labelFn: (s) => autoScale(s.total_buy_value + s.total_sell_value),
+        },
+      ]
+    : [];
 
   return (
     <div className="card-luxury p-6 space-y-4">
       {/* header */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium">
-          Top Mover Saham
-        </h3>
-        {data?.date && (
-          <span className="text-[10px] tracking-[0.1em] text-[#B8AA96]/60">
-            {data.date}
-          </span>
-        )}
-        <span
-          className={`flex items-center gap-1.5 text-[10px] tracking-[0.1em] uppercase ${
-            live ? "text-emerald-400/70" : "text-[#B8AA96]/40"
-          }`}
-        >
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center gap-3">
+          <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium">
+            Top Mover Saham
+          </h3>
+          {aggData?.days && aggData.days > 1 && (
+            <span className="text-[9px] text-[#B8AA96]/40">
+              {aggData.days} hari
+            </span>
+          )}
+        </div>
+
+        {/* period tabs */}
+        <div className="flex items-center gap-1">
+          {PERIODS.map((p) => (
+            <button
+              key={p.key}
+              onClick={() => setPeriod(p.key)}
+              className={`px-3 py-1 text-[10px] tracking-[0.15em] uppercase font-medium transition-all ${
+                period === p.key
+                  ? "bg-[#C6A15B]/15 text-[#C6A15B] border border-[#C6A15B]/30"
+                  : "border border-[#2C261E] text-[#B8AA96]/50 hover:text-[#B8AA96]"
+              }`}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          {aggData?.dateRange && period !== "1d" && (
+            <span className="text-[9px] text-[#B8AA96]/40">{aggData.dateRange}</span>
+          )}
+          {data?.date && period === "1d" && (
+            <span className="text-[10px] tracking-[0.1em] text-[#B8AA96]/60">{data.date}</span>
+          )}
           <span
-            className={`w-1.5 h-1.5 rounded-full ${
-              live ? "bg-emerald-400 animate-pulse" : "bg-[#B8AA96]/30"
+            className={`flex items-center gap-1.5 text-[10px] tracking-[0.1em] uppercase ${
+              live ? "text-emerald-400/70" : "text-[#B8AA96]/40"
             }`}
-          />
-          {live ? "Live" : "Offline"}
-        </span>
+          >
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                live ? "bg-emerald-400 animate-pulse" : "bg-[#B8AA96]/30"
+              }`}
+            />
+            {loading ? "Loading" : live ? "Live" : "Offline"}
+          </span>
+        </div>
       </div>
 
-      {/* 3-column grid: side-by-side md+, stacked mobile */}
-      <div className="flex flex-col md:flex-row md:gap-6 gap-4">
-        {columns.map((col) => (
-          <MoverColumn key={col.title} col={col} />
-        ))}
-      </div>
+      {/* 3-column content */}
+      {displayData ? (
+        <div className="flex flex-col md:flex-row md:gap-6 gap-4">
+          {columns.map((col) => (
+            <MoverColumn key={col.title} col={col} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-8 text-[#B8AA96]/40 text-sm">
+          {loading ? "Memuat..." : "Data top mover tidak tersedia."}
+        </div>
+      )}
     </div>
   );
 }
