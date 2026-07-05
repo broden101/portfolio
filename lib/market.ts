@@ -137,7 +137,7 @@ export const IHSG_FALLBACK: Quote = {
 /* ── Fallback manual data ── */
 export const FALLBACK_MANUAL: ManualData = {
   biRate: { value: 5.50, note: "BI RDG" },
-  tradeBalance: { value: 3.32, note: "Surplus" },
+  tradeBalance: { value: 4.03, note: "Surplus Jan-Mei 2026" },
   inflation: { value: 3.08, note: "yoy", month: "Mei" },
   apbn: { realized: 1580, target: 3100, unit: "T", note: "Realisasi 2026" },
   gdp: { growth: 5.6, note: "yoy", quarter: "Q1-2026" },
