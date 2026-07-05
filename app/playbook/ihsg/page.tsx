@@ -164,10 +164,10 @@ export default function IHSGDashboard() {
       { label: "IHSG", value: fmtNum(ihsg.close), change: fmtPct(ihsg.change), up: ihsgUp, note: ihsg.perfYTD != null ? `YTD ${fmtPct(ihsg.perfYTD)}` : "Komposit" },
       { label: "USD/IDR", value: usdIdr?.close != null ? fmtNum(usdIdr.close) : "—", change: usdIdr?.change != null ? fmtPct(usdIdr.change) : "", up: (usdIdr?.change ?? 0) >= 0, note: "Spot" },
       { label: "BI Rate", value: `${(manual.biRate?.value ?? 5.50).toFixed(2)}%`, change: "Otomatis", up: true, note: manual.biRate?.note ?? "" },
-      { label: "Inflasi", value: `${(manual.inflation?.value ?? 1.5).toFixed(1)}%`, change: manual.inflation?.note ?? "yoy", up: (manual.inflation?.value ?? 0) > 0, note: manual.inflation?.month ? `${manual.inflation.month} (BPS)` : "BPS" },
+      { label: "Yield SBN 10Th", value: `${(manual.bondYield10y?.value ?? 6.85).toFixed(2)}%`, change: manual.bondYield10y?.change != null ? `${manual.bondYield10y.change >= 0 ? "+" : ""}${manual.bondYield10y.change.toFixed(2)}%` : "", up: (manual.bondYield10y?.change ?? 0) >= 0, note: manual.bondYield10y?.note ?? "SBN FR" },
       { label: "APBN", value: `Rp${(manual.apbn?.realized ?? 1580).toFixed(0)}${manual.apbn?.unit ?? "T"}`, change: `vs target Rp${(manual.apbn?.target ?? 3100).toFixed(0)}${manual.apbn?.unit ?? "T"}`, up: false, note: manual.apbn?.note ?? "" },
-      { label: "GDP", value: `${(manual.gdp?.growth ?? 5.1).toFixed(1)}%`, change: manual.gdp?.note ?? "yoy", up: true, note: manual.gdp?.quarter ?? "Q1-2026" },
-      { label: "EIDO", value: data?.eido?.close != null ? `$${fmtNum(data.eido.close, 2)}` : "—", change: fmtPct(data?.eido?.change), up: (data?.eido?.change ?? 0) >= 0, note: "iShares MSCI Indonesia" },
+      { label: "GDP", value: `${(manual.gdp?.growth ?? 5.6).toFixed(1)}%`, change: manual.gdp?.note ?? "yoy", up: true, note: manual.gdp?.quarter ?? "Q1-2026" },
+      { label: "Inflasi", value: `${(manual.inflation?.value ?? 3.08).toFixed(2)}%`, change: manual.inflation?.note ?? "yoy", up: (manual.inflation?.value ?? 0) > 0, note: manual.inflation?.month ? `${manual.inflation.month} (BPS)` : "BPS" },
       { label: "Neraca Dagang", value: `$${(manual.tradeBalance?.value ?? 3.32).toFixed(2)}B`, change: manual.tradeBalance?.note ?? "", up: (manual.tradeBalance?.value ?? 3.32) >= 0, note: "Manual" },
     ];
   }, [data, ihsg, ihsgUp, manual]);

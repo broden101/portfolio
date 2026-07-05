@@ -506,7 +506,7 @@
     "fetchedAt": "2026-07-03T11:00:37.679093+00:00"
   },
   "inflation": {
-    "value": 1.5,
+    "value": 3.08,
     "note": "yoy",
     "month": "Mei"
   },
@@ -517,8 +517,13 @@
     "note": "Realisasi 2026"
   },
   "gdp": {
-    "growth": 5.1,
+    "growth": 5.6,
     "note": "yoy",
     "quarter": "Q1-2026"
+  },
+  "bondYield10y": {
+    "value": 6.85,
+    "change": -0.02,
+    "note": "SBN FR"
   }
 }

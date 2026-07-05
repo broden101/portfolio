@@ -79,6 +79,7 @@ export interface ManualData {
   inflation?: { value: number; note: string; month?: string };
   apbn?: { realized: number; target: number; unit: string; note?: string };
   gdp?: { growth: number; note: string; quarter?: string };
+  bondYield10y?: { value: number; change?: number; note?: string };
 }
 
 export interface MarketData {
@@ -137,9 +138,10 @@ export const IHSG_FALLBACK: Quote = {
 export const FALLBACK_MANUAL: ManualData = {
   biRate: { value: 5.50, note: "BI RDG" },
   tradeBalance: { value: 3.32, note: "Surplus" },
-  inflation: { value: 1.5, note: "yoy", month: "Mei" },
+  inflation: { value: 3.08, note: "yoy", month: "Mei" },
   apbn: { realized: 1580, target: 3100, unit: "T", note: "Realisasi 2026" },
-  gdp: { growth: 5.1, note: "yoy", quarter: "Q1-2026" },
+  gdp: { growth: 5.6, note: "yoy", quarter: "Q1-2026" },
+  bondYield10y: { value: 6.85, change: -0.02, note: "SBN FR" },
 };
 
 /* ── Formatting helpers ── */
