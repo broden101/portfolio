@@ -166,9 +166,9 @@ export default function IHSGDashboard() {
       { label: "BI Rate", value: `${(manual.biRate?.value ?? 5.50).toFixed(2)}%`, change: "Otomatis", up: true, note: manual.biRate?.note ?? "" },
       { label: "Yield SBN 10Th", value: `${(manual.bondYield10y?.value ?? 6.85).toFixed(2)}%`, change: manual.bondYield10y?.change != null ? `${manual.bondYield10y.change >= 0 ? "+" : ""}${manual.bondYield10y.change.toFixed(2)}%` : "", up: (manual.bondYield10y?.change ?? 0) >= 0, note: manual.bondYield10y?.note ?? "SBN FR" },
       { label: "APBN", value: `Rp${(manual.apbn?.belanja ?? 1365.4).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"}`, change: "", up: false, note: manual.apbn?.note ?? "Mei", detail: { lines: [
-        { label: "Pendapatan", value: `Rp${(manual.apbn?.pendapatan ?? 1185.0).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"}`, up: true },
-        { label: "Belanja", value: `Rp${(manual.apbn?.belanja ?? 1365.4).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"}`, up: false },
-        { label: "APBN", value: `(Rp${(manual.apbn?.deficit ?? 180.4).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"})`, up: false },
+        { label: "Pendapatan", value: `Rp${(manual.apbn?.pendapatan ?? 1185.0).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"} / Rp${(manual.apbn?.pendapatanTarget ?? 3153.6).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"} (Target)`, up: true },
+        { label: "Belanja", value: `Rp${(manual.apbn?.belanja ?? 1365.4).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"} / Rp${(manual.apbn?.belanjaTarget ?? 3842.7).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"} (Target)`, up: false },
+        { label: "APBN", value: `(Rp${(manual.apbn?.deficit ?? 180.4).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"}) / (Rp${(manual.apbn?.deficitTarget ?? 689.0).toFixed(1).replace('.',',')}${manual.apbn?.unit ?? "T"}) (Target)`, up: false },
       ] } },
       { label: "GDP", value: `${(manual.gdp?.growth ?? 5.6).toFixed(1)}%`, change: manual.gdp?.note ?? "yoy", up: true, note: manual.gdp?.quarter ?? "Q1-2026" },
       { label: "Inflasi", value: `${(manual.inflation?.value ?? 3.08).toFixed(2)}%`, change: manual.inflation?.note ?? "yoy", up: (manual.inflation?.value ?? 0) > 0, note: manual.inflation?.month ? `${manual.inflation.month} (BPS)` : "BPS" },

@@ -244,7 +244,7 @@ export async function GET() {
       biRate: manualData?.biRate ?? { value: 5.50, note: "BI RDG" },
       tradeBalance: manualData?.tradeBalance ?? { value: 4.03, note: "Surplus Jan-Mei 2026" },
       inflation: manualData?.inflation ?? { value: 3.08, note: "yoy", month: "Mei" },
-      apbn: manualData?.apbn ?? { pendapatan: 1185.0, belanja: 1365.4, deficit: 180.4, unit: "T", note: "Mei" },
+      apbn: manualData?.apbn ?? { pendapatan: 1185.0, pendapatanTarget: 3153.6, belanja: 1365.4, belanjaTarget: 3842.7, deficit: 180.4, deficitTarget: 689.0, unit: "T", note: "Mei" },
       gdp: manualData?.gdp ?? { growth: 5.6, note: "yoy", quarter: "Q1-2026" },
       bondYield10y: manualData?.bondYield10y ?? { value: 6.85, change: -0.02, note: "SBN FR" },
     };
