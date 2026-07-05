@@ -352,7 +352,7 @@ export default function IHSGDashboard() {
               return <>
                 <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-1">US</div>
                 {["SPX","IXIC","DJI","DXY","VIX"].map(k => row(k === "SPX" ? "S&P 500" : k === "IXIC" ? "Nasdaq" : k === "DJI" ? "Dow Jones" : k, q(k), k === "DXY" ? n=>n.toFixed(2) : k === "VIX" ? n=>n.toFixed(2) : usFmt))}
-                {(() => { const inf = manual.inflation; if (!inf) return null; const up = (inf.value ?? 0) >= 0; return <div key="Inflasi" className="flex justify-between py-1.5 border-b border-[#2C261E]/30"><span className="text-[#B8AA96]/70 text-[11px]">Inflasi BPS Bulanan</span><span className="text-[11px] font-mono"><span className="text-[#F4EFE6]">{inf.value?.toFixed(1)}%</span><span className={`ml-1.5 ${up ? "text-emerald-400" : "text-red-400"}`}>{inf.month ?? ""}</span></span></div>; })()}
+                {(() => { const e = q("AMEX_EIDO") ?? data?.eido; return row("EIDO", e, n=>n.toFixed(2)); })()}
                 <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">ASIA</div>
                 {[
                   ["NI225","Nikkei 225"],
