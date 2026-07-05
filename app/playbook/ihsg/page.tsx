@@ -352,6 +352,7 @@ export default function IHSGDashboard() {
               return <>
                 <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-1">US</div>
                 {["SPX","IXIC","DJI","DXY","VIX"].map(k => row(k === "SPX" ? "S&P 500" : k === "IXIC" ? "Nasdaq" : k === "DJI" ? "Dow Jones" : k, q(k), k === "DXY" ? n=>n.toFixed(2) : k === "VIX" ? n=>n.toFixed(2) : usFmt))}
+                {(() => { const e = q("AMEX_EIDO") ?? data?.eido; return row("EIDO", e, n=>n.toFixed(2)); })()}
                 <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">ASIA</div>
                 {[
                   ["NI225","Nikkei 225"],
