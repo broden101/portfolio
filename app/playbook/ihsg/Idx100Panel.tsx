@@ -156,7 +156,7 @@ export function Idx100Panel() {
       </h3>
 
       {/* Day */}
-      <details className="group border-b border-[#2C261E]/30 pb-3 mb-3">
+      <details open className="group border-b border-[#2C261E]/30 pb-3 mb-3">
         <summary className="flex items-center justify-between cursor-pointer text-[11px] text-[#B8AA96]/70 hover:text-[#B8AA96] py-1.5">
           <span>1 Hari</span>
           <div className="flex items-center gap-2">
