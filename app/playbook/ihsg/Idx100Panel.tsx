@@ -156,25 +156,39 @@ export function Idx100Panel() {
       </h3>
 
       {/* Day */}
-      <div className="border-b border-[#2C261E]/30 pb-3 mb-3">
-        <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-2">1 Hari</div>
-        <div className="grid grid-cols-3 gap-2">
-          {[
-            { label: "Rata-rata", value: sum.day.avg, up: sum.day.avg >= 0 },
-            { label: "Naik", value: sum.day.up, up: true },
-            { label: "Turun", value: sum.day.down, up: false },
-          ].map((x) => (
-            <div key={x.label} className="border border-[#2C261E] p-2 text-center">
-              <div className="text-[#B8AA96]/40 text-[8px] tracking-[0.15em] uppercase">{x.label}</div>
-              <div className={`text-xs font-mono font-medium ${x.up ? "text-emerald-400" : "text-red-400"}`}>
-                {typeof x.value === "number" && x.label === "Rata-rata"
-                  ? `${x.value >= 0 ? "+" : ""}${x.value.toFixed(2)}%`
-                  : x.value}
+      <details className="group border-b border-[#2C261E]/30 pb-3 mb-3">
+        <summary className="flex items-center justify-between cursor-pointer text-[11px] text-[#B8AA96]/70 hover:text-[#B8AA96] py-1.5">
+          <span>1 Hari</span>
+          <div className="flex items-center gap-2">
+            <span className={`text-[10px] font-mono ${sum.day.avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+              {sum.day.up} ▲ / {sum.day.down} ▼
+            </span>
+            <span className={`text-xs font-mono font-medium ${sum.day.avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+              {sum.day.avg >= 0 ? "+" : ""}{sum.day.avg.toFixed(2)}%
+            </span>
+          </div>
+        </summary>
+        <div className="flex gap-4 mt-2 mb-2">
+          <div className="flex-1">
+            <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Gainers</div>
+            {sum.day.top.map((st) => (
+              <div key={st.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
+                <span className="text-[#F4EFE6]">{st.ticker}</span>
+                <span className="text-emerald-400">{fmtPct(st.perfDay)}</span>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <div className="flex-1">
+            <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Losers</div>
+            {sum.day.bot.map((st) => (
+              <div key={st.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
+                <span className="text-[#F4EFE6]">{st.ticker}</span>
+                <span className="text-red-400">{fmtPct(st.perfDay)}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </details>
 
       {/* Week + Month rows */}
       <div className="space-y-1">
