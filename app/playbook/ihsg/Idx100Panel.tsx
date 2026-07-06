@@ -42,10 +42,10 @@ export function Idx100Panel() {
       const avg = arr.reduce((a, s) => a + (s[key] ?? 0), 0) / arr.length;
       const top = [...arr]
         .sort((a, b) => (b[key] ?? -999) - (a[key] ?? -999))
-        .slice(0, 5);
+        .slice(0, 10);
       const bot = [...arr]
         .sort((a, b) => (a[key] ?? 999) - (b[key] ?? 999))
-        .slice(0, 5);
+        .slice(0, 10);
       return { up, down, avg, top, bot };
     };
     return { day: fn(d, "perfDay"), week: fn(w, "perfWeek"), month: fn(m, "perf1M") };
