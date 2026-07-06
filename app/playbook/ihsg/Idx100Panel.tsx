@@ -6,13 +6,20 @@ import { EmptyState, SourceNote } from "@/components/DataState";
 interface StockRow {
   ticker: string;
   name: string;
+  perfDay: number | null;
   perfWeek: number | null;
   perf1M: number | null;
+}
+
+function fmtPct(v: number | null): string {
+  if (v == null) return "—";
+  return `${v >= 0 ? "+" : ""}${v.toFixed(2)}%`;
 }
 
 export function Idx100Panel() {
   const [stocks, setStocks] = useState<StockRow[] | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showFullDay, setShowFullDay] = useState(false);
   const [showFullWeek, setShowFullWeek] = useState(false);
   const [showFullMonth, setShowFullMonth] = useState(false);
 
@@ -26,9 +33,10 @@ export function Idx100Panel() {
 
   const sum = useMemo(() => {
     if (!stocks || stocks.length === 0) return null;
+    const d = stocks.filter((s) => s.perfDay != null);
     const w = stocks.filter((s) => s.perfWeek != null);
     const m = stocks.filter((s) => s.perf1M != null);
-    const fn = (arr: StockRow[], key: "perfWeek" | "perf1M") => {
+    const fn = (arr: StockRow[], key: "perfDay" | "perfWeek" | "perf1M") => {
       const up = arr.filter((s) => (s[key] ?? 0) >= 0).length;
       const down = arr.filter((s) => (s[key] ?? 0) < 0).length;
       const avg = arr.reduce((a, s) => a + (s[key] ?? 0), 0) / arr.length;
@@ -40,7 +48,7 @@ export function Idx100Panel() {
         .slice(0, 5);
       return { up, down, avg, top, bot };
     };
-    return { week: fn(w, "perfWeek"), month: fn(m, "perf1M") };
+    return { day: fn(d, "perfDay"), week: fn(w, "perfWeek"), month: fn(m, "perf1M") };
   }, [stocks]);
 
   if (loading)
@@ -68,121 +76,146 @@ export function Idx100Panel() {
       </div>
     );
 
+  const renderSection = (
+    label: string,
+    data: { up: number; down: number; avg: number; top: StockRow[]; bot: StockRow[] },
+    key: "perfDay" | "perfWeek" | "perf1M",
+    showFull: boolean,
+    setShowFull: (v: boolean) => void
+  ) => (
+    <div className="mb-4 last:mb-0">
+      {/* Summary card */}
+      <div className="grid grid-cols-3 gap-2 mb-2">
+        <div className="border border-[#2C261E] p-2 text-center">
+          <div className="text-[#B8AA96]/40 text-[8px] tracking-[0.15em] uppercase">{label}</div>
+          <div className={`text-xs font-mono font-medium ${data.avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+            {data.avg >= 0 ? "+" : ""}{data.avg.toFixed(2)}%
+          </div>
+        </div>
+        <div className="border border-[#2C261E] p-2 text-center">
+          <div className="text-[#B8AA96]/40 text-[8px] tracking-[0.15em] uppercase">Naik</div>
+          <div className="text-xs font-mono text-emerald-400">{data.up}</div>
+        </div>
+        <div className="border border-[#2C261E] p-2 text-center">
+          <div className="text-[#B8AA96]/40 text-[8px] tracking-[0.15em] uppercase">Turun</div>
+          <div className="text-xs font-mono text-red-400">{data.down}</div>
+        </div>
+      </div>
+
+      {/* Top / Bottom rows */}
+      <div className="flex gap-4">
+        <div className="flex-1">
+          <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Gainers</div>
+          {data.top.map((s) => (
+            <div key={s.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
+              <span className="text-[#F4EFE6]">{s.ticker}</span>
+              <span className="text-emerald-400">{fmtPct(s[key])}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex-1">
+          <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Losers</div>
+          {data.bot.map((s) => (
+            <div key={s.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
+              <span className="text-[#F4EFE6]">{s.ticker}</span>
+              <span className="text-red-400">{fmtPct(s[key])}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button
+        onClick={() => setShowFull(!showFull)}
+        className="mt-2 w-full flex items-center justify-center gap-1 text-[9px] tracking-[0.12em] uppercase text-[#C6A15B]/60 hover:text-[#C6A15B] transition-colors py-1"
+      >
+        <span>{showFull ? "▲" : "▼"}</span>
+        {showFull ? "Sembunyikan Semua" : "Lihat Semua"}
+      </button>
+
+      {showFull && (
+        <div className="mt-2 border border-[#2C261E] p-2 max-h-[200px] overflow-y-auto">
+          <div className="flex justify-between text-[8px] tracking-wide text-[#B8AA96]/30 uppercase mb-1 px-1">
+            <span>Saham</span>
+            <span>{label}</span>
+          </div>
+          {[...data.top, ...data.bot].map((s) => (
+            <div key={s.ticker} className="flex justify-between py-1 px-1 border-t border-[#2C261E]/40 text-[10px] font-mono">
+              <span className="text-[#B8AA96]/50">{s.ticker}</span>
+              <span className={`${(s[key] ?? 0) >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fmtPct(s[key])}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <div className="card-luxury p-6">
       <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">
         Performa IDX 100
       </h3>
 
-      {/* Summary cards */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
-        {[
-          { label: "1 Minggu", data: sum.week },
-          { label: "1 Bulan", data: sum.month },
-        ].map((s) => (
-          <div key={s.label} className="border border-[#2C261E] p-3 text-center">
-            <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{s.label}</div>
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <span className="text-emerald-400 text-[11px] font-mono">{s.data.up}▲</span>
-              <span className="text-[#B8AA96]/20 text-[9px]">/</span>
-              <span className="text-red-400 text-[11px] font-mono">{s.data.down}▼</span>
+      {/* Day */}
+      <div className="border-b border-[#2C261E]/30 pb-3 mb-3">
+        <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-2">1 Hari</div>
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            { label: "Rata-rata", value: sum.day.avg, up: sum.day.avg >= 0 },
+            { label: "Naik", value: sum.day.up, up: true },
+            { label: "Turun", value: sum.day.down, up: false },
+          ].map((x) => (
+            <div key={x.label} className="border border-[#2C261E] p-2 text-center">
+              <div className="text-[#B8AA96]/40 text-[8px] tracking-[0.15em] uppercase">{x.label}</div>
+              <div className={`text-xs font-mono font-medium ${x.up ? "text-emerald-400" : "text-red-400"}`}>
+                {typeof x.value === "number" && x.label === "Rata-rata"
+                  ? `${x.value >= 0 ? "+" : ""}${x.value.toFixed(2)}%`
+                  : x.value}
+              </div>
             </div>
-            <div className={`text-xs font-mono font-medium ${s.data.avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-              {s.data.avg >= 0 ? "+" : ""}{s.data.avg.toFixed(2)}%
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* Top movers */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* 1 Minggu */}
-        <div>
-          <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Top Gainers (1Mgg)</div>
-          <div className="space-y-1">
-            {sum.week.top.map((s) => (
-              <div key={s.ticker} className="flex justify-between items-center">
-                <span className="text-[#F4EFE6] text-[11px] font-mono">{s.ticker}</span>
-                <span className="text-emerald-400 text-[10px] font-mono">+{s.perfWeek!.toFixed(2)}%</span>
+      {/* Week + Month rows */}
+      <div className="space-y-1">
+        {[
+          { label: "1 Minggu", data: sum.week, key: "perfWeek" as const, show: showFullWeek, set: setShowFullWeek },
+          { label: "1 Bulan", data: sum.month, key: "perf1M" as const, show: showFullMonth, set: setShowFullMonth },
+        ].map((s) => (
+          <details key={s.label} className="group">
+            <summary className="flex items-center justify-between cursor-pointer text-[11px] text-[#B8AA96]/70 hover:text-[#B8AA96] py-1.5">
+              <span>{s.label}</span>
+              <div className="flex items-center gap-2">
+                <span className={`text-[10px] font-mono ${s.data.avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                  {s.data.up} ▲ / {s.data.down} ▼
+                </span>
+                <span className={`text-xs font-mono font-medium ${s.data.avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                  {s.data.avg >= 0 ? "+" : ""}{s.data.avg.toFixed(2)}%
+                </span>
               </div>
-            ))}
-          </div>
-          <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2 mt-3">Top Losers (1Mgg)</div>
-          <div className="space-y-1">
-            {sum.week.bot.map((s) => (
-              <div key={s.ticker} className="flex justify-between items-center">
-                <span className="text-[#F4EFE6] text-[11px] font-mono">{s.ticker}</span>
-                <span className="text-red-400 text-[10px] font-mono">{s.perfWeek!.toFixed(2)}%</span>
-              </div>
-            ))}
-          </div>
-          <button
-            onClick={() => setShowFullWeek((v) => !v)}
-            className="mt-2 w-full flex items-center justify-center gap-1.5 text-[9px] tracking-[0.1em] uppercase text-[#C6A15B]/50 hover:text-[#C6A15B] transition-colors py-1 border-t border-[#2C261E]/40"
-          >
-            {showFullWeek ? "▲ Sembunyikan" : "▼ Lihat Semua"}
-          </button>
-          {showFullWeek && (
-            <div className="mt-2 max-h-[300px] overflow-y-auto">
-              {stocks!.filter((s) => s.perfWeek != null).sort((a, b) => b.perfWeek! - a.perfWeek!).map((s, i) => {
-                const v = s.perfWeek!;
-                return (
-                  <div key={s.ticker} className={`flex justify-between items-center py-1 px-1 ${i % 2 === 0 ? "bg-[#2C261E]/20" : ""}`}>
-                    <span className="text-[#B8AA96]/40 text-[9px] w-5 text-right mr-2">{i + 1}</span>
-                    <span className="text-[#F4EFE6] text-[11px] font-mono flex-1">{s.ticker}</span>
-                    <span className={`text-[10px] font-mono ${v >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                      {v >= 0 ? "+" : ""}{v.toFixed(2)}%
-                    </span>
+            </summary>
+            <div className="flex gap-4 mt-2 mb-2">
+              <div className="flex-1">
+                <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Gainers</div>
+                {s.data.top.map((st) => (
+                  <div key={st.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
+                    <span className="text-[#F4EFE6]">{st.ticker}</span>
+                    <span className="text-emerald-400">{fmtPct(st[s.key])}</span>
                   </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* 1 Bulan */}
-        <div>
-          <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Top Gainers (1Bln)</div>
-          <div className="space-y-1">
-            {sum.month.top.map((s) => (
-              <div key={s.ticker} className="flex justify-between items-center">
-                <span className="text-[#F4EFE6] text-[11px] font-mono">{s.ticker}</span>
-                <span className="text-emerald-400 text-[10px] font-mono">+{s.perf1M!.toFixed(2)}%</span>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2 mt-3">Top Losers (1Bln)</div>
-          <div className="space-y-1">
-            {sum.month.bot.map((s) => (
-              <div key={s.ticker} className="flex justify-between items-center">
-                <span className="text-[#F4EFE6] text-[11px] font-mono">{s.ticker}</span>
-                <span className="text-red-400 text-[10px] font-mono">{s.perf1M!.toFixed(2)}%</span>
-              </div>
-            ))}
-          </div>
-          <button
-            onClick={() => setShowFullMonth((v) => !v)}
-            className="mt-2 w-full flex items-center justify-center gap-1.5 text-[9px] tracking-[0.1em] uppercase text-[#C6A15B]/50 hover:text-[#C6A15B] transition-colors py-1 border-t border-[#2C261E]/40"
-          >
-            {showFullMonth ? "▲ Sembunyikan" : "▼ Lihat Semua"}
-          </button>
-          {showFullMonth && (
-            <div className="mt-2 max-h-[300px] overflow-y-auto">
-              {stocks!.filter((s) => s.perf1M != null).sort((a, b) => b.perf1M! - a.perf1M!).map((s, i) => {
-                const v = s.perf1M!;
-                return (
-                  <div key={s.ticker} className={`flex justify-between items-center py-1 px-1 ${i % 2 === 0 ? "bg-[#2C261E]/20" : ""}`}>
-                    <span className="text-[#B8AA96]/40 text-[9px] w-5 text-right mr-2">{i + 1}</span>
-                    <span className="text-[#F4EFE6] text-[11px] font-mono flex-1">{s.ticker}</span>
-                    <span className={`text-[10px] font-mono ${v >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                      {v >= 0 ? "+" : ""}{v.toFixed(2)}%
-                    </span>
+              <div className="flex-1">
+                <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Losers</div>
+                {s.data.bot.map((st) => (
+                  <div key={st.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
+                    <span className="text-[#F4EFE6]">{st.ticker}</span>
+                    <span className="text-red-400">{fmtPct(st[s.key])}</span>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
-          )}
-        </div>
+          </details>
+        ))}
       </div>
     </div>
   );
