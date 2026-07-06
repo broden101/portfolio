@@ -591,7 +591,7 @@ export default function IHSGDashboard() {
                       const maxAbs = Math.max(...flowHistory.slice(-30).map(x => Math.abs(x.dailyNet)), 1);
                       const h = Math.min(Math.abs(d.dailyNet) / maxAbs * 100, 100);
                       return (
-                        <div key={i} className="flex-1 flex items-end justify-center" title={`${d.date}: ${fmtMiliar(d.dailyNet)}`}>
+                        <div key={i} className="flex-1 flex items-end justify-center" title={`${d.date}: ${fmtMiliar(d.dailyNet / 1000)}`}>
                           <div
                             className={`w-full ${d.dailyNet >= 0 ? "bg-emerald-400/60" : "bg-red-400/60"}`}
                             style={{ height: `${Math.max(h, 2)}%` }}
