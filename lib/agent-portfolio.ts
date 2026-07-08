@@ -1,6 +1,7 @@
 // Agent Portfolio – Virtual trading simulator
 // Each agent starts with Rp 100 juta, max 4 positions @ Rp 25 jt each.
 // Rules: CL -3%, TP +4% (middle of 3-5% range).
+// Agents use learned params from agent-learning when available.
 
 export interface AgentHolding {
   ticker: string;
@@ -20,6 +21,16 @@ export interface AgentTrade {
   pnl?: number;       // realized P&L for sells (IDR)
 }
 
+export interface LearnedParams {
+  clPct: number;
+  tpPct: number;
+  positionSizePct: number;
+  maxPositions: number;
+  minVolRatio: number;
+  minRsi: number;
+  maxRsi: number;
+}
+
 export interface AgentState {
   name: string;
   avatar: string;     // emoji
@@ -28,6 +39,8 @@ export interface AgentState {
   cash: number;       // available cash
   holdings: AgentHolding[];
   trades: AgentTrade[];
+  learnedParams?: LearnedParams;
+  evolutionGeneration?: number;
 }
 
 export interface PortfolioState {
@@ -56,6 +69,7 @@ function createInitial(): PortfolioState {
       cash: INITIAL_CAPITAL,
       holdings: [],
       trades: [],
+      evolutionGeneration: 0,
     },
     dondon: {
       name: "Dondon",
@@ -65,6 +79,7 @@ function createInitial(): PortfolioState {
       cash: INITIAL_CAPITAL,
       holdings: [],
       trades: [],
+      evolutionGeneration: 0,
     },
     ragaCC: {
       name: "ragaCC",
@@ -74,6 +89,7 @@ function createInitial(): PortfolioState {
       cash: INITIAL_CAPITAL,
       holdings: [],
       trades: [],
+      evolutionGeneration: 0,
     },
     lastRun: null,
   };
@@ -86,7 +102,6 @@ export function loadPortfolio(): PortfolioState {
   if (!raw) return createInitial();
   try {
     const parsed = JSON.parse(raw) as PortfolioState;
-    // Sanity: ensure all 3 agents exist
     if (!parsed.bertot || !parsed.dondon || !parsed.ragaCC) return createInitial();
     return parsed;
   } catch {
@@ -106,12 +121,6 @@ export function resetPortfolio(): PortfolioState {
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────
-function calcLots(price: number): number {
-  if (price <= 0) return 0;
-  const shares = Math.floor(POSITION_SIZE / (price * 100)) * 100;
-  return shares / 100;
-}
-
 function formatIDR(val: number): string {
   if (Math.abs(val) >= 1e12) return `Rp${(val / 1e12).toFixed(2)}T`;
   if (Math.abs(val) >= 1e9) return `Rp${(val / 1e9).toFixed(2)}M`;
@@ -166,16 +175,27 @@ export function processAgent(
   strategyFilter: (stock: StockRow) => boolean,
   strategyName: string,
 ): ProcessResult {
+  // Use learned params from agent if available, else defaults
+  const lp = agent.learnedParams;
+  const clPct = (lp ? lp.clPct : -3) / 100;         // -3 → -0.03
+  const tpPct = (lp ? lp.tpPct : 4) / 100;           // 4 → 0.04
+  const maxPos = lp ? lp.maxPositions : MAX_POSITIONS;
+  const sizePct = lp ? lp.positionSizePct : 25;      // % of capital per position
+  const positionSize = Math.round(agent.capital * (sizePct / 100));
+
+  const calcLotsForAgent = (price: number): number => {
+    if (price <= 0) return 0;
+    const shares = Math.floor(positionSize / (price * 100)) * 100;
+    return shares / 100;
+  };
+
   let buys = 0;
   let sells = 0;
   const clTriggers: string[] = [];
   const tpTriggers: string[] = [];
   const now = new Date().toLocaleString("id-ID", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+    day: "2-digit", month: "short", year: "numeric",
+    hour: "2-digit", minute: "2-digit",
   });
 
   // ── Step 1: Evaluate CL/TP on existing holdings ──
@@ -191,10 +211,10 @@ export function processAgent(
     const pnlPct = (currentPrice - holding.buyPrice) / holding.buyPrice;
 
     let sellReason = "";
-    if (pnlPct <= CL_PCT) {
+    if (pnlPct <= clPct) {
       sellReason = `CL ${(pnlPct * 100).toFixed(1)}%`;
       clTriggers.push(holding.ticker);
-    } else if (pnlPct >= TP_PCT) {
+    } else if (pnlPct >= tpPct) {
       sellReason = `TP +${(pnlPct * 100).toFixed(1)}%`;
       tpTriggers.push(holding.ticker);
     }
@@ -221,11 +241,10 @@ export function processAgent(
   agent.holdings = remaining;
 
   // ── Step 2: Try to buy new signals ──
-  const openSlots = MAX_POSITIONS - agent.holdings.length;
+  const openSlots = maxPos - agent.holdings.length;
   if (openSlots <= 0) return { agent, buys, sells, clTriggers, tpTriggers };
 
   const signals = stockData.filter((s) => strategyFilter(s));
-  // Sort: larger mcap first as tiebreaker
   signals.sort((a, b) => Number(b.mcap || 0) - Number(a.mcap || 0));
 
   const heldTickers = new Set(agent.holdings.map((h) => h.ticker));
@@ -238,7 +257,7 @@ export function processAgent(
     const price = Number(stock.close);
     if (price <= 0) continue;
 
-    const lots = calcLots(price);
+    const lots = calcLotsForAgent(price);
     if (lots <= 0) continue;
 
     const cost = price * lots * 100;
