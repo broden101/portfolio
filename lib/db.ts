@@ -4,9 +4,34 @@ import pg from "pg";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
+interface DbConfig {
+  host: string;
+  port: number;
+  database: string;
+  user: string;
+  password: string;
+}
+
+function parseDbUrl(url: string): DbConfig {
+  const u = new URL(url);
+  return {
+    host: u.hostname,
+    port: parseInt(u.port || "5432", 10),
+    database: u.pathname.replace(/^\//, ""),
+    user: decodeURIComponent(u.username),
+    password: decodeURIComponent(u.password),
+  };
+}
+
 function createPrisma() {
+  const raw = process.env.DATABASE_URL || "";
+  const cfg = parseDbUrl(raw);
   const pool = new pg.Pool({
-    connectionString: process.env.DATABASE_URL,
+    host: cfg.host,
+    port: cfg.port,
+    database: cfg.database,
+    user: cfg.user,
+    password: cfg.password,
     ssl: { rejectUnauthorized: false },
   });
   const adapter = new PrismaPg(pool);
