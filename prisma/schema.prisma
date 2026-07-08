@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Agent {
+  id              String   @id @default(uuid())
+  name            String
+  strategy        String
+  avatar          String
+  initialCapital  Float    @default(100000000)
+  cash            Float    @default(100000000)
+  evolutionGen    Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  positions       Position[]
+  transactions    Transaction[]
+}
+
+model Position {
+  id        Int      @id @default(autoincrement())
+  agentId   String
+  ticker    String
+  qty       Int
+  avgPrice  Float
+  openedAt  DateTime @default(now())
+
+  agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@unique([agentId, ticker])
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  agentId     String
+  ticker      String
+  side        String
+  qty         Int
+  price       Float
+  reason      String
+  pnl         Float?
+  executedAt  DateTime @default(now())
+
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+}

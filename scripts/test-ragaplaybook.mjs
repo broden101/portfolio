@@ -75,8 +75,8 @@ async function testDcfMedcSotpRegression() {
 async function testDcfBankSanity() {
   const data = await fetchJson('/api/dcf-inputs/BRIS?_test=' + Date.now());
   assert.equal(data.model, 'bank', 'BRIS must route to bank model');
-  const roe = data.inputs?.roe;
-  const payout = data.inputs?.payout;
+  const roe = data.bankInputs?.roe ?? data.inputs?.roe;
+  const payout = data.bankInputs?.payout ?? data.inputs?.payout;
   assertFiniteNumber(roe, 'BRIS roe');
   assertFiniteNumber(payout, 'BRIS payoutRatio');
   assert.ok(roe >= 1 && roe <= 50, `BRIS ROE sanity clamp failed: ${roe}`);

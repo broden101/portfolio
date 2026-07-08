@@ -5,3 +5,5 @@ out/
 .vercel
 __pycache__/
 .hermes/
+
+/lib/generated/prisma
