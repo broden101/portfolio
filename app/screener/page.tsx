@@ -6,13 +6,14 @@ import { StockTable } from "@/components/StockTable";
 import ReversalScreener from "@/components/ReversalScreener";
 import BsjpScreener from "@/components/BsjpScreener";
 import CustomScreener from "@/components/CustomScreener";
+import AgentPortfolio from "@/components/AgentPortfolio";
 import { EmptyState, ErrorState, Disclaimer } from "@/components/DataState";
 import { getSettings, saveSettings, getCachedResults } from "@/lib/storage";
 import type { ScreenResult, FilterConfig } from "@/lib/types";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-type ScreenerMode = "standard" | "reversal" | "bsjp" | "custom";
+type ScreenerMode = "standard" | "reversal" | "bsjp" | "custom" | "performa";
 
 export default function ScreenerPage() {
   const [mode, setMode] = useState<ScreenerMode>("standard");
@@ -105,6 +106,7 @@ export default function ScreenerPage() {
             { key: "reversal" as ScreenerMode, label: "Reversal watch" },
             { key: "bsjp" as ScreenerMode, label: "BSJP" },
             { key: "custom" as ScreenerMode, label: "Custom Script" },
+            { key: "performa" as ScreenerMode, label: "🤖 Performa Agent" },
           ]).map((tab) => (
             <button
               key={tab.key}
@@ -124,6 +126,7 @@ export default function ScreenerPage() {
         {mode === "reversal" && <ReversalScreener />}
         {mode === "bsjp" && <BsjpScreener />}
         {mode === "custom" && <CustomScreener />}
+        {mode === "performa" && <AgentPortfolio />}
 
         {/* Standard mode */}
         {mode === "standard" && (
