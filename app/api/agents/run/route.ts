@@ -5,16 +5,11 @@ import {
   bertotFilter,
   dondonFilter,
   ragaCCFilter,
+  antekAsingFilter,
   isMarketHours,
   getWibTime,
 } from "@/lib/agent-server";
-import type { StockRow } from "@/lib/agent-server";
-
-const AGENT_STRATEGIES: Record<string, { filter: (s: StockRow) => boolean; label: string }> = {
-  bertot: { filter: bertotFilter, label: "BSJP" },
-  dondon: { filter: dondonFilter, label: "Reversal" },
-  ragacc: { filter: ragaCCFilter, label: "Uptrend+VWAP" },
-};
+import type { StockRow, ExecuteOptions } from "@/lib/agent-server";
 
 const IDX100 = [
   "ACES","ADMR","ADRO","AKRA","AMMN","AMRT","ANTM","ARTO","ASII","ASSA",
@@ -29,6 +24,33 @@ const IDX100 = [
   "TCPI","TINS","TLKM","TOBA","TOWR","TPIA","UNTR","UNVR","WIFI","WIRG",
 ];
 
+/** Fetch top foreign accumulation tickers from Tradersaham */
+async function fetchForeignAccumulation(): Promise<Set<string>> {
+  const today = new Date(Date.now() + 7 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const url = `https://apiv2.tradersaham.com/api/market-insight/foreign-flow?date=${today}`;
+  try {
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Accept": "application/json",
+        "Origin": "https://www.tradersaham.com",
+        "Referer": "https://www.tradersaham.com/foreign-flow",
+      },
+    });
+    if (!res.ok) return new Set();
+    const data = await res.json();
+    const accumulation = data.accumulation || [];
+    // Only keep positive net_value stocks from IDX100
+    return new Set(
+      accumulation
+        .filter((a: { net_value: number; stock_code: string }) => a.net_value > 0 && IDX100.includes(a.stock_code))
+        .map((a: { stock_code: string }) => a.stock_code),
+    );
+  } catch {
+    return new Set();
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { force } = await req.json().catch(() => ({}));
@@ -36,7 +58,7 @@ export async function POST(req: NextRequest) {
     if (!isMarketHours() && !force) {
       return NextResponse.json({
         skipped: true,
-        message: "Outside market hours (WIB 09:00-15:00, Mon-Fri)",
+        message: "Outside market hours (WIB 09:00-15:45, Mon-Fri)",
         time: getWibTime(),
       });
     }
@@ -88,10 +110,26 @@ export async function POST(req: NextRequest) {
       mcap: Number(r.market_cap_basic) || 0,
     }));
 
+    // Fetch foreign accumulation for AntekAsing
+    const foreignAccum = await fetchForeignAccumulation();
+
+    // Agent configs: filter + options
+    const AGENTS: Array<{
+      id: string;
+      filter: (s: StockRow) => boolean;
+      label: string;
+      options?: ExecuteOptions;
+    }> = [
+      { id: "bertot",    filter: bertotFilter,                                    label: "BSJP" },
+      { id: "dondon",    filter: dondonFilter,                                    label: "Reversal" },
+      { id: "ragacc",    filter: ragaCCFilter,                                    label: "Uptrend+VWAP" },
+      { id: "antekasing",filter: antekAsingFilter(foreignAccum),                  label: "AntekAsing", options: { tpPct: Infinity } },
+    ];
+
     // Execute all agents
     const results = await Promise.all(
-      Object.entries(AGENT_STRATEGIES).map(([id, { filter }]) =>
-        executeAgent(id, stockRows, filter),
+      AGENTS.map(({ id, filter, options }) =>
+        executeAgent(id, stockRows, filter, options),
       ),
     );
 
@@ -101,6 +139,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       ran_at: getWibTime(),
       stock_count: stockRows.length,
+      foreign_accum: foreignAccum.size,
       total_buys: totalBuys,
       total_sells: totalSells,
       agents: results,

@@ -37,6 +37,17 @@ export function ragaCCFilter(stock: StockRow): boolean {
   return stock.close > stock.sma20 && stock.sma20 > stock.sma50 && stock.close > stock.vwap;
 }
 
+/** AntekAsing — foreign accumulation.
+ *  Returns a filter function that checks if stock is in today's foreign accumulation list.
+ *  Also adds minimum quality: harga > 50 (avoid penny), RSI wajar (30-75). */
+export function antekAsingFilter(accumulatedTickers: Set<string>): (s: StockRow) => boolean {
+  return (stock: StockRow) =>
+    accumulatedTickers.has(stock.name) &&
+    stock.close > 50 &&
+    stock.rsi >= 30 &&
+    stock.rsi <= 75;
+}
+
 // ─── WIB time helpers ──────────────────────────────────────────────
 
 function wibDate(): Date {
@@ -90,15 +101,26 @@ interface ExecuteResult {
   details: string[];
 }
 
+/** Options for executeAgent — allows per-agent CL/TP override */
+export interface ExecuteOptions {
+  clPct?: number;  // e.g. -0.03
+  tpPct?: number;  // e.g. 0.04, or Infinity for no TP
+}
+
 // ─── Core execution ────────────────────────────────────────────────
 
 export async function executeAgent(
   agentId: string,
   stockData: StockRow[],
   strategyFilter: (s: StockRow) => boolean,
+  options?: ExecuteOptions,
 ): Promise<ExecuteResult> {
   const agent = await prisma.agent.findUnique({ where: { id: agentId } });
   if (!agent) return { agentId, buys: 0, sells: 0, details: ["Agent not found"] };
+
+  // Per-agent CL/TP (default: global CL/TP)
+  const clPct = options?.clPct ?? CL_PCT;
+  const tpPct = options?.tpPct ?? TP_PCT;
 
   // ── BSJP special handling ────────────────────────────────────────
   if (agent.strategy === "bsjp") {
@@ -131,8 +153,8 @@ export async function executeAgent(
 
     const pnlPct = (stock.close - pos.avgPrice) / pos.avgPrice;
     let sellReason = "";
-    if (pnlPct <= CL_PCT) sellReason = `CL ${(pnlPct * 100).toFixed(1)}%`;
-    else if (pnlPct >= TP_PCT) sellReason = `TP +${(pnlPct * 100).toFixed(1)}%`;
+    if (pnlPct <= clPct) sellReason = `CL ${(pnlPct * 100).toFixed(1)}%`;
+    else if (pnlPct >= tpPct) sellReason = `TP +${(pnlPct * 100).toFixed(1)}%`;
 
     if (sellReason) {
       const totalValue = stock.close * pos.qty * 100;
