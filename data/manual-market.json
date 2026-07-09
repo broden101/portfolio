@@ -510,14 +510,14 @@
     "month": "Mei"
   },
   "apbn": {
-    "pendapatan": 1185.0,
+    "pendapatan": 1459.4,
     "pendapatanTarget": 3153.6,
-    "belanja": 1365.4,
+    "belanja": 1656.0,
     "belanjaTarget": 3842.7,
-    "deficit": 180.4,
+    "deficit": 196.5,
     "deficitTarget": 689.0,
     "unit": "T",
-    "note": "Mei"
+    "note": "Semester I"
   },
   "gdp": {
     "growth": 5.6,
