@@ -9,500 +9,500 @@
     "note": "Surplus Jan-Mei 2026"
   },
   "foreignFlow": {
-    "date": "2026-07-08",
-    "weekNet": -673714,
-    "mtdNet": -1909191,
-    "ytdNet": -81718256,
-    "dailyNetCorrect": -673714423100,
+    "date": "2026-07-09",
+    "weekNet": -344486,
+    "mtdNet": -2253677,
+    "ytdNet": -82080449,
+    "dailyNetCorrect": -344485678500,
     "topBuy": [
       {
-        "ticker": "BBCA",
-        "net": 247316
+        "ticker": "BMRI",
+        "net": 87870
       },
       {
-        "ticker": "TLKM",
-        "net": 65116
+        "ticker": "DEWA",
+        "net": 43071
+      },
+      {
+        "ticker": "RAJA",
+        "net": 42090
       },
       {
         "ticker": "BRPT",
-        "net": 33464
+        "net": 36483
       },
       {
-        "ticker": "BMRI",
-        "net": 14671
+        "ticker": "BBCA",
+        "net": 34672
+      },
+      {
+        "ticker": "ANTM",
+        "net": 27846
+      },
+      {
+        "ticker": "AMMN",
+        "net": 18886
       },
       {
         "ticker": "GOTO",
-        "net": 11927
+        "net": 13488
       },
       {
-        "ticker": "JECX",
-        "net": 9750
+        "ticker": "BBTN",
+        "net": 13142
       },
       {
-        "ticker": "BUVA",
-        "net": 9048
-      },
-      {
-        "ticker": "UNTR",
-        "net": 7907
-      },
-      {
-        "ticker": "BNBR",
-        "net": 7845
-      },
-      {
-        "ticker": "INCO",
-        "net": 6689
+        "ticker": "TPIA",
+        "net": 11887
       }
     ],
     "topSell": [
       {
-        "ticker": "MAPI",
-        "net": -423188
-      },
-      {
         "ticker": "BBRI",
-        "net": -141775
+        "net": -193114
       },
       {
-        "ticker": "BRMS",
-        "net": -60603
-      },
-      {
-        "ticker": "AMMN",
-        "net": -57822
-      },
-      {
-        "ticker": "CPIN",
-        "net": -20754
-      },
-      {
-        "ticker": "SMGR",
-        "net": -19754
-      },
-      {
-        "ticker": "ERAA",
-        "net": -17620
-      },
-      {
-        "ticker": "NCKL",
-        "net": -17407
+        "ticker": "MAPI",
+        "net": -130303
       },
       {
         "ticker": "ASII",
-        "net": -15350
+        "net": -52603
       },
       {
-        "ticker": "BREN",
-        "net": -14122
+        "ticker": "BUKA",
+        "net": -45439
+      },
+      {
+        "ticker": "DSSA",
+        "net": -35192
+      },
+      {
+        "ticker": "ENRG",
+        "net": -30265
+      },
+      {
+        "ticker": "AADI",
+        "net": -22792
+      },
+      {
+        "ticker": "MDKA",
+        "net": -19166
+      },
+      {
+        "ticker": "BFIN",
+        "net": -18444
+      },
+      {
+        "ticker": "ADRO",
+        "net": -18305
       }
     ],
     "rawAccumulation": [
       {
-        "stock_code": "BBCA",
-        "net_value": 247315542500,
-        "net_volume": 40051100,
-        "total_buy_volume": 135873700,
-        "total_sell_volume": 95822600,
-        "total_buy_value": 839020097500,
-        "total_sell_value": 591704555000,
-        "close_price": 6175
+        "stock_code": "BMRI",
+        "net_value": 87869596000,
+        "net_volume": 21749900,
+        "total_buy_volume": 73444900,
+        "total_sell_volume": 51695000,
+        "total_buy_value": 296717396000,
+        "total_sell_value": 208847800000,
+        "close_price": 4040
       },
       {
-        "stock_code": "TLKM",
-        "net_value": 65115926000,
-        "net_volume": 25942600,
-        "total_buy_volume": 79977400,
-        "total_sell_volume": 54034800,
-        "total_buy_value": 200743274000,
-        "total_sell_value": 135627348000,
-        "close_price": 2510
+        "stock_code": "DEWA",
+        "net_value": 43071057200,
+        "net_volume": 129732100,
+        "total_buy_volume": 375378600,
+        "total_sell_volume": 245646500,
+        "total_buy_value": 124625695200,
+        "total_sell_value": 81554638000,
+        "close_price": 332
+      },
+      {
+        "stock_code": "RAJA",
+        "net_value": 42090165000,
+        "net_volume": 9675900,
+        "total_buy_volume": 15793400,
+        "total_sell_volume": 6117500,
+        "total_buy_value": 68701290000,
+        "total_sell_value": 26611125000,
+        "close_price": 4350
       },
       {
         "stock_code": "BRPT",
-        "net_value": 33464100000,
-        "net_volume": 22309400,
-        "total_buy_volume": 64244100,
-        "total_sell_volume": 41934700,
-        "total_buy_value": 96366150000,
-        "total_sell_value": 62902050000,
-        "close_price": 1500
+        "net_value": 36482560000,
+        "net_volume": 22801600,
+        "total_buy_volume": 46639200,
+        "total_sell_volume": 23837600,
+        "total_buy_value": 74622720000,
+        "total_sell_value": 38140160000,
+        "close_price": 1600
       },
       {
-        "stock_code": "BMRI",
-        "net_value": 14671135000,
-        "net_volume": 3695500,
-        "total_buy_volume": 49508100,
-        "total_sell_volume": 45812600,
-        "total_buy_value": 196547157000,
-        "total_sell_value": 181876022000,
-        "close_price": 3970
+        "stock_code": "BBCA",
+        "net_value": 34672260000,
+        "net_volume": 5592300,
+        "total_buy_volume": 149876900,
+        "total_sell_volume": 144284600,
+        "total_buy_value": 929236780000,
+        "total_sell_value": 894564520000,
+        "close_price": 6200
+      },
+      {
+        "stock_code": "ANTM",
+        "net_value": 27846495000,
+        "net_volume": 9770700,
+        "total_buy_volume": 33807300,
+        "total_sell_volume": 24036600,
+        "total_buy_value": 96350805000,
+        "total_sell_value": 68504310000,
+        "close_price": 2850
+      },
+      {
+        "stock_code": "AMMN",
+        "net_value": 18885990000,
+        "net_volume": 5474200,
+        "total_buy_volume": 17429900,
+        "total_sell_volume": 11955700,
+        "total_buy_value": 60133155000,
+        "total_sell_value": 41247165000,
+        "close_price": 3450
       },
       {
         "stock_code": "GOTO",
-        "net_value": 11927115000,
-        "net_volume": 238542300,
-        "total_buy_volume": 274932600,
-        "total_sell_volume": 36390300,
-        "total_buy_value": 13746630000,
-        "total_sell_value": 1819515000,
+        "net_value": 13487970000,
+        "net_volume": 269759400,
+        "total_buy_volume": 289759400,
+        "total_sell_volume": 20000000,
+        "total_buy_value": 14487970000,
+        "total_sell_value": 1000000000,
         "close_price": 50
       },
       {
-        "stock_code": "JECX",
-        "net_value": 9750000000,
-        "net_volume": 5000000,
-        "total_buy_volume": 5000000,
-        "total_sell_volume": 0,
-        "total_buy_value": 9750000000,
-        "total_sell_value": 0,
-        "close_price": 1950
-      },
-      {
-        "stock_code": "BUVA",
-        "net_value": 9048105000,
-        "net_volume": 10967400,
-        "total_buy_volume": 32880400,
-        "total_sell_volume": 21913000,
-        "total_buy_value": 27126330000,
-        "total_sell_value": 18078225000,
-        "close_price": 825
-      },
-      {
-        "stock_code": "UNTR",
-        "net_value": 7907220000,
-        "net_volume": 325400,
-        "total_buy_volume": 2148100,
-        "total_sell_volume": 1822700,
-        "total_buy_value": 52198830000,
-        "total_sell_value": 44291610000,
-        "close_price": 24300
-      },
-      {
-        "stock_code": "BNBR",
-        "net_value": 7844760600,
-        "net_volume": 83454900,
-        "total_buy_volume": 210256700,
-        "total_sell_volume": 126801800,
-        "total_buy_value": 19764129800,
-        "total_sell_value": 11919369200,
-        "close_price": 94
-      },
-      {
-        "stock_code": "INCO",
-        "net_value": 6689232000,
-        "net_volume": 1483200,
-        "total_buy_volume": 5005000,
-        "total_sell_volume": 3521800,
-        "total_buy_value": 22572550000,
-        "total_sell_value": 15883318000,
-        "close_price": 4510
-      },
-      {
-        "stock_code": "BUMI",
-        "net_value": 6362583200,
-        "net_volume": 46783700,
-        "total_buy_volume": 231292200,
-        "total_sell_volume": 184508500,
-        "total_buy_value": 31455739200,
-        "total_sell_value": 25093156000,
-        "close_price": 136
-      },
-      {
-        "stock_code": "PGEO",
-        "net_value": 5268230000,
-        "net_volume": 5604500,
-        "total_buy_volume": 14184200,
-        "total_sell_volume": 8579700,
-        "total_buy_value": 13333148000,
-        "total_sell_value": 8064918000,
-        "close_price": 940
-      },
-      {
-        "stock_code": "AMRT",
-        "net_value": 4183205000,
-        "net_volume": 3009500,
-        "total_buy_volume": 25485800,
-        "total_sell_volume": 22476300,
-        "total_buy_value": 35425262000,
-        "total_sell_value": 31242057000,
-        "close_price": 1390
-      },
-      {
-        "stock_code": "ELSA",
-        "net_value": 3305071500,
-        "net_volume": 5374100,
-        "total_buy_volume": 17120700,
-        "total_sell_volume": 11746600,
-        "total_buy_value": 10529230500,
-        "total_sell_value": 7224159000,
-        "close_price": 615
-      },
-      {
-        "stock_code": "BSML",
-        "net_value": 2992963000,
-        "net_volume": 5647100,
-        "total_buy_volume": 9312200,
-        "total_sell_volume": 3665100,
-        "total_buy_value": 4935466000,
-        "total_sell_value": 1942503000,
-        "close_price": 530
-      },
-      {
-        "stock_code": "GULA",
-        "net_value": 2330162500,
-        "net_volume": 3557500,
-        "total_buy_volume": 4793600,
-        "total_sell_volume": 1236100,
-        "total_buy_value": 3139808000,
-        "total_sell_value": 809645500,
-        "close_price": 655
+        "stock_code": "BBTN",
+        "net_value": 13141674000,
+        "net_volume": 11232200,
+        "total_buy_volume": 13293600,
+        "total_sell_volume": 2061400,
+        "total_buy_value": 15553512000,
+        "total_sell_value": 2411838000,
+        "close_price": 1170
       },
       {
         "stock_code": "TPIA",
-        "net_value": 2206081500,
-        "net_volume": 1235900,
-        "total_buy_volume": 39471200,
-        "total_sell_volume": 38235300,
-        "total_buy_value": 70456092000,
-        "total_sell_value": 68250010500,
-        "close_price": 1785
+        "net_value": 11887320000,
+        "net_volume": 6513600,
+        "total_buy_volume": 61983100,
+        "total_sell_volume": 55469500,
+        "total_buy_value": 113119157500,
+        "total_sell_value": 101231837500,
+        "close_price": 1825
       },
       {
-        "stock_code": "IRSX",
-        "net_value": 2004402000,
-        "net_volume": 7769000,
-        "total_buy_volume": 12252500,
-        "total_sell_volume": 4483500,
-        "total_buy_value": 3161145000,
-        "total_sell_value": 1156743000,
-        "close_price": 258
+        "stock_code": "CUAN",
+        "net_value": 9995268000,
+        "net_volume": 16121400,
+        "total_buy_volume": 42789200,
+        "total_sell_volume": 26667800,
+        "total_buy_value": 26529304000,
+        "total_sell_value": 16534036000,
+        "close_price": 620
       },
       {
-        "stock_code": "TAPG",
-        "net_value": 1908984000,
-        "net_volume": 1239600,
-        "total_buy_volume": 5440200,
-        "total_sell_volume": 4200600,
-        "total_buy_value": 8377908000,
-        "total_sell_value": 6468924000,
-        "close_price": 1540
+        "stock_code": "INDF",
+        "net_value": 8948387500,
+        "net_volume": 1350700,
+        "total_buy_volume": 2709200,
+        "total_sell_volume": 1358500,
+        "total_buy_value": 17948450000,
+        "total_sell_value": 9000062500,
+        "close_price": 6625
       },
       {
-        "stock_code": "IMPC",
-        "net_value": 1856093000,
-        "net_volume": 1245700,
-        "total_buy_volume": 3075800,
-        "total_sell_volume": 1830100,
-        "total_buy_value": 4582942000,
-        "total_sell_value": 2726849000,
-        "close_price": 1490
+        "stock_code": "PGAS",
+        "net_value": 8602860000,
+        "net_volume": 6144900,
+        "total_buy_volume": 15981200,
+        "total_sell_volume": 9836300,
+        "total_buy_value": 22373680000,
+        "total_sell_value": 13770820000,
+        "close_price": 1400
+      },
+      {
+        "stock_code": "INCO",
+        "net_value": 8406040000,
+        "net_volume": 1827400,
+        "total_buy_volume": 6178500,
+        "total_sell_volume": 4351100,
+        "total_buy_value": 28421100000,
+        "total_sell_value": 20015060000,
+        "close_price": 4600
+      },
+      {
+        "stock_code": "TINS",
+        "net_value": 8251824000,
+        "net_volume": 2455900,
+        "total_buy_volume": 9816300,
+        "total_sell_volume": 7360400,
+        "total_buy_value": 32982768000,
+        "total_sell_value": 24730944000,
+        "close_price": 3360
+      },
+      {
+        "stock_code": "EMAS",
+        "net_value": 7780545000,
+        "net_volume": 1401900,
+        "total_buy_volume": 3303300,
+        "total_sell_volume": 1901400,
+        "total_buy_value": 18333315000,
+        "total_sell_value": 10552770000,
+        "close_price": 5550
+      },
+      {
+        "stock_code": "ADMR",
+        "net_value": 7370593500,
+        "net_volume": 5208900,
+        "total_buy_volume": 10539700,
+        "total_sell_volume": 5330800,
+        "total_buy_value": 14913675500,
+        "total_sell_value": 7543082000,
+        "close_price": 1415
+      },
+      {
+        "stock_code": "CMNT",
+        "net_value": 6311982000,
+        "net_volume": 7939600,
+        "total_buy_volume": 8546600,
+        "total_sell_volume": 607000,
+        "total_buy_value": 6794547000,
+        "total_sell_value": 482565000,
+        "close_price": 795
+      },
+      {
+        "stock_code": "PNBN",
+        "net_value": 4999267500,
+        "net_volume": 5779500,
+        "total_buy_volume": 5866200,
+        "total_sell_volume": 86700,
+        "total_buy_value": 5074263000,
+        "total_sell_value": 74995500,
+        "close_price": 865
+      },
+      {
+        "stock_code": "AMRT",
+        "net_value": 4953386000,
+        "net_volume": 3488300,
+        "total_buy_volume": 20644900,
+        "total_sell_volume": 17156600,
+        "total_buy_value": 29315758000,
+        "total_sell_value": 24362372000,
+        "close_price": 1420
       }
     ],
     "rawDistribution": [
       {
-        "stock_code": "MAPI",
-        "net_value": -423187617000,
-        "net_volume": -280256700,
-        "total_buy_volume": 25094300,
-        "total_sell_volume": 305351000,
-        "total_buy_value": 37892393000,
-        "total_sell_value": 461080010000,
-        "close_price": 1510
-      },
-      {
         "stock_code": "BBRI",
-        "net_value": -141775245000,
-        "net_volume": -50815500,
-        "total_buy_volume": 95952200,
-        "total_sell_volume": 146767700,
-        "total_buy_value": 267706638000,
-        "total_sell_value": 409481883000,
-        "close_price": 2790
+        "net_value": -193113812000,
+        "net_volume": -69465400,
+        "total_buy_volume": 106455800,
+        "total_sell_volume": 175921200,
+        "total_buy_value": 295947124000,
+        "total_sell_value": 489060936000,
+        "close_price": 2780
       },
       {
-        "stock_code": "BRMS",
-        "net_value": -60603368000,
-        "net_volume": -127318000,
-        "total_buy_volume": 41750000,
-        "total_sell_volume": 169068000,
-        "total_buy_value": 19873000000,
-        "total_sell_value": 80476368000,
-        "close_price": 476
-      },
-      {
-        "stock_code": "AMMN",
-        "net_value": -57821670000,
-        "net_volume": -17260200,
-        "total_buy_volume": 9371200,
-        "total_sell_volume": 26631400,
-        "total_buy_value": 31393520000,
-        "total_sell_value": 89215190000,
-        "close_price": 3350
-      },
-      {
-        "stock_code": "CPIN",
-        "net_value": -20753838000,
-        "net_volume": -6782300,
-        "total_buy_volume": 1447600,
-        "total_sell_volume": 8229900,
-        "total_buy_value": 4429656000,
-        "total_sell_value": 25183494000,
-        "close_price": 3060
-      },
-      {
-        "stock_code": "SMGR",
-        "net_value": -19753762000,
-        "net_volume": -13911100,
-        "total_buy_volume": 2933600,
-        "total_sell_volume": 16844700,
-        "total_buy_value": 4165712000,
-        "total_sell_value": 23919474000,
-        "close_price": 1420
-      },
-      {
-        "stock_code": "ERAA",
-        "net_value": -17620045200,
-        "net_volume": -51520600,
-        "total_buy_volume": 149700,
-        "total_sell_volume": 51670300,
-        "total_buy_value": 51197400,
-        "total_sell_value": 17671242600,
-        "close_price": 342
-      },
-      {
-        "stock_code": "NCKL",
-        "net_value": -17406922500,
-        "net_volume": -21099300,
-        "total_buy_volume": 9053700,
-        "total_sell_volume": 30153000,
-        "total_buy_value": 7469302500,
-        "total_sell_value": 24876225000,
-        "close_price": 825
+        "stock_code": "MAPI",
+        "net_value": -130302862500,
+        "net_volume": -85444500,
+        "total_buy_volume": 27162600,
+        "total_sell_volume": 112607100,
+        "total_buy_value": 41422965000,
+        "total_sell_value": 171725827500,
+        "close_price": 1525
       },
       {
         "stock_code": "ASII",
-        "net_value": -15349710000,
-        "net_volume": -3139000,
-        "total_buy_volume": 33713900,
-        "total_sell_volume": 36852900,
-        "total_buy_value": 164860971000,
-        "total_sell_value": 180210681000,
-        "close_price": 4890
+        "net_value": -52602984000,
+        "net_volume": -10779300,
+        "total_buy_volume": 26186900,
+        "total_sell_volume": 36966200,
+        "total_buy_value": 127792072000,
+        "total_sell_value": 180395056000,
+        "close_price": 4880
       },
       {
-        "stock_code": "BREN",
-        "net_value": -14121900000,
-        "net_volume": -4345200,
-        "total_buy_volume": 60175800,
-        "total_sell_volume": 64521000,
-        "total_buy_value": 195571350000,
-        "total_sell_value": 209693250000,
-        "close_price": 3250
-      },
-      {
-        "stock_code": "MEDC",
-        "net_value": -12762477000,
-        "net_volume": -10908100,
-        "total_buy_volume": 19333900,
-        "total_sell_volume": 30242000,
-        "total_buy_value": 22620663000,
-        "total_sell_value": 35383140000,
-        "close_price": 1170
-      },
-      {
-        "stock_code": "MDKA",
-        "net_value": -12090051000,
-        "net_volume": -4704300,
-        "total_buy_volume": 10901100,
-        "total_sell_volume": 15605400,
-        "total_buy_value": 28015827000,
-        "total_sell_value": 40105878000,
-        "close_price": 2570
-      },
-      {
-        "stock_code": "TKIM",
-        "net_value": -10771942500,
-        "net_volume": -2022900,
-        "total_buy_volume": 159400,
-        "total_sell_volume": 2182300,
-        "total_buy_value": 848805000,
-        "total_sell_value": 11620747500,
-        "close_price": 5325
-      },
-      {
-        "stock_code": "CUAN",
-        "net_value": -10379280000,
-        "net_volume": -17298800,
-        "total_buy_volume": 24899900,
-        "total_sell_volume": 42198700,
-        "total_buy_value": 14939940000,
-        "total_sell_value": 25319220000,
-        "close_price": 600
-      },
-      {
-        "stock_code": "ENRG",
-        "net_value": -10141307500,
-        "net_volume": -8630900,
-        "total_buy_volume": 11304100,
-        "total_sell_volume": 19935000,
-        "total_buy_value": 13282317500,
-        "total_sell_value": 23423625000,
-        "close_price": 1175
-      },
-      {
-        "stock_code": "KLBF",
-        "net_value": -8921810000,
-        "net_volume": -12056500,
-        "total_buy_volume": 23426200,
-        "total_sell_volume": 35482700,
-        "total_buy_value": 17335388000,
-        "total_sell_value": 26257198000,
-        "close_price": 740
-      },
-      {
-        "stock_code": "UNVR",
-        "net_value": -8668754000,
-        "net_volume": -4996400,
-        "total_buy_volume": 1406700,
-        "total_sell_volume": 6403100,
-        "total_buy_value": 2440624500,
-        "total_sell_value": 11109378500,
-        "close_price": 1735
-      },
-      {
-        "stock_code": "JPFA",
-        "net_value": -8245623000,
-        "net_volume": -4102300,
-        "total_buy_volume": 4606700,
-        "total_sell_volume": 8709000,
-        "total_buy_value": 9259467000,
-        "total_sell_value": 17505090000,
-        "close_price": 2010
+        "stock_code": "BUKA",
+        "net_value": -45438932200,
+        "net_volume": -468442600,
+        "total_buy_volume": 96892600,
+        "total_sell_volume": 565335200,
+        "total_buy_value": 9398582200,
+        "total_sell_value": 54837514400,
+        "close_price": 97
       },
       {
         "stock_code": "DSSA",
-        "net_value": -8063925000,
-        "net_volume": -10207500,
-        "total_buy_volume": 24480300,
-        "total_sell_volume": 34687800,
-        "total_buy_value": 19339437000,
-        "total_sell_value": 27403362000,
-        "close_price": 790
+        "net_value": -35191742500,
+        "net_volume": -45408700,
+        "total_buy_volume": 34154000,
+        "total_sell_volume": 79562700,
+        "total_buy_value": 26469350000,
+        "total_sell_value": 61661092500,
+        "close_price": 775
       },
       {
-        "stock_code": "PGAS",
-        "net_value": -7817835000,
-        "net_volume": -5486200,
-        "total_buy_volume": 9240600,
-        "total_sell_volume": 14726800,
-        "total_buy_value": 13167855000,
-        "total_sell_value": 20985690000,
-        "close_price": 1425
+        "stock_code": "ENRG",
+        "net_value": -30265407000,
+        "net_volume": -24909800,
+        "total_buy_volume": 24807200,
+        "total_sell_volume": 49717000,
+        "total_buy_value": 30140748000,
+        "total_sell_value": 60406155000,
+        "close_price": 1215
+      },
+      {
+        "stock_code": "AADI",
+        "net_value": -22792495000,
+        "net_volume": -2822600,
+        "total_buy_volume": 1292400,
+        "total_sell_volume": 4115000,
+        "total_buy_value": 10436130000,
+        "total_sell_value": 33228625000,
+        "close_price": 8075
+      },
+      {
+        "stock_code": "MDKA",
+        "net_value": -19165518000,
+        "net_volume": -7457400,
+        "total_buy_volume": 10102300,
+        "total_sell_volume": 17559700,
+        "total_buy_value": 25962911000,
+        "total_sell_value": 45128429000,
+        "close_price": 2570
+      },
+      {
+        "stock_code": "BFIN",
+        "net_value": -18443999000,
+        "net_volume": -22911800,
+        "total_buy_volume": 10176600,
+        "total_sell_volume": 33088400,
+        "total_buy_value": 8192163000,
+        "total_sell_value": 26636162000,
+        "close_price": 805
+      },
+      {
+        "stock_code": "ADRO",
+        "net_value": -18305344000,
+        "net_volume": -7993600,
+        "total_buy_volume": 7056400,
+        "total_sell_volume": 15050000,
+        "total_buy_value": 16159156000,
+        "total_sell_value": 34464500000,
+        "close_price": 2290
+      },
+      {
+        "stock_code": "BUMI",
+        "net_value": -14796963000,
+        "net_volume": -104943000,
+        "total_buy_volume": 402123400,
+        "total_sell_volume": 507066400,
+        "total_buy_value": 56699399400,
+        "total_sell_value": 71496362400,
+        "close_price": 141
+      },
+      {
+        "stock_code": "JPFA",
+        "net_value": -13498637000,
+        "net_volume": -6852100,
+        "total_buy_volume": 727000,
+        "total_sell_volume": 7579100,
+        "total_buy_value": 1432190000,
+        "total_sell_value": 14930827000,
+        "close_price": 1970
+      },
+      {
+        "stock_code": "BRMS",
+        "net_value": -13404146400,
+        "net_volume": -27244200,
+        "total_buy_volume": 106549500,
+        "total_sell_volume": 133793700,
+        "total_buy_value": 52422354000,
+        "total_sell_value": 65826500400,
+        "close_price": 492
+      },
+      {
+        "stock_code": "ARTO",
+        "net_value": -12713640000,
+        "net_volume": -10594700,
+        "total_buy_volume": 5297300,
+        "total_sell_volume": 15892000,
+        "total_buy_value": 6356760000,
+        "total_sell_value": 19070400000,
+        "close_price": 1200
+      },
+      {
+        "stock_code": "BREN",
+        "net_value": -11938544000,
+        "net_volume": -3639800,
+        "total_buy_volume": 32783100,
+        "total_sell_volume": 36422900,
+        "total_buy_value": 107528568000,
+        "total_sell_value": 119467112000,
+        "close_price": 3280
+      },
+      {
+        "stock_code": "MTEL",
+        "net_value": -11016048000,
+        "net_volume": -22950100,
+        "total_buy_volume": 3935300,
+        "total_sell_volume": 26885400,
+        "total_buy_value": 1888944000,
+        "total_sell_value": 12904992000,
+        "close_price": 480
+      },
+      {
+        "stock_code": "KLBF",
+        "net_value": -8601400000,
+        "net_volume": -11864000,
+        "total_buy_volume": 19096400,
+        "total_sell_volume": 30960400,
+        "total_buy_value": 13844890000,
+        "total_sell_value": 22446290000,
+        "close_price": 725
+      },
+      {
+        "stock_code": "MIKA",
+        "net_value": -7627730000,
+        "net_volume": -4486900,
+        "total_buy_volume": 3944000,
+        "total_sell_volume": 8430900,
+        "total_buy_value": 6704800000,
+        "total_sell_value": 14332530000,
+        "close_price": 1700
+      },
+      {
+        "stock_code": "NCKL",
+        "net_value": -6906175500,
+        "net_volume": -8579100,
+        "total_buy_volume": 11174100,
+        "total_sell_volume": 19753200,
+        "total_buy_value": 8995150500,
+        "total_sell_value": 15901326000,
+        "close_price": 805
+      },
+      {
+        "stock_code": "ISAT",
+        "net_value": -6038936000,
+        "net_volume": -3212200,
+        "total_buy_volume": 7719400,
+        "total_sell_volume": 10931600,
+        "total_buy_value": 14512472000,
+        "total_sell_value": 20551408000,
+        "close_price": 1880
       }
     ],
-    "fetchedAt": "2026-07-08T11:00:58.995571+00:00"
+    "fetchedAt": "2026-07-09T11:00:36.320159+00:00"
   },
   "inflation": {
     "value": 3.08,
