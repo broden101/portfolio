@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
+function fmtWIB(d: Date): string {
+  const wib = new Date(d.getTime() + 7 * 60 * 60 * 1000);
+  const parts = wib.toISOString().split("T");
+  const [Y, M, D] = parts[0].split("-");
+  const [H, Min] = parts[1].split(":");
+  return `${D}-${M}-${Y.slice(2)} ${H}:${Min} WIB`;
+}
+
 export async function GET() {
   try {
     const agents = await prisma.agent.findMany({
@@ -24,7 +32,7 @@ export async function GET() {
         ticker: p.ticker,
         buyPrice: p.avgPrice,
         lots: p.qty,
-        buyDate: p.openedAt.toISOString(),
+        buyDate: fmtWIB(p.openedAt),
         strategy: a.strategy,
       })),
       trades: a.transactions.map((t) => ({
@@ -32,11 +40,11 @@ export async function GET() {
         type: t.side.toUpperCase(),
         price: t.price,
         lots: t.qty,
-        date: t.executedAt.toISOString(),
+        date: fmtWIB(t.executedAt),
         reason: t.reason,
         pnl: t.pnl,
       })),
-      lastRun: a.updatedAt.toISOString(),
+      lastRun: fmtWIB(a.updatedAt),
     }));
 
     return NextResponse.json({ agents: formatted });
