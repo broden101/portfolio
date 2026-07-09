@@ -73,9 +73,9 @@ export function isMarketHours(): boolean {
   return hour >= 9 && hour < 16;
 }
 
-/** BSJP morning sell window: 09:00-09:30 WIB */
+/** BSJP morning sell window: 09:30-09:59 WIB */
 export function isMorningWindow(): boolean {
-  return wibHour() === 9 && wibMinute() < 30;
+  return wibHour() === 9 && wibMinute() >= 30;
 }
 
 /** BSJP afternoon buy window: 15:30-15:45 WIB */
