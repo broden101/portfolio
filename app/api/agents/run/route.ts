@@ -10,6 +10,8 @@ import {
   getWibTime,
 } from "@/lib/agent-server";
 import type { StockRow, ExecuteOptions } from "@/lib/agent-server";
+import fs from "fs";
+import path from "path";
 
 const IDX100 = [
   "ACES","ADMR","ADRO","AKRA","AMMN","AMRT","ANTM","ARTO","ASII","ASSA",
@@ -24,8 +26,29 @@ const IDX100 = [
   "TCPI","TINS","TLKM","TOBA","TOWR","TPIA","UNTR","UNVR","WIFI","WIRG",
 ];
 
-/** Fetch top foreign accumulation tickers from Tradersaham */
+/** Fetch top foreign accumulation tickers — dual source: Stockbit file (manual) + Tradersaham API */
 async function fetchForeignAccumulation(): Promise<Set<string>> {
+  // Source 1: Stockbit data file (if updated today)
+  try {
+    const filePath = path.join(process.cwd(), "data", "foreign-stockbit.json");
+    if (fs.existsSync(filePath)) {
+      const stat = fs.statSync(filePath);
+      const today = new Date(Date.now() + 7 * 60 * 60 * 1000).toISOString().slice(0, 10);
+      const fileDate = stat.mtime.toISOString().slice(0, 10);
+      if (fileDate === today) {
+        const raw = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+        const tickers = (raw.accumulation || [])
+          .filter((a: { code: string }) => IDX100.includes(a.code))
+          .map((a: { code: string }) => a.code);
+        if (tickers.length > 0) {
+          console.log(`[AntekAsing] Using Stockbit data: ${tickers.length} tickers`);
+          return new Set(tickers);
+        }
+      }
+    }
+  } catch { /* fall through to Tradersaham */ }
+
+  // Source 2: Tradersaham API (fallback)
   const today = new Date(Date.now() + 7 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const url = `https://apiv2.tradersaham.com/api/market-insight/foreign-flow?date=${today}`;
   try {
