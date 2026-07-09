@@ -194,10 +194,10 @@ function TradeLog({
                     : "text-red-400 bg-red-500/10"
                 }`}>{t.type}</span>
               </td>
-              <td className="py-2 px-2 text-right font-mono text-[#F4EFE6]">{t.price.toLocaleString("id-ID")}</td>
+              <td className="py-2 px-2 text-right font-mono text-[#F4EFE6]">{(t.price ?? 0).toLocaleString("id-ID")}</td>
               <td className="py-2 px-2 text-right font-mono text-[#B8AA96]">{t.lots}</td>
               <td className="py-2 px-2 text-right font-mono">
-                {t.pnl !== undefined ? (
+                {t.pnl != null ? (
                   <span className={t.pnl >= 0 ? "text-emerald-400" : "text-red-400"}>
                     {t.pnl >= 0 ? "+" : ""}{formatIDR(t.pnl)}
                   </span>

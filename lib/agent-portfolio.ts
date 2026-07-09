@@ -121,11 +121,12 @@ export function resetPortfolio(): PortfolioState {
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────
-function formatIDR(val: number): string {
-  if (Math.abs(val) >= 1e12) return `Rp${(val / 1e12).toFixed(2)}T`;
-  if (Math.abs(val) >= 1e9) return `Rp${(val / 1e9).toFixed(2)}M`;
-  if (Math.abs(val) >= 1e6) return `Rp${(val / 1e6).toFixed(1)}jt`;
-  return `Rp${val.toLocaleString("id-ID")}`;
+function formatIDR(val: number | null | undefined): string {
+  const n = val ?? 0;
+  if (Math.abs(n) >= 1e12) return `Rp${(n / 1e12).toFixed(2)}T`;
+  if (Math.abs(n) >= 1e9) return `Rp${(n / 1e9).toFixed(2)}M`;
+  if (Math.abs(n) >= 1e6) return `Rp${(n / 1e6).toFixed(1)}jt`;
+  return `Rp${n.toLocaleString("id-ID")}`;
 }
 
 export { formatIDR };
