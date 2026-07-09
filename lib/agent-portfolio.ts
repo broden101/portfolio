@@ -334,10 +334,10 @@ export function enrichHoldings(
 ): HoldingPL[] {
   return holdings.map((h) => {
     const stock = stockData.find((s) => String(s.name) === h.ticker);
-    const currentPrice = stock ? Number(stock.close) : h.buyPrice;
-    const pnlPct = (currentPrice - h.buyPrice) / h.buyPrice;
-    const pnlIDR = (currentPrice - h.buyPrice) * h.lots * 100;
+    const currentPrice = (stock ? Number(stock.close) : null) ?? h.buyPrice ?? 0;
+    const pnlPct = h.buyPrice > 0 ? (currentPrice - h.buyPrice) / h.buyPrice : 0;
+    const pnlIDR = (currentPrice - (h.buyPrice ?? 0)) * h.lots * 100;
     const marketValue = currentPrice * h.lots * 100;
-    return { ...h, currentPrice, pnlPct, pnlIDR, marketValue };
+    return { ...h, currentPrice: currentPrice || 0, pnlPct, pnlIDR, marketValue };
   });
 }

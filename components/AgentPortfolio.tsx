@@ -22,7 +22,7 @@ const IDX100 = [
   "TCPI","TINS","TLKM","TOBA","TOWR","TPIA","UNTR","UNVR","WIFI","WIRG",
 ];
 
-type TabAgent = "all" | "bertot" | "dondon" | "ragaCC";
+type TabAgent = "all" | "bertot" | "dondon" | "ragacc" | "antekasing";
 
 // ─── Map server agent to AgentState ────────────────────────────────
 function serverToAgent(srv: any, stockData: Record<string, number | string>[]): AgentState {
@@ -129,11 +129,11 @@ function AgentCard({
               </div>
               <div className="text-right">
                 <div className="font-mono">
-                  <span className={h.pnlPct >= 0 ? "text-emerald-400" : "text-red-400"}>
-                    {h.pnlPct >= 0 ? "+" : ""}{(h.pnlPct * 100).toFixed(1)}%
+                  <span className={(h.pnlPct ?? 0) >= 0 ? "text-emerald-400" : "text-red-400"}>
+                    {(h.pnlPct ?? 0) >= 0 ? "+" : ""}{((h.pnlPct ?? 0) * 100).toFixed(1)}%
                   </span>
                 </div>
-                <div className="text-[10px] text-[#B8AA96]/40">{h.currentPrice.toLocaleString("id-ID")}</div>
+                <div className="text-[10px] text-[#B8AA96]/40">{(h.currentPrice ?? 0).toLocaleString("id-ID")}</div>
               </div>
             </div>
           ))}
@@ -182,8 +182,9 @@ function TradeLog({
               <td className="py-2 px-2">
                 <span className={
                   t.agent === "bertot" ? "text-amber-400" :
-                  t.agent === "dondon" ? "text-blue-400" : "text-emerald-400"
-                }>{t.agent === "bertot" ? "Bertot" : t.agent === "dondon" ? "Dondon" : "ragaCC"}</span>
+                  t.agent === "dondon" ? "text-blue-400" :
+                  t.agent === "antekasing" ? "text-purple-400" : "text-emerald-400"
+                }>{t.agent === "bertot" ? "Bertot" : t.agent === "dondon" ? "Dondon" : t.agent === "antekasing" ? "AntekAsing" : "ragaCC"}</span>
               </td>
               <td className="py-2 px-2 font-mono text-[#F4EFE6]">{t.ticker}</td>
               <td className="py-2 px-2 text-center">
