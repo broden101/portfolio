@@ -91,7 +91,7 @@ export function getWibTime(): string {
 
 const POSITION_SIZE = 25_000_000; // Rp 25jt per trade
 const MAX_POSITIONS = 4;
-const CL_PCT = -0.03; // PATEN — tidak bisa diubah
+const CL_PCT = -0.03; // PATEN — cut loss -3%
 
 interface ExecuteResult {
   agentId: string;
@@ -100,51 +100,36 @@ interface ExecuteResult {
   details: string[];
 }
 
-/** Options for executeAgent — allows per-agent override */
-export interface ExecuteOptions {
-  trailingTriggerPct?: number;  // e.g. 0.025 — mulai trail setelah profit ini
-  trailingStopPct?: number;     // e.g. 0.02 — TP kalau turun ke sini dari peak
-}
-
 // ─── Core execution ────────────────────────────────────────────────
 
 export async function executeAgent(
   agentId: string,
   stockData: StockRow[],
   strategyFilter: (s: StockRow) => boolean,
-  options?: ExecuteOptions,
 ): Promise<ExecuteResult> {
   const agent = await prisma.agent.findUnique({ where: { id: agentId } });
   if (!agent) return { agentId, buys: 0, sells: 0, details: ["Agent not found"] };
 
-  // CL paten, TP dari agent (learned via evolusi)
-  const clPct = CL_PCT;
-  const tpPct = agent.learnedTpPct ?? 0.04;
-
   // ── BSJP special handling ────────────────────────────────────────
   if (agent.strategy === "bsjp") {
     if (isMorningWindow()) {
-      // Jual semua pagi (force, untung/rugi tetap jual)
       return sellAll(agentId, stockData, "BSJP force sell pagi");
     }
     if (isAfternoonWindow()) {
-      // Beli sore — clear & rebuild portfolio
       return buySignals(agentId, agent.cash, stockData, strategyFilter);
     }
-    // Outside BSJP windows — skip
     return { agentId, buys: 0, sells: 0, details: ["BSJP: tunggu jam buy (15:30) atau sell (09:00)"] };
   }
 
-  // ── Normal CL/TP logic (Dondon/ragaCC/AntekAsing) ───────────────
+  // ── Normal execution (Dondon/ragaCC/AntekAsing) ─────────────────
   let cash = agent.cash;
   let buys = 0;
   let sells = 0;
   const details: string[] = [];
 
-  // Step 1: Check CL/TP on existing holdings
+  // Step 1: Check CL & price action tiap posisi
   const positions = await prisma.position.findMany({ where: { agentId } });
   const heldTickers = new Set(positions.map((p) => p.ticker));
-  const openSlots = MAX_POSITIONS - positions.length;
 
   for (const pos of positions) {
     const stock = stockData.find((s) => s.name === pos.ticker);
@@ -153,7 +138,7 @@ export async function executeAgent(
     const pnlPct = (stock.close - pos.avgPrice) / pos.avgPrice;
     let sellReason = "";
 
-    // Update peak P&L
+    // Update peak P&L (buat trailing TP nanti)
     const newPeak = Math.max(pos.peakPnlPct, pnlPct);
     if (newPeak > pos.peakPnlPct) {
       await prisma.position.update({
@@ -162,16 +147,24 @@ export async function executeAgent(
       });
     }
 
-    if (pnlPct <= clPct) sellReason = `CL ${(pnlPct * 100).toFixed(1)}%`;
-    else if (pnlPct >= tpPct) sellReason = `TP +${(pnlPct * 100).toFixed(1)}%`;
-    // Trailing TP: pernah peak ≥ trigger, turun ke stop
-    else if (
-      options?.trailingTriggerPct &&
-      options?.trailingStopPct &&
-      newPeak >= options.trailingTriggerPct &&
-      pnlPct <= options.trailingStopPct
-    ) {
-      sellReason = `Trailing TP +${(pnlPct * 100).toFixed(1)}% (peak +${(newPeak * 100).toFixed(1)}%)`;
+    // ── Priority 1: CL -3% paten ──────────────────────────────────
+    if (pnlPct <= CL_PCT) {
+      sellReason = `CL ${(pnlPct * 100).toFixed(1)}%`;
+    }
+    // ── Priority 2: Price action TP ────────────────────────────────
+    // Jual kalo harga turun di bawah level penting, meski masih profit
+    else if (pnlPct > 0 && stock.close < stock.vwap) {
+      sellReason = `TP — profit ${(pnlPct * 100).toFixed(1)}%, close < VWAP (${stock.vwap})`;
+    }
+    else if (pnlPct > 0 && stock.close < stock.sma20) {
+      sellReason = `TP — profit ${(pnlPct * 100).toFixed(1)}%, break SMA20 (${stock.sma20})`;
+    }
+    else if (pnlPct > 0 && stock.rsi < 40) {
+      sellReason = `TP — profit ${(pnlPct * 100).toFixed(1)}%, RSI turun ke ${stock.rsi}`;
+    }
+    // ── Priority 3: Trailing safety (kalo udah profit gede trus turun balik) ──
+    else if (pnlPct > 0.03 && pnlPct < newPeak - 0.02) {
+      sellReason = `Trailing — profit ${(pnlPct * 100).toFixed(1)}% (peak +${(newPeak * 100).toFixed(1)}%)`;
     }
 
     if (sellReason) {
@@ -196,7 +189,7 @@ export async function executeAgent(
   const currentSlots = MAX_POSITIONS - remaining.length;
   const currentHeld = new Set(remaining.map((p) => p.ticker));
 
-  // Step 2: Try to buy new signals
+  // Step 2: Buy new signals
   if (currentSlots > 0) {
     const signals = stockData
       .filter((s) => strategyFilter(s) && !currentHeld.has(s.name))
@@ -223,7 +216,7 @@ export async function executeAgent(
         }),
       ]);
       buys++;
-      heldTickers.add(stock.name);
+      currentHeld.add(stock.name);
       details.push(`BUY ${stock.name} ${lots} lot @ ${stock.close}`);
     }
   }
@@ -231,78 +224,13 @@ export async function executeAgent(
   // Update cash
   await prisma.agent.update({ where: { id: agentId }, data: { cash } });
 
-  // ── Learning: analisa trade history → evolve TP ──────────────────
-  if (sells > 0) {
-    const learnResult = await runLearning(agentId);
-    if (learnResult) details.push(learnResult);
-  }
-
   return { agentId, buys, sells, details };
-}
-
-// ─── Learning / Evolution ──────────────────────────────────────────
-
-/**
- * Analisa trade history agent → adjust learnedTpPct.
- * CL tetap -3% (paten), hanya TP yg berevolusi.
- * Minimal 5 closed trades (sells with pnl) untuk mulai belajar.
- */
-async function runLearning(agentId: string): Promise<string | null> {
-  const closedTrades = await prisma.transaction.findMany({
-    where: { agentId, side: "sell", pnl: { not: null } },
-    orderBy: { executedAt: "desc" },
-    take: 50, // limit to recent 50 sells
-  });
-
-  if (closedTrades.length < 5) return null;
-
-  const wins = closedTrades.filter((t) => (t.pnl ?? 0) > 0);
-  const losses = closedTrades.filter((t) => (t.pnl ?? 0) <= 0);
-  const winRate = wins.length / closedTrades.length;
-  const avgWin = wins.length > 0 ? wins.reduce((s, t) => s + (t.pnl ?? 0), 0) / wins.length : 0;
-  const avgLoss = losses.length > 0 ? Math.abs(losses.reduce((s, t) => s + (t.pnl ?? 0), 0) / losses.length) : 1;
-  const profitFactor = avgLoss > 0 ? avgWin / avgLoss : 0;
-
-  const agent = await prisma.agent.findUnique({ where: { id: agentId } });
-  if (!agent) return null;
-
-  const currentTp = agent.learnedTpPct ?? 0.04;
-  let newTp = currentTp;
-  let reason = "";
-
-  // Evolve TP based on performance
-  if (winRate > 0.60 && profitFactor > 1.5) {
-    // Bagus — biarkan pemenang berlari lebih jauh
-    newTp = Math.min(0.10, currentTp + 0.005); // +0.5%
-    reason = `Win ${(winRate * 100).toFixed(0)}%, PF ${profitFactor.toFixed(1)} → TP naik ${(newTp * 100).toFixed(1)}%`;
-  } else if (winRate < 0.40 || profitFactor < 1.0) {
-    // Kurang bagus — ambil profit lebih cepat
-    newTp = Math.max(0.02, currentTp - 0.005); // -0.5%
-    reason = `Win ${(winRate * 100).toFixed(0)}%, PF ${profitFactor.toFixed(1)} → TP turun ${(newTp * 100).toFixed(1)}%`;
-  } else {
-    // Netral — pertahankan TP saat ini
-    return null;
-  }
-
-  if (newTp !== currentTp) {
-    await prisma.agent.update({
-      where: { id: agentId },
-      data: {
-        learnedTpPct: newTp,
-        evolutionGen: { increment: 1 },
-      },
-    });
-    return `🧬 ${reason}`;
-  }
-
-  return null;
 }
 
 // ─── BSJP helpers ──────────────────────────────────────────────────
 
 /**
  * BSJP buy at 15:30 WIB — liquidate sisa, beli signal baru.
- * Uses live market price from stockData.
  */
 async function buySignals(
   agentId: string,
@@ -313,7 +241,7 @@ async function buySignals(
   const details: string[] = ["BSJP: beli sore"];
   let buys = 0;
 
-  // Liquidate leftover positions from yesterday (kalau gagal jual pagi)
+  // Liquidate leftover positions
   const existing = await prisma.position.findMany({ where: { agentId } });
   for (const pos of existing) {
     const stock = stockData.find((s) => s.name === pos.ticker);
@@ -359,8 +287,7 @@ async function buySignals(
 }
 
 /**
- * BSJP sell all at 09:00-09:30 WIB — force sell, untung/rugi tetap jual.
- * Uses live market price from stockData.
+ * BSJP sell all at 09:00-09:30 WIB — force sell.
  */
 async function sellAll(
   agentId: string,
@@ -378,7 +305,7 @@ async function sellAll(
 
   for (const pos of positions) {
     const stock = stockData.find((s) => s.name === pos.ticker);
-    const price = stock?.close ?? pos.avgPrice; // use live price kalau ada
+    const price = stock?.close ?? pos.avgPrice;
     const value = price * pos.qty * 100;
     const pnl = (price - pos.avgPrice) * pos.qty * 100;
     newCash += value;
@@ -394,7 +321,6 @@ async function sellAll(
     details.push(`SELL ${pos.ticker} ${pos.qty} lot @ ${price} — ${sign}${(pnl / 1_000_000).toFixed(1)}jt`);
   }
 
-  // Update cash: start fresh (will be re-set on next buy)
   await prisma.agent.update({ where: { id: agentId }, data: { cash: newCash } });
   return { agentId, buys: 0, sells, details };
 }

@@ -9,7 +9,7 @@ import {
   isMarketHours,
   getWibTime,
 } from "@/lib/agent-server";
-import type { StockRow, ExecuteOptions } from "@/lib/agent-server";
+import type { StockRow } from "@/lib/agent-server";
 import fs from "fs";
 import path from "path";
 
@@ -131,23 +131,22 @@ export async function POST(req: NextRequest) {
     // Fetch foreign accumulation for AntekAsing
     const foreignAccum = await fetchForeignAccumulation();
 
-    // Agent configs: filter + options
+    // Agent configs: filter
     const AGENTS: Array<{
       id: string;
       filter: (s: StockRow) => boolean;
       label: string;
-      options?: ExecuteOptions;
     }> = [
       { id: "bertot",    filter: bertotFilter,                                    label: "BSJP" },
       { id: "dondon",    filter: dondonFilter,                                    label: "Reversal" },
       { id: "ragacc",    filter: ragaCCFilter,                                    label: "Uptrend+VWAP" },
-      { id: "antekasing",filter: antekAsingFilter(foreignAccum),                  label: "AntekAsing", options: { trailingTriggerPct: 0.025, trailingStopPct: 0.02 } },
+      { id: "antekasing",filter: antekAsingFilter(foreignAccum),                  label: "AntekAsing" },
     ];
 
     // Execute all agents
     const results = await Promise.all(
-      AGENTS.map(({ id, filter, options }) =>
-        executeAgent(id, stockRows, filter, options),
+      AGENTS.map(({ id, filter }) =>
+        executeAgent(id, stockRows, filter),
       ),
     );
 
