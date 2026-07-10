@@ -54,6 +54,9 @@ export default function RightsIssuePage() {
     const pnlNotParticipate = valueAfterNotParticipate - (sharesHeld * avg);
     const pnlNotParticipatePct = ((valueAfterNotParticipate / (sharesHeld * avg)) - 1) * 100;
 
+    // Average price after exercising
+    const newAvgPrice = ((sharesHeld * avg) + totalCostExercise) / totalSharesAfter;
+
     // Break-even RI price
     const breakEven = theoPrice;
 
@@ -75,6 +78,7 @@ export default function RightsIssuePage() {
       pnlNotParticipate,
       pnlNotParticipatePct,
       breakEven,
+      newAvgPrice,
       ratio: `${rOld}:${rNew}`,
     };
   }, [avgPrice, lots, cumPrice, riPrice, ratioOld, ratioNew]);
@@ -178,6 +182,7 @@ export default function RightsIssuePage() {
                       { label: "Saham Baru", value: fmt(calc.newShares) },
                       { label: "Total Saham", value: fmt(calc.totalSharesAfter) },
                       { label: "Biaya Tebus", value: fmtIDR(calc.totalCostExercise) },
+                      { label: "Harga Rata-rata Baru", value: fmtIDR(calc.newAvgPrice) },
                       { label: "Nilai Portofolio (Cum)", value: fmtIDR(calc.valueBefore) },
                       { label: "HMETD Value / Lembar", value: fmtIDR(calc.hmetdValue) },
                     ].map((item) => (
