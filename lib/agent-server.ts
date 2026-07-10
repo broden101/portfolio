@@ -104,7 +104,9 @@ interface ExecuteResult {
 /** Options for executeAgent — allows per-agent CL/TP override */
 export interface ExecuteOptions {
   clPct?: number;  // e.g. -0.03
-  tpPct?: number;  // e.g. 0.04, or Infinity for no TP
+  tpPct?: number;  // e.g. 0.03, or Infinity for no TP
+  trailingTriggerPct?: number;  // e.g. 0.025 — mulai trail setelah profit ini
+  trailingStopPct?: number;     // e.g. 0.02 — TP kalau turun ke sini dari peak
 }
 
 // ─── Core execution ────────────────────────────────────────────────
@@ -153,8 +155,27 @@ export async function executeAgent(
 
     const pnlPct = (stock.close - pos.avgPrice) / pos.avgPrice;
     let sellReason = "";
+
+    // Update peak P&L
+    const newPeak = Math.max(pos.peakPnlPct, pnlPct);
+    if (newPeak > pos.peakPnlPct) {
+      await prisma.position.update({
+        where: { agentId_ticker: { agentId, ticker: pos.ticker } },
+        data: { peakPnlPct: newPeak },
+      });
+    }
+
     if (pnlPct <= clPct) sellReason = `CL ${(pnlPct * 100).toFixed(1)}%`;
     else if (pnlPct >= tpPct) sellReason = `TP +${(pnlPct * 100).toFixed(1)}%`;
+    // Trailing TP: pernah peak ≥ trigger, turun ke stop
+    else if (
+      options?.trailingTriggerPct &&
+      options?.trailingStopPct &&
+      newPeak >= options.trailingTriggerPct &&
+      pnlPct <= options.trailingStopPct
+    ) {
+      sellReason = `Trailing TP +${(pnlPct * 100).toFixed(1)}% (peak +${(newPeak * 100).toFixed(1)}%)`;
+    }
 
     if (sellReason) {
       const totalValue = stock.close * pos.qty * 100;

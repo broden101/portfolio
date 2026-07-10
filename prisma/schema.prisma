@@ -22,14 +22,15 @@ model Agent {
 }
 
 model Position {
-  id        Int      @id @default(autoincrement())
-  agentId   String
-  ticker    String
-  qty       Int
-  avgPrice  Float
-  openedAt  DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  agentId     String
+  ticker      String
+  qty         Int
+  avgPrice    Float
+  peakPnlPct  Float    @default(0)
+  openedAt    DateTime @default(now())
 
-  agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
 
   @@unique([agentId, ticker])
 }
