@@ -27,8 +27,9 @@ export async function GET() {
       avatar: a.avatar,
       capital: a.initialCapital,
       cash: a.cash,
-      learnedTpPct: a.learnedTpPct,
       evolutionGeneration: a.evolutionGen,
+      sellTrigger: a.sellTrigger,
+      minProfitToSell: a.minProfitToSell,
       holdings: a.positions.map((p) => ({
         ticker: p.ticker,
         buyPrice: p.avgPrice,
