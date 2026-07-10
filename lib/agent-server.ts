@@ -1,5 +1,4 @@
-// Server-side agent execution logic
-// Learning + evolution system — agent belajar dari log trading
+// Agent learning & evolution — evolve sellTrigger and minProfitToSell from trade log
 
 import { prisma } from "./db";
 
