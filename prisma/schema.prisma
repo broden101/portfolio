@@ -14,9 +14,9 @@ model Agent {
   initialCapital  Float    @default(100000000)
   cash            Float    @default(100000000)
   evolutionGen    Int      @default(0)
-  sellTrigger     String   @default("vwap")
-  minProfitToSell Float    @default(0)
-  learningLog     Json     @default("[]")
+  sellTrigger     String   @default("vwap") @map("sellTrigger")
+  minProfitToSell Float    @default(0) @map("minProfitToSell")
+  learningLog     Json     @default("[]") @map("learningLog")
   positions       Position[]
   transactions    Transaction[]
   createdAt       DateTime @default(now())
