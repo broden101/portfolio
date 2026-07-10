@@ -264,6 +264,32 @@ export default function IHSGDashboard() {
     return { net7d: sumDays(7), net14d: sumDays(14), net30d: sumDays(30) };
   }, [flowHistory]);
 
+  // MTD and YTD cumulative from history
+  const cumulativeFlow = useMemo(() => {
+    const now = new Date();
+    const curYear = now.getFullYear();
+    const curMonth = now.getMonth();
+    const monthStr = String(curMonth + 1).padStart(2, "0");
+    const yearStart = `${curYear}-01-01`;
+    const monthStart = `${curYear}-${monthStr}-01`;
+    const mtd = flowHistory
+      .filter(d => d.date >= monthStart)
+      .reduce((s, d) => s + d.dailyNet, 0);
+    const ytd = flowHistory
+      .filter(d => d.date >= yearStart)
+      .reduce((s, d) => s + d.dailyNet, 0);
+    // Today's net from latest day in history
+    const todayNet = flowHistory.length > 0 ? flowHistory[flowHistory.length - 1].dailyNet : null;
+    // Rolling cumulative sums for history chart (cumulative from start of data)
+    const cumulative = [];
+    let running = 0;
+    for (const d of flowHistory) {
+      running += d.dailyNet;
+      cumulative.push({ date: d.date, cumNet: running });
+    }
+    return { mtd, ytd, todayNet, cumulative, startDate: flowHistory[0]?.date ?? "" };
+  }, [flowHistory]);
+
   // Top movers computed from raw foreign flow data
   const topMovers = useMemo(() => {
     if (!ff?.rawAccumulation || !ff?.rawDistribution) return null;
@@ -569,9 +595,9 @@ export default function IHSGDashboard() {
               <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Net Flow Asing Kumulatif</h3>
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: "Today", value: ff?.weekNet ?? null, unit: "M", div: 1e3 },
-                  { label: "MTD", value: ff?.mtdNet ?? null, unit: "M", div: 1e3 },
-                  { label: "YTD", value: ff?.ytdNet ?? null, unit: "T", div: 1e6 },
+                  { label: "Hari Ini", value: cumulativeFlow.todayNet ?? (ff?.weekNet ?? null), unit: "M", div: 1e3 },
+                  { label: "MTD", value: cumulativeFlow.mtd, unit: "M", div: 1e3 },
+                  { label: "YTD", value: cumulativeFlow.ytd, unit: "T", div: 1e6 },
                 ].map((r) => (
                   <div key={r.label} className="border border-[#2C261E] p-3 text-center">
                     <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
@@ -585,13 +611,29 @@ export default function IHSGDashboard() {
               </div>
               {flowHistory.length > 0 && (
                 <div className="mt-4 pt-3 border-t border-[#2C261E]">
+                  {/* Rolling cumulative: 7d / 14d / 30d */}
+                  <div className="grid grid-cols-3 gap-2 mb-3">
+                    {[
+                      { label: "7 Hari", value: rollingNetFlow.net7d.total, div: 1e3, unit: "M" },
+                      { label: "14 Hari", value: rollingNetFlow.net14d.total, div: 1e3, unit: "M" },
+                      { label: "30 Hari", value: rollingNetFlow.net30d.total, div: 1e3, unit: "M" },
+                    ].map((r) => (
+                      <div key={r.label} className="text-center">
+                        <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.1em] uppercase">{r.label}</div>
+                        <div className={`text-xs font-mono font-medium ${r.value >= 0 ? "text-emerald-400/80" : "text-red-400/80"}`}>
+                          {r.value >= 0 ? "+" : ""}Rp {(r.value / r.div).toFixed(1).replace(".", ",")}{r.unit}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Daily bar chart */}
                   <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Tren Harian (Miliar Rp)</div>
                   <div className="flex items-end gap-0.5 h-12">
                     {flowHistory.slice(-30).map((d, i) => {
                       const maxAbs = Math.max(...flowHistory.slice(-30).map(x => Math.abs(x.dailyNet)), 1);
                       const h = Math.min(Math.abs(d.dailyNet) / maxAbs * 100, 100);
                       return (
-                        <div key={i} className="flex-1 flex items-end justify-center" title={`${d.date}: ${fmtMiliar(d.dailyNet / 1000)}`}>
+                        <div key={i} className="flex-1 flex items-end justify-center" title={`${d.date}: ${(d.dailyNet / 1e3).toFixed(1)}M`}>
                           <div
                             className={`w-full ${d.dailyNet >= 0 ? "bg-emerald-400/60" : "bg-red-400/60"}`}
                             style={{ height: `${Math.max(h, 2)}%` }}
@@ -600,10 +642,40 @@ export default function IHSGDashboard() {
                       );
                     })}
                   </div>
-                  <div className="flex justify-between text-[#B8AA96]/30 text-[8px] mt-1">
+                  <div className="flex justify-between text-[#B8AA96]/30 text-[8px] mt-1 mb-3">
                     <span>{flowHistory.slice(-30)[0]?.date ?? ""}</span>
                     <span>{flowHistory.slice(-1)[0]?.date ?? ""}</span>
                   </div>
+                  {/* Cumulative line chart */}
+                  {cumulativeFlow.cumulative.length > 0 && (
+                    <>
+                      <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Kumulatif (Miliar Rp) · sejak {cumulativeFlow.startDate}</div>
+                      <div className="flex items-end gap-0.5 h-16">
+                        {(() => {
+                          const slice = cumulativeFlow.cumulative;
+                          const maxAbs = Math.max(...slice.map(x => Math.abs(x.cumNet)), 1);
+                          const minVal = Math.min(...slice.map(x => x.cumNet));
+                          const maxVal = Math.max(...slice.map(x => x.cumNet));
+                          const range = Math.max(maxVal - minVal, 1);
+                          return slice.map((d, i) => {
+                            const h = ((d.cumNet - minVal) / range) * 100;
+                            return (
+                              <div key={i} className="flex-1 flex items-end justify-center" title={`${d.date}: ${(d.cumNet / 1e3).toFixed(1)}M`}>
+                                <div
+                                  className={`w-full ${d.cumNet >= 0 ? "bg-emerald-400/40" : "bg-red-400/40"} ${i === slice.length - 1 ? "bg-emerald-400/80" : ""}`}
+                                  style={{ height: `${Math.max(h, 2)}%` }}
+                                />
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+                      <div className="flex justify-between text-[#B8AA96]/30 text-[8px] mt-1">
+                        <span>{cumulativeFlow.cumulative[0]?.date ?? ""}</span>
+                        <span>{cumulativeFlow.cumulative[cumulativeFlow.cumulative.length - 1]?.date ?? ""}</span>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>
