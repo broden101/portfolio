@@ -21,6 +21,7 @@ export interface StockRow {
 
 /** BSJP — Beli Sore Jual Pagi: momentum kuat jelang tutup */
 export function bertotFilter(stock: StockRow): boolean {
+  if (stock.close <= HARGA_MIN) return false;
   const closeNearHigh = stock.high > 0 && ((stock.high - stock.close) / stock.high) * 100 <= 3;
   const volRatio = stock.avg_vol_10d > 0 ? stock.volume / stock.avg_vol_10d : 0;
   return closeNearHigh && volRatio >= 1.2 && stock.close >= stock.vwap && stock.rsi >= 35 && stock.rsi <= 70;
@@ -28,19 +29,21 @@ export function bertotFilter(stock: StockRow): boolean {
 
 /** Reversal — oversold + MACD golden cross */
 export function dondonFilter(stock: StockRow): boolean {
+  if (stock.close <= HARGA_MIN) return false;
   return stock.rsi < 35 && (stock.macd - stock.macd_signal) > 0;
 }
 
 /** Uptrend + VWAP — trending bullish */
 export function ragaCCFilter(stock: StockRow): boolean {
+  if (stock.close <= HARGA_MIN) return false;
   return stock.close > stock.sma20 && stock.sma20 > stock.sma50 && stock.close > stock.vwap;
 }
 
 /** AntekAsing — foreign accumulation. */
 export function antekAsingFilter(accumulatedTickers: Set<string>): (s: StockRow) => boolean {
   return (stock: StockRow) =>
+    stock.close > HARGA_MIN &&
     accumulatedTickers.has(stock.name) &&
-    stock.close > 50 &&
     stock.rsi >= 30 &&
     stock.rsi <= 75;
 }
@@ -85,6 +88,7 @@ export function getWibTime(): string {
 const POSITION_SIZE = 25_000_000; // Rp 25jt per trade
 const MAX_POSITIONS = 4;
 const CL_PCT = -0.03; // PATEN
+const HARGA_MIN = 400; // minimal harga saham
 
 interface ExecuteResult {
   agentId: string;
@@ -144,7 +148,11 @@ export async function executeAgent(
     if (pnlPct <= CL_PCT) {
       sellReason = `CL ${(pnlPct * 100).toFixed(1)}%`;
     }
-    // ── Priority 2: Price action TP (hanya kalo profit >= minProfit) ──
+    // ── Priority 1.5: Harga di bawah 400 — jual ────────────────────
+    else if (stock.close < HARGA_MIN) {
+      sellReason = `Harga ${stock.close} < ${HARGA_MIN} — jual`;
+    }
+    // ── Priority 2: Price action TP ────────────────────────────────
     else if (pnlPct >= minProfit) {
       if (sellTrigger === "vwap" && stock.close < stock.vwap) {
         sellReason = `TP (vwap) — profit ${(pnlPct * 100).toFixed(1)}%, close < VWAP`;
