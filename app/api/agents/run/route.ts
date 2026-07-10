@@ -6,6 +6,7 @@ import {
   dondonFilter,
   ragaCCFilter,
   antekAsingFilter,
+  konglomerasiFilter,
   isMarketHours,
   getWibTime,
 } from "@/lib/agent-server";
@@ -25,6 +26,34 @@ const IDX100 = [
   "RAJA","RATU","SCMA","SGER","SIDO","SMGR","SMIL","SMRA","SSIA","TAPG",
   "TCPI","TINS","TLKM","TOBA","TOWR","TPIA","UNTR","UNVR","WIFI","WIRG",
 ];
+
+// ─── Konglomerasi tickers ─────────────────────────────────────────
+const KONGLO_TICKERS = [
+  // Happy Hapsoro
+  "RAJA","RATU","BUVA",
+  // Bakri
+  "BUMI","BRMS","DEWA","ENRG","VKTR","BNBR",
+  // PP
+  "PTRO","CUAN","BREN","BRPT","TPIA","CDIA","SSIA",
+  // Thohir
+  "ADRO","EMAS","ADMR","ESSA","MDKA","AADI","BFIN",
+  // Sinarmas
+  "DSSA","TKIM","INKP",
+  // Aguan
+  "PANI",
+  // Haji Isam
+  "JARR","TEBE",
+  // Tanoko
+  "AVIA","CLEO",
+  // SCM
+  "EMTK","SCMA",
+  // Jerry Ng
+  "ARTO",
+];
+const KONGLO_SET = new Set(KONGLO_TICKERS);
+
+// Non-IDX100 konglo tickers that must be added to scanner
+const EXTRA_TICKERS = KONGLO_TICKERS.filter(t => !IDX100.includes(t));
 
 /** Fetch top foreign accumulation tickers — dual source: Stockbit file (manual) + Tradersaham API */
 async function fetchForeignAccumulation(): Promise<Set<string>> {
@@ -91,7 +120,7 @@ export async function POST(req: NextRequest) {
           "VWAP","RSI","SMA20","SMA50","MACD.macd","MACD.signal","market_cap_basic",
         ],
         filter: [
-          { left: "name", operation: "in_range", right: IDX100 },
+          { left: "name", operation: "in_range", right: [...IDX100, ...EXTRA_TICKERS] },
           { left: "is_primary", operation: "equal", right: true },
         ],
         range: [0, 200],
@@ -141,6 +170,7 @@ export async function POST(req: NextRequest) {
       { id: "dondon",    filter: dondonFilter,                                    label: "Reversal" },
       { id: "ragacc",    filter: ragaCCFilter,                                    label: "Uptrend+VWAP" },
       { id: "antekasing",filter: antekAsingFilter(foreignAccum),                  label: "AntekAsing" },
+      { id: "konglomerasi", filter: konglomerasiFilter(KONGLO_SET),               label: "Konglomerasi" },
     ];
 
     // Execute all agents

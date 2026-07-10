@@ -48,6 +48,16 @@ export function antekAsingFilter(accumulatedTickers: Set<string>): (s: StockRow)
     stock.rsi <= 75;
 }
 
+/** Konglomerasi — conglomerate stocks with uptrend+VWAP filter. */
+export function konglomerasiFilter(kongloTickers: Set<string>): (s: StockRow) => boolean {
+  return (stock: StockRow) =>
+    stock.close > HARGA_MIN &&
+    kongloTickers.has(stock.name) &&
+    stock.close > stock.vwap &&
+    stock.rsi >= 30 &&
+    stock.rsi <= 75;
+}
+
 // ─── WIB time helpers ──────────────────────────────────────────────
 
 function wibDate(): Date {
