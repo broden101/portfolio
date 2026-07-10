@@ -409,7 +409,8 @@ async function buySignals(
 async function sellAll(agentId: string, stockData: StockRow[], reason: string): Promise<ExecuteResult> {
   const details: string[] = [];
   let sells = 0;
-  let newCash = 0;
+  const agent = await prisma.agent.findUnique({ where: { id: agentId } });
+  let newCash = agent?.cash ?? 0;
 
   const positions = await prisma.position.findMany({ where: { agentId } });
   if (positions.length === 0) return { agentId, buys: 0, sells: 0, details: ["BSJP: no position to sell"] };
