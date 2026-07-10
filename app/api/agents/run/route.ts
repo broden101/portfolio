@@ -7,6 +7,7 @@ import {
   ragaCCFilter,
   antekAsingFilter,
   konglomerasiFilter,
+  wmiFilter,
   isMarketHours,
   getWibTime,
 } from "@/lib/agent-server";
@@ -54,6 +55,16 @@ const KONGLO_SET = new Set(KONGLO_TICKERS);
 
 // Non-IDX100 konglo tickers that must be added to scanner
 const EXTRA_TICKERS = KONGLO_TICKERS.filter(t => !IDX100.includes(t));
+
+// ─── WMI / Hedge Fund tickers ────────────────────────────────────
+const WMI_TICKERS = [
+  "TINS","ANTM","TLKM","INCO","NCKL","ARCI","ISAT",
+  "BMRI","BBRI","BBCA","MDKA","AMMN","BREN","MBMA",
+  "AMRT","BRMS","ELSA","PGAS","BUMI","TAPG",
+  "NSSS","AALI","ASII","UNTR","PTBA","BRIS",
+];
+const WMI_SET = new Set(WMI_TICKERS);
+const EXTRA_WMI = WMI_TICKERS.filter(t => !IDX100.includes(t));
 
 /** Fetch top foreign accumulation tickers — dual source: Stockbit file (manual) + Tradersaham API */
 async function fetchForeignAccumulation(): Promise<Set<string>> {
@@ -120,7 +131,7 @@ export async function POST(req: NextRequest) {
           "VWAP","RSI","SMA20","SMA50","MACD.macd","MACD.signal","market_cap_basic",
         ],
         filter: [
-          { left: "name", operation: "in_range", right: [...IDX100, ...EXTRA_TICKERS] },
+          { left: "name", operation: "in_range", right: [...IDX100, ...EXTRA_TICKERS, ...EXTRA_WMI] },
           { left: "is_primary", operation: "equal", right: true },
         ],
         range: [0, 200],
@@ -171,6 +182,7 @@ export async function POST(req: NextRequest) {
       { id: "ragacc",    filter: ragaCCFilter,                                    label: "Uptrend+VWAP" },
       { id: "antekasing",filter: antekAsingFilter(foreignAccum),                  label: "AntekAsing" },
       { id: "konglomerasi", filter: konglomerasiFilter(KONGLO_SET),               label: "Konglomerasi" },
+      { id: "hedgefund",    filter: wmiFilter(WMI_SET),                                  label: "Hedge Fund" },
     ];
 
     // Execute all agents

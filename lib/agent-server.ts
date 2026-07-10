@@ -58,6 +58,16 @@ export function konglomerasiFilter(kongloTickers: Set<string>): (s: StockRow) =>
     stock.rsi <= 75;
 }
 
+/** Hedge Fund / WMI — large cap, MSCI, high foreign ownership, dividend. */
+export function wmiFilter(wmiTickers: Set<string>): (s: StockRow) => boolean {
+  return (stock: StockRow) =>
+    stock.close > HARGA_MIN &&
+    wmiTickers.has(stock.name) &&
+    stock.close > stock.vwap &&
+    stock.rsi >= 30 &&
+    stock.rsi <= 75;
+}
+
 // ─── WIB time helpers ──────────────────────────────────────────────
 
 function wibDate(): Date {
