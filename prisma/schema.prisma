@@ -17,6 +17,7 @@ model Agent {
   sellTrigger     String   @default("vwap")
   minProfitToSell Float    @default(0)
   learningLog     Json     @default("[]")
+  updatedAt       DateTime @updatedAt
   positions       Position[]
   transactions    Transaction[]
   createdAt       DateTime @default(now())
