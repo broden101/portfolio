@@ -63,6 +63,7 @@ const WMI_TICKERS = [
   "AMRT","BRMS","ELSA","PGAS","BUMI","TAPG",
   "NSSS","AALI","ASII","UNTR","PTBA","BRIS",
   "ADRO","AADI","ADMR","PGEO",
+  "BRPT","DSSA","TPIA",
 ];
 const WMI_SET = new Set(WMI_TICKERS);
 const EXTRA_WMI = WMI_TICKERS.filter(t => !IDX100.includes(t));
