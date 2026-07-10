@@ -91,8 +91,7 @@ export function getWibTime(): string {
 
 const POSITION_SIZE = 25_000_000; // Rp 25jt per trade
 const MAX_POSITIONS = 4;
-const CL_PCT = -0.03;
-const TP_PCT = 0.04;
+const CL_PCT = -0.03; // PATEN — tidak bisa diubah
 
 interface ExecuteResult {
   agentId: string;
@@ -101,10 +100,8 @@ interface ExecuteResult {
   details: string[];
 }
 
-/** Options for executeAgent — allows per-agent CL/TP override */
+/** Options for executeAgent — allows per-agent override */
 export interface ExecuteOptions {
-  clPct?: number;  // e.g. -0.03
-  tpPct?: number;  // e.g. 0.03, or Infinity for no TP
   trailingTriggerPct?: number;  // e.g. 0.025 — mulai trail setelah profit ini
   trailingStopPct?: number;     // e.g. 0.02 — TP kalau turun ke sini dari peak
 }
@@ -120,9 +117,9 @@ export async function executeAgent(
   const agent = await prisma.agent.findUnique({ where: { id: agentId } });
   if (!agent) return { agentId, buys: 0, sells: 0, details: ["Agent not found"] };
 
-  // Per-agent CL/TP (default: global CL/TP)
-  const clPct = options?.clPct ?? CL_PCT;
-  const tpPct = options?.tpPct ?? TP_PCT;
+  // CL paten, TP dari agent (learned via evolusi)
+  const clPct = CL_PCT;
+  const tpPct = agent.learnedTpPct ?? 0.04;
 
   // ── BSJP special handling ────────────────────────────────────────
   if (agent.strategy === "bsjp") {
@@ -138,7 +135,7 @@ export async function executeAgent(
     return { agentId, buys: 0, sells: 0, details: ["BSJP: tunggu jam buy (15:30) atau sell (09:00)"] };
   }
 
-  // ── Normal CL/TP logic (Dondon/ragaCC) ───────────────────────────
+  // ── Normal CL/TP logic (Dondon/ragaCC/AntekAsing) ───────────────
   let cash = agent.cash;
   let buys = 0;
   let sells = 0;
@@ -234,7 +231,71 @@ export async function executeAgent(
   // Update cash
   await prisma.agent.update({ where: { id: agentId }, data: { cash } });
 
+  // ── Learning: analisa trade history → evolve TP ──────────────────
+  if (sells > 0) {
+    const learnResult = await runLearning(agentId);
+    if (learnResult) details.push(learnResult);
+  }
+
   return { agentId, buys, sells, details };
+}
+
+// ─── Learning / Evolution ──────────────────────────────────────────
+
+/**
+ * Analisa trade history agent → adjust learnedTpPct.
+ * CL tetap -3% (paten), hanya TP yg berevolusi.
+ * Minimal 5 closed trades (sells with pnl) untuk mulai belajar.
+ */
+async function runLearning(agentId: string): Promise<string | null> {
+  const closedTrades = await prisma.transaction.findMany({
+    where: { agentId, side: "sell", pnl: { not: null } },
+    orderBy: { executedAt: "desc" },
+    take: 50, // limit to recent 50 sells
+  });
+
+  if (closedTrades.length < 5) return null;
+
+  const wins = closedTrades.filter((t) => (t.pnl ?? 0) > 0);
+  const losses = closedTrades.filter((t) => (t.pnl ?? 0) <= 0);
+  const winRate = wins.length / closedTrades.length;
+  const avgWin = wins.length > 0 ? wins.reduce((s, t) => s + (t.pnl ?? 0), 0) / wins.length : 0;
+  const avgLoss = losses.length > 0 ? Math.abs(losses.reduce((s, t) => s + (t.pnl ?? 0), 0) / losses.length) : 1;
+  const profitFactor = avgLoss > 0 ? avgWin / avgLoss : 0;
+
+  const agent = await prisma.agent.findUnique({ where: { id: agentId } });
+  if (!agent) return null;
+
+  const currentTp = agent.learnedTpPct ?? 0.04;
+  let newTp = currentTp;
+  let reason = "";
+
+  // Evolve TP based on performance
+  if (winRate > 0.60 && profitFactor > 1.5) {
+    // Bagus — biarkan pemenang berlari lebih jauh
+    newTp = Math.min(0.10, currentTp + 0.005); // +0.5%
+    reason = `Win ${(winRate * 100).toFixed(0)}%, PF ${profitFactor.toFixed(1)} → TP naik ${(newTp * 100).toFixed(1)}%`;
+  } else if (winRate < 0.40 || profitFactor < 1.0) {
+    // Kurang bagus — ambil profit lebih cepat
+    newTp = Math.max(0.02, currentTp - 0.005); // -0.5%
+    reason = `Win ${(winRate * 100).toFixed(0)}%, PF ${profitFactor.toFixed(1)} → TP turun ${(newTp * 100).toFixed(1)}%`;
+  } else {
+    // Netral — pertahankan TP saat ini
+    return null;
+  }
+
+  if (newTp !== currentTp) {
+    await prisma.agent.update({
+      where: { id: agentId },
+      data: {
+        learnedTpPct: newTp,
+        evolutionGen: { increment: 1 },
+      },
+    });
+    return `🧬 ${reason}`;
+  }
+
+  return null;
 }
 
 // ─── BSJP helpers ──────────────────────────────────────────────────

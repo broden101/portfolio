@@ -141,7 +141,7 @@ export async function POST(req: NextRequest) {
       { id: "bertot",    filter: bertotFilter,                                    label: "BSJP" },
       { id: "dondon",    filter: dondonFilter,                                    label: "Reversal" },
       { id: "ragacc",    filter: ragaCCFilter,                                    label: "Uptrend+VWAP" },
-      { id: "antekasing",filter: antekAsingFilter(foreignAccum),                  label: "AntekAsing", options: { tpPct: 0.03, trailingTriggerPct: 0.025, trailingStopPct: 0.02 } },
+      { id: "antekasing",filter: antekAsingFilter(foreignAccum),                  label: "AntekAsing", options: { trailingTriggerPct: 0.025, trailingStopPct: 0.02 } },
     ];
 
     // Execute all agents
