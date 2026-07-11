@@ -628,20 +628,6 @@ export default function IHSGDashboard() {
                   </div>
                   {/* Historis Harian */}
                   <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Historis Harian (Miliar Rp)</div>
-                  <div className="max-h-64 overflow-y-auto mb-3">
-                    <table className="w-full text-[10px] text-[#B8AA96]/70">
-                      <tbody>
-                        {flowHistory.slice(-15).reverse().map((d, i) => (
-                          <tr key={i} className="border-b border-[#2C261E]/30">
-                            <td className="py-1">{d.date}</td>
-                            <td className={`py-1 text-right ${d.dailyNet >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                              {d.dailyNet >= 0 ? "+" : ""}{(d.dailyNet / 1e3).toFixed(2).replace(".", ",")} M
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
                   {/* Cumulative — text summary */}
                   {cumulativeFlow.cumulative.length > 0 && (
                     <>
