@@ -45,7 +45,7 @@ export interface ScreenerPreset {
   name: string;
   description: string;
   filters: FilterConfig[];
-  universe: "IDX100" | "LQ45" | "CUSTOM";
+  universe: "IDX100" | "LQ45" | "KONGLO" | "CUSTOM";
   customTickers: string[];
   createdAt: string;
 }
@@ -70,7 +70,7 @@ export interface AlertRule {
 
 // App settings
 export interface AppSettings {
-  universe: "IDX100" | "LQ45" | "CUSTOM";
+  universe: "IDX100" | "LQ45" | "KONGLO" | "CUSTOM";
   customTickers: string[];
   activePresetId: string | null;
   presets: ScreenerPreset[];
@@ -157,6 +157,28 @@ export const STOCK_UNIVERSES: Record<string, string[]> = {
     "EMTK", "TOWR", "TBIG", "MTEL", "AALI", "LSIP", "DSNG", "MNCN",
     "SCMA", "BSDE", "CTRA", "SMRA", "PWON", "LPKR", "DILD", "AUTO",
     "BREN", "CUAN", "DSSA", "MBMA", "ESSA", "PTRO", "ARNA", "INDY", "HRUM",
+  ],
+  KONGLO: [
+    // Happy Hapsoro
+    "RAJA","RATU","BUVA",
+    // Bakri
+    "BUMI","BRMS","DEWA","ENRG","VKTR","BNBR",
+    // PP
+    "PTRO","CUAN","BREN","BRPT","TPIA","CDIA","SSIA",
+    // Thohir
+    "ADRO","EMAS","ADMR","ESSA","MDKA","AADI","BFIN",
+    // Sinarmas
+    "DSSA","TKIM","INKP",
+    // Aguan
+    "PANI",
+    // Haji Isam
+    "JARR","TEBE",
+    // Tanoko
+    "AVIA","CLEO",
+    // SCM
+    "EMTK","SCMA",
+    // Lippo
+    "LPPF","MAPI",
   ],
   LQ45: [
     "ACES", "ADRO", "AMRT", "ANTM", "ASII", "BBCA", "BBNI", "BBRI",

@@ -21,12 +21,12 @@ export default function ScreenerPage() {
   const [filters, setFilters] = useState<FilterConfig[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [scanning, setScanning] = useState(false);
-  const [universe, setUniverse] = useState<"IDX100" | "LQ45">("IDX100");
+  const [universe, setUniverse] = useState<"IDX100" | "LQ45" | "KONGLO">("IDX100");
 
   useEffect(() => {
     const settings = getSettings();
     setFilters(settings.defaultFilters);
-    setUniverse(settings.universe === "CUSTOM" ? "IDX100" : settings.universe);
+    setUniverse((settings.universe === "CUSTOM" || !["IDX100", "LQ45", "KONGLO"].includes(settings.universe)) ? "IDX100" : settings.universe as "IDX100" | "LQ45" | "KONGLO");
     const cached = getCachedResults();
     if (cached.length > 0) setResults(cached as unknown as ScreenResult[]);
     setLoaded(true);
@@ -50,7 +50,7 @@ export default function ScreenerPage() {
     });
   };
 
-  const changeUniverse = (u: "IDX100" | "LQ45") => {
+  const changeUniverse = (u: "IDX100" | "LQ45" | "KONGLO") => {
     setUniverse(u);
     saveSettings({ ...getSettings(), universe: u });
   };
@@ -135,7 +135,7 @@ export default function ScreenerPage() {
               <span className="text-[#B8AA96]/60 text-xs tracking-wider uppercase">
                 Universe:
               </span>
-              {(["IDX100", "LQ45"] as const).map((u) => (
+              {(["IDX100", "LQ45", "KONGLO"] as const).map((u) => (
                 <button
                   key={u}
                   onClick={() => changeUniverse(u)}
