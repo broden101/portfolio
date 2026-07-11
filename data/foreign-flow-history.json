@@ -514,6 +514,48 @@
       "totalForeignSell": 4277066016900
     },
     {
+      "date": "2026-06-23",
+      "dailyNet": -334298,
+      "sectorTotal": -334298271400,
+      "totalForeignBuy": 0,
+      "totalForeignSell": 0
+    },
+    {
+      "date": "2026-06-24",
+      "dailyNet": -1153435,
+      "sectorTotal": -1153435091300,
+      "totalForeignBuy": 0,
+      "totalForeignSell": 0
+    },
+    {
+      "date": "2026-06-25",
+      "dailyNet": -198242,
+      "sectorTotal": -198241917300,
+      "totalForeignBuy": 0,
+      "totalForeignSell": 0
+    },
+    {
+      "date": "2026-06-26",
+      "dailyNet": -286770,
+      "sectorTotal": -286769668500,
+      "totalForeignBuy": 0,
+      "totalForeignSell": 0
+    },
+    {
+      "date": "2026-06-29",
+      "dailyNet": -852862,
+      "sectorTotal": -852862279900,
+      "totalForeignBuy": 0,
+      "totalForeignSell": 0
+    },
+    {
+      "date": "2026-06-30",
+      "dailyNet": -1181862,
+      "sectorTotal": -1181862028000,
+      "totalForeignBuy": 0,
+      "totalForeignSell": 0
+    },
+    {
       "date": "2026-07-01",
       "dailyNet": -537405,
       "sectorTotal": -537405362200,
