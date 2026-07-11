@@ -621,7 +621,7 @@ export default function IHSGDashboard() {
                       <div key={r.label} className="text-center">
                         <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.1em] uppercase">{r.label}</div>
                         <div className={`text-xs font-mono font-medium ${r.value >= 0 ? "text-emerald-400/80" : "text-red-400/80"}`}>
-                          {r.value >= 0 ? "+" : ""}Rp {(Math.abs(r.value) >= 10000 ? Math.abs(r.value / 1e6) : Math.abs(r.value / r.div)).toFixed(Math.abs(r.value) >= 10000 ? 2 : 1).replace(".", ",")}
+                          {r.value >= 0 ? "+" : "-"}Rp {(Math.abs(r.value) >= 10000 ? Math.abs(r.value / 1e6) : Math.abs(r.value / r.div)).toFixed(Math.abs(r.value) >= 10000 ? 2 : 1).replace(".", ",")}
                           {Math.abs(r.value) >= 10000 ? "T" : r.unit}
                         </div>
                       </div>
