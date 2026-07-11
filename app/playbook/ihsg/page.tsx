@@ -602,7 +602,7 @@ export default function IHSGDashboard() {
                   <div key={r.label} className="border border-[#2C261E] p-3 text-center">
                     <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
                     <div className={`text-sm font-mono font-medium ${r.value == null ? "text-[#B8AA96]/30" : r.value >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                      {r.value != null ? `${r.value >= 0 ? "" : "-"}Rp ${Math.abs(r.value / r.div).toFixed(2).replace(".", ",")}${r.unit}` : "—"}
+                      {r.value != null ? `${r.value >= 0 ? "" : "-"}Rp ${Math.abs(r.value / (Math.abs(r.value) >= 10000 ? 1e6 : r.div)).toFixed(2).replace(".", ",")}${Math.abs(r.value) >= 10000 ? "T" : r.unit}` : "—"}
                     </div>
                     {r.label === "MTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{new Date().toLocaleDateString("id-ID", { month: "long" })}</div>}
                     {r.label === "YTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{new Date().getFullYear()}</div>}
