@@ -612,15 +612,15 @@ export default function IHSGDashboard() {
               {flowHistory.length > 0 && (
                 <div className="mt-4 pt-3 border-t border-[#2C261E]">
                   {/* Rolling cumulative: 7d / 14d / 30d */}
-                  <div className="grid grid-cols-3 gap-2 mb-3">
+                  <div className="grid grid-cols-3 gap-3 mb-3">
                     {[
                       { label: "7 Hari", value: rollingNetFlow.net7d.total, div: 1e3, unit: "M" },
                       { label: "14 Hari", value: rollingNetFlow.net14d.total, div: 1e3, unit: "M" },
                       { label: "30 Hari", value: rollingNetFlow.net30d.total, div: 1e3, unit: "M" },
                     ].map((r) => (
-                      <div key={r.label} className="text-center">
-                        <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.1em] uppercase">{r.label}</div>
-                        <div className={`text-xs font-mono font-medium ${r.value >= 0 ? "text-emerald-400/80" : "text-red-400/80"}`}>
+                      <div key={r.label} className="border border-[#2C261E] p-3 text-center">
+                        <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
+                        <div className={`text-sm font-mono font-medium ${r.value >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                           {r.value >= 0 ? "+" : "-"}Rp {(Math.abs(r.value) >= 10000 ? Math.abs(r.value / 1e6) : Math.abs(r.value / r.div)).toFixed(Math.abs(r.value) >= 10000 ? 2 : 1).replace(".", ",")}
                           {Math.abs(r.value) >= 10000 ? "T" : r.unit}
                         </div>
