@@ -626,48 +626,7 @@ export default function IHSGDashboard() {
                       </div>
                     ))}
                   </div>
-                  {/* Daily bar chart — replaced with text summary */}
-                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Ringkasan 30 Hari Terakhir</div>
-                  <div className="grid grid-cols-2 gap-2 mb-3">
-                    {(() => {
-                      const slice = flowHistory.slice(-30).filter(d => d.dailyNet !== 0);
-                      const maxIn = slice.length > 0 ? Math.max(...slice.map(d => d.dailyNet)) : 0;
-                      const maxOut = slice.length > 0 ? Math.min(...slice.map(d => d.dailyNet)) : 0;
-                      const avg = slice.length > 0 ? slice.reduce((s, d) => s + d.dailyNet, 0) / slice.length : 0;
-                      const bestDay = slice.find(d => d.dailyNet === maxIn);
-                      const worstDay = slice.find(d => d.dailyNet === maxOut);
-                      return (
-                        <>
-                          <div className="border border-[#2C261E] p-2 text-center">
-                            <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Inflow Terbesar</div>
-                            {bestDay ? (
-                              <>
-                                <div className="text-emerald-400 text-[11px] font-mono font-medium">+Rp {(maxIn / 1e3).toFixed(0).replace(".", ",")}M</div>
-                                <div className="text-[#B8AA96]/30 text-[8px]">{bestDay.date}</div>
-                              </>
-                            ) : <div className="text-[#B8AA96]/30 text-[11px]">—</div>}
-                          </div>
-                          <div className="border border-[#2C261E] p-2 text-center">
-                            <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Outflow Terbesar</div>
-                            {worstDay ? (
-                              <>
-                                <div className="text-red-400 text-[11px] font-mono font-medium">-Rp {(Math.abs(maxOut) / 1e3).toFixed(0).replace(".", ",")}M</div>
-                                <div className="text-[#B8AA96]/30 text-[8px]">{worstDay.date}</div>
-                              </>
-                            ) : <div className="text-[#B8AA96]/30 text-[11px]">—</div>}
-                          </div>
-                          <div className="border border-[#2C261E] p-2 text-center col-span-2">
-                            <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Rata-rata Harian</div>
-                            <div className={`text-[11px] font-mono font-medium ${avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                              {avg >= 0 ? "+" : ""}Rp {(avg / 1e3).toFixed(1).replace(".", ",")}M
-                            </div>
-                          </div>
-                        </>
-                      );
-                    })()}
-                  </div>
-
-                  {/* Daily History Table */}
+                  {/* Historis Harian */}
                   <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Historis Harian (Miliar Rp)</div>
                   <div className="max-h-64 overflow-y-auto mb-3">
                     <table className="w-full text-[10px] text-[#B8AA96]/70">
