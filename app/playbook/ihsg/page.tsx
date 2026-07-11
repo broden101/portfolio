@@ -641,39 +641,9 @@ export default function IHSGDashboard() {
                         ))}
                       </tbody>
                     </table>
-                  </div>
-                  {/* Cumulative — text summary */}
-                  {cumulativeFlow.cumulative.length > 0 && (
-                    <>
-                      <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Kumulatif · sejak {cumulativeFlow.startDate}</div>
-                      <div className="grid grid-cols-2 gap-2 mb-3">
-                        <div className="border border-[#2C261E] p-2 text-center">
-                          <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Total Kumulatif</div>
-                          {(() => {
-                            const last = cumulativeFlow.cumulative[cumulativeFlow.cumulative.length - 1];
-                            return (
-                              <div className={`text-[11px] font-mono font-medium ${last.cumNet >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                                {last.cumNet >= 0 ? "+" : ""}Rp {(last.cumNet / 1e3).toFixed(2).replace(".", ",")}M
-                              </div>
-                            );
-                          })()}
-                        </div>
-                        <div className="border border-[#2C261E] p-2 text-center">
-                          <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Hari Paling Bearish</div>
-                          {(() => {
-                            const w = cumulativeFlow.cumulative.reduce((worst, d) => d.cumNet < worst.cumNet ? d : worst, cumulativeFlow.cumulative[0]);
-                            return (
-                              <>
-                                <div className="text-red-400 text-[11px] font-mono font-medium">-Rp {(Math.abs(w.cumNet) / 1e3).toFixed(0).replace(".", ",")}M</div>
-                                <div className="text-[#B8AA96]/30 text-[8px]">{w.date}</div>
-                              </>
-                            );
-                          })()}
-                        </div>
-                      </div>
-                    </>
-                  )}
-
+                </div>
+              )}
+            </div>
                 </div>
               )}
             </div>
