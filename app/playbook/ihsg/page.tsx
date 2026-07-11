@@ -626,56 +626,95 @@ export default function IHSGDashboard() {
                       </div>
                     ))}
                   </div>
-                  {/* Daily bar chart */}
-                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Tren Harian (Miliar Rp)</div>
-                  <div className="flex items-end gap-0.5 h-12">
-                    {flowHistory.slice(-30).map((d, i) => {
-                      const maxAbs = Math.max(...flowHistory.slice(-30).map(x => Math.abs(x.dailyNet)), 1);
-                      const h = Math.min(Math.abs(d.dailyNet) / maxAbs * 100, 100);
+                  {/* Daily bar chart — replaced with text summary */}
+                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Ringkasan 30 Hari Terakhir</div>
+                  <div className="grid grid-cols-2 gap-2 mb-3">
+                    {(() => {
+                      const slice = flowHistory.slice(-30).filter(d => d.dailyNet !== 0);
+                      const maxIn = slice.length > 0 ? Math.max(...slice.map(d => d.dailyNet)) : 0;
+                      const maxOut = slice.length > 0 ? Math.min(...slice.map(d => d.dailyNet)) : 0;
+                      const avg = slice.length > 0 ? slice.reduce((s, d) => s + d.dailyNet, 0) / slice.length : 0;
+                      const bestDay = slice.find(d => d.dailyNet === maxIn);
+                      const worstDay = slice.find(d => d.dailyNet === maxOut);
                       return (
-                        <div key={i} className="flex-1 flex items-end justify-center" title={`${d.date}: ${(d.dailyNet / 1e3).toFixed(1)}M`}>
-                          <div
-                            className={`w-full ${d.dailyNet >= 0 ? "bg-emerald-400/60" : "bg-red-400/60"}`}
-                            style={{ height: `${Math.max(h, 2)}%` }}
-                          />
-                        </div>
+                        <>
+                          <div className="border border-[#2C261E] p-2 text-center">
+                            <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Inflow Terbesar</div>
+                            {bestDay ? (
+                              <>
+                                <div className="text-emerald-400 text-[11px] font-mono font-medium">+Rp {(maxIn / 1e3).toFixed(0).replace(".", ",")}M</div>
+                                <div className="text-[#B8AA96]/30 text-[8px]">{bestDay.date}</div>
+                              </>
+                            ) : <div className="text-[#B8AA96]/30 text-[11px]">—</div>}
+                          </div>
+                          <div className="border border-[#2C261E] p-2 text-center">
+                            <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Outflow Terbesar</div>
+                            {worstDay ? (
+                              <>
+                                <div className="text-red-400 text-[11px] font-mono font-medium">-Rp {(Math.abs(maxOut) / 1e3).toFixed(0).replace(".", ",")}M</div>
+                                <div className="text-[#B8AA96]/30 text-[8px]">{worstDay.date}</div>
+                              </>
+                            ) : <div className="text-[#B8AA96]/30 text-[11px]">—</div>}
+                          </div>
+                          <div className="border border-[#2C261E] p-2 text-center col-span-2">
+                            <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Rata-rata Harian</div>
+                            <div className={`text-[11px] font-mono font-medium ${avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                              {avg >= 0 ? "+" : ""}Rp {(avg / 1e3).toFixed(1).replace(".", ",")}M
+                            </div>
+                          </div>
+                        </>
                       );
-                    })}
+                    })()}
                   </div>
-                  <div className="flex justify-between text-[#B8AA96]/30 text-[8px] mt-1 mb-3">
-                    <span>{flowHistory.slice(-30)[0]?.date ?? ""}</span>
-                    <span>{flowHistory.slice(-1)[0]?.date ?? ""}</span>
+
+                  {/* Daily History Table */}
+                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Historis Harian (Miliar Rp)</div>
+                  <div className="max-h-64 overflow-y-auto mb-3">
+                    <table className="w-full text-[10px] text-[#B8AA96]/70">
+                      <tbody>
+                        {flowHistory.slice(-15).reverse().map((d, i) => (
+                          <tr key={i} className="border-b border-[#2C261E]/30">
+                            <td className="py-1">{d.date}</td>
+                            <td className={`py-1 text-right ${d.dailyNet >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                              {d.dailyNet >= 0 ? "+" : ""}{(d.dailyNet / 1e3).toFixed(2).replace(".", ",")} M
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
-                  {/* Cumulative line chart */}
+                  {/* Cumulative — text summary */}
                   {cumulativeFlow.cumulative.length > 0 && (
                     <>
-                      <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Kumulatif (Miliar Rp) · sejak {cumulativeFlow.startDate}</div>
-                      <div className="flex items-end gap-0.5 h-16">
-                        {(() => {
-                          const slice = cumulativeFlow.cumulative;
-                          const maxAbs = Math.max(...slice.map(x => Math.abs(x.cumNet)), 1);
-                          const minVal = Math.min(...slice.map(x => x.cumNet));
-                          const maxVal = Math.max(...slice.map(x => x.cumNet));
-                          const range = Math.max(maxVal - minVal, 1);
-                          return slice.map((d, i) => {
-                            const h = ((d.cumNet - minVal) / range) * 100;
+                      <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Kumulatif · sejak {cumulativeFlow.startDate}</div>
+                      <div className="grid grid-cols-2 gap-2 mb-3">
+                        <div className="border border-[#2C261E] p-2 text-center">
+                          <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Total Kumulatif</div>
+                          {(() => {
+                            const last = cumulativeFlow.cumulative[cumulativeFlow.cumulative.length - 1];
                             return (
-                              <div key={i} className="flex-1 flex items-end justify-center" title={`${d.date}: ${(d.cumNet / 1e3).toFixed(1)}M`}>
-                                <div
-                                  className={`w-full ${d.cumNet >= 0 ? "bg-emerald-400/40" : "bg-red-400/40"} ${i === slice.length - 1 ? "bg-emerald-400/80" : ""}`}
-                                  style={{ height: `${Math.max(h, 2)}%` }}
-                                />
+                              <div className={`text-[11px] font-mono font-medium ${last.cumNet >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                                {last.cumNet >= 0 ? "+" : ""}Rp {(last.cumNet / 1e3).toFixed(2).replace(".", ",")}M
                               </div>
                             );
-                          });
-                        })()}
-                      </div>
-                      <div className="flex justify-between text-[#B8AA96]/30 text-[8px] mt-1">
-                        <span>{cumulativeFlow.cumulative[0]?.date ?? ""}</span>
-                        <span>{cumulativeFlow.cumulative[cumulativeFlow.cumulative.length - 1]?.date ?? ""}</span>
+                          })()}
+                        </div>
+                        <div className="border border-[#2C261E] p-2 text-center">
+                          <div className="text-[#B8AA96]/30 text-[7px] tracking-[0.1em] uppercase">Hari Paling Bearish</div>
+                          {(() => {
+                            const w = cumulativeFlow.cumulative.reduce((worst, d) => d.cumNet < worst.cumNet ? d : worst, cumulativeFlow.cumulative[0]);
+                            return (
+                              <>
+                                <div className="text-red-400 text-[11px] font-mono font-medium">-Rp {(Math.abs(w.cumNet) / 1e3).toFixed(0).replace(".", ",")}M</div>
+                                <div className="text-[#B8AA96]/30 text-[8px]">{w.date}</div>
+                              </>
+                            );
+                          })()}
+                        </div>
                       </div>
                     </>
                   )}
+
                 </div>
               )}
             </div>
