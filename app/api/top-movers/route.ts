@@ -99,6 +99,7 @@ function getDaysForPeriod(period: string): number {
     case "1d": return 1;
     case "1w": return 5;   // trading days
     case "1m": return 20;  // trading days
+    case "3m": return 60;  // ~3 mo trading days
     default: return 1;
   }
 }

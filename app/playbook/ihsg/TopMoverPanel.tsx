@@ -33,12 +33,13 @@ interface Props {
   live: boolean;
 }
 
-type Period = "1d" | "1w" | "1m";
+type Period = "1d" | "1w" | "1m" | "3m";
 
 const PERIODS: { key: Period; label: string }[] = [
   { key: "1d", label: "1D" },
   { key: "1w", label: "1W" },
   { key: "1m", label: "1M" },
+  { key: "3m", label: "3M" },
 ];
 
 /* ---------- helpers ---------- */
