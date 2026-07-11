@@ -121,11 +121,11 @@ export function TopMoverPanel({ data, live }: Props) {
   const [period, setPeriod] = useState<Period>("1d");
   const [aggData, setAggData] = useState<AggResult | null>(null);
   const [loading, setLoading] = useState(false);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(10);
 
   const fetchPeriod = useCallback(async (p: Period) => {
     setLoading(true);
-    setLimit(8);
+    setLimit(10);
     try {
       const r = await fetch(`/api/top-movers?period=${p}`);
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -253,10 +253,10 @@ export function TopMoverPanel({ data, live }: Props) {
       {displayData && (
         <div className="text-center pt-1">
           <button
-            onClick={() => setLimit((prev) => (prev === 8 ? 20 : 8))}
+            onClick={() => setLimit((prev) => (prev === 10 ? 20 : 10))}
             className="text-[9px] uppercase tracking-[0.1em] text-[#C6A15B]/60 hover:text-[#C6A15B] transition-colors"
           >
-            {limit === 8 ? "Tampilkan Semua (20)" : "Tampilkan Sedikit"}
+            {limit === 10 ? "Tampilkan Semua (20)" : "Tampilkan Sedikit"}
           </button>
         </div>
       )}
