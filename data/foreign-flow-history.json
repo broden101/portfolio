@@ -430,6 +430,13 @@
       "totalForeignSell": 31296561154200
     },
     {
+      "date": "2026-06-01",
+      "dailyNet": 0,
+      "sectorTotal": 0,
+      "totalForeignBuy": 0,
+      "totalForeignSell": 0
+    },
+    {
       "date": "2026-06-02",
       "dailyNet": -1350543,
       "totalForeignBuy": 8085255367700,
@@ -488,6 +495,13 @@
       "dailyNet": -53628,
       "totalForeignBuy": 8313364694600,
       "totalForeignSell": 8007189249700
+    },
+    {
+      "date": "2026-06-16",
+      "dailyNet": 0,
+      "sectorTotal": 0,
+      "totalForeignBuy": 0,
+      "totalForeignSell": 0
     },
     {
       "date": "2026-06-17",
