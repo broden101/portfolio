@@ -93,6 +93,7 @@ export default function IHSGDashboard() {
   const [flowHistory, setFlowHistory] = useState<{ date: string; dailyNet: number; totalForeignBuy: number; totalForeignSell: number }[]>([]);
   const [showVolumeHistory, setShowVolumeHistory] = useState(false);
   const [selectedSector, setSelectedSector] = useState<{ code: string; name: string; color: string; type?: string; tickers?: string[] } | null>(null);
+  const [showAllHistory, setShowAllHistory] = useState(false);
   const [commodityData, setCommodityData] = useState<{ symbol: string; name: string; price: number; change: number | null; unit: string }[] | null>(null);
 
   const BASKET_TICKERS: Record<string, string[]> = {
@@ -632,7 +633,7 @@ export default function IHSGDashboard() {
                   <div className="max-h-64 overflow-y-auto mb-3">
                     <table className="w-full text-[10px] text-[#B8AA96]/70">
                       <tbody>
-                        {flowHistory.slice(-15).reverse().map((d, i) => (
+                        {flowHistory.slice(-(showAllHistory ? 15 : 6)).reverse().map((d, i) => (
                           <tr key={i} className="border-b border-[#2C261E]/30">
                             <td className="py-1">{new Date(d.date + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</td>
                             <td className={`py-1 text-right ${d.dailyNet >= 0 ? "text-emerald-400" : "text-red-400"}`}>
@@ -643,6 +644,16 @@ export default function IHSGDashboard() {
                       </tbody>
                     </table>
                   </div>
+                  {flowHistory.length > 6 && (
+                    <div className="text-center pb-1">
+                      <button
+                        onClick={() => setShowAllHistory((prev) => !prev)}
+                        className="text-[9px] uppercase tracking-[0.1em] text-[#C6A15B]/60 hover:text-[#C6A15B] transition-colors"
+                      >
+                        {showAllHistory ? "Tampilkan Sedikit" : "Tampilkan Lainnya"}
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
