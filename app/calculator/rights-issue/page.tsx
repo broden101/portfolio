@@ -6,8 +6,9 @@ import Footer from "@/components/Footer";
 import { Disclaimer, SourceNote } from "@/components/DataState";
 
 const EXAMPLES = [
-  { label: "BBNI 2026", avgPrice: 4500, lots: 10, cumPrice: 5100, riPrice: 2800, ratioOld: 5, ratioNew: 2 },
-  { label: "MPPA 2026", avgPrice: 800, lots: 20, cumPrice: 900, riPrice: 500, ratioOld: 10, ratioNew: 3 },
+  { label: "COCO", avgPrice: 167, lots: 20, cumPrice: 200, riPrice: 165, ratioOld: 1, ratioNew: 3 },
+  { label: "BNBR", avgPrice: 86, lots: 50, cumPrice: 100, riPrice: 53, ratioOld: 27, ratioNew: 14 },
+  { label: "PADI", avgPrice: 73, lots: 30, cumPrice: 80, riPrice: 50, ratioOld: 5, ratioNew: 1 },
 ];
 
 export default function RightsIssuePage() {
@@ -100,6 +101,42 @@ export default function RightsIssuePage() {
             Rights Issue <span className="text-gold-gradient font-medium">& HMETD</span>
           </h1>
           <p className="text-[#B8AA96]/60 text-sm mt-2 font-light">Hitung harga teoritis, potensi cuan, dan skenario partisipasi rights issue.</p>
+        </div>
+
+        {/* Suggested RI Stocks */}
+        <div className="card-luxury p-5 mb-8">
+          <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium mb-4">📋 Saham RI Aktif</h3>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {[
+              { ticker: "COCO", status: "Up Coming", effective: "6 Jul 2026", dana: "Rp266 M", rasio: "1:3", harga: "—" },
+              { ticker: "BNBR", status: "Up Coming", effective: "26 Jun 2026", dana: "Rp4,76 T", rasio: "27:14", harga: "Rp53" },
+              { ticker: "PADI", status: "Postponed", effective: "—", dana: "Rp113 M", rasio: "5:1", harga: "Rp50" },
+              { ticker: "VKTR", status: "—", effective: "—", dana: "—", rasio: "—", harga: "—" },
+            ].map((s) => (
+              <button key={s.ticker} onClick={() => {
+                const preset = EXAMPLES.find(e => e.label === s.ticker);
+                if (preset) {
+                  setAvgPrice(String(preset.avgPrice));
+                  setLots(String(preset.lots));
+                  setCumPrice(String(preset.cumPrice));
+                  setRiPrice(String(preset.riPrice));
+                  setRatioOld(String(preset.ratioOld));
+                  setRatioNew(String(preset.ratioNew));
+                }
+              }} className="text-left border border-[#2C261E] hover:border-[#C6A15B]/40 p-3 transition-colors">
+                <div className="text-[#C6A15B] font-bold text-sm tracking-wide">{s.ticker}</div>
+                <div className="text-[10px] text-[#B8AA96]/40 uppercase mt-1">
+                  {s.status === "Up Coming" ? <span className="text-emerald-400">✓ {s.status}</span> : <span className="text-amber-400">{s.status || "?"}</span>}
+                </div>
+                <div className="text-[10px] text-[#B8AA96]/30 mt-1.5 leading-relaxed">
+                  {s.effective !== "—" && <div>Efektif: {s.effective}</div>}
+                  <div>Rasio: {s.rasio} · Dana: {s.dana}</div>
+                  {s.harga !== "—" && <div>Harga Tebus: {s.harga}</div>}
+                </div>
+              </button>
+            ))}
+          </div>
+          <p className="text-[#B8AA96]/30 text-[10px] mt-4">Klik saham untuk auto-fill kalkulator. Data: RagaPlaybook.</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">

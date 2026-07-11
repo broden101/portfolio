@@ -1,0 +1,50 @@
+   Generating static pages (0/27) ...
+   Generating static pages (6/27) 
+   Generating static pages (13/27) 
+   Generating static pages (20/27) 
+ ✓ Generating static pages (27/27)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                Size     First Load JS
+┌ ○ /                                      6.27 kB        96.5 kB
+├ ○ /_not-found                            873 B          88.1 kB
+├ ○ /api/agents/portfolio                  0 B                0 B
+├ ƒ /api/agents/run                        0 B                0 B
+├ ƒ /api/commodities                       0 B                0 B
+├ ƒ /api/dcf-inputs/[ticker]               0 B                0 B
+├ ○ /api/dividends                         0 B                0 B
+├ ○ /api/dividends/prices                  0 B                0 B
+├ ƒ /api/foreign-flow-history              0 B                0 B
+├ ƒ /api/fundamentals/[ticker]             0 B                0 B
+├ ƒ /api/idx100-perf                       0 B                0 B
+├ ƒ /api/market                            0 B                0 B
+├ ƒ /api/market/manual                     0 B                0 B
+├ ƒ /api/scanner                           0 B                0 B
+├ ƒ /api/simulation                        0 B                0 B
+├ ƒ /api/top-movers                        0 B                0 B
+├ ○ /articles                              1.51 kB         100 kB
+├ ○ /articles/ftse-russell-juni-2026       1.69 kB        97.7 kB
+├ ○ /articles/ihsg-q1-2026                 197 B          99.1 kB
+├ ○ /articles/msci-value-mei-2026          1.69 kB        97.7 kB
+├ ○ /articles/right-issue-2026             1.69 kB        97.7 kB
+├ ○ /articles/robot-actuator-supply-chain  6.85 kB         103 kB
+├ ○ /calculator                            4.04 kB        91.3 kB
+├ ○ /calculator/dcf                        10.8 kB         101 kB
+├ ○ /calculator/pbv-roe                    4.25 kB        94.5 kB
+├ ○ /calculator/rights-issue               2.63 kB        92.9 kB
+├ ○ /dividend                              7.19 kB        94.5 kB
+├ ○ /playbook                              1.19 kB        91.4 kB
+├ ○ /playbook/ihsg                         14.2 kB         104 kB
+├ ○ /screener                              14.3 kB         105 kB
+├ ○ /tools/simulation                      3.69 kB        93.9 kB
+└ ○ /tradebook                             5.63 kB        92.9 kB
++ First Load JS shared by all              87.3 kB
+  ├ chunks/117-74c7abb41b606da6.js         31.7 kB
+  ├ chunks/fd9d1056-314442b610634306.js    53.6 kB
+  └ other shared chunks (total)            1.9 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -210,7 +210,7 @@ export function TopMoverPanel({
           {aggData?.dateRange && period !== "1d" && (
             <span className="text-[9px] text-[#B8AA96]/40">{aggData.dateRange}</span>
           )}
-          {data?.date && period === "1d" && (
+              {data?.date && period === "1d" && (
             <span className="text-[10px] tracking-[0.1em] text-[#B8AA96]/60">{data.date}</span>
           )}
           <span
