@@ -96,7 +96,22 @@ export function TopMoverPanel({
     try {
       const r = await fetch(`/api/stock-foreign-flow?ticker=${search.trim()}`);
       const d = await r.json();
-      setSearchData(d);
+      
+      // Fetch mcap
+      const mcapR = await fetch(`https://scanner.tradingview.com/indonesia/scan`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          columns: ["market_cap_basic"],
+          filter: [{ left: "name", operation: "equal", right: search.trim().toUpperCase() }],
+          options: { lang: "en" },
+          range: [0, 1]
+        })
+      });
+      const mcapD = await mcapR.json();
+      const mcap = mcapD.data?.[0]?.d?.[0] || 0;
+      
+      setSearchData({ ...d, mcap });
     } catch {
       setSearchData(null);
     } finally {
@@ -171,9 +186,14 @@ export function TopMoverPanel({
       {/* search result */}
       {searchData && (
         <div className="mb-4 p-3 bg-[#0B0B0A] border border-[#C6A15B]/20 rounded">
-          <div className="text-[11px] font-bold text-[#C6A15B] mb-2">
-            {searchData.ticker}
-            <span className="text-[9px] text-[#B8AA96]/50 ml-2">Foreign Net Flow</span>
+          <div className="text-[11px] font-bold text-[#C6A15B] mb-2 flex justify-between">
+            <span>
+              {searchData.ticker}
+              <span className="text-[9px] text-[#B8AA96]/50 ml-2">Foreign Net Flow</span>
+            </span>
+            <span className="text-[9px] text-[#B8AA96]/50">
+              MCAP = {formatRp(searchData.mcap)}
+            </span>
           </div>
           <div className="grid grid-cols-5 gap-2 text-center">
             {Object.entries(searchData.periods as Record<string, number>).map(([k, v]) => (
