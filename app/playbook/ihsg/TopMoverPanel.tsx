@@ -70,8 +70,8 @@ interface ColumnDef {
   labelFn: (s: StockMover) => React.ReactNode;
 }
 
-function MoverColumn({ col }: { col: ColumnDef }) {
-  const sliced = col.items.slice(0, 8);
+function MoverColumn({ col, limit }: { col: ColumnDef; limit: number }) {
+  const sliced = col.items.slice(0, limit);
   const maxVal = Math.max(...sliced.map((s) => Math.abs(col.valueFn(s))), 1);
 
   return (
@@ -120,9 +120,11 @@ export function TopMoverPanel({ data, live }: Props) {
   const [period, setPeriod] = useState<Period>("1d");
   const [aggData, setAggData] = useState<AggResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [limit, setLimit] = useState(8);
 
   const fetchPeriod = useCallback(async (p: Period) => {
     setLoading(true);
+    setLimit(8);
     try {
       const r = await fetch(`/api/top-movers?period=${p}`);
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -143,7 +145,6 @@ export function TopMoverPanel({ data, live }: Props) {
     }
   }, [period, fetchPeriod]);
 
-  // Determine which data to show
   const displayData = period === "1d" && data
     ? { topBuy: data.topBuy, topSell: data.topSell, topActive: data.topActive }
     : aggData;
@@ -238,12 +239,24 @@ export function TopMoverPanel({ data, live }: Props) {
       {displayData ? (
         <div className="flex flex-col md:flex-row md:gap-6 gap-4">
           {columns.map((col) => (
-            <MoverColumn key={col.title} col={col} />
+            <MoverColumn key={col.title} col={col} limit={limit} />
           ))}
         </div>
       ) : (
         <div className="text-center py-8 text-[#B8AA96]/40 text-sm">
           {loading ? "Memuat..." : "Data top mover tidak tersedia."}
+        </div>
+      )}
+
+      {/* more/less toggle */}
+      {displayData && (
+        <div className="text-center pt-1">
+          <button
+            onClick={() => setLimit((prev) => (prev === 8 ? 20 : 8))}
+            className="text-[9px] uppercase tracking-[0.1em] text-[#C6A15B]/60 hover:text-[#C6A15B] transition-colors"
+          >
+            {limit === 8 ? "Tampilkan Semua (20)" : "Tampilkan Sedikit"}
+          </button>
         </div>
       )}
     </div>

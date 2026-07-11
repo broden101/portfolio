@@ -85,11 +85,11 @@ function aggregateDays(allDays: StockMover[][]): AggResult {
   }
 
   const all = Array.from(map.values());
-  const topBuy = [...all].sort((a, b) => b.net_value - a.net_value).slice(0, 10);
-  const topSell = [...all].sort((a, b) => a.net_value - b.net_value).slice(0, 10);
+  const topBuy = [...all].sort((a, b) => b.net_value - a.net_value).slice(0, 20);
+  const topSell = [...all].sort((a, b) => a.net_value - b.net_value).slice(0, 20);
   const topActive = [...all]
     .sort((a, b) => (b.total_buy_value + b.total_sell_value) - (a.total_buy_value + a.total_sell_value))
-    .slice(0, 10);
+    .slice(0, 20);
 
   return { topBuy, topSell, topActive, dateRange: "", days: 0 };
 }
