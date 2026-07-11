@@ -633,7 +633,7 @@ export default function IHSGDashboard() {
                       <tbody>
                         {flowHistory.slice(-15).reverse().map((d, i) => (
                           <tr key={i} className="border-b border-[#2C261E]/30">
-                            <td className="py-1">{d.date}</td>
+                            <td className="py-1">{new Date(d.date + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</td>
                             <td className={`py-1 text-right ${d.dailyNet >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                               {d.dailyNet >= 0 ? "+" : ""}{(d.dailyNet / 1e3).toFixed(2).replace(".", ",")} M
                             </td>
