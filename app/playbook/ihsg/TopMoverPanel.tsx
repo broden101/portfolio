@@ -94,24 +94,13 @@ export function TopMoverPanel({
     if (!search.trim()) return;
     setSearching(true);
     try {
-      const r = await fetch(`/api/stock-foreign-flow?ticker=${search.trim()}`);
-      const d = await r.json();
-      
-      // Fetch mcap
-      const mcapR = await fetch(`https://scanner.tradingview.com/indonesia/scan`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          columns: ["market_cap_basic"],
-          filter: [{ left: "name", operation: "equal", right: search.trim().toUpperCase() }],
-          options: { lang: "en" },
-          range: [0, 1]
-        })
-      });
-      const mcapD = await mcapR.json();
-      const mcap = mcapD.data?.[0]?.d?.[0] || 0;
-      
-      setSearchData({ ...d, mcap });
+      const [flowR, mcapR] = await Promise.all([
+        fetch(`/api/stock-foreign-flow?ticker=${search.trim()}`),
+        fetch(`/api/mcap?ticker=${search.trim()}`),
+      ]);
+      const d = await flowR.json();
+      const { mcap } = await mcapR.json();
+      setSearchData({ ...d, mcap: mcap || 0 });
     } catch {
       setSearchData(null);
     } finally {
