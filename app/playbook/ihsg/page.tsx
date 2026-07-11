@@ -312,9 +312,9 @@ export default function IHSGDashboard() {
       }
     }
     const unique = Array.from(uniqueMap.values());
-    const topBuy = [...unique].sort((a, b) => b.net_value - a.net_value).slice(0, 10);
-    const topSell = [...unique].sort((a, b) => a.net_value - b.net_value).slice(0, 10);
-    const topActive = [...unique].sort((a, b) => (b.total_buy_value + b.total_sell_value) - (a.total_buy_value + a.total_sell_value)).slice(0, 10);
+    const topBuy = [...unique].sort((a, b) => b.net_value - a.net_value).slice(0, 20);
+    const topSell = [...unique].sort((a, b) => a.net_value - b.net_value).slice(0, 20);
+    const topActive = [...unique].sort((a, b) => (b.total_buy_value + b.total_sell_value) - (a.total_buy_value + a.total_sell_value)).slice(0, 20);
     return { topBuy, topSell, topActive, date: ff.date };
   }, [ff]);
 
