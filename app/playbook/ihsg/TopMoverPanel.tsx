@@ -21,18 +21,6 @@ interface AggResult {
   days: number;
 }
 
-export interface TopMoverData {
-  topBuy: StockMover[];
-  topSell: StockMover[];
-  topActive: StockMover[];
-  date?: string;
-}
-
-interface Props {
-  data: TopMoverData | null;
-  live: boolean;
-}
-
 type Period = "1d" | "1w" | "1m" | "3m" | "YTD";
 
 const PERIODS: { key: Period; label: string }[] = [
@@ -45,83 +33,76 @@ const PERIODS: { key: Period; label: string }[] = [
 
 /* ---------- helpers ---------- */
 
-function autoScale(val: number): string {
-  const abs = Math.abs(val);
-  if (abs >= 1e12) return (val / 1e12).toFixed(1) + "T";
-  if (abs >= 1e9) return (val / 1e9).toFixed(1) + "M";
-  if (abs >= 1e6) return (val / 1e6).toFixed(0) + "jt";
-  if (abs >= 1e3) return (val / 1e3).toFixed(0) + "rb";
-  return val.toFixed(0);
+function formatRp(val: number): string {
+  if (Math.abs(val) >= 1e12) return (val / 1e12).toFixed(1).replace(".", ",") + "T";
+  if (Math.abs(val) >= 1e9) return (val / 1e9).toFixed(1).replace(".", ",") + "M";
+  if (Math.abs(val) >= 1e6) return (val / 1e6).toFixed(1).replace(".", ",") + "jt";
+  return val.toLocaleString("id-ID");
 }
 
-function fmtRupiah(val: number): string {
-  if (val >= 0) return "+Rp" + autoScale(val);
-  return "-Rp" + autoScale(Math.abs(val));
-}
+/* ---------- sub-components ---------- */
 
-/* ---------- column sub-component ---------- */
-
-interface ColumnDef {
-  title: string;
-  dotClass: string;
-  titleClass: string;
-  barClass: string;
-  items: StockMover[];
-  valueFn: (s: StockMover) => number;
-  labelFn: (s: StockMover) => React.ReactNode;
-}
-
-function MoverColumn({ col, limit }: { col: ColumnDef; limit: number }) {
-  const sliced = col.items.slice(0, limit);
-  const maxVal = Math.max(...sliced.map((s) => Math.abs(col.valueFn(s))), 1);
-
+function MoverItem({ stock, index }: { stock: StockMover; index: number }) {
   return (
-    <div className="flex-1 min-w-0">
-      <h4
-        className={`text-[10px] tracking-[0.15em] uppercase ${col.titleClass} font-medium mb-2 flex items-center gap-2`}
-      >
-        <span className={`inline-block w-1.5 h-1.5 rounded-full ${col.dotClass}`} />
-        {col.title}
-      </h4>
-
-      {sliced.length === 0 ? (
-        <div className="py-4 text-[#B8AA96]/40 text-[10px] text-center">—</div>
-      ) : (
-        <div className="space-y-0">
-          {sliced.map((s, i) => {
-            const raw = col.valueFn(s);
-            const pct = Math.min((Math.abs(raw) / maxVal) * 100, 100);
-            return (
-              <div key={s.stock_code} className="flex items-center gap-2 py-1 border-b border-[#2C261E]/30">
-                <span className="w-4 text-right text-[10px] text-[#B8AA96]/40 font-mono shrink-0">{i + 1}</span>
-                <span className="w-12 text-xs text-[#F4EFE6] font-sans font-medium shrink-0 truncate">{s.stock_code}</span>
-                <span className="w-14 text-right text-[10px] text-[#B8AA96]/60 font-mono shrink-0">
-                  {s.close_price > 0 ? s.close_price.toLocaleString("id-ID") : "—"}
-                </span>
-                <div className="flex-1 min-w-0 flex items-center gap-1.5">
-                  <div className="flex-1 h-1.5 rounded-full bg-[#1E1C18] overflow-hidden">
-                    <div className={`h-full rounded-full ${col.barClass}`} style={{ width: `${pct}%` }} />
-                  </div>
-                  <span className={`text-[10px] font-mono shrink-0 w-14 text-right ${col.barClass.replace("bg-", "text-")}`}>
-                    {col.labelFn(s)}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+    <div className="flex items-center justify-between py-1.5 border-b border-[#2C261E]/30">
+      <div className="flex items-center gap-2">
+        <span className="text-[8px] text-[#B8AA96]/30 w-4">{index + 1}</span>
+        <span className="text-[11px] font-mono text-[#F4EFE6] font-medium">{stock.stock_code}</span>
+        <span className="text-[9px] text-[#B8AA96]/50">{stock.close_price.toLocaleString("id-ID")}</span>
+      </div>
+      <div className={`text-[10px] font-mono ${stock.net_value >= 0 ? "text-emerald-400/80" : "text-red-400/80"}`}>
+        {stock.net_value >= 0 ? "+" : ""}{formatRp(stock.net_value)}
+      </div>
     </div>
   );
 }
 
-/* ---------- main panel ---------- */
+function MoverColumn({ col, limit }: { col: { title: string; data: StockMover[]; color: string }; limit: number }) {
+  const sliced = col.data.slice(0, limit);
+  return (
+    <div className="flex-1">
+      <div className={`text-[10px] tracking-[0.15em] uppercase mb-2 ${col.color}`}>
+        {col.title}
+      </div>
+      <div className="space-y-0.5">
+        {sliced.map((stock, i) => (
+          <MoverItem key={stock.stock_code} stock={stock} index={i} />
+        ))}
+      </div>
+    </div>
+  );
+}
 
-export function TopMoverPanel({ data, live }: Props) {
+/* ---------- main component ---------- */
+
+export function TopMoverPanel({
+  data,
+  live,
+}: {
+  data?: { topBuy: StockMover[]; topSell: StockMover[]; topActive: StockMover[]; date?: string } | null;
+  live: boolean;
+}) {
   const [period, setPeriod] = useState<Period>("1d");
   const [aggData, setAggData] = useState<AggResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [limit, setLimit] = useState(10);
+  const [search, setSearch] = useState("");
+  const [searchData, setSearchData] = useState<any>(null);
+  const [searching, setSearching] = useState(false);
+
+  const findTicker = async () => {
+    if (!search.trim()) return;
+    setSearching(true);
+    try {
+      const r = await fetch(`/api/stock-foreign-flow?ticker=${search.trim()}`);
+      const d = await r.json();
+      setSearchData(d);
+    } catch {
+      setSearchData(null);
+    } finally {
+      setSearching(false);
+    }
+  };
 
   const fetchPeriod = useCallback(async (p: Period) => {
     setLoading(true);
@@ -129,8 +110,8 @@ export function TopMoverPanel({ data, live }: Props) {
     try {
       const r = await fetch(`/api/top-movers?period=${p}`);
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const json: AggResult = await r.json();
-      setAggData(json);
+      const d = await r.json();
+      setAggData(d);
     } catch {
       setAggData(null);
     } finally {
@@ -139,55 +120,26 @@ export function TopMoverPanel({ data, live }: Props) {
   }, []);
 
   useEffect(() => {
-    if (period === "1d") {
-      setAggData(null);
-    } else {
-      fetchPeriod(period);
-    }
+    if (period !== "1d") fetchPeriod(period);
   }, [period, fetchPeriod]);
 
   const displayData = period === "1d" && data
-    ? { topBuy: data.topBuy, topSell: data.topSell, topActive: data.topActive }
+    ? { topBuy: data.topBuy, topSell: data.topSell, topActive: data.topActive, dateRange: "", days: 0 }
     : aggData;
 
-  const columns: ColumnDef[] = displayData
+  const columns = displayData
     ? [
-        {
-          title: "Beli Asing",
-          dotClass: "bg-emerald-400/60",
-          titleClass: "text-emerald-400/80",
-          barClass: "bg-emerald-400",
-          items: displayData.topBuy,
-          valueFn: (s) => s.net_value,
-          labelFn: (s) => <>{fmtRupiah(s.net_value)}</>,
-        },
-        {
-          title: "Jual Asing",
-          dotClass: "bg-red-400/60",
-          titleClass: "text-red-400/80",
-          barClass: "bg-red-400",
-          items: displayData.topSell,
-          valueFn: (s) => s.net_value,
-          labelFn: (s) => <>{fmtRupiah(s.net_value)}</>,
-        },
-        {
-          title: "Paling Aktif",
-          dotClass: "bg-[#C6A15B]/60",
-          titleClass: "text-[#C6A15B]/80",
-          barClass: "bg-[#C6A15B]",
-          items: displayData.topActive,
-          valueFn: (s) => s.total_buy_value + s.total_sell_value,
-          labelFn: (s) => autoScale(s.total_buy_value + s.total_sell_value),
-        },
+        { title: "Accumulation", data: displayData.topBuy, color: "text-emerald-400/70" },
+        { title: "Distribution", data: displayData.topSell, color: "text-red-400/70" },
+        { title: "Most Active", data: displayData.topActive, color: "text-[#C6A15B]/70" },
       ]
     : [];
 
   return (
-    <div className="card-luxury p-6 space-y-4">
-      {/* header */}
-      <div className="flex items-center justify-between flex-wrap gap-3">
+    <div className="card-luxury p-6">
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] font-medium">
+          <h3 className="text-[#F4EFE6] font-heading font-medium tracking-wide text-sm">
             Top Mover Saham
           </h3>
           {aggData?.days && aggData.days > 1 && (
@@ -197,7 +149,47 @@ export function TopMoverPanel({ data, live }: Props) {
           )}
         </div>
 
-        {/* period tabs */}
+        {/* search bar */}
+        <div className="flex items-center space-x-2">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && findTicker()}
+            placeholder="Ticker..."
+            className="bg-[#0B0B0A] border border-[#2C261E] rounded px-2 py-1 text-[11px] text-[#F4EFE6] w-20 focus:border-[#C6A15B]/40 outline-none"
+          />
+          <button
+            onClick={findTicker}
+            disabled={searching}
+            className="text-[10px] uppercase tracking-[0.1em] text-[#C6A15B]/80 hover:text-[#C6A15B] transition-colors disabled:opacity-40"
+          >
+            {searching ? "..." : "Find"}
+          </button>
+        </div>
+      </div>
+
+      {/* search result */}
+      {searchData && (
+        <div className="mb-4 p-3 bg-[#0B0B0A] border border-[#C6A15B]/20 rounded">
+          <div className="text-[11px] font-bold text-[#C6A15B] mb-2">
+            {searchData.ticker}
+            <span className="text-[9px] text-[#B8AA96]/50 ml-2">Foreign Net Flow</span>
+          </div>
+          <div className="grid grid-cols-5 gap-2 text-center">
+            {Object.entries(searchData.periods as Record<string, number>).map(([k, v]) => (
+              <div key={k}>
+                <div className="text-[9px] text-[#B8AA96]/40 uppercase tracking-wider">{k}</div>
+                <div className={`text-[11px] font-mono font-medium ${v >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                  {v >= 0 ? "+" : ""}{formatRp(v)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* period tabs + status */}
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-1">
           {PERIODS.map((p) => (
             <button
