@@ -1,42 +1,6 @@
 {
-  "lastUpdated": "2026-07-10T19:00:30",
+  "lastUpdated": "2026-07-13T19:00:14",
   "days": [
-    {
-      "date": "2026-01-07",
-      "dailyNet": 241478
-    },
-    {
-      "date": "2026-01-08",
-      "dailyNet": 704783
-    },
-    {
-      "date": "2026-01-09",
-      "dailyNet": -96327
-    },
-    {
-      "date": "2026-01-12",
-      "dailyNet": 264036
-    },
-    {
-      "date": "2026-01-13",
-      "dailyNet": 1496202
-    },
-    {
-      "date": "2026-01-14",
-      "dailyNet": 1145070
-    },
-    {
-      "date": "2026-01-15",
-      "dailyNet": 488647
-    },
-    {
-      "date": "2026-01-16",
-      "dailyNet": 0
-    },
-    {
-      "date": "2026-01-19",
-      "dailyNet": -535670
-    },
     {
       "date": "2026-01-20",
       "dailyNet": 53679
@@ -623,6 +587,13 @@
       "sectorTotal": -281155149500,
       "totalForeignBuy": 2300689783000,
       "totalForeignSell": 2535142572200
+    },
+    {
+      "date": "2026-07-13",
+      "dailyNet": -409373,
+      "sectorTotal": -409373395100,
+      "totalForeignBuy": 2659072647800,
+      "totalForeignSell": 3065420527800
     }
   ]
 }
