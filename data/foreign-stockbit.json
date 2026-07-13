@@ -1,288 +1,289 @@
 {
   "accumulation": [
     {
-      "code": "ADRO",
-      "price": 2360,
-      "score": 89,
-      "estVal": 25800000000.0,
-      "estValHuman": "Rp25.8B"
-    },
-    {
-      "code": "ELSA",
-      "price": 650,
-      "score": 89,
-      "estVal": 18700000000.0,
-      "estValHuman": "Rp18.7B"
+      "code": "BRPT",
+      "price": 1675,
+      "score": 61,
+      "estVal": 70700000000.0,
+      "estValHuman": "Rp70.7B"
     },
     {
       "code": "BRMS",
-      "price": 505,
-      "score": 47,
-      "estVal": 16399999999.999998,
-      "estValHuman": "Rp16.4B"
+      "price": 520,
+      "score": 56,
+      "estVal": 40500000000.0,
+      "estValHuman": "Rp40.5B"
     },
     {
-      "code": "INDF",
-      "price": 6750,
-      "score": 68,
-      "estVal": 13600000000.0,
-      "estValHuman": "Rp13.6B"
+      "code": "BBRI",
+      "price": 2800,
+      "score": 17,
+      "estVal": 18800000000.0,
+      "estValHuman": "Rp18.8B"
     },
     {
-      "code": "TINS",
-      "price": 3440,
-      "score": 53,
-      "estVal": 13500000000.0,
-      "estValHuman": "Rp13.5B"
-    },
-    {
-      "code": "ARCI",
-      "price": 1000,
-      "score": 68,
-      "estVal": 10400000000.0,
-      "estValHuman": "Rp10.4B"
+      "code": "TLKM",
+      "price": 2500,
+      "score": 41,
+      "estVal": 15100000000.0,
+      "estValHuman": "Rp15.1B"
     },
     {
       "code": "UNTR",
-      "price": 24300,
-      "score": 24,
-      "estVal": 7800000000.0,
-      "estValHuman": "Rp7.8B"
+      "price": 24800,
+      "score": 21,
+      "estVal": 14500000000.0,
+      "estValHuman": "Rp14.5B"
     },
     {
-      "code": "MEDC",
-      "price": 1170,
-      "score": 75,
-      "estVal": 7400000000.0,
-      "estValHuman": "Rp7.4B"
+      "code": "AMMN",
+      "price": 3540,
+      "score": 42,
+      "estVal": 11000000000.0,
+      "estValHuman": "Rp11.0B"
     },
     {
-      "code": "BREN",
-      "price": 3240,
-      "score": 13,
-      "estVal": 5900000000.0,
-      "estValHuman": "Rp5.9B"
-    },
-    {
-      "code": "ANTM",
-      "price": 2900,
-      "score": 10,
-      "estVal": 5200000000.0,
-      "estValHuman": "Rp5.2B"
-    },
-    {
-      "code": "CUAN",
-      "price": 625,
-      "score": 30,
+      "code": "EMAS",
+      "price": 5650,
+      "score": 51,
       "estVal": 5000000000.0,
       "estValHuman": "Rp5.0B"
     },
     {
-      "code": "MAPI",
-      "price": 1535,
-      "score": 77,
-      "estVal": 4500000000.0,
-      "estValHuman": "Rp4.5B"
+      "code": "GGRM",
+      "price": 16700,
+      "score": 72,
+      "estVal": 4200000000.0,
+      "estValHuman": "Rp4.2B"
     },
     {
-      "code": "LSIP",
-      "price": 1295,
-      "score": 73,
-      "estVal": 4500000000.0,
-      "estValHuman": "Rp4.5B"
-    },
-    {
-      "code": "AADI",
-      "price": 8175,
-      "score": 39,
-      "estVal": 4300000000.0,
-      "estValHuman": "Rp4.3B"
-    },
-    {
-      "code": "JPFA",
-      "price": 1990,
-      "score": 57,
-      "estVal": 4300000000.0,
-      "estValHuman": "Rp4.3B"
-    },
-    {
-      "code": "HRTA",
-      "price": 1805,
-      "score": 59,
-      "estVal": 3600000000.0,
-      "estValHuman": "Rp3.6B"
-    },
-    {
-      "code": "BBTN",
-      "price": 1190,
-      "score": 76,
-      "estVal": 3500000000.0,
-      "estValHuman": "Rp3.5B"
-    },
-    {
-      "code": "PGEO",
-      "price": 995,
-      "score": 47,
+      "code": "INDF",
+      "price": 6800,
+      "score": 11,
       "estVal": 3300000000.0,
       "estValHuman": "Rp3.3B"
     },
     {
-      "code": "PGAS",
-      "price": 1430,
-      "score": 37,
+      "code": "CUAN",
+      "price": 625,
+      "score": 11,
       "estVal": 3100000000.0,
       "estValHuman": "Rp3.1B"
     },
     {
-      "code": "GOTO",
-      "price": 50,
-      "score": 82,
-      "estVal": 3000000000.0,
-      "estValHuman": "Rp3.0B"
+      "code": "PTRO",
+      "price": 3880,
+      "score": 35,
+      "estVal": 1800000000.0,
+      "estValHuman": "Rp1.8B"
+    },
+    {
+      "code": "BAPA",
+      "price": 266,
+      "score": 76,
+      "estVal": 1800000000.0,
+      "estValHuman": "Rp1.8B"
+    },
+    {
+      "code": "BRIS",
+      "price": 1740,
+      "score": 81,
+      "estVal": 1600000000.0,
+      "estValHuman": "Rp1.6B"
+    },
+    {
+      "code": "GULA",
+      "price": 620,
+      "score": 68,
+      "estVal": 1600000000.0,
+      "estValHuman": "Rp1.6B"
+    },
+    {
+      "code": "JPFA",
+      "price": 2030,
+      "score": 35,
+      "estVal": 1600000000.0,
+      "estValHuman": "Rp1.6B"
+    },
+    {
+      "code": "ENRG",
+      "price": 1260,
+      "score": 10,
+      "estVal": 1600000000.0,
+      "estValHuman": "Rp1.6B"
+    },
+    {
+      "code": "PACK",
+      "price": 214,
+      "score": 80,
+      "estVal": 1400000000.0,
+      "estValHuman": "Rp1.4B"
+    },
+    {
+      "code": "INET",
+      "price": 195,
+      "score": 47,
+      "estVal": 1200000000.0,
+      "estValHuman": "Rp1.2B"
+    },
+    {
+      "code": "SUPA",
+      "price": 580,
+      "score": 42,
+      "estVal": 1200000000.0,
+      "estValHuman": "Rp1.2B"
+    },
+    {
+      "code": "NSSS",
+      "price": 690,
+      "score": 79,
+      "estVal": 962000000.0,
+      "estValHuman": "Rp962jt"
     }
   ],
   "distribution": [
     {
+      "code": "MAPI",
+      "price": 1530,
+      "score": -78,
+      "estVal": -110400000000.0,
+      "estValHuman": "Rp110.4B"
+    },
+    {
       "code": "BBCA",
-      "price": 6125,
-      "score": -27,
-      "estVal": -84300000000.0,
-      "estValHuman": "Rp84.3B"
+      "price": 6075,
+      "score": -43,
+      "estVal": -94500000000.0,
+      "estValHuman": "Rp94.5B"
     },
     {
-      "code": "BBRI",
-      "price": 2790,
-      "score": -47,
-      "estVal": -74900000000.0,
-      "estValHuman": "Rp74.9B"
+      "code": "ASII",
+      "price": 4770,
+      "score": -48,
+      "estVal": -42600000000.0,
+      "estValHuman": "Rp42.6B"
     },
     {
-      "code": "TLKM",
-      "price": 2470,
-      "score": -42,
-      "estVal": -57800000000.0,
-      "estValHuman": "Rp57.8B"
+      "code": "AADI",
+      "price": 8150,
+      "score": -51,
+      "estVal": -25700000000.0,
+      "estValHuman": "Rp25.7B"
     },
     {
       "code": "DEWA",
       "price": 336,
-      "score": -65,
-      "estVal": -35900000000.0,
-      "estValHuman": "Rp35.9B"
+      "score": -55,
+      "estVal": -22500000000.0,
+      "estValHuman": "Rp22.5B"
     },
     {
-      "code": "TPIA",
-      "price": 1830,
-      "score": -85,
-      "estVal": -32200000000.000004,
-      "estValHuman": "Rp32.2B"
+      "code": "ADRO",
+      "price": 2360,
+      "score": -62,
+      "estVal": -21400000000.0,
+      "estValHuman": "Rp21.4B"
     },
     {
-      "code": "RAJA",
-      "price": 4300,
-      "score": -78,
-      "estVal": -24300000000.0,
-      "estValHuman": "Rp24.3B"
+      "code": "ANTM",
+      "price": 2850,
+      "score": -53,
+      "estVal": -18700000000.0,
+      "estValHuman": "Rp18.7B"
     },
     {
-      "code": "ASII",
-      "price": 4790,
-      "score": -48,
-      "estVal": -18300000000.0,
-      "estValHuman": "Rp18.3B"
-    },
-    {
-      "code": "DSSA",
-      "price": 785,
-      "score": -17,
-      "estVal": -18000000000.0,
-      "estValHuman": "Rp18.0B"
-    },
-    {
-      "code": "MDKA",
-      "price": 2550,
-      "score": -69,
-      "estVal": -16399999999.999998,
-      "estValHuman": "Rp16.4B"
-    },
-    {
-      "code": "BRPT",
-      "price": 1640,
-      "score": -21,
-      "estVal": -11300000000.0,
-      "estValHuman": "Rp11.3B"
-    },
-    {
-      "code": "BBNI",
+      "code": "TINS",
       "price": 3410,
-      "score": -31,
-      "estVal": -10600000000.0,
-      "estValHuman": "Rp10.6B"
+      "score": -82,
+      "estVal": -15500000000.0,
+      "estValHuman": "Rp15.5B"
     },
     {
-      "code": "BMRI",
-      "price": 4040,
-      "score": -12,
-      "estVal": -10600000000.0,
-      "estValHuman": "Rp10.6B"
+      "code": "ELSA",
+      "price": 645,
+      "score": -89,
+      "estVal": -9200000000.0,
+      "estValHuman": "Rp9.2B"
+    },
+    {
+      "code": "BIPI",
+      "price": 125,
+      "score": -65,
+      "estVal": -8800000000.0,
+      "estValHuman": "Rp8.8B"
     },
     {
       "code": "BUVA",
-      "price": 865,
-      "score": -68,
-      "estVal": -10200000000.0,
-      "estValHuman": "Rp10.2B"
+      "price": 845,
+      "score": -63,
+      "estVal": -8300000000.000001,
+      "estValHuman": "Rp8.3B"
     },
     {
-      "code": "AMMN",
-      "price": 3510,
-      "score": -34,
-      "estVal": -9500000000.0,
-      "estValHuman": "Rp9.5B"
-    },
-    {
-      "code": "NCKL",
-      "price": 800,
+      "code": "UNVR",
+      "price": 1680,
       "score": -73,
-      "estVal": -8100000000.0,
-      "estValHuman": "Rp8.1B"
+      "estVal": -7700000000.0,
+      "estValHuman": "Rp7.7B"
     },
     {
-      "code": "AMRT",
-      "price": 1395,
-      "score": -44,
+      "code": "RAJA",
+      "price": 4320,
+      "score": -55,
+      "estVal": -6900000000.0,
+      "estValHuman": "Rp6.9B"
+    },
+    {
+      "code": "TPIA",
+      "price": 1810,
+      "score": -17,
+      "estVal": -6400000000.0,
+      "estValHuman": "Rp6.4B"
+    },
+    {
+      "code": "MEDC",
+      "price": 1185,
+      "score": -60,
+      "estVal": -6400000000.0,
+      "estValHuman": "Rp6.4B"
+    },
+    {
+      "code": "BNBR",
+      "price": 90,
+      "score": -34,
+      "estVal": -6300000000.0,
+      "estValHuman": "Rp6.3B"
+    },
+    {
+      "code": "PGAS",
+      "price": 1500,
+      "score": -33,
+      "estVal": -5800000000.0,
+      "estValHuman": "Rp5.8B"
+    },
+    {
+      "code": "BMRI",
+      "price": 4090,
+      "score": -3,
       "estVal": -5400000000.0,
       "estValHuman": "Rp5.4B"
     },
     {
-      "code": "MTEL",
-      "price": 472,
-      "score": -97,
-      "estVal": -4900000000.0,
-      "estValHuman": "Rp4.9B"
+      "code": "KLBF",
+      "price": 725,
+      "score": -51,
+      "estVal": -4200000000.0,
+      "estValHuman": "Rp4.2B"
     },
     {
-      "code": "BFIN",
-      "price": 810,
-      "score": -72,
-      "estVal": -4000000000.0,
-      "estValHuman": "Rp4.0B"
-    },
-    {
-      "code": "BNBR",
-      "price": 87,
-      "score": -61,
-      "estVal": -3300000000.0,
-      "estValHuman": "Rp3.3B"
-    },
-    {
-      "code": "INCO",
-      "price": 4700,
-      "score": -34,
-      "estVal": -3100000000.0,
-      "estValHuman": "Rp3.1B"
+      "code": "ESSA",
+      "price": 585,
+      "score": -36,
+      "estVal": -3900000000.0,
+      "estValHuman": "Rp3.9B"
     }
   ],
   "accumCount": 20,
-  "distribCount": 20
+  "distribCount": 20,
+  "date": "2026-07-13"
 }
