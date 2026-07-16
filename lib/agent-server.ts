@@ -44,6 +44,7 @@ export function antekAsingFilter(accumulatedTickers: Set<string>): (s: StockRow)
   return (stock: StockRow) =>
     stock.close > HARGA_MIN &&
     accumulatedTickers.has(stock.name) &&
+    stock.close >= stock.vwap &&
     stock.rsi >= 30 &&
     stock.rsi <= 75;
 }
@@ -147,6 +148,7 @@ export async function executeAgent(
   // Step 1: Check each position — CL or TP based on price action
   const positions = await prisma.position.findMany({ where: { agentId } });
   const heldTickers = new Set(positions.map((p) => p.ticker));
+  const soldTickers = new Set<string>();
 
   for (const pos of positions) {
     const stock = stockData.find((s) => s.name === pos.ticker);
@@ -216,6 +218,7 @@ export async function executeAgent(
       ]);
       sells++;
       details.push(`SELL ${pos.ticker} @ ${stock.close} — ${sellReason}`);
+      soldTickers.add(pos.ticker);
     }
   }
 
@@ -228,6 +231,7 @@ export async function executeAgent(
   if (currentSlots > 0) {
     const signals = stockData
       .filter((s) => strategyFilter(s) && !currentHeld.has(s.name))
+      .filter((s) => !soldTickers.has(s.name))
       .sort((a, b) => b.mcap - a.mcap);
 
     for (const stock of signals) {
@@ -343,7 +347,7 @@ async function runLearning(agentId: string): Promise<string[]> {
   let newMinProfit = agent.minProfitToSell;
   // Banyak rugi → jual lebih awal (turunin minProfit)
   if (winRate < 0.35 && avgLoss > avgWin && sells.length >= 8) {
-    newMinProfit = Math.max(-0.01, newMinProfit - 0.005);
+    newMinProfit = Math.max(0.005, newMinProfit - 0.005);
     if (newMinProfit !== agent.minProfitToSell) {
       await prisma.agent.update({
         where: { id: agentId },
