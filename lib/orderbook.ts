@@ -7,6 +7,7 @@ export interface RunningTrade {
   lot: number;
   change: number;
   side: "BUY" | "SELL";
+  broker?: string; // optional broker code
 }
 
 export interface OrderLevel {
@@ -36,7 +37,7 @@ export function parseCSV(text: string): RunningTrade[] {
     // Skip header
     if (parts[0].toLowerCase() === "time" || parts[0].toLowerCase() === "timestamp") continue;
 
-    const [time, code, priceStr, lotStr, changeStr, side] = parts;
+    const [time, code, priceStr, lotStr, changeStr, side, broker] = parts;
     const price = parseFloat(priceStr);
     const lot = parseInt(lotStr);
     const change = parseFloat(changeStr);
@@ -44,7 +45,15 @@ export function parseCSV(text: string): RunningTrade[] {
     if (!time || !code || isNaN(price) || isNaN(lot)) continue;
     if (side !== "BUY" && side !== "SELL") continue;
 
-    trades.push({ time, code: code.toUpperCase(), price, lot, change, side });
+    trades.push({
+      time,
+      code: code.toUpperCase(),
+      price,
+      lot,
+      change,
+      side,
+      broker: broker ? broker.toUpperCase() : undefined,
+    });
   }
 
   return trades;
@@ -92,6 +101,7 @@ export function generateSampleData(): RunningTrade[] {
   const basePrice = 170;
   let price = basePrice;
   let time = 9 * 3600 + 30 * 60; // 09:30:00
+  const brokers = ["YU", "AK", "BD", "MG", "RG", "DH", "KK", "BK", "PD", "OS"];
 
   for (let i = 0; i < 200; i++) {
     const hour = Math.floor(time / 3600);
@@ -105,10 +115,61 @@ export function generateSampleData(): RunningTrade[] {
     const lot = Math.floor(Math.random() * 50) + 1;
     const side: "BUY" | "SELL" = Math.random() > 0.5 ? "BUY" : "SELL";
     const change = ((price - basePrice) / basePrice) * 100;
+    const broker = brokers[Math.floor(Math.random() * brokers.length)];
 
-    trades.push({ time: timeStr, code: "BUMI", price, lot, change, side });
+    trades.push({ time: timeStr, code: "BUMI", price, lot, change, side, broker });
     time += Math.floor(Math.random() * 15) + 1;
   }
 
   return trades;
+}
+
+/** Calculate VWAP for trades up to currentIdx */
+export function calcVWAP(trades: RunningTrade[], currentIdx: number): number {
+  let totalVol = 0;
+  let totalVal = 0;
+  for (let i = 0; i <= currentIdx && i < trades.length; i++) {
+    const t = trades[i];
+    totalVol += t.lot;
+    totalVal += t.lot * t.price;
+  }
+  return totalVol > 0 ? totalVal / totalVol : 0;
+}
+
+/** Calculate cumulative net flow (buy - sell in lots) up to each trade */
+export function calcCumFlow(trades: RunningTrade[], currentIdx: number): { time: string; cumBuy: number; cumSell: number; net: number }[] {
+  const result: { time: string; cumBuy: number; cumSell: number; net: number }[] = [];
+  let cumBuy = 0;
+  let cumSell = 0;
+  for (let i = 0; i <= currentIdx && i < trades.length; i++) {
+    const t = trades[i];
+    if (t.side === "BUY") cumBuy += t.lot;
+    else cumSell += t.lot;
+    result.push({ time: t.time, cumBuy, cumSell, net: cumBuy - cumSell });
+  }
+  return result;
+}
+
+/** Detect big trades (above threshold) */
+export function detectBigTrades(trades: RunningTrade[], currentIdx: number, threshold: number = 10): RunningTrade[] {
+  const big: RunningTrade[] = [];
+  for (let i = 0; i <= currentIdx && i < trades.length; i++) {
+    if (trades[i].lot >= threshold) big.push(trades[i]);
+  }
+  return big;
+}
+
+/** Broker summary: net buy/sell per broker */
+export function brokerSummary(trades: RunningTrade[], currentIdx: number): Map<string, { buy: number; sell: number; net: number }> {
+  const map = new Map<string, { buy: number; sell: number; net: number }>();
+  for (let i = 0; i <= currentIdx && i < trades.length; i++) {
+    const t = trades[i];
+    const b = t.broker || "N/A";
+    if (!map.has(b)) map.set(b, { buy: 0, sell: 0, net: 0 });
+    const entry = map.get(b)!;
+    if (t.side === "BUY") entry.buy += t.lot;
+    else entry.sell += t.lot;
+    entry.net = entry.buy - entry.sell;
+  }
+  return map;
 }

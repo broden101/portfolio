@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import {
   parseCSV,
   buildOrderBook,
   generateSampleData,
+  calcVWAP,
+  brokerSummary,
   type RunningTrade,
   type OrderLevel,
   type TickerInfo,
@@ -14,6 +15,8 @@ import {
 
 type Tab = "backtest" | "data" | "stats";
 type TradeFilter = "all" | "buy" | "sell";
+
+const BIG_LOT = 10;
 
 export default function OrderBookPage() {
   const [tab, setTab] = useState<Tab>("backtest");
@@ -26,11 +29,24 @@ export default function OrderBookPage() {
   const [ticker, setTicker] = useState<TickerInfo>({ code: "—", last: 0, change: 0, high: 0, low: 0, open: 0, volume: 0 });
   const [levels, setLevels] = useState<OrderLevel[]>([]);
   const [visibleTrades, setVisibleTrades] = useState<RunningTrade[]>([]);
+  const [hasBroker, setHasBroker] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const orderBookRef = useRef<HTMLDivElement>(null);
   const tradesRef = useRef<HTMLDivElement>(null);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.code === "Space") { e.preventDefault(); togglePlay(); }
+      if (e.code === "ArrowRight") { e.preventDefault(); stepForward(); }
+      if (e.code === "ArrowLeft") { e.preventDefault(); stepBack(); }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [trades, currentIdx, playing]);
 
   // Update order book when index changes
   useEffect(() => {
@@ -44,10 +60,19 @@ export default function OrderBookPage() {
     setLevels(lv);
     setTicker(tk);
 
-    // Show trades up to current index, filter
     const shown = trades.slice(0, currentIdx + 1).reverse();
     setVisibleTrades(filter === "all" ? shown : shown.filter((t) => filter === "buy" ? t.side === "BUY" : t.side === "SELL"));
   }, [trades, currentIdx, filter]);
+
+  // Auto-scroll orderbook to last price
+  useEffect(() => {
+    if (!orderBookRef.current || levels.length === 0) return;
+    const idx = levels.findIndex((l) => l.price === ticker.last);
+    if (idx >= 0) {
+      const el = orderBookRef.current.children[idx] as HTMLElement;
+      if (el) el.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+  }, [currentIdx, levels, ticker.last]);
 
   // Playback
   useEffect(() => {
@@ -79,6 +104,7 @@ export default function OrderBookPage() {
     setVisibleTrades([]);
     setLevels([]);
     setTicker({ code: data[0]?.code || "—", last: 0, change: 0, high: 0, low: 0, open: 0, volume: 0 });
+    setHasBroker(data.some((t) => !!t.broker));
   }, []);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,6 +161,12 @@ export default function OrderBookPage() {
   const totalLots = visibleTrades.reduce((s, t) => s + t.lot, 0);
   const totalFreq = levels.reduce((s, l) => s + l.freq, 0);
   const totalVal = levels.reduce((s, l) => s + (l.bidVol + l.offerVol) * l.price, 0);
+  const vwap = calcVWAP(trades, currentIdx);
+  const cumBuy = visibleTrades.filter((t) => t.side === "BUY").reduce((s, t) => s + t.lot, 0);
+  const cumSell = visibleTrades.filter((t) => t.side === "SELL").reduce((s, t) => s + t.lot, 0);
+  const maxCum = Math.max(cumBuy, cumSell, 1);
+  const bigTrades = visibleTrades.filter((t) => t.lot >= BIG_LOT);
+  const brokerMap = brokerSummary(trades, currentIdx);
 
   return (
     <div className="flex h-screen flex-col bg-[#0B0B0A] text-[#F4EFE6] overflow-hidden font-['Inter']">
@@ -143,11 +175,12 @@ export default function OrderBookPage() {
       {/* Header */}
       <header className="mb-2 flex items-center justify-between bg-[#141210] border border-[#2C261E] px-4 py-2">
         <div className="flex items-center gap-3">
-          <h1 className="text-base font-semibold text-[#F4EFE6] font-heading">📈 OrderBook Backtest</h1>
+          <h1 className="text-base font-semibold text-[#F4EFE6] font-heading">📈 OrderBook Replay</h1>
+          <span className="text-[10px] text-[#B8AA96]/30">Space play · ← → step</span>
         </div>
         <nav className="flex gap-1 bg-[#0B0B0A] border border-[#2C261E] p-0.5">
           {([
-            { id: "backtest", icon: "🎮", label: "Backtest" },
+            { id: "backtest", icon: "🎮", label: "Replay" },
             { id: "data", icon: "📂", label: "Data" },
             { id: "stats", icon: "📊", label: "Stats" },
           ] as const).map((t) => (
@@ -168,7 +201,7 @@ export default function OrderBookPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-lg font-bold text-[#F4EFE6] font-heading">Order Book</span>
-                  <span className="ml-2 text-xs text-[#B8AA96]/40">Real-time</span>
+                  <span className="ml-2 text-xs text-[#B8AA96]/40">Replay</span>
                 </div>
                 <div className="text-right">
                   <div className={`text-2xl font-bold ${ticker.change >= 0 ? "text-emerald-400" : "text-red-400"}`}>{ticker.last || "0"}</div>
@@ -179,8 +212,15 @@ export default function OrderBookPage() {
                 <div><span className="text-[#B8AA96]/30">H</span> {ticker.high || "0"}</div>
                 <div><span className="text-[#B8AA96]/30">L</span> {ticker.low || "0"}</div>
                 <div><span className="text-[#B8AA96]/30">O</span> {ticker.open || "0"}</div>
-                <div><span className="text-[#B8AA96]/30">Vol</span> {ticker.volume || "0"}</div>
+                <div><span className="text-[#B8AA96]/30">VWAP</span> <span className="text-[#C6A15B]">{vwap > 0 ? vwap.toFixed(0) : "—"}</span></div>
               </div>
+              {/* Cumulative flow mini bar */}
+              {maxCum > 0 && (
+                <div className="mt-2 flex h-1.5 rounded-full overflow-hidden bg-[#2C261E]">
+                  <div className="bg-emerald-500/60 transition-all" style={{ width: `${(cumBuy / maxCum) * 50}%` }} />
+                  <div className="bg-red-500/60 transition-all" style={{ width: `${(cumSell / maxCum) * 50}%` }} />
+                </div>
+              )}
             </div>
 
             {/* Column Headers */}
@@ -252,15 +292,21 @@ export default function OrderBookPage() {
                       </button>
                     ))}
                   </div>
-                  <button onClick={() => setVisibleTrades([])} className="text-xs text-[#B8AA96]/30 hover:text-red-400 transition-colors">Clear All</button>
+                  <div className="flex gap-2">
+                    {bigTrades.length > 0 && (
+                      <span className="text-[10px] text-[#C6A15B]/60">Big: {bigTrades.length}</span>
+                    )}
+                    <button onClick={() => setVisibleTrades([])} className="text-xs text-[#B8AA96]/30 hover:text-red-400 transition-colors">Clear All</button>
+                  </div>
                 </div>
-                <div className="mt-2 grid grid-cols-7 gap-1 border-t border-[#2C261E] pt-2 text-[10px] text-[#B8AA96]/40">
+                <div className={`mt-2 ${hasBroker ? "grid-cols-8" : "grid-cols-7"} grid gap-1 border-t border-[#2C261E] pt-2 text-[10px] text-[#B8AA96]/40`}>
                   <span className="col-span-2">Time</span>
                   <span>Code</span>
                   <span className="text-right">Price</span>
                   <span className="text-right">Lot</span>
                   <span className="text-right">Chg%</span>
                   <span className="text-right">Side</span>
+                  {hasBroker && <span className="text-right">Brk</span>}
                 </div>
               </div>
 
@@ -268,21 +314,30 @@ export default function OrderBookPage() {
                 {visibleTrades.length === 0 ? (
                   <div className="flex items-center justify-center py-12 text-sm text-[#B8AA96]/30">No trades yet — load or start playback</div>
                 ) : (
-                  visibleTrades.map((t, i) => (
-                    <div key={i} className="grid grid-cols-7 gap-1 px-3 py-1.5 text-xs border-b border-[#2C261E]/30 hover:bg-[#C6A15B]/[0.02]">
-                      <span className="col-span-2 font-mono text-[#B8AA96]/60">{t.time}</span>
-                      <span className="text-[#C6A15B] font-semibold">{t.code}</span>
-                      <span className="text-right font-mono text-[#F4EFE6]">{t.price.toLocaleString("id-ID")}</span>
-                      <span className="text-right text-[#B8AA96]">{t.lot}</span>
-                      <span className={`text-right font-mono ${t.change >= 0 ? "text-emerald-400" : "text-red-400"}`}>{t.change >= 0 ? "+" : ""}{t.change.toFixed(2)}</span>
-                      <span className={`text-right font-semibold ${t.side === "BUY" ? "text-emerald-400" : "text-red-400"}`}>{t.side}</span>
-                    </div>
-                  ))
+                  visibleTrades.map((t, i) => {
+                    const isBig = t.lot >= BIG_LOT;
+                    return (
+                      <div key={i} className={`${hasBroker ? "grid-cols-8" : "grid-cols-7"} grid gap-1 px-3 py-1.5 text-xs border-b border-[#2C261E]/30 hover:bg-[#C6A15B]/[0.02] ${isBig ? "border-l-2 border-[#C6A15B]" : ""}`}>
+                        <span className="col-span-2 font-mono text-[#B8AA96]/60">{t.time}</span>
+                        <span className="text-[#C6A15B] font-semibold">{t.code}</span>
+                        <span className="text-right font-mono text-[#F4EFE6]">{t.price.toLocaleString("id-ID")}</span>
+                        <span className={`text-right ${isBig ? "text-[#C6A15B] font-bold" : "text-[#B8AA96]"}`}>{t.lot}</span>
+                        <span className={`text-right font-mono ${t.change >= 0 ? "text-emerald-400" : "text-red-400"}`}>{t.change >= 0 ? "+" : ""}{t.change.toFixed(2)}</span>
+                        <span className={`text-right font-semibold ${t.side === "BUY" ? "text-emerald-400" : "text-red-400"}`}>{t.side}</span>
+                        {hasBroker && <span className="text-right text-[#B8AA96]/60 font-mono">{t.broker || "—"}</span>}
+                      </div>
+                    );
+                  })
                 )}
               </div>
 
-              <div className="border-t border-[#2C261E] p-2 text-[10px] text-[#B8AA96]/40">
-                <span className="text-emerald-400">BUY {buyTrades}</span> · <span className="text-red-400">SELL {sellTrades}</span> · Total lot {totalLots}
+              <div className="border-t border-[#2C261E] p-2 text-[10px] text-[#B8AA96]/40 flex items-center justify-between">
+                <div>
+                  <span className="text-emerald-400">BUY {buyTrades}</span> · <span className="text-red-400">SELL {sellTrades}</span> · Total lot {totalLots}
+                </div>
+                {bigTrades.length > 0 && (
+                  <span className="text-[#C6A15B]/60">Big≥{BIG_LOT}: {bigTrades.length} trades</span>
+                )}
               </div>
             </div>
           </div>
@@ -292,7 +347,7 @@ export default function OrderBookPage() {
             {/* Backtest Controls */}
             <div className="border border-[#2C261E] bg-[#141210] p-4">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-sm font-medium text-[#F4EFE6]">🎮 Backtest Controls</h3>
+                <h3 className="text-sm font-medium text-[#F4EFE6]">🎮 Replay Controls</h3>
               </div>
 
               {/* Progress bar */}
@@ -320,6 +375,7 @@ export default function OrderBookPage() {
                   </button>
                 ))}
               </div>
+              <div className="text-[10px] text-[#B8AA96]/30 text-center">Space=Play/Pause · ←=Back · →=Forward</div>
             </div>
 
             {/* Data Source */}
@@ -329,7 +385,7 @@ export default function OrderBookPage() {
                 <div className="space-y-3">
                   <div onClick={() => fileRef.current?.click()} className="cursor-pointer rounded-lg border-2 border-dashed border-[#2C261E] p-4 text-center hover:border-[#C6A15B]/30 transition-colors">
                     <p className="text-xs text-[#B8AA96]/60">Upload CSV Running Trade</p>
-                    <p className="mt-1 text-[10px] text-[#B8AA96]/30">Format: Time,Code,Price,Lot,Change,Side</p>
+                    <p className="mt-1 text-[10px] text-[#B8AA96]/30">Format: Time,Code,Price,Lot,Change,Side[,Broker]</p>
                     <input ref={fileRef} type="file" accept=".csv,.txt" onChange={handleFileUpload} className="hidden" />
                   </div>
 
@@ -339,13 +395,13 @@ export default function OrderBookPage() {
                       value={csvText}
                       onChange={(e) => setCsvText(e.target.value)}
                       className="w-full bg-[#0B0B0A] border border-[#2C261E] px-3 py-2 font-mono text-xs text-[#F4EFE6] placeholder-[#B8AA96]/20 resize-none"
-                      placeholder={"Paste CSV data here...\nTime,Code,Price,Lot,Change,Side\n09:30:01,BUMI,170,10,0.00,BUY\n09:30:05,BUMI,169,25,-0.58,SELL"}
+                      placeholder={"Paste CSV data here...\nTime,Code,Price,Lot,Change,Side,Broker\n09:30:01,BUMI,170,10,0.00,BUY,YU\n09:30:05,BUMI,169,25,-0.58,SELL,AK"}
                     />
                     <button onClick={handlePasteLoad} className="mt-2 w-full py-2 border border-[#2C261E] text-xs text-[#B8AA96] hover:text-[#C6A15B] hover:border-[#C6A15B]/30 transition-colors">📥 Load from Text</button>
                   </div>
 
                   <button onClick={handleGenerate} className="w-full py-2 border border-[#2C261E] text-xs text-[#B8AA96] hover:text-[#C6A15B] hover:border-[#C6A15B]/30 transition-colors">
-                    🎲 Generate Sample Data (BUMI)
+                    🎲 Generate Sample Data (BUMI + Broker)
                   </button>
 
                   <button onClick={handleReset} className="w-full text-xs text-[#B8AA96]/30 hover:text-red-400 transition-colors py-1">
@@ -362,23 +418,46 @@ export default function OrderBookPage() {
                 <div className="space-y-3 text-xs">
                   {[
                     { label: "Total Trades", value: `${currentIdx + 1} / ${trades.length}` },
-                    { label: "Total Buy Volume", value: `${visibleTrades.filter(t => t.side === "BUY").reduce((s, t) => s + t.lot, 0)} lots` },
-                    { label: "Total Sell Volume", value: `${visibleTrades.filter(t => t.side === "SELL").reduce((s, t) => s + t.lot, 0)} lots` },
+                    { label: "VWAP", value: vwap > 0 ? vwap.toFixed(0) : "—" },
+                    { label: "Total Buy Vol", value: `${cumBuy} lots` },
+                    { label: "Total Sell Vol", value: `${cumSell} lots` },
+                    { label: "Net Flow", value: `${cumBuy - cumSell} lots` },
+                    { label: "Big Trades (≥10)", value: `${bigTrades.length} trades / ${bigTrades.reduce((s, t) => s + t.lot, 0)} lots` },
                     { label: "Price Range", value: levels.length > 0 ? `${Math.min(...levels.map(l => l.price))} — ${Math.max(...levels.map(l => l.price))}` : "—" },
-                    { label: "Unique Price Levels", value: levels.length.toString() },
-                    { label: "Total Volume", value: `${ticker.volume} lots` },
-                    { label: "Net Flow", value: `${buyTrades - sellTrades} trades` },
+                    { label: "Avg Trade Size", value: (currentIdx >= 0 && totalLots > 0) ? `${(totalLots / Math.max(1, currentIdx + 1)).toFixed(1)} lots` : "—" },
                   ].map((s) => (
                     <div key={s.label} className="flex items-center justify-between border-b border-[#2C261E]/50 pb-2">
                       <span className="text-[#B8AA96]/60">{s.label}</span>
                       <span className="text-[#F4EFE6] font-mono">{s.value}</span>
                     </div>
                   ))}
+
+                  {/* Broker Summary */}
+                  {hasBroker && brokerMap.size > 0 && (
+                    <div className="mt-4">
+                      <div className="mb-2 text-xs text-[#B8AA96]/60 font-medium">Broker Flow</div>
+                      {Array.from(brokerMap.entries())
+                        .sort((a, b) => Math.abs(b[1].net) - Math.abs(a[1].net))
+                        .slice(0, 8)
+                        .map(([brk, val]) => (
+                          <div key={brk} className="flex items-center justify-between border-b border-[#2C261E]/30 py-1.5 text-xs">
+                            <span className="text-[#B8AA96] font-mono">{brk}</span>
+                            <div className="flex gap-2">
+                              <span className="text-emerald-400/70">{val.buy}L</span>
+                              <span className="text-red-400/70">{val.sell}L</span>
+                              <span className={val.net >= 0 ? "text-emerald-400 font-mono" : "text-red-400 font-mono"}>
+                                {val.net >= 0 ? "+" : ""}{val.net}L
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
 
-            {/* Quick Info (when on backtest tab) */}
+            {/* Quick Info (when on replay tab) */}
             {tab === "backtest" && (
               <div className="border border-[#2C261E] bg-[#141210] p-4">
                 <h3 className="mb-3 text-sm font-medium text-[#F4EFE6]">Quick Info</h3>
@@ -387,6 +466,11 @@ export default function OrderBookPage() {
                   <div className="flex justify-between"><span className="text-[#B8AA96]/60">Speed</span><span className="text-[#C6A15B] font-mono">{speed}x</span></div>
                   <div className="flex justify-between"><span className="text-[#B8AA96]/60">Progress</span><span className="text-[#F4EFE6] font-mono">{trades.length > 0 ? ((currentIdx + 1) / trades.length * 100).toFixed(1) : "0"}%</span></div>
                   <div className="flex justify-between"><span className="text-[#B8AA96]/60">Ticker</span><span className="text-[#C6A15B] font-semibold">{ticker.code}</span></div>
+                  <div className="flex justify-between"><span className="text-[#B8AA96]/60">VWAP</span><span className="text-[#C6A15B] font-mono">{vwap > 0 ? vwap.toFixed(0) : "—"}</span></div>
+                  <div className="flex justify-between"><span className="text-[#B8AA96]/60">Net Flow</span><span className={cumBuy - cumSell >= 0 ? "text-emerald-400 font-mono" : "text-red-400 font-mono"}>{(cumBuy - cumSell) >= 0 ? "+" : ""}{cumBuy - cumSell}L</span></div>
+                  {bigTrades.length > 0 && (
+                    <div className="flex justify-between"><span className="text-[#B8AA96]/60">Big Trades</span><span className="text-[#C6A15B] font-mono">{bigTrades.length}</span></div>
+                  )}
                 </div>
               </div>
             )}
