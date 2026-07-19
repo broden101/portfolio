@@ -208,10 +208,10 @@ export default function OrderBookPage() {
                   <div className={`text-xs ${ticker.change >= 0 ? "text-emerald-400" : "text-red-400"}`}>{ticker.change >= 0 ? "+" : ""}{ticker.change.toFixed(2)}%</div>
                 </div>
               </div>
-              <div className="mt-2 grid grid-cols-4 gap-2 text-xs text-[#B8AA96]">
+              <div className="mt-2 grid grid-cols-4 gap-2 text-xs text-[#B8AA96]" style={{fontVariantNumeric:"tabular-nums"}}>
+                <div><span className="text-[#B8AA96]/30">O</span> {ticker.open || "0"}</div>
                 <div><span className="text-[#B8AA96]/30">H</span> {ticker.high || "0"}</div>
                 <div><span className="text-[#B8AA96]/30">L</span> {ticker.low || "0"}</div>
-                <div><span className="text-[#B8AA96]/30">O</span> {ticker.open || "0"}</div>
                 <div><span className="text-[#B8AA96]/30">VWAP</span> <span className="text-[#C6A15B]">{vwap > 0 ? vwap.toFixed(0) : "—"}</span></div>
               </div>
               {/* Cumulative flow mini bar */}
@@ -224,7 +224,7 @@ export default function OrderBookPage() {
             </div>
 
             {/* Column Headers */}
-            <div className="grid grid-cols-4 gap-2 border-b border-[#2C261E] px-3 py-1.5 text-[10px] text-[#B8AA96]/40">
+            <div className="grid grid-cols-4 gap-2 border-b border-[#2C261E] px-3 py-1 text-[10px] text-[#B8AA96]/40" style={{fontVariantNumeric:"tabular-nums"}}>
               <span className="text-left">Bid</span>
               <span className="text-center">Price</span>
               <span className="text-center">Offer</span>
@@ -241,23 +241,23 @@ export default function OrderBookPage() {
                   const offerPct = 100 - bidPct;
                   const isLast = lv.price === ticker.last;
                   return (
-                    <div key={i} className={`grid grid-cols-4 gap-2 px-3 py-1 text-xs border-b border-[#2C261E]/30 ${isLast ? "bg-[#C6A15B]/[0.06]" : "hover:bg-[#C6A15B]/[0.02]"}`}>
+                    <div key={i} className={`grid grid-cols-4 gap-2 px-3 py-[1px] text-xs border-b border-[#2C261E]/30 ${isLast ? "bg-[#C6A15B]/[0.06] border-l-2 border-[#C6A15B]" : "hover:bg-[#C6A15B]/[0.02]"}`} style={{fontVariantNumeric:"tabular-nums"}}>
                       {/* Bid bar */}
                       <div className="relative flex items-center">
                         <div className="absolute inset-0 bg-emerald-500/10" style={{ width: `${bidPct}%` }} />
-                        <span className="relative text-emerald-400 font-mono text-[11px]">{lv.bidVol || ""}</span>
+                        <span className="relative text-emerald-400 font-mono font-bold text-[11px]">{lv.bidVol || ""}</span>
                       </div>
                       {/* Price */}
-                      <div className={`text-center font-mono font-medium text-[11px] ${isLast ? "text-[#C6A15B]" : "text-[#F4EFE6]"}`}>
+                      <div className={`text-center font-mono font-bold text-[11px] ${isLast ? "text-[#C6A15B]" : "text-white"}`}>
                         {lv.price.toLocaleString("id-ID")}
                       </div>
                       {/* Offer bar */}
                       <div className="relative flex items-center justify-end">
                         <div className="absolute inset-0 bg-red-500/10" style={{ width: `${offerPct}%`, marginLeft: "auto" }} />
-                        <span className="relative text-red-400 font-mono text-[11px]">{lv.offerVol || ""}</span>
+                        <span className="relative text-red-400 font-mono font-bold text-[11px]">{lv.offerVol || ""}</span>
                       </div>
                       {/* Freq */}
-                      <div className="text-right font-mono text-[#B8AA96]/50 text-[11px]">{lv.freq}</div>
+                      <div className="text-right font-mono font-bold text-white text-[11px]">{lv.freq}</div>
                     </div>
                   );
                 })
@@ -299,7 +299,7 @@ export default function OrderBookPage() {
                     <button onClick={() => setVisibleTrades([])} className="text-xs text-[#B8AA96]/30 hover:text-red-400 transition-colors">Clear All</button>
                   </div>
                 </div>
-                <div className={`mt-2 ${hasBroker ? "grid-cols-8" : "grid-cols-7"} grid gap-1 border-t border-[#2C261E] pt-2 text-[10px] text-[#B8AA96]/40`}>
+                <div className={`mt-2 ${hasBroker ? "grid-cols-8" : "grid-cols-7"} grid gap-1 border-t border-[#2C261E] pt-2 text-[10px] text-[#B8AA96]/40`} style={{fontVariantNumeric:"tabular-nums"}}>
                   <span className="col-span-2">Time</span>
                   <span>Code</span>
                   <span className="text-right">Price</span>
@@ -317,14 +317,14 @@ export default function OrderBookPage() {
                   visibleTrades.map((t, i) => {
                     const isBig = t.lot >= BIG_LOT;
                     return (
-                      <div key={i} className={`${hasBroker ? "grid-cols-8" : "grid-cols-7"} grid gap-1 px-3 py-1.5 text-xs border-b border-[#2C261E]/30 hover:bg-[#C6A15B]/[0.02] ${isBig ? "border-l-2 border-[#C6A15B]" : ""}`}>
-                        <span className="col-span-2 font-mono text-[#B8AA96]/60">{t.time}</span>
-                        <span className="text-[#C6A15B] font-semibold">{t.code}</span>
-                        <span className="text-right font-mono text-[#F4EFE6]">{t.price.toLocaleString("id-ID")}</span>
-                        <span className={`text-right ${isBig ? "text-[#C6A15B] font-bold" : "text-[#B8AA96]"}`}>{t.lot}</span>
-                        <span className={`text-right font-mono ${t.change >= 0 ? "text-emerald-400" : "text-red-400"}`}>{t.change >= 0 ? "+" : ""}{t.change.toFixed(2)}</span>
-                        <span className={`text-right font-semibold ${t.side === "BUY" ? "text-emerald-400" : "text-red-400"}`}>{t.side}</span>
-                        {hasBroker && <span className="text-right text-[#B8AA96]/60 font-mono">{t.broker || "—"}</span>}
+                      <div key={i} className={`${hasBroker ? "grid-cols-8" : "grid-cols-7"} grid gap-1 px-3 py-[1px] text-xs border-b border-[#2C261E]/30 hover:bg-[#C6A15B]/[0.02] ${isBig ? "border-l-2 border-[#C6A15B]" : ""}`} style={{fontVariantNumeric:"tabular-nums"}}>
+                        <span className="col-span-2 font-mono text-[#B8AA96]/60 text-[11px]">{t.time}</span>
+                        <span className="text-[#C6A15B] font-bold text-[11px]">{t.code}</span>
+                        <span className="text-right font-mono font-bold text-white text-[11px]">{t.price.toLocaleString("id-ID")}</span>
+                        <span className={`text-right font-mono font-bold text-[11px] ${isBig ? "text-[#C6A15B]" : "text-white"}`}>{t.lot}</span>
+                        <span className={`text-right font-mono font-bold text-[11px] ${t.change >= 0 ? "text-emerald-400" : "text-red-400"}`}>{t.change >= 0 ? "+" : ""}{t.change.toFixed(2)}</span>
+                        <span className={`text-right font-bold text-[11px] ${t.side === "BUY" ? "text-emerald-400" : "text-red-400"}`}>{t.side}</span>
+                        {hasBroker && <span className="text-right font-mono font-bold text-[11px] text-white/60">{t.broker || "—"}</span>}
                       </div>
                     );
                   })
@@ -345,9 +345,9 @@ export default function OrderBookPage() {
           {/* Right Panel - Controls */}
           <div className="w-[340px] flex-shrink-0 overflow-y-auto space-y-4">
             {/* Backtest Controls */}
-            <div className="border border-[#2C261E] bg-[#141210] p-4">
+            <div className="border border-[#2C261E] bg-[#141210] p-3">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-sm font-medium text-[#F4EFE6]">🎮 Replay Controls</h3>
+                <h3 className="text-sm font-medium text-[#F4EFE6]">🎮 Controls</h3>
               </div>
 
               {/* Progress bar */}
@@ -415,7 +415,7 @@ export default function OrderBookPage() {
             {tab === "stats" && (
               <div className="border border-[#2C261E] bg-[#141210] p-4">
                 <h3 className="mb-3 text-sm font-medium text-[#F4EFE6]">📊 Session Stats</h3>
-                <div className="space-y-3 text-xs">
+                <div className="space-y-2 text-xs">
                   {[
                     { label: "Total Trades", value: `${currentIdx + 1} / ${trades.length}` },
                     { label: "VWAP", value: vwap > 0 ? vwap.toFixed(0) : "—" },
@@ -426,7 +426,7 @@ export default function OrderBookPage() {
                     { label: "Price Range", value: levels.length > 0 ? `${Math.min(...levels.map(l => l.price))} — ${Math.max(...levels.map(l => l.price))}` : "—" },
                     { label: "Avg Trade Size", value: (currentIdx >= 0 && totalLots > 0) ? `${(totalLots / Math.max(1, currentIdx + 1)).toFixed(1)} lots` : "—" },
                   ].map((s) => (
-                    <div key={s.label} className="flex items-center justify-between border-b border-[#2C261E]/50 pb-2">
+                    <div key={s.label} className="flex items-center justify-between border-b border-[#2C261E]/30 py-1">
                       <span className="text-[#B8AA96]/60">{s.label}</span>
                       <span className="text-[#F4EFE6] font-mono">{s.value}</span>
                     </div>
@@ -440,7 +440,7 @@ export default function OrderBookPage() {
                         .sort((a, b) => Math.abs(b[1].net) - Math.abs(a[1].net))
                         .slice(0, 8)
                         .map(([brk, val]) => (
-                          <div key={brk} className="flex items-center justify-between border-b border-[#2C261E]/30 py-1.5 text-xs">
+                          <div key={brk} className="flex items-center justify-between border-b border-[#2C261E]/30 py-1 text-xs">
                             <span className="text-[#B8AA96] font-mono">{brk}</span>
                             <div className="flex gap-2">
                               <span className="text-emerald-400/70">{val.buy}L</span>
