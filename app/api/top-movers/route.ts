@@ -119,13 +119,24 @@ export async function GET(req: Request) {
   }
 
   try {
-    // For 1d, just fetch today
-    // For 1w/1m, fetch last N trading days (skip weekends)
     const today = new Date();
     const dates: string[] = [];
 
     if (days === 1) {
-      dates.push(toYMD(today));
+      // Fetch latest available date instead of today (market may still be open)
+      const availRes = await fetch(`${API_BASE}/available-dates`, {
+        headers: HEADERS,
+        cache: "no-store",
+      });
+      if (availRes.ok) {
+        const avail = await availRes.json();
+        if (Array.isArray(avail) && avail.length > 0) {
+          dates.push(avail[0]); // latest available date
+        }
+      }
+      if (dates.length === 0) {
+        dates.push(toYMD(today));
+      }
     } else {
       // Walk backwards skipping weekends
       const d = new Date(today);
