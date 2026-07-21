@@ -3,18 +3,18 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Navbar from "@/components/Navbar";
 import {
-  parseCSV,
   buildOrderBook,
   calcVWAP,
-  brokerSummary,
   type RunningTrade,
   type OrderLevel,
   type TickerInfo,
 } from "@/lib/orderbook";
 
-type TradeFilter = "all" | "buy" | "sell";
-
-const SPEEDS = [0.5, 1, 2, 5, 10, 25, 50];
+/** Max rows rendered per list panel — prevents 40k-row freeze */
+const LIST_WINDOW = 180;
+/** During play, rebuild orderbook every N steps (forward uses incremental) */
+const REBUILD_EVERY = 1;
+const SPEEDS = [1, 2, 5, 10, 25, 50, 100];
 
 function fmt(n: number, dig = 0) {
   return n.toLocaleString("id-ID", {
@@ -31,8 +31,7 @@ export default function OrderBookPage() {
   const [trades, setTrades] = useState<RunningTrade[]>([]);
   const [currentIdx, setCurrentIdx] = useState(-1);
   const [playing, setPlaying] = useState(false);
-  const [speed, setSpeed] = useState(1);
-  const [filter, setFilter] = useState<TradeFilter>("all");
+  const [speed, setSpeed] = useState(10);
   const [ticker, setTicker] = useState<TickerInfo>({
     code: "DEWA",
     last: 0,
@@ -46,15 +45,31 @@ export default function OrderBookPage() {
   const [availableTickers, setAvailableTickers] = useState<string[]>([]);
   const [loadingData, setLoadingData] = useState(false);
   const [levels, setLevels] = useState<OrderLevel[]>([]);
-  const [visibleTrades, setVisibleTrades] = useState<RunningTrade[]>([]);
   const [dateLabel, setDateLabel] = useState("—");
   const [showBroker, setShowBroker] = useState(true);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const orderBookRef = useRef<HTMLDivElement>(null);
-  const tradesRef = useRef<HTMLDivElement>(null);
-  const buyRef = useRef<HTMLDivElement>(null);
-  const sellRef = useRef<HTMLDivElement>(null);
+  const tradesRef = useRef(trades);
+  const idxRef = useRef(currentIdx);
+  const playingRef = useRef(playing);
+  const speedRef = useRef(speed);
+  const levelsMapRef = useRef<Map<number, OrderLevel>>(new Map());
+  const statsRef = useRef({ high: 0, low: Infinity, open: 0, volume: 0 });
+
+  // Keep refs in sync for timer/keyboard without rebind
+  useEffect(() => {
+    tradesRef.current = trades;
+  }, [trades]);
+  useEffect(() => {
+    idxRef.current = currentIdx;
+  }, [currentIdx]);
+  useEffect(() => {
+    playingRef.current = playing;
+  }, [playing]);
+  useEffect(() => {
+    speedRef.current = speed;
+  }, [speed]);
 
   // Load available tickers
   useEffect(() => {
@@ -67,27 +82,220 @@ export default function OrderBookPage() {
       .catch(() => {});
   }, []);
 
-  const fetchTickerData = async (code: string) => {
-    setLoadingData(true);
-    setPlaying(false);
-    try {
-      const res = await fetch(`/data/trades/${code}.json`);
-      if (res.ok) {
-        const data = await res.json();
-        loadData(data);
+  const applyBookFromScratch = useCallback(
+    (data: RunningTrade[], idx: number, code: string) => {
+      if (data.length === 0 || idx < 0) {
+        levelsMapRef.current = new Map();
+        statsRef.current = { high: 0, low: Infinity, open: 0, volume: 0 };
+        setLevels([]);
+        setTicker({ code, last: 0, change: 0, high: 0, low: 0, open: 0, volume: 0 });
+        return;
       }
-    } catch (e) {
-      console.error("Load failed", e);
+      const { levels: lv, ticker: tk } = buildOrderBook(data, idx);
+      const map = new Map<number, OrderLevel>();
+      for (const l of lv) map.set(l.price, { ...l });
+      levelsMapRef.current = map;
+      statsRef.current = {
+        high: tk.high,
+        low: tk.low || Infinity,
+        open: tk.open,
+        volume: tk.volume,
+      };
+      setLevels(lv);
+      setTicker(tk);
+    },
+    []
+  );
+
+  /** Incremental forward apply (fast path during play) */
+  const applyForward = useCallback((data: RunningTrade[], from: number, to: number) => {
+    if (to < from || to >= data.length) return;
+    const map = levelsMapRef.current;
+    const st = statsRef.current;
+    let last = data[from]?.price ?? 0;
+    let lastChange = data[from]?.change ?? 0;
+
+    for (let i = from + 1; i <= to; i++) {
+      const t = data[i];
+      let lv = map.get(t.price);
+      if (!lv) {
+        lv = { price: t.price, bidVol: 0, offerVol: 0, freq: 0 };
+        map.set(t.price, lv);
+      }
+      if (t.side === "BUY") lv.bidVol += t.lot;
+      else lv.offerVol += t.lot;
+      lv.freq++;
+      st.volume += t.lot;
+      if (i === 0 || st.open === 0) st.open = t.price;
+      if (t.price > st.high) st.high = t.price;
+      if (t.price < st.low) st.low = t.price;
+      last = t.price;
+      lastChange = t.change;
     }
-    setLoadingData(false);
-  };
+
+    const sorted = Array.from(map.values()).sort((a, b) => b.price - a.price);
+    setLevels(sorted);
+    setTicker({
+      code: data[0]?.code || "—",
+      last,
+      change: lastChange,
+      high: st.high,
+      low: st.low === Infinity ? 0 : st.low,
+      open: st.open,
+      volume: st.volume,
+    });
+  }, []);
+
+  const loadData = useCallback(
+    (data: RunningTrade[], code: string) => {
+      setTrades(data);
+      // Start at 0 for replay — light render; user jumps via slider
+      const idx = data.length > 0 ? 0 : -1;
+      setCurrentIdx(idx);
+      setPlaying(false);
+      applyBookFromScratch(data, idx, code);
+    },
+    [applyBookFromScratch]
+  );
+
+  const fetchTickerData = useCallback(
+    async (code: string) => {
+      setLoadingData(true);
+      setPlaying(false);
+      try {
+        const res = await fetch(`/data/trades/${code}.json`);
+        if (res.ok) {
+          const data = await res.json();
+          loadData(data, code);
+        }
+      } catch (e) {
+        console.error("Load failed", e);
+      }
+      setLoadingData(false);
+    },
+    [loadData]
+  );
 
   useEffect(() => {
     fetchTickerData(tickerCode);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchTickerData, tickerCode]);
+
+  // Rebuild book when index jumps (slider / step back / non-sequential)
+  const lastAppliedRef = useRef(-1);
+  useEffect(() => {
+    if (trades.length === 0 || currentIdx < 0) {
+      lastAppliedRef.current = -1;
+      return;
+    }
+    const prev = lastAppliedRef.current;
+    // Sequential forward by small step → incremental
+    if (prev >= 0 && currentIdx > prev && currentIdx - prev <= 50) {
+      applyForward(trades, prev, currentIdx);
+      lastAppliedRef.current = currentIdx;
+      return;
+    }
+    // Seek / jump / backward → full rebuild
+    applyBookFromScratch(trades, currentIdx, tickerCode);
+    lastAppliedRef.current = currentIdx;
+  }, [trades, currentIdx, tickerCode, applyForward, applyBookFromScratch]);
+
+  // Auto-scroll orderbook only when not playing (smooth is expensive)
+  useEffect(() => {
+    if (playing) return;
+    if (!orderBookRef.current || levels.length === 0) return;
+    const idx = levels.findIndex((l) => l.price === ticker.last);
+    if (idx >= 0) {
+      const el = orderBookRef.current.children[idx] as HTMLElement | undefined;
+      if (el) el.scrollIntoView({ block: "center", behavior: "auto" });
+    }
+  }, [currentIdx, levels, ticker.last, playing]);
+
+  // Playback — interval stable; uses refs; batch steps by speed
+  useEffect(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    if (!playing) return;
+
+    // Base tick ~30ms; advance multiple trades per tick at high speed
+    const tickMs = 30;
+    timerRef.current = setInterval(() => {
+      const data = tradesRef.current;
+      if (!data.length) return;
+      const sp = speedRef.current;
+      // trades per tick: at 1x ≈ 1 trade / 100ms → ~3 ticks = 1 trade
+      // simplify: advance `sp` trades every tick at 30ms → 1x = ~33 trades/s
+      const step = Math.max(1, Math.round(sp));
+      setCurrentIdx((prev) => {
+        if (prev >= data.length - 1) {
+          setPlaying(false);
+          return prev;
+        }
+        return Math.min(data.length - 1, prev + step);
+      });
+    }, tickMs);
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [playing]);
+
+  const togglePlay = useCallback(() => {
+    const data = tradesRef.current;
+    if (!data.length) return;
+    const idx = idxRef.current;
+    if (idx >= data.length - 1) {
+      setCurrentIdx(0);
+      lastAppliedRef.current = -1;
+      setPlaying(true);
+      return;
+    }
+    if (idx < 0) {
+      setCurrentIdx(0);
+      setPlaying(true);
+    } else {
+      setPlaying((p) => !p);
+    }
   }, []);
 
-  // Keyboard
+  const stepForward = useCallback(() => {
+    setPlaying(false);
+    setCurrentIdx((prev) => {
+      const max = tradesRef.current.length - 1;
+      return prev < max ? prev + 1 : prev;
+    });
+  }, []);
+
+  const stepBack = useCallback(() => {
+    setPlaying(false);
+    setCurrentIdx((prev) => (prev > 0 ? prev - 1 : prev));
+  }, []);
+
+  const jumpToStart = useCallback(() => {
+    setPlaying(false);
+    lastAppliedRef.current = -1;
+    setCurrentIdx(tradesRef.current.length > 0 ? 0 : -1);
+  }, []);
+
+  const jumpToEnd = useCallback(() => {
+    setPlaying(false);
+    lastAppliedRef.current = -1;
+    const n = tradesRef.current.length;
+    setCurrentIdx(n > 0 ? n - 1 : -1);
+  }, []);
+
+  const cycleSpeed = useCallback(() => {
+    setSpeed((s) => {
+      const i = SPEEDS.indexOf(s);
+      return SPEEDS[(i + 1) % SPEEDS.length];
+    });
+  }, []);
+
+  // Keyboard — stable handlers via refs
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
@@ -106,160 +314,67 @@ export default function OrderBookPage() {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trades, currentIdx, playing]);
+  }, [togglePlay, stepForward, stepBack]);
 
-  // Rebuild book on index change
-  useEffect(() => {
-    if (trades.length === 0 || currentIdx < 0) {
-      setLevels([]);
-      setTicker({
-        code: tickerCode,
-        last: 0,
-        change: 0,
-        high: 0,
-        low: 0,
-        open: 0,
-        volume: 0,
-      });
-      setVisibleTrades([]);
-      return;
-    }
-    const { levels: lv, ticker: tk } = buildOrderBook(trades, currentIdx);
-    setLevels(lv);
-    setTicker(tk);
+  // ── Windowed lists (only last LIST_WINDOW trades) ──
+  const windowSlice = useMemo(() => {
+    if (currentIdx < 0 || trades.length === 0) return [] as RunningTrade[];
+    const start = Math.max(0, currentIdx - LIST_WINDOW + 1);
+    // newest first
+    const out: RunningTrade[] = [];
+    for (let i = currentIdx; i >= start; i--) out.push(trades[i]);
+    return out;
+  }, [trades, currentIdx]);
 
-    const shown = trades.slice(0, currentIdx + 1).reverse();
-    setVisibleTrades(
-      filter === "all"
-        ? shown
-        : shown.filter((t) => (filter === "buy" ? t.side === "BUY" : t.side === "SELL"))
-    );
-  }, [trades, currentIdx, filter, tickerCode]);
-
-  // Auto-scroll orderbook to last price
-  useEffect(() => {
-    if (!orderBookRef.current || levels.length === 0) return;
-    const idx = levels.findIndex((l) => l.price === ticker.last);
-    if (idx >= 0) {
-      const el = orderBookRef.current.children[idx] as HTMLElement;
-      if (el) el.scrollIntoView({ block: "center", behavior: "smooth" });
-    }
-  }, [currentIdx, levels, ticker.last]);
-
-  // Auto-scroll running trade to top
-  useEffect(() => {
-    if (tradesRef.current) tradesRef.current.scrollTop = 0;
-    if (buyRef.current) buyRef.current.scrollTop = 0;
-    if (sellRef.current) sellRef.current.scrollTop = 0;
-  }, [currentIdx]);
-
-  // Playback timer
-  useEffect(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    if (playing && currentIdx < trades.length - 1) {
-      const ms = Math.max(5, 1000 / speed);
-      timerRef.current = setInterval(() => {
-        setCurrentIdx((prev) => {
-          if (prev >= trades.length - 1) {
-            setPlaying(false);
-            return prev;
-          }
-          return prev + 1;
-        });
-      }, ms);
-    }
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [playing, speed, trades.length, currentIdx]);
-
-  const loadData = useCallback((data: RunningTrade[]) => {
-    setTrades(data);
-    // Start at beginning for replay feel (first trade), like bandarmolony
-    // User can jump with slider. Default show last for quick overview.
-    setCurrentIdx(data.length > 0 ? data.length - 1 : -1);
-    setPlaying(false);
-  }, []);
-
-  const togglePlay = () => {
-    if (trades.length === 0) return;
-    if (currentIdx >= trades.length - 1) {
-      setCurrentIdx(0);
-      setPlaying(true);
-      return;
-    }
-    if (currentIdx < 0) {
-      setCurrentIdx(0);
-      setPlaying(true);
-    } else {
-      setPlaying(!playing);
-    }
-  };
-
-  const stepForward = () => {
-    if (currentIdx < trades.length - 1) setCurrentIdx(currentIdx + 1);
-  };
-
-  const stepBack = () => {
-    if (currentIdx > 0) setCurrentIdx(currentIdx - 1);
-  };
-
-  const jumpToStart = () => {
-    setPlaying(false);
-    setCurrentIdx(trades.length > 0 ? 0 : -1);
-  };
-
-  const jumpToEnd = () => {
-    setPlaying(false);
-    setCurrentIdx(trades.length > 0 ? trades.length - 1 : -1);
-  };
-
-  const cycleSpeed = () => {
-    const i = SPEEDS.indexOf(speed);
-    setSpeed(SPEEDS[(i + 1) % SPEEDS.length]);
-  };
-
-  // Stats
   const buyTrades = useMemo(
-    () => visibleTrades.filter((t) => t.side === "BUY"),
-    [visibleTrades]
+    () => windowSlice.filter((t) => t.side === "BUY"),
+    [windowSlice]
   );
   const sellTrades = useMemo(
-    () => visibleTrades.filter((t) => t.side === "SELL"),
-    [visibleTrades]
+    () => windowSlice.filter((t) => t.side === "SELL"),
+    [windowSlice]
   );
-  const cumBuy = buyTrades.reduce((s, t) => s + t.lot, 0);
-  const cumSell = sellTrades.reduce((s, t) => s + t.lot, 0);
-  const totalLots = cumBuy + cumSell;
-  const vwap = calcVWAP(trades, currentIdx);
-  const totalFreq = levels.reduce((s, l) => s + l.freq, 0);
-  const totalBidLot = levels.reduce((s, l) => s + l.bidVol, 0);
-  const totalOfferLot = levels.reduce((s, l) => s + l.offerVol, 0);
-  const totalValue = useMemo(() => {
-    let v = 0;
+
+  // Cumulative stats from full range 0..currentIdx (lightweight loop)
+  const { cumBuy, cumSell, totalValue } = useMemo(() => {
+    let b = 0,
+      s = 0,
+      v = 0;
     for (let i = 0; i <= currentIdx && i < trades.length; i++) {
-      v += trades[i].lot * 100 * trades[i].price; // lot * 100 shares * price
+      const t = trades[i];
+      if (t.side === "BUY") b += t.lot;
+      else s += t.lot;
+      v += t.lot * 100 * t.price;
     }
-    return v;
+    return { cumBuy: b, cumSell: s, totalValue: v };
   }, [trades, currentIdx]);
+
+  const totalLots = cumBuy + cumSell;
+  const vwap = useMemo(() => calcVWAP(trades, currentIdx), [trades, currentIdx]);
+  const totalFreq = useMemo(() => levels.reduce((s, l) => s + l.freq, 0), [levels]);
+  const totalBidLot = useMemo(() => levels.reduce((s, l) => s + l.bidVol, 0), [levels]);
+  const totalOfferLot = useMemo(() => levels.reduce((s, l) => s + l.offerVol, 0), [levels]);
+  const maxVol = useMemo(
+    () => Math.max(...levels.map((l) => Math.max(l.bidVol, l.offerVol)), 1),
+    [levels]
+  );
 
   const currentTime =
     currentIdx >= 0 && trades[currentIdx] ? trades[currentIdx].time : "—";
   const endTime = trades.length > 0 ? trades[trades.length - 1].time : "—";
   const startTime = trades.length > 0 ? trades[0].time : "—";
-  const prevPrice =
-    currentIdx > 0 ? trades[0].price : ticker.open || ticker.last;
+  const prevPrice = trades.length > 0 ? trades[0].price : ticker.open || ticker.last;
   const changeAbs = ticker.last - prevPrice;
   const changePct = prevPrice > 0 ? (changeAbs / prevPrice) * 100 : 0;
   const progress = trades.length > 1 ? (currentIdx / (trades.length - 1)) * 100 : 0;
 
-  // Broker top for current price level
   const brokersAtLast = useMemo(() => {
-    if (currentIdx < 0) return { buy: [] as string[], sell: [] as string[] };
+    if (currentIdx < 0 || !ticker.last) return { buy: [] as string[], sell: [] as string[] };
     const buyB = new Set<string>();
     const sellB = new Set<string>();
-    for (let i = 0; i <= currentIdx && i < trades.length; i++) {
+    // only scan window for brokers at last price
+    const start = Math.max(0, currentIdx - 500);
+    for (let i = start; i <= currentIdx; i++) {
       const t = trades[i];
       if (t.price !== ticker.last || !t.broker) continue;
       if (t.side === "BUY") buyB.add(t.broker);
@@ -271,8 +386,7 @@ export default function OrderBookPage() {
   return (
     <div className="flex h-screen flex-col bg-[#0B0E11] text-[#EAECEF] overflow-hidden font-['Inter',system-ui,sans-serif] text-[11px]">
       <Navbar />
-
-      {/* spacer for fixed Navbar (h ~56-64px) */}
+      {/* spacer for fixed Navbar */}
       <div className="h-14 shrink-0" aria-hidden />
 
       {/* ── Filter bar ── */}
@@ -281,10 +395,7 @@ export default function OrderBookPage() {
           {availableTickers.length > 0 ? (
             <select
               value={tickerCode}
-              onChange={(e) => {
-                setTickerCode(e.target.value);
-                fetchTickerData(e.target.value);
-              }}
+              onChange={(e) => setTickerCode(e.target.value)}
               className="bg-[#0B0E11] border border-[#2B3139] px-2 py-1 rounded text-[11px] text-[#F0B90B] font-bold min-w-[72px] focus:outline-none focus:border-[#F0B90B]/60"
             >
               {availableTickers.map((t) => (
@@ -299,7 +410,7 @@ export default function OrderBookPage() {
         </Field>
 
         <Field label="Date">
-          <Box min="90px">{loadingData ? "Loading..." : dateLabel || "20/07/2026"}</Box>
+          <Box min="90px">{loadingData ? "Loading..." : dateLabel || "—"}</Box>
         </Field>
 
         <Field label="Time">
@@ -327,25 +438,25 @@ export default function OrderBookPage() {
         </label>
 
         <button
+          type="button"
           onClick={() => fetchTickerData(tickerCode)}
           disabled={loadingData}
-          className="bg-[#F0B90B] hover:bg-[#F8D12F] disabled:opacity-50 text-[#0B0E11] text-[11px] font-bold px-4 py-1 rounded transition-colors ml-auto"
+          className="bg-[#F0B90B] hover:bg-[#F8D12F] disabled:opacity-50 text-[#0B0E11] text-[11px] font-bold px-4 py-1 rounded transition-colors ml-auto cursor-pointer"
         >
           {loadingData ? "..." : "Show"}
         </button>
       </div>
 
       {/* ── Title + playback strip ── */}
-      <div className="flex flex-wrap items-center gap-3 bg-[#0E1218] border-b border-[#1E2329] px-3 py-1.5 shrink-0 relative z-10">
-        {/* Transport first so always visible */}
-        <div className="flex items-center gap-1 order-first shrink-0">
+      <div className="flex flex-wrap items-center gap-3 bg-[#0E1218] border-b border-[#1E2329] px-3 py-2 shrink-0 relative z-20">
+        <div className="flex items-center gap-1 shrink-0">
           <Ctrl onClick={jumpToStart} title="Start">
             ⏮
           </Ctrl>
           <Ctrl onClick={stepBack} title="Step back">
             ◀
           </Ctrl>
-          <Ctrl onClick={togglePlay} title="Play/Pause" active={playing}>
+          <Ctrl onClick={togglePlay} title="Play/Pause" active={playing} big>
             {playing ? "⏸" : "▶"}
           </Ctrl>
           <Ctrl onClick={stepForward} title="Step forward">
@@ -371,7 +482,6 @@ export default function OrderBookPage() {
           <span className="text-[#848E9C] min-w-[64px]">{endTime}</span>
         </div>
 
-        {/* Progress slider */}
         <div className="flex-1 min-w-[120px] max-w-[360px]">
           <input
             type="range"
@@ -380,28 +490,28 @@ export default function OrderBookPage() {
             value={Math.max(0, currentIdx)}
             onChange={(e) => {
               setPlaying(false);
+              lastAppliedRef.current = -1;
               setCurrentIdx(Number(e.target.value));
             }}
             className="w-full h-1.5 accent-[#F0B90B] cursor-pointer"
-            disabled={trades.length === 0}
+            disabled={trades.length === 0 || loadingData}
           />
         </div>
 
         <button
+          type="button"
           onClick={cycleSpeed}
-          className="px-2 py-0.5 rounded bg-[#1E2329] border border-[#2B3139] text-[#F0B90B] font-mono font-bold text-[11px] hover:border-[#F0B90B]/50 min-w-[44px]"
+          className="px-2 py-1 rounded bg-[#1E2329] border border-[#2B3139] text-[#F0B90B] font-mono font-bold text-[11px] hover:border-[#F0B90B]/50 min-w-[48px] cursor-pointer"
           title="Cycle speed"
         >
           {speed}x
         </button>
 
-        <div className="text-[10px] text-[#5E6673] hidden sm:block">
-          Space play · ← → step
-        </div>
+        <div className="text-[10px] text-[#5E6673] hidden md:block">Space · ← →</div>
       </div>
 
       {/* ── Price summary ── */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 bg-[#12161C] border-b border-[#1E2329] px-3 py-1.5 text-[11px]">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 bg-[#12161C] border-b border-[#1E2329] px-3 py-1.5 text-[11px] shrink-0">
         <div className="flex items-baseline gap-2">
           <span className="text-[15px] font-bold text-white">{tickerCode}</span>
           <span className="text-[15px] font-bold text-[#F0B90B] font-mono">
@@ -432,25 +542,32 @@ export default function OrderBookPage() {
         <Stat label="Freq" value={fmt(totalFreq)} />
       </div>
 
+      {loadingData && (
+        <div className="bg-[#F0B90B]/10 text-[#F0B90B] text-center text-[11px] py-1 shrink-0">
+          Loading trade data…
+        </div>
+      )}
+
       {/* ── Main 4-panel grid ── */}
       <div className="flex-1 grid grid-cols-12 min-h-0 overflow-hidden">
-        {/* BUY ORDERS */}
+        {/* BUY */}
         <Panel
           className="col-span-3 border-r border-[#1E2329]"
           headerClass="bg-[#0B2E21] text-[#0ECB81]"
           title="Buy Orders"
-          count={`${buyTrades.length} orders`}
+          count={`${buyTrades.length}${currentIdx + 1 > LIST_WINDOW ? "+" : ""} shown`}
         >
-          <TableHead cols={["Ord", "Time", "Price", "Lot", "Inv", showBroker ? "Br" : "", "St"]} />
-          <div ref={buyRef} className="flex-1 overflow-y-auto scrollbar-thin">
+          <TableHead cols={["#", "Time", "Price", "Lot", showBroker ? "Br" : "", "St"]} />
+          <div className="flex-1 overflow-y-auto overscroll-contain">
             {buyTrades.map((t, i) => (
-              <Row key={`b-${i}`} green hover>
-                <Cell muted>{buyTrades.length - i}</Cell>
+              <Row key={`b-${currentIdx}-${i}`} green>
+                <Cell muted>{i + 1}</Cell>
                 <Cell muted>{t.time}</Cell>
                 <Cell className="text-[#0ECB81] font-bold">{fmtPrice(t.price)}</Cell>
                 <Cell className="text-white font-bold text-right">{fmt(t.lot)}</Cell>
-                <Cell className="text-white text-right">{fmt(t.lot)}</Cell>
-                {showBroker && <Cell className="text-[#F0B90B] font-bold text-right">{t.broker || "—"}</Cell>}
+                {showBroker && (
+                  <Cell className="text-[#F0B90B] font-bold text-right">{t.broker || "—"}</Cell>
+                )}
                 <Cell className="text-[#0ECB81]/70 text-right">O</Cell>
               </Row>
             ))}
@@ -458,14 +575,14 @@ export default function OrderBookPage() {
           </div>
         </Panel>
 
-        {/* ORDERBOOK DEPTH */}
+        {/* DEPTH */}
         <Panel
           className="col-span-3 border-r border-[#1E2329]"
           headerClass="bg-[#1E2329] text-[#848E9C]"
           title="Orderbook Depth"
           count={`${levels.length} levels`}
         >
-          <div className="grid grid-cols-6 gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] sticky top-0 z-10">
+          <div className="grid grid-cols-6 gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] shrink-0">
             <span className="text-center">Freq</span>
             <span className="text-right">BLot</span>
             <span className="text-right">Bid</span>
@@ -473,21 +590,19 @@ export default function OrderBookPage() {
             <span className="text-right">SLot</span>
             <span className="text-center">Freq</span>
           </div>
-          <div ref={orderBookRef} className="flex-1 overflow-y-auto scrollbar-thin">
-            {levels.map((lv, i) => {
+          <div ref={orderBookRef} className="flex-1 overflow-y-auto overscroll-contain">
+            {levels.map((lv) => {
               const isLast = lv.price === ticker.last;
-              const maxVol = Math.max(...levels.map((l) => Math.max(l.bidVol, l.offerVol)), 1);
               const bidPct = (lv.bidVol / maxVol) * 100;
               const offerPct = (lv.offerVol / maxVol) * 100;
               return (
                 <div
-                  key={i}
+                  key={lv.price}
                   className={`relative grid grid-cols-6 gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
-                    isLast ? "bg-[#F0B90B]/10" : "hover:bg-white/[0.02]"
+                    isLast ? "bg-[#F0B90B]/10" : ""
                   }`}
                   style={{ fontVariantNumeric: "tabular-nums" }}
                 >
-                  {/* depth bars */}
                   <div
                     className="absolute inset-y-0 left-0 bg-[#0ECB81]/10 pointer-events-none"
                     style={{ width: `${bidPct / 2}%` }}
@@ -527,18 +642,19 @@ export default function OrderBookPage() {
             })}
             {levels.length === 0 && <Empty />}
           </div>
-          {/* Bottom aggregate */}
-          <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-7 gap-0">
+          <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-7 gap-0 shrink-0">
             <span className="text-[#5E6673]">TOTAL</span>
             <span className="text-[#0ECB81] text-right">{fmt(totalFreq)}</span>
             <span className="text-[#0ECB81] text-right">{fmt(totalBidLot)}</span>
             <span className="text-right">—</span>
             <span className="text-[#F6465D] text-right">{fmt(totalOfferLot)}</span>
             <span className="text-[#F6465D] text-right">{fmt(totalFreq)}</span>
-            <span className="text-white text-right font-bold">{fmt(totalBidLot + totalOfferLot)}</span>
+            <span className="text-white text-right font-bold">
+              {fmt(totalBidLot + totalOfferLot)}
+            </span>
           </div>
           {showBroker && ticker.last > 0 && (
-            <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] flex flex-wrap gap-x-2 gap-y-0.5">
+            <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] flex flex-wrap gap-x-2 gap-y-0.5 shrink-0">
               <span className="text-[#5E6673]">@ {fmtPrice(ticker.last)}</span>
               {brokersAtLast.buy.map((b) => (
                 <span key={`bb-${b}`} className="text-[#0ECB81] font-bold">
@@ -554,23 +670,24 @@ export default function OrderBookPage() {
           )}
         </Panel>
 
-        {/* SELL ORDERS */}
+        {/* SELL */}
         <Panel
           className="col-span-3 border-r border-[#1E2329]"
           headerClass="bg-[#3D1218] text-[#F6465D]"
           title="Sell Orders"
-          count={`${sellTrades.length} orders`}
+          count={`${sellTrades.length}${currentIdx + 1 > LIST_WINDOW ? "+" : ""} shown`}
         >
-          <TableHead cols={["Ord", "Time", "Price", "Lot", "Inv", showBroker ? "Br" : "", "St"]} />
-          <div ref={sellRef} className="flex-1 overflow-y-auto scrollbar-thin">
+          <TableHead cols={["#", "Time", "Price", "Lot", showBroker ? "Br" : "", "St"]} />
+          <div className="flex-1 overflow-y-auto overscroll-contain">
             {sellTrades.map((t, i) => (
-              <Row key={`s-${i}`} red hover>
-                <Cell muted>{sellTrades.length - i}</Cell>
+              <Row key={`s-${currentIdx}-${i}`} red>
+                <Cell muted>{i + 1}</Cell>
                 <Cell muted>{t.time}</Cell>
                 <Cell className="text-[#F6465D] font-bold">{fmtPrice(t.price)}</Cell>
                 <Cell className="text-white font-bold text-right">{fmt(t.lot)}</Cell>
-                <Cell className="text-white text-right">{fmt(t.lot)}</Cell>
-                {showBroker && <Cell className="text-[#F0B90B] font-bold text-right">{t.broker || "—"}</Cell>}
+                {showBroker && (
+                  <Cell className="text-[#F0B90B] font-bold text-right">{t.broker || "—"}</Cell>
+                )}
                 <Cell className="text-[#F6465D]/70 text-right">O</Cell>
               </Row>
             ))}
@@ -578,14 +695,14 @@ export default function OrderBookPage() {
           </div>
         </Panel>
 
-        {/* RUNNING TRADE */}
+        {/* RUNNING */}
         <Panel
           className="col-span-3"
           headerClass="bg-[#0D1F3C] text-[#3B82F6]"
           title="Running Trade"
-          count={`${visibleTrades.length} trades`}
+          count={`${windowSlice.length} / ${currentIdx + 1}`}
         >
-          <div className="grid grid-cols-7 gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] sticky top-0 z-10">
+          <div className="grid grid-cols-7 gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] shrink-0">
             <span>Time</span>
             <span className="text-center">Stock</span>
             <span className="text-right">Price</span>
@@ -594,13 +711,13 @@ export default function OrderBookPage() {
             <span className="text-right">Seller</span>
             <span className="text-right">Side</span>
           </div>
-          <div ref={tradesRef} className="flex-1 overflow-y-auto scrollbar-thin">
-            {visibleTrades.map((t, i) => {
+          <div className="flex-1 overflow-y-auto overscroll-contain">
+            {windowSlice.map((t, i) => {
               const isBuy = t.side === "BUY";
               return (
                 <div
-                  key={`rt-${i}`}
-                  className={`grid grid-cols-7 gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 hover:bg-[#0D1F3C]/40 ${
+                  key={`rt-${currentIdx}-${i}`}
+                  className={`grid grid-cols-7 gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
                     i === 0 ? "bg-[#F0B90B]/[0.06]" : ""
                   }`}
                   style={{ fontVariantNumeric: "tabular-nums" }}
@@ -609,25 +726,31 @@ export default function OrderBookPage() {
                   <span className="text-center text-[#F0B90B] font-bold">{t.code}</span>
                   <span className="text-right text-white font-bold">{fmtPrice(t.price)}</span>
                   <span className="text-right text-[#F0B90B] font-bold">{fmt(t.lot)}</span>
-                  <span className={`text-right font-bold ${isBuy ? "text-[#0ECB81]" : "text-[#5E6673]"}`}>
+                  <span
+                    className={`text-right font-bold ${isBuy ? "text-[#0ECB81]" : "text-[#5E6673]"}`}
+                  >
                     {isBuy ? t.broker || "??" : "—"}
                   </span>
-                  <span className={`text-right font-bold ${!isBuy ? "text-[#F6465D]" : "text-[#5E6673]"}`}>
+                  <span
+                    className={`text-right font-bold ${!isBuy ? "text-[#F6465D]" : "text-[#5E6673]"}`}
+                  >
                     {!isBuy ? t.broker || "??" : "—"}
                   </span>
-                  <span className={`text-right font-bold ${isBuy ? "text-[#0ECB81]" : "text-[#F6465D]"}`}>
+                  <span
+                    className={`text-right font-bold ${isBuy ? "text-[#0ECB81]" : "text-[#F6465D]"}`}
+                  >
                     {isBuy ? "B" : "S"}
                   </span>
                 </div>
               );
             })}
-            {visibleTrades.length === 0 && <Empty />}
+            {windowSlice.length === 0 && <Empty />}
           </div>
         </Panel>
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="h-7 bg-[#0E1218] border-t border-[#1E2329] px-3 flex items-center justify-between text-[10px] font-bold">
+      <div className="h-7 bg-[#0E1218] border-t border-[#1E2329] px-3 flex items-center justify-between text-[10px] font-bold shrink-0">
         <div className="flex gap-4">
           <span>
             <span className="text-[#5E6673] uppercase mr-1">Buy Vol</span>
@@ -640,25 +763,24 @@ export default function OrderBookPage() {
           <span>
             <span className="text-[#5E6673] uppercase mr-1">Net</span>
             <span
-              className={`font-mono ${
-                cumBuy - cumSell >= 0 ? "text-[#0ECB81]" : "text-[#F6465D]"
-              }`}
+              className={`font-mono ${cumBuy - cumSell >= 0 ? "text-[#0ECB81]" : "text-[#F6465D]"}`}
             >
               {fmt(cumBuy - cumSell)}
             </span>
           </span>
         </div>
         <div className="flex gap-4 items-center">
-          {/* mini progress */}
           <div className="w-24 h-1 bg-[#1E2329] rounded overflow-hidden hidden sm:block">
             <div
-              className="h-full bg-[#F0B90B] transition-all duration-100"
+              className="h-full bg-[#F0B90B] transition-all duration-75"
               style={{ width: `${progress}%` }}
             />
           </div>
           <span>
             <span className="text-[#5E6673] uppercase mr-1">VWAP</span>
-            <span className="text-[#F0B90B] font-mono">{vwap ? fmtPrice(Math.round(vwap)) : "—"}</span>
+            <span className="text-[#F0B90B] font-mono">
+              {vwap ? fmtPrice(Math.round(vwap)) : "—"}
+            </span>
           </span>
           <span>
             <span className="text-[#5E6673] uppercase mr-1">Total</span>
@@ -670,7 +792,7 @@ export default function OrderBookPage() {
   );
 }
 
-/* ── small UI atoms ── */
+/* ── UI atoms ── */
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -697,17 +819,24 @@ function Ctrl({
   onClick,
   title,
   active,
+  big,
 }: {
   children: React.ReactNode;
   onClick: () => void;
   title?: string;
   active?: boolean;
+  big?: boolean;
 }) {
   return (
     <button
-      onClick={onClick}
+      type="button"
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick();
+      }}
       title={title}
-      className={`w-7 h-7 flex items-center justify-center rounded border text-[11px] transition-colors ${
+      className={`${big ? "w-9 h-9 text-[14px]" : "w-7 h-7 text-[11px]"} flex items-center justify-center rounded border transition-colors cursor-pointer select-none ${
         active
           ? "bg-[#F0B90B] border-[#F0B90B] text-[#0B0E11]"
           : "bg-[#1E2329] border-[#2B3139] text-[#EAECEF] hover:border-[#F0B90B]/50 hover:text-[#F0B90B]"
@@ -765,7 +894,7 @@ function TableHead({ cols }: { cols: string[] }) {
   const filtered = cols.filter(Boolean);
   return (
     <div
-      className="grid gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] sticky top-0 z-10"
+      className="grid gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] shrink-0"
       style={{ gridTemplateColumns: `repeat(${filtered.length}, minmax(0, 1fr))` }}
     >
       {filtered.map((c, i) => (
@@ -784,24 +913,16 @@ function Row({
   children,
   green,
   red,
-  hover,
 }: {
   children: React.ReactNode;
   green?: boolean;
   red?: boolean;
-  hover?: boolean;
 }) {
   const cols = Array.isArray(children) ? children.filter(Boolean).length : 1;
   return (
     <div
       className={`grid gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
-        hover
-          ? green
-            ? "hover:bg-[#0B2E21]/40"
-            : red
-            ? "hover:bg-[#3D1218]/40"
-            : "hover:bg-white/[0.02]"
-          : ""
+        green ? "hover:bg-[#0B2E21]/40" : red ? "hover:bg-[#3D1218]/40" : ""
       }`}
       style={{
         fontVariantNumeric: "tabular-nums",
@@ -829,8 +950,6 @@ function Cell({
 
 function Empty() {
   return (
-    <div className="flex items-center justify-center h-24 text-[#5E6673] text-[11px]">
-      No data
-    </div>
+    <div className="flex items-center justify-center h-24 text-[#5E6673] text-[11px]">No data</div>
   );
 }
