@@ -192,46 +192,46 @@ export default function OrderBookPage() {
     <div className="flex h-screen flex-col bg-[#050505] text-[#F4EFE6] overflow-hidden font-['Inter']">
       <Navbar />
 
-      {/* Top Filter Bar */}
-      <div className="flex items-center gap-2 bg-[#0A0A0A] border-b border-[#1A1A1A] px-2 py-1.5 h-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
-        <div className="flex items-center gap-1">
-          <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Ticker</span>
-          {availableTickers.length > 0 ? (
-            <select
-              value={tickerCode}
-              onChange={(e) => { setTickerCode(e.target.value); fetchTickerData(e.target.value); }}
-              className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#C6A15B] font-bold min-w-[70px] focus:outline-none focus:border-[#C6A15B]/50"
-            >
-              {availableTickers.map((t) => <option key={t} value={t}>{t}</option>)}
-            </select>
-          ) : (
-            <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#C6A15B] font-bold min-w-[60px]">{ticker.code}</div>
-          )}
-        </div>
-        <div className="flex items-center gap-1">
-          <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Date</span>
-          <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[80px]">
-            {loadingData ? "Loading..." : "20/07/2026"}
+        {/* Top Filter Bar */}
+        <div className="flex flex-wrap items-center gap-2 bg-[#0A0A0A] border-b border-[#1A1A1A] px-2 py-1.5 min-h-[40px]">
+          <div className="flex items-center gap-1 shrink-0">
+            <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Ticker</span>
+            {availableTickers.length > 0 ? (
+              <select
+                value={tickerCode}
+                onChange={(e) => { setTickerCode(e.target.value); fetchTickerData(e.target.value); }}
+                className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#C6A15B] font-bold min-w-[70px] focus:outline-none focus:border-[#C6A15B]/50"
+              >
+                {availableTickers.map((t) => <option key={t} value={t}>{t}</option>)}
+              </select>
+            ) : (
+              <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#C6A15B] font-bold min-w-[60px]">{ticker.code}</div>
+            )}
+          </div>
+          <div className="flex items-center gap-1 shrink-0">
+            <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Date</span>
+            <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[80px]">
+              {loadingData ? "Loading..." : "20/07/2026"}
+            </div>
+          </div>
+          <div className="flex items-center gap-1 shrink-0">
+            <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Broker</span>
+            <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[50px]">ALL</div>
+          </div>
+          <div className="flex items-center gap-1 shrink-0">
+            <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Time</span>
+            <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[70px]">ALL</div>
+          </div>
+          <button onClick={() => fetchTickerData(tickerCode)} className="bg-[#C6A15B] hover:bg-[#A6813B] text-[#0A0A0A] text-[11px] font-bold px-3 py-1 rounded ml-auto transition-colors shrink-0">
+            {loadingData ? "..." : "LOAD"}
+          </button>
+          <div className="flex gap-1 ml-2 shrink-0">
+            <button onClick={togglePlay} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#C6A15B] hover:bg-[#2C261E] transition-colors">{playing ? "⏸" : "▶"}</button>
+            <button onClick={stepBack} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#B8AA96]/60 hover:bg-[#2C261E] transition-colors">⏮</button>
+            <button onClick={stepForward} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#B8AA96]/60 hover:bg-[#2C261E] transition-colors">⏭</button>
+            <div className="flex items-center px-2 bg-[#141210] border border-[#2C261E] rounded text-[10px] text-[#C6A15B] font-mono">{speed}x</div>
           </div>
         </div>
-        <div className="flex items-center gap-1">
-          <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Broker</span>
-          <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[50px]">ALL</div>
-        </div>
-        <div className="flex items-center gap-1">
-          <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Time</span>
-          <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[70px]">ALL</div>
-        </div>
-        <button onClick={() => fetchTickerData(tickerCode)} className="bg-[#C6A15B] hover:bg-[#A6813B] text-[#0A0A0A] text-[11px] font-bold px-3 py-1 rounded ml-auto transition-colors">
-          {loadingData ? "..." : "LOAD"}
-        </button>
-        <div className="flex gap-1 ml-2">
-          <button onClick={togglePlay} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#C6A15B] hover:bg-[#2C261E] transition-colors">{playing ? "⏸" : "▶"}</button>
-          <button onClick={stepBack} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#B8AA96]/60 hover:bg-[#2C261E] transition-colors">⏮</button>
-          <button onClick={stepForward} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#B8AA96]/60 hover:bg-[#2C261E] transition-colors">⏭</button>
-          <div className="flex items-center px-2 bg-[#141210] border border-[#2C261E] rounded text-[10px] text-[#C6A15B] font-mono">{speed}x</div>
-        </div>
-      </div>
 
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Main Panels Grid */}
