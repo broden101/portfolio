@@ -27,6 +27,9 @@ export default function OrderBookPage() {
   const [filter, setFilter] = useState<TradeFilter>("all");
   const [csvText, setCsvText] = useState("");
   const [ticker, setTicker] = useState<TickerInfo>({ code: "TLKM", last: 0, change: 0, high: 0, low: 0, open: 0, volume: 0 });
+  const [tickerCode, setTickerCode] = useState("TPIA");
+  const [availableTickers, setAvailableTickers] = useState<string[]>([]);
+  const [loadingData, setLoadingData] = useState(false);
   const [levels, setLevels] = useState<OrderLevel[]>([]);
   const [visibleTrades, setVisibleTrades] = useState<RunningTrade[]>([]);
   const [hasBroker, setHasBroker] = useState(false);
@@ -35,6 +38,33 @@ export default function OrderBookPage() {
   const fileRef = useRef<HTMLInputElement>(null);
   const orderBookRef = useRef<HTMLDivElement>(null);
   const tradesRef = useRef<HTMLDivElement>(null);
+
+  // Load available tickers index on mount
+  useEffect(() => {
+    fetch("/data/trades-index.json")
+      .then((r) => r.json())
+      .then((d) => { if (d.tickers) setAvailableTickers(d.tickers); })
+      .catch(() => {});
+  }, []);
+
+  // Load ticker data from server
+  const fetchTickerData = async (code: string) => {
+    setLoadingData(true);
+    try {
+      const res = await fetch(`/data/trades/${code}.json`);
+      if (res.ok) {
+        const data = await res.json();
+        loadData(data);
+      }
+    } catch (e) { console.error("Load failed", e); }
+    setLoadingData(false);
+  };
+
+  // Auto-load on mount
+  useEffect(() => {
+    fetchTickerData(tickerCode);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -52,7 +82,7 @@ export default function OrderBookPage() {
   useEffect(() => {
     if (trades.length === 0 || currentIdx < 0) {
       setLevels([]);
-      setTicker({ code: "TLKM", last: 0, change: 0, high: 0, low: 0, open: 0, volume: 0 });
+      setTicker({ code: tickerCode, last: 0, change: 0, high: 0, low: 0, open: 0, volume: 0 });
       setVisibleTrades([]);
       return;
     }
@@ -62,7 +92,7 @@ export default function OrderBookPage() {
 
     const shown = trades.slice(0, currentIdx + 1).reverse();
     setVisibleTrades(filter === "all" ? shown : shown.filter((t) => filter === "buy" ? t.side === "BUY" : t.side === "SELL"));
-  }, [trades, currentIdx, filter]);
+  }, [trades, currentIdx, filter, tickerCode]);
 
   // Auto-scroll orderbook to last price
   useEffect(() => {
@@ -166,11 +196,23 @@ export default function OrderBookPage() {
       <div className="flex items-center gap-2 bg-[#0A0A0A] border-b border-[#1A1A1A] px-2 py-1.5 h-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
         <div className="flex items-center gap-1">
           <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Ticker</span>
-          <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#C6A15B] font-bold min-w-[60px]">{ticker.code}</div>
+          {availableTickers.length > 0 ? (
+            <select
+              value={tickerCode}
+              onChange={(e) => { setTickerCode(e.target.value); fetchTickerData(e.target.value); }}
+              className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#C6A15B] font-bold min-w-[70px] focus:outline-none focus:border-[#C6A15B]/50"
+            >
+              {availableTickers.map((t) => <option key={t} value={t}>{t}</option>)}
+            </select>
+          ) : (
+            <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#C6A15B] font-bold min-w-[60px]">{ticker.code}</div>
+          )}
         </div>
         <div className="flex items-center gap-1">
           <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Date</span>
-          <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[80px]">17/07/2026</div>
+          <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[80px]">
+            {loadingData ? "Loading..." : "20/07/2026"}
+          </div>
         </div>
         <div className="flex items-center gap-1">
           <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Broker</span>
@@ -180,7 +222,9 @@ export default function OrderBookPage() {
           <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Time</span>
           <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[70px]">ALL</div>
         </div>
-        <button onClick={handleGenerate} className="bg-[#C6A15B] hover:bg-[#A6813B] text-[#0A0A0A] text-[11px] font-bold px-3 py-1 rounded ml-auto transition-colors">SHOW</button>
+        <button onClick={() => fetchTickerData(tickerCode)} className="bg-[#C6A15B] hover:bg-[#A6813B] text-[#0A0A0A] text-[11px] font-bold px-3 py-1 rounded ml-auto transition-colors">
+          {loadingData ? "..." : "LOAD"}
+        </button>
         <div className="flex gap-1 ml-2">
           <button onClick={togglePlay} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#C6A15B] hover:bg-[#2C261E] transition-colors">{playing ? "⏸" : "▶"}</button>
           <button onClick={stepBack} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#B8AA96]/60 hover:bg-[#2C261E] transition-colors">⏮</button>
