@@ -42,13 +42,34 @@ export default function OrderBookPage() {
     volume: 0,
   });
   const [tickerCode, setTickerCode] = useState("DEWA");
+  const [tickerInput, setTickerInput] = useState("DEWA");
+  const [tickerOpen, setTickerOpen] = useState(false);
   const [availableTickers, setAvailableTickers] = useState<string[]>([]);
   const [availableDates, setAvailableDates] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [latestDate, setLatestDate] = useState("");
   const [loadingData, setLoadingData] = useState(false);
+  const tickerBoxRef = useRef<HTMLDivElement>(null);
   const [levels, setLevels] = useState<OrderLevel[]>([]);
   const [showBroker, setShowBroker] = useState(true);
+
+  const filteredTickers = useMemo(() => {
+    const q = tickerInput.trim().toUpperCase();
+    if (!q) return availableTickers.slice(0, 50);
+    return availableTickers.filter((t) => t.startsWith(q)).slice(0, 50);
+  }, [availableTickers, tickerInput]);
+
+  useEffect(() => {
+    const onMouseDown = (e: MouseEvent) => {
+      if (!tickerBoxRef.current?.contains(e.target as Node)) setTickerOpen(false);
+    };
+    document.addEventListener("mousedown", onMouseDown);
+    return () => document.removeEventListener("mousedown", onMouseDown);
+  }, []);
+
+  useEffect(() => {
+    setTickerInput(tickerCode);
+  }, [tickerCode]);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const orderBookRef = useRef<HTMLDivElement>(null);
@@ -404,21 +425,51 @@ export default function OrderBookPage() {
       {/* ── Filter bar ── */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 bg-[#12161C] border-b border-[#1E2329] px-3 py-2 shrink-0">
         <Field label="Ticker">
-          {availableTickers.length > 0 ? (
-            <select
-              value={tickerCode}
-              onChange={(e) => setTickerCode(e.target.value)}
-              className="bg-[#0B0E11] border border-[#2B3139] px-2 py-1 rounded text-[11px] text-[#F0B90B] font-bold min-w-[72px] focus:outline-none focus:border-[#F0B90B]/60"
-            >
-              {availableTickers.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <Box>{tickerCode}</Box>
-          )}
+          <div className="relative" ref={tickerBoxRef}>
+            <input
+              value={tickerInput}
+              onChange={(e) => {
+                setTickerInput(e.target.value.toUpperCase());
+                setTickerOpen(true);
+              }}
+              onFocus={() => setTickerOpen(true)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  const next = availableTickers.includes(tickerInput) ? tickerInput : filteredTickers[0];
+                  if (next) {
+                    setTickerInput(next);
+                    setTickerCode(next);
+                    setTickerOpen(false);
+                  }
+                }
+                if (e.key === "Escape") setTickerOpen(false);
+              }}
+              placeholder="Cari saham..."
+              className="bg-[#0B0E11] border border-[#2B3139] px-2 py-1 rounded text-[11px] text-[#F0B90B] font-bold w-[88px] focus:outline-none focus:border-[#F0B90B]/60 uppercase"
+            />
+            {tickerOpen && tickerInput && (
+              <div className="absolute top-full left-0 z-50 mt-0.5 max-h-[280px] overflow-y-auto bg-[#1E2329] border border-[#2B3139] rounded shadow-lg">
+                {filteredTickers.map((t) => (
+                    <div
+                      key={t}
+                      className={`px-2.5 py-1 text-[11px] cursor-pointer hover:bg-[#2B3139] ${
+                        t === tickerCode ? "text-[#F0B90B]" : "text-[#EAECEF]"
+                      }`}
+                      onMouseDown={() => {
+                        setTickerInput(t);
+                        setTickerCode(t);
+                        setTickerOpen(false);
+                      }}
+                    >
+                      {t}
+                    </div>
+                  ))}
+                {filteredTickers.length === 0 && (
+                  <div className="px-2.5 py-1.5 text-[11px] text-[#5E6673]">Tidak ada ticker</div>
+                )}
+              </div>
+            )}
+          </div>
         </Field>
 
         <Field label="Date">
