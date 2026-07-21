@@ -43,9 +43,11 @@ export default function OrderBookPage() {
   });
   const [tickerCode, setTickerCode] = useState("DEWA");
   const [availableTickers, setAvailableTickers] = useState<string[]>([]);
+  const [availableDates, setAvailableDates] = useState<string[]>([]);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [latestDate, setLatestDate] = useState("");
   const [loadingData, setLoadingData] = useState(false);
   const [levels, setLevels] = useState<OrderLevel[]>([]);
-  const [dateLabel, setDateLabel] = useState("—");
   const [showBroker, setShowBroker] = useState(true);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -71,13 +73,17 @@ export default function OrderBookPage() {
     speedRef.current = speed;
   }, [speed]);
 
-  // Load available tickers
+  // Load available tickers + dates
   useEffect(() => {
     fetch("/data/trades-index.json")
       .then((r) => r.json())
       .then((d) => {
         if (d.tickers) setAvailableTickers(d.tickers);
-        if (d.date) setDateLabel(d.date);
+        if (d.dates) setAvailableDates(d.dates);
+        if (d.date) {
+          setSelectedDate(d.date);
+          setLatestDate(d.date);
+        }
       })
       .catch(() => {});
   }, []);
@@ -159,11 +165,17 @@ export default function OrderBookPage() {
   );
 
   const fetchTickerData = useCallback(
-    async (code: string) => {
+    async (code: string, date?: string) => {
+      const targetDate = date || selectedDate || latestDate;
+      if (!targetDate) return;
       setLoadingData(true);
       setPlaying(false);
       try {
-        const res = await fetch(`/data/trades/${code}.json`);
+        const isLatest = targetDate === latestDate;
+        const url = isLatest
+          ? `/data/trades/${code}.json`
+          : `/data/trades-history/${targetDate}/${code}.json`;
+        const res = await fetch(url);
         if (res.ok) {
           const data = await res.json();
           loadData(data, code);
@@ -173,7 +185,7 @@ export default function OrderBookPage() {
       }
       setLoadingData(false);
     },
-    [loadData]
+    [selectedDate, latestDate, loadData]
   );
 
   useEffect(() => {
@@ -410,7 +422,21 @@ export default function OrderBookPage() {
         </Field>
 
         <Field label="Date">
-          <Box min="90px">{loadingData ? "Loading..." : dateLabel || "—"}</Box>
+          <select
+            className="bg-black text-white p-1 border border-gray-700"
+            value={selectedDate}
+            onChange={(e) => {
+              const d = e.target.value;
+              setSelectedDate(d);
+              fetchTickerData(tickerCode, d);
+            }}
+          >
+            {availableDates.map((d) => (
+              <option key={d} value={d}>
+                {d}
+              </option>
+            ))}
+          </select>
         </Field>
 
         <Field label="Time">
