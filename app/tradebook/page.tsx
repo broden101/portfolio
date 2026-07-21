@@ -27,7 +27,7 @@ export default function OrderBookPage() {
   const [filter, setFilter] = useState<TradeFilter>("all");
   const [csvText, setCsvText] = useState("");
   const [ticker, setTicker] = useState<TickerInfo>({ code: "TLKM", last: 0, change: 0, high: 0, low: 0, open: 0, volume: 0 });
-  const [tickerCode, setTickerCode] = useState("TPIA");
+  const [tickerCode, setTickerCode] = useState("DEWA");
   const [availableTickers, setAvailableTickers] = useState<string[]>([]);
   const [loadingData, setLoadingData] = useState(false);
   const [levels, setLevels] = useState<OrderLevel[]>([]);
@@ -124,7 +124,7 @@ export default function OrderBookPage() {
 
   const loadData = useCallback((data: RunningTrade[]) => {
     setTrades(data);
-    setCurrentIdx(-1);
+    setCurrentIdx(data.length - 1);
     setPlaying(false);
     setHasBroker(data.some((t) => !!t.broker));
   }, []);
