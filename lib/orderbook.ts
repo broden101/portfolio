@@ -7,7 +7,9 @@ export interface RunningTrade {
   lot: number;
   change: number;
   side: "BUY" | "SELL";
-  broker?: string; // optional broker code
+  broker?: string; // taker broker / legacy
+  buyer?: string;
+  seller?: string;
 }
 
 export interface OrderLevel {

@@ -19,6 +19,8 @@ def convert_ticker(ticker, date):
         for row in reader:
             t_raw = row["TRX_TIME"].zfill(6)
             time = f"{t_raw[:2]}:{t_raw[2:4]}:{t_raw[4:]}"
+            buyer = (row.get("BRK_COD1") or "").strip().upper()
+            seller = (row.get("BRK_COD2") or "").strip().upper()
             side = "BUY" if row["HAKA_HAKI"] == "1" else "SELL"
             lot = int(row["STK_VOLM"]) // 100
             if lot < 1:
@@ -30,7 +32,9 @@ def convert_ticker(ticker, date):
                 "lot": lot,
                 "change": 0,
                 "side": side,
-                "broker": row["BRK_COD1"],
+                "broker": buyer if side == "BUY" else seller,
+                "buyer": buyer,
+                "seller": seller,
             })
     return trades
 

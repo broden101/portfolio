@@ -803,15 +803,11 @@ export default function OrderBookPage() {
                   <span className="text-center text-[#F0B90B] font-bold">{t.code}</span>
                   <span className="text-right text-white font-bold">{fmtPrice(t.price)}</span>
                   <span className="text-right text-[#F0B90B] font-bold">{fmt(t.lot)}</span>
-                  <span
-                    className={`text-right font-bold ${isBuy ? "text-[#0ECB81]" : "text-[#5E6673]"}`}
-                  >
-                    {isBuy ? t.broker || "??" : "—"}
+                  <span className="text-right font-bold text-[#0ECB81]">
+                    {t.buyer || t.broker || "—"}
                   </span>
-                  <span
-                    className={`text-right font-bold ${!isBuy ? "text-[#F6465D]" : "text-[#5E6673]"}`}
-                  >
-                    {!isBuy ? t.broker || "??" : "—"}
+                  <span className="text-right font-bold text-[#F6465D]">
+                    {t.seller || "—"}
                   </span>
                   <span
                     className={`text-right font-bold ${isBuy ? "text-[#0ECB81]" : "text-[#F6465D]"}`}
