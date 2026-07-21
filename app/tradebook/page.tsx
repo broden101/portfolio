@@ -272,8 +272,11 @@ export default function OrderBookPage() {
     <div className="flex h-screen flex-col bg-[#0B0E11] text-[#EAECEF] overflow-hidden font-['Inter',system-ui,sans-serif] text-[11px]">
       <Navbar />
 
+      {/* spacer for fixed Navbar (h ~56-64px) */}
+      <div className="h-14 shrink-0" aria-hidden />
+
       {/* ── Filter bar ── */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 bg-[#12161C] border-b border-[#1E2329] px-3 py-2">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 bg-[#12161C] border-b border-[#1E2329] px-3 py-2 shrink-0">
         <Field label="Ticker">
           {availableTickers.length > 0 ? (
             <select
@@ -333,18 +336,9 @@ export default function OrderBookPage() {
       </div>
 
       {/* ── Title + playback strip ── */}
-      <div className="flex flex-wrap items-center gap-3 bg-[#0E1218] border-b border-[#1E2329] px-3 py-1.5">
-        <div className="flex items-center gap-2 min-w-0">
-          <h1 className="text-[13px] font-bold text-white tracking-wide truncate">
-            {tickerCode} — BID-OFFER REPLAY
-          </h1>
-          <span className="text-[9px] font-bold uppercase tracking-wider bg-[#1E2329] text-[#848E9C] px-1.5 py-0.5 rounded shrink-0">
-            {currentIdx + 1}/{trades.length || 0}
-          </span>
-        </div>
-
-        {/* Transport */}
-        <div className="flex items-center gap-1">
+      <div className="flex flex-wrap items-center gap-3 bg-[#0E1218] border-b border-[#1E2329] px-3 py-1.5 shrink-0 relative z-10">
+        {/* Transport first so always visible */}
+        <div className="flex items-center gap-1 order-first shrink-0">
           <Ctrl onClick={jumpToStart} title="Start">
             ⏮
           </Ctrl>
@@ -360,6 +354,15 @@ export default function OrderBookPage() {
           <Ctrl onClick={jumpToEnd} title="End">
             ⏭
           </Ctrl>
+        </div>
+
+        <div className="flex items-center gap-2 min-w-0">
+          <h1 className="text-[13px] font-bold text-white tracking-wide truncate">
+            {tickerCode} — BID-OFFER REPLAY
+          </h1>
+          <span className="text-[9px] font-bold uppercase tracking-wider bg-[#1E2329] text-[#848E9C] px-1.5 py-0.5 rounded shrink-0">
+            {currentIdx + 1}/{trades.length || 0}
+          </span>
         </div>
 
         <div className="flex items-center gap-2 text-[11px] font-mono">
