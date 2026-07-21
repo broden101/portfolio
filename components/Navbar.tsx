@@ -20,6 +20,7 @@ const navLinks: NavLink[] = [
     children: [
       { label: "Dividend Tracker", href: "/dividend" },
       { label: "Rights Issue Calculator", href: "/calculator/rights-issue" },
+      { label: "Orderflow Market", href: "/market" },
       { label: "Backtest Running Trade", href: "/tradebook" },
       { label: "Simulasi Investasi", href: "/tools/simulation" },
     ],
