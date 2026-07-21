@@ -117,7 +117,7 @@ export default function OrderBookPage() {
   };
 
   const handleGenerate = () => {
-    const data = generateSampleData("TLKM");
+    const data = generateSampleData();
     loadData(data);
   };
 
