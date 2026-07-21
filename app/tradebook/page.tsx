@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Navbar from "@/components/Navbar";
 import {
   parseCSV,
   buildOrderBook,
-  generateSampleData,
   calcVWAP,
   brokerSummary,
   type RunningTrade,
@@ -13,76 +12,116 @@ import {
   type TickerInfo,
 } from "@/lib/orderbook";
 
-type Tab = "backtest" | "data" | "stats";
 type TradeFilter = "all" | "buy" | "sell";
 
-const BIG_LOT = 10;
+const SPEEDS = [0.5, 1, 2, 5, 10, 25, 50];
+
+function fmt(n: number, dig = 0) {
+  return n.toLocaleString("id-ID", {
+    minimumFractionDigits: dig,
+    maximumFractionDigits: dig,
+  });
+}
+
+function fmtPrice(p: number) {
+  return p.toLocaleString("id-ID");
+}
 
 export default function OrderBookPage() {
-  const [tab, setTab] = useState<Tab>("backtest");
   const [trades, setTrades] = useState<RunningTrade[]>([]);
   const [currentIdx, setCurrentIdx] = useState(-1);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
   const [filter, setFilter] = useState<TradeFilter>("all");
-  const [csvText, setCsvText] = useState("");
-  const [ticker, setTicker] = useState<TickerInfo>({ code: "TLKM", last: 0, change: 0, high: 0, low: 0, open: 0, volume: 0 });
+  const [ticker, setTicker] = useState<TickerInfo>({
+    code: "DEWA",
+    last: 0,
+    change: 0,
+    high: 0,
+    low: 0,
+    open: 0,
+    volume: 0,
+  });
   const [tickerCode, setTickerCode] = useState("DEWA");
   const [availableTickers, setAvailableTickers] = useState<string[]>([]);
   const [loadingData, setLoadingData] = useState(false);
   const [levels, setLevels] = useState<OrderLevel[]>([]);
   const [visibleTrades, setVisibleTrades] = useState<RunningTrade[]>([]);
-  const [hasBroker, setHasBroker] = useState(false);
+  const [dateLabel, setDateLabel] = useState("—");
+  const [showBroker, setShowBroker] = useState(true);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
   const orderBookRef = useRef<HTMLDivElement>(null);
   const tradesRef = useRef<HTMLDivElement>(null);
+  const buyRef = useRef<HTMLDivElement>(null);
+  const sellRef = useRef<HTMLDivElement>(null);
 
-  // Load available tickers index on mount
+  // Load available tickers
   useEffect(() => {
     fetch("/data/trades-index.json")
       .then((r) => r.json())
-      .then((d) => { if (d.tickers) setAvailableTickers(d.tickers); })
+      .then((d) => {
+        if (d.tickers) setAvailableTickers(d.tickers);
+        if (d.date) setDateLabel(d.date);
+      })
       .catch(() => {});
   }, []);
 
-  // Load ticker data from server
   const fetchTickerData = async (code: string) => {
     setLoadingData(true);
+    setPlaying(false);
     try {
       const res = await fetch(`/data/trades/${code}.json`);
       if (res.ok) {
         const data = await res.json();
         loadData(data);
       }
-    } catch (e) { console.error("Load failed", e); }
+    } catch (e) {
+      console.error("Load failed", e);
+    }
     setLoadingData(false);
   };
 
-  // Auto-load on mount
   useEffect(() => {
     fetchTickerData(tickerCode);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Keyboard shortcuts
+  // Keyboard
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-      if (e.code === "Space") { e.preventDefault(); togglePlay(); }
-      if (e.code === "ArrowRight") { e.preventDefault(); stepForward(); }
-      if (e.code === "ArrowLeft") { e.preventDefault(); stepBack(); }
+      if (e.code === "Space") {
+        e.preventDefault();
+        togglePlay();
+      }
+      if (e.code === "ArrowRight") {
+        e.preventDefault();
+        stepForward();
+      }
+      if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        stepBack();
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trades, currentIdx, playing]);
 
-  // Update order book when index changes
+  // Rebuild book on index change
   useEffect(() => {
     if (trades.length === 0 || currentIdx < 0) {
       setLevels([]);
-      setTicker({ code: tickerCode, last: 0, change: 0, high: 0, low: 0, open: 0, volume: 0 });
+      setTicker({
+        code: tickerCode,
+        last: 0,
+        change: 0,
+        high: 0,
+        low: 0,
+        open: 0,
+        volume: 0,
+      });
       setVisibleTrades([]);
       return;
     }
@@ -91,7 +130,11 @@ export default function OrderBookPage() {
     setTicker(tk);
 
     const shown = trades.slice(0, currentIdx + 1).reverse();
-    setVisibleTrades(filter === "all" ? shown : shown.filter((t) => filter === "buy" ? t.side === "BUY" : t.side === "SELL"));
+    setVisibleTrades(
+      filter === "all"
+        ? shown
+        : shown.filter((t) => (filter === "buy" ? t.side === "BUY" : t.side === "SELL"))
+    );
   }, [trades, currentIdx, filter, tickerCode]);
 
   // Auto-scroll orderbook to last price
@@ -104,11 +147,18 @@ export default function OrderBookPage() {
     }
   }, [currentIdx, levels, ticker.last]);
 
-  // Playback
+  // Auto-scroll running trade to top
+  useEffect(() => {
+    if (tradesRef.current) tradesRef.current.scrollTop = 0;
+    if (buyRef.current) buyRef.current.scrollTop = 0;
+    if (sellRef.current) sellRef.current.scrollTop = 0;
+  }, [currentIdx]);
+
+  // Playback timer
   useEffect(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     if (playing && currentIdx < trades.length - 1) {
-      const ms = Math.max(10, 1000 / speed);
+      const ms = Math.max(5, 1000 / speed);
       timerRef.current = setInterval(() => {
         setCurrentIdx((prev) => {
           if (prev >= trades.length - 1) {
@@ -119,48 +169,27 @@ export default function OrderBookPage() {
         });
       }, ms);
     }
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [playing, speed, trades.length, currentIdx]);
 
   const loadData = useCallback((data: RunningTrade[]) => {
     setTrades(data);
-    setCurrentIdx(data.length - 1);
+    // Start at beginning for replay feel (first trade), like bandarmolony
+    // User can jump with slider. Default show last for quick overview.
+    setCurrentIdx(data.length > 0 ? data.length - 1 : -1);
     setPlaying(false);
-    setHasBroker(data.some((t) => !!t.broker));
   }, []);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const content = e.target?.result as string;
-      const parsed = parseCSV(content);
-      if (parsed.length > 0) loadData(parsed);
-    };
-    reader.readAsText(file);
-  };
-
-  const handlePasteLoad = () => {
-    const parsed = parseCSV(csvText);
-    if (parsed.length > 0) loadData(parsed);
-  };
-
-  const handleGenerate = () => {
-    const data = generateSampleData();
-    loadData(data);
-  };
-
-  const handleReset = () => {
-    setTrades([]);
-    setCurrentIdx(-1);
-    setPlaying(false);
-    setVisibleTrades([]);
-    setLevels([]);
-  };
-
   const togglePlay = () => {
-    if (currentIdx < 0 && trades.length > 0) {
+    if (trades.length === 0) return;
+    if (currentIdx >= trades.length - 1) {
+      setCurrentIdx(0);
+      setPlaying(true);
+      return;
+    }
+    if (currentIdx < 0) {
       setCurrentIdx(0);
       setPlaying(true);
     } else {
@@ -176,206 +205,629 @@ export default function OrderBookPage() {
     if (currentIdx > 0) setCurrentIdx(currentIdx - 1);
   };
 
-  const maxFreq = Math.max(...levels.map((l) => l.freq), 1);
-  const buyTrades = visibleTrades.filter((t) => t.side === "BUY").length;
-  const sellTrades = visibleTrades.filter((t) => t.side === "SELL").length;
-  const totalLots = visibleTrades.reduce((s, t) => s + t.lot, 0);
-  const totalFreq = levels.reduce((s, l) => s + l.freq, 0);
-  const totalVal = levels.reduce((s, l) => s + (l.bidVol + l.offerVol) * l.price, 0);
+  const jumpToStart = () => {
+    setPlaying(false);
+    setCurrentIdx(trades.length > 0 ? 0 : -1);
+  };
+
+  const jumpToEnd = () => {
+    setPlaying(false);
+    setCurrentIdx(trades.length > 0 ? trades.length - 1 : -1);
+  };
+
+  const cycleSpeed = () => {
+    const i = SPEEDS.indexOf(speed);
+    setSpeed(SPEEDS[(i + 1) % SPEEDS.length]);
+  };
+
+  // Stats
+  const buyTrades = useMemo(
+    () => visibleTrades.filter((t) => t.side === "BUY"),
+    [visibleTrades]
+  );
+  const sellTrades = useMemo(
+    () => visibleTrades.filter((t) => t.side === "SELL"),
+    [visibleTrades]
+  );
+  const cumBuy = buyTrades.reduce((s, t) => s + t.lot, 0);
+  const cumSell = sellTrades.reduce((s, t) => s + t.lot, 0);
+  const totalLots = cumBuy + cumSell;
   const vwap = calcVWAP(trades, currentIdx);
-  const cumBuy = visibleTrades.filter((t) => t.side === "BUY").reduce((s, t) => s + t.lot, 0);
-  const cumSell = visibleTrades.filter((t) => t.side === "SELL").reduce((s, t) => s + t.lot, 0);
-  const maxCum = Math.max(cumBuy, cumSell, 1);
-  const brokerMap = brokerSummary(trades, currentIdx);
+  const totalFreq = levels.reduce((s, l) => s + l.freq, 0);
+  const totalBidLot = levels.reduce((s, l) => s + l.bidVol, 0);
+  const totalOfferLot = levels.reduce((s, l) => s + l.offerVol, 0);
+  const totalValue = useMemo(() => {
+    let v = 0;
+    for (let i = 0; i <= currentIdx && i < trades.length; i++) {
+      v += trades[i].lot * 100 * trades[i].price; // lot * 100 shares * price
+    }
+    return v;
+  }, [trades, currentIdx]);
+
+  const currentTime =
+    currentIdx >= 0 && trades[currentIdx] ? trades[currentIdx].time : "—";
+  const endTime = trades.length > 0 ? trades[trades.length - 1].time : "—";
+  const startTime = trades.length > 0 ? trades[0].time : "—";
+  const prevPrice =
+    currentIdx > 0 ? trades[0].price : ticker.open || ticker.last;
+  const changeAbs = ticker.last - prevPrice;
+  const changePct = prevPrice > 0 ? (changeAbs / prevPrice) * 100 : 0;
+  const progress = trades.length > 1 ? (currentIdx / (trades.length - 1)) * 100 : 0;
+
+  // Broker top for current price level
+  const brokersAtLast = useMemo(() => {
+    if (currentIdx < 0) return { buy: [] as string[], sell: [] as string[] };
+    const buyB = new Set<string>();
+    const sellB = new Set<string>();
+    for (let i = 0; i <= currentIdx && i < trades.length; i++) {
+      const t = trades[i];
+      if (t.price !== ticker.last || !t.broker) continue;
+      if (t.side === "BUY") buyB.add(t.broker);
+      else sellB.add(t.broker);
+    }
+    return { buy: Array.from(buyB).slice(0, 8), sell: Array.from(sellB).slice(0, 8) };
+  }, [trades, currentIdx, ticker.last]);
 
   return (
-    <div className="flex h-screen flex-col bg-[#050505] text-[#F4EFE6] overflow-hidden font-['Inter']">
+    <div className="flex h-screen flex-col bg-[#0B0E11] text-[#EAECEF] overflow-hidden font-['Inter',system-ui,sans-serif] text-[11px]">
       <Navbar />
 
-        {/* Top Filter Bar */}
-        <div className="flex flex-wrap items-center gap-2 bg-[#0A0A0A] border-b border-[#1A1A1A] px-2 py-1.5 min-h-[40px]">
-          <div className="flex items-center gap-1 shrink-0">
-            <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Ticker</span>
-            {availableTickers.length > 0 ? (
-              <select
-                value={tickerCode}
-                onChange={(e) => { setTickerCode(e.target.value); fetchTickerData(e.target.value); }}
-                className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#C6A15B] font-bold min-w-[70px] focus:outline-none focus:border-[#C6A15B]/50"
-              >
-                {availableTickers.map((t) => <option key={t} value={t}>{t}</option>)}
-              </select>
-            ) : (
-              <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#C6A15B] font-bold min-w-[60px]">{ticker.code}</div>
-            )}
-          </div>
-          <div className="flex items-center gap-1 shrink-0">
-            <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Date</span>
-            <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[80px]">
-              {loadingData ? "Loading..." : "20/07/2026"}
-            </div>
-          </div>
-          <div className="flex items-center gap-1 shrink-0">
-            <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Broker</span>
-            <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[50px]">ALL</div>
-          </div>
-          <div className="flex items-center gap-1 shrink-0">
-            <span className="text-[10px] text-[#B8AA96]/40 px-1 uppercase font-bold">Time</span>
-            <div className="bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded text-xs text-[#B8AA96] min-w-[70px]">ALL</div>
-          </div>
-          <button onClick={() => fetchTickerData(tickerCode)} className="bg-[#C6A15B] hover:bg-[#A6813B] text-[#0A0A0A] text-[11px] font-bold px-3 py-1 rounded ml-auto transition-colors shrink-0">
-            {loadingData ? "..." : "LOAD"}
-          </button>
-          <div className="flex gap-1 ml-2 shrink-0">
-            <button onClick={togglePlay} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#C6A15B] hover:bg-[#2C261E] transition-colors">{playing ? "⏸" : "▶"}</button>
-            <button onClick={stepBack} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#B8AA96]/60 hover:bg-[#2C261E] transition-colors">⏮</button>
-            <button onClick={stepForward} className="w-8 h-7 flex items-center justify-center bg-[#141210] border border-[#2C261E] rounded text-[#B8AA96]/60 hover:bg-[#2C261E] transition-colors">⏭</button>
-            <div className="flex items-center px-2 bg-[#141210] border border-[#2C261E] rounded text-[10px] text-[#C6A15B] font-mono">{speed}x</div>
-          </div>
+      {/* ── Filter bar ── */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 bg-[#12161C] border-b border-[#1E2329] px-3 py-2">
+        <Field label="Ticker">
+          {availableTickers.length > 0 ? (
+            <select
+              value={tickerCode}
+              onChange={(e) => {
+                setTickerCode(e.target.value);
+                fetchTickerData(e.target.value);
+              }}
+              className="bg-[#0B0E11] border border-[#2B3139] px-2 py-1 rounded text-[11px] text-[#F0B90B] font-bold min-w-[72px] focus:outline-none focus:border-[#F0B90B]/60"
+            >
+              {availableTickers.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <Box>{tickerCode}</Box>
+          )}
+        </Field>
+
+        <Field label="Date">
+          <Box min="90px">{loadingData ? "Loading..." : dateLabel || "20/07/2026"}</Box>
+        </Field>
+
+        <Field label="Time">
+          <Box min="70px">{startTime}</Box>
+          <span className="text-[#5E6673] mx-0.5">–</span>
+          <Box min="70px">{endTime}</Box>
+        </Field>
+
+        <Field label="Broker">
+          <Box min="50px">All</Box>
+        </Field>
+
+        <Field label="Board">
+          <Box min="40px">RG</Box>
+        </Field>
+
+        <label className="flex items-center gap-1.5 text-[#848E9C] cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={showBroker}
+            onChange={(e) => setShowBroker(e.target.checked)}
+            className="accent-[#F0B90B] w-3 h-3"
+          />
+          Broker
+        </label>
+
+        <button
+          onClick={() => fetchTickerData(tickerCode)}
+          disabled={loadingData}
+          className="bg-[#F0B90B] hover:bg-[#F8D12F] disabled:opacity-50 text-[#0B0E11] text-[11px] font-bold px-4 py-1 rounded transition-colors ml-auto"
+        >
+          {loadingData ? "..." : "Show"}
+        </button>
+      </div>
+
+      {/* ── Title + playback strip ── */}
+      <div className="flex flex-wrap items-center gap-3 bg-[#0E1218] border-b border-[#1E2329] px-3 py-1.5">
+        <div className="flex items-center gap-2 min-w-0">
+          <h1 className="text-[13px] font-bold text-white tracking-wide truncate">
+            {tickerCode} — BID-OFFER REPLAY
+          </h1>
+          <span className="text-[9px] font-bold uppercase tracking-wider bg-[#1E2329] text-[#848E9C] px-1.5 py-0.5 rounded shrink-0">
+            {currentIdx + 1}/{trades.length || 0}
+          </span>
         </div>
 
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Main Panels Grid */}
-        <div className="flex-1 grid grid-cols-12 gap-0 overflow-hidden bg-[#0A0A0A]">
-          {/* Panel Left: Buy Orders (3 cols) */}
-          <div className="col-span-3 flex flex-col border-r border-[#1A1A1A] overflow-hidden">
-            <div className="bg-[#103D2E] text-[#10B981] text-[10px] font-bold px-2 py-1 uppercase tracking-wider flex justify-between">
-              <span>Buy Orders</span>
-              <span className="opacity-60">{visibleTrades.filter(t => t.side === "BUY").length} orders</span>
-            </div>
-            <div className="grid grid-cols-8 gap-0 border-b border-[#1A1A1A] px-1 py-1 text-[9px] text-[#B8AA96]/40 uppercase font-bold bg-[#0D0D0D]" style={{fontVariantNumeric:"tabular-nums"}}>
-              <span className="col-span-1 text-left">Ord</span>
-              <span className="col-span-2 text-center">Time</span>
-              <span className="col-span-1 text-right">Price</span>
-              <span className="col-span-1 text-right">Rls</span>
-              <span className="col-span-1 text-right">Open</span>
-              <span className="col-span-1 text-right">Inv</span>
-              <span className="col-span-1 text-right">Br</span>
-            </div>
-            <div className="flex-1 overflow-y-auto scrollbar-hide">
-              {visibleTrades.filter(t => t.side === "BUY").map((t, i) => (
-                <div key={i} className="grid grid-cols-8 gap-0 px-1 py-[1.5px] text-[10px] border-b border-[#1A1A1A]/30 hover:bg-[#103D2E]/10" style={{fontVariantNumeric:"tabular-nums"}}>
-                  <span className="col-span-1 text-[#B8AA96]/30">#</span>
-                  <span className="col-span-2 text-center text-[#B8AA96]/60">{t.time}</span>
-                  <span className="col-span-1 text-right text-emerald-400 font-bold">{t.price}</span>
-                  <span className="col-span-1 text-right text-[#B8AA96]/40">0</span>
-                  <span className="col-span-1 text-right text-white font-bold">{t.lot}</span>
-                  <span className="col-span-1 text-right text-white font-bold">{t.lot}</span>
-                  <span className="col-span-1 text-right text-[#C6A15B] font-bold">{t.broker || "—"}</span>
-                  <span className="col-span-1 text-right text-emerald-500/60 font-bold">O</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Panel Center: Orderbook Depth (3 cols) */}
-          <div className="col-span-3 flex flex-col border-r border-[#1A1A1A] overflow-hidden">
-            <div className="bg-[#1A1A1A] text-[#B8AA96] text-[10px] font-bold px-2 py-1 uppercase tracking-wider flex justify-between">
-              <span>Orderbook Depth</span>
-              <span className="opacity-60">{levels.length} levels</span>
-            </div>
-            <div className="grid grid-cols-6 gap-0 border-b border-[#1A1A1A] px-1 py-1 text-[9px] text-[#B8AA96]/40 uppercase font-bold bg-[#0D0D0D]" style={{fontVariantNumeric:"tabular-nums"}}>
-              <span className="text-center">Freq</span>
-              <span className="text-right">Blot</span>
-              <span className="text-right">Bid</span>
-              <span className="text-right">Offer</span>
-              <span className="text-right">Slot</span>
-              <span className="text-right">Freq</span>
-            </div>
-            <div ref={orderBookRef} className="flex-1 overflow-y-auto scrollbar-hide">
-              {levels.map((lv, i) => {
-                const isLast = lv.price === ticker.last;
-                return (
-                  <div key={i} className={`grid grid-cols-6 gap-0 px-1 py-[1.5px] text-[10px] border-b border-[#1A1A1A]/30 ${isLast ? "bg-[#C6A15B]/[0.08]" : "hover:bg-white/[0.02]"}`} style={{fontVariantNumeric:"tabular-nums"}}>
-                    <span className="text-center text-emerald-400/60 font-bold">{lv.freq}</span>
-                    <span className="text-right text-emerald-400 font-bold">{lv.bidVol}</span>
-                    <span className={`text-right font-bold ${isLast ? "text-[#C6A15B] bg-[#C6A15B]/20" : "text-white"}`}>{lv.price}</span>
-                    <span className={`text-right font-bold ${isLast ? "text-[#C6A15B] bg-[#C6A15B]/20" : "text-white"}`}>{lv.price}</span>
-                    <span className="text-right text-red-400 font-bold">{lv.offerVol}</span>
-                    <span className="text-right text-red-400/60 font-bold">{lv.freq}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Panel Right: Sell Orders (3 cols) */}
-          <div className="col-span-3 flex flex-col border-r border-[#1A1A1A] overflow-hidden">
-            <div className="bg-[#4D1C1C] text-[#EF4444] text-[10px] font-bold px-2 py-1 uppercase tracking-wider flex justify-between">
-              <span>Sell Orders</span>
-              <span className="opacity-60">{visibleTrades.filter(t => t.side === "SELL").length} orders</span>
-            </div>
-            <div className="grid grid-cols-8 gap-0 border-b border-[#1A1A1A] px-1 py-1 text-[9px] text-[#B8AA96]/40 uppercase font-bold bg-[#0D0D0D]" style={{fontVariantNumeric:"tabular-nums"}}>
-              <span className="col-span-1 text-left">Ord</span>
-              <span className="col-span-2 text-center">Time</span>
-              <span className="col-span-1 text-right">Price</span>
-              <span className="col-span-1 text-right">Rls</span>
-              <span className="col-span-1 text-right">Open</span>
-              <span className="col-span-1 text-right">Inv</span>
-              <span className="col-span-1 text-right">Br</span>
-            </div>
-            <div className="flex-1 overflow-y-auto scrollbar-hide">
-              {visibleTrades.filter(t => t.side === "SELL").map((t, i) => (
-                <div key={i} className="grid grid-cols-8 gap-0 px-1 py-[1.5px] text-[10px] border-b border-[#1A1A1A]/30 hover:bg-[#4D1C1C]/10" style={{fontVariantNumeric:"tabular-nums"}}>
-                  <span className="col-span-1 text-[#B8AA96]/30">#</span>
-                  <span className="col-span-2 text-center text-[#B8AA96]/60">{t.time}</span>
-                  <span className="col-span-1 text-right text-red-400 font-bold">{t.price}</span>
-                  <span className="col-span-1 text-right text-[#B8AA96]/40">0</span>
-                  <span className="col-span-1 text-right text-white font-bold">{t.lot}</span>
-                  <span className="col-span-1 text-right text-white font-bold">{t.lot}</span>
-                  <span className="col-span-1 text-right text-[#C6A15B] font-bold">{t.broker || "—"}</span>
-                  <span className="col-span-1 text-right text-red-500/60 font-bold">O</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Panel Right Extra: Running Trade (3 cols) */}
-          <div className="col-span-3 flex flex-col overflow-hidden">
-            <div className="bg-[#1C2C4D] text-[#3B82F6] text-[10px] font-bold px-2 py-1 uppercase tracking-wider flex justify-between">
-              <span>Running Trade</span>
-              <span className="opacity-60">{visibleTrades.length} trades</span>
-            </div>
-            <div className="grid grid-cols-8 gap-0 border-b border-[#1A1A1A] px-1 py-1 text-[9px] text-[#B8AA96]/40 uppercase font-bold bg-[#0D0D0D]" style={{fontVariantNumeric:"tabular-nums"}}>
-              <span className="col-span-1 text-left">Time</span>
-              <span className="col-span-1 text-center">Stock</span>
-              <span className="col-span-1 text-right">Price</span>
-              <span className="col-span-1 text-right">Lot</span>
-              <span className="col-span-1 text-right">Buy</span>
-              <span className="col-span-1 text-right">Sel</span>
-              <span className="col-span-1 text-right">BO</span>
-              <span className="col-span-1 text-right">SO</span>
-            </div>
-            <div ref={tradesRef} className="flex-1 overflow-y-auto scrollbar-hide">
-              {visibleTrades.map((t, i) => (
-                <div key={i} className="grid grid-cols-8 gap-0 px-1 py-[1.5px] text-[10px] border-b border-[#1A1A1A]/30 hover:bg-[#1C2C4D]/10" style={{fontVariantNumeric:"tabular-nums"}}>
-                  <span className="col-span-1 text-[#B8AA96]/60">{t.time}</span>
-                  <span className="col-span-1 text-center text-[#C6A15B] font-bold">{t.code}</span>
-                  <span className="col-span-1 text-right text-white font-bold">{t.price}</span>
-                  <span className="col-span-1 text-right text-[#C6A15B] font-bold">{t.lot}</span>
-                  <span className="col-span-1 text-right text-emerald-400 font-bold">{t.side === "BUY" ? (t.broker || "??") : "—"}</span>
-                  <span className="col-span-1 text-right text-red-400 font-bold">{t.side === "SELL" ? (t.broker || "??") : "—"}</span>
-                  <span className="col-span-1 text-right text-[#B8AA96]/40">#</span>
-                  <span className="col-span-1 text-right text-[#B8AA96]/40">#</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Transport */}
+        <div className="flex items-center gap-1">
+          <Ctrl onClick={jumpToStart} title="Start">
+            ⏮
+          </Ctrl>
+          <Ctrl onClick={stepBack} title="Step back">
+            ◀
+          </Ctrl>
+          <Ctrl onClick={togglePlay} title="Play/Pause" active={playing}>
+            {playing ? "⏸" : "▶"}
+          </Ctrl>
+          <Ctrl onClick={stepForward} title="Step forward">
+            ▶
+          </Ctrl>
+          <Ctrl onClick={jumpToEnd} title="End">
+            ⏭
+          </Ctrl>
         </div>
 
-        {/* Bottom Stats Summary */}
-        <div className="h-8 bg-[#0D0D0D] border-t border-[#1A1A1A] px-2 flex items-center justify-between text-[10px] font-bold text-[#B8AA96]/60">
-          <div className="flex gap-4">
-            <div className="flex gap-1.5"><span className="text-[#B8AA96]/30 uppercase">Buy Vol:</span><span className="text-emerald-400 font-mono">{cumBuy.toLocaleString("id-ID")}</span></div>
-            <div className="flex gap-1.5"><span className="text-[#B8AA96]/30 uppercase">Sell Vol:</span><span className="text-red-400 font-mono">{cumSell.toLocaleString("id-ID")}</span></div>
-            <div className="flex gap-1.5"><span className="text-[#B8AA96]/30 uppercase">Net Flow:</span><span className={`${cumBuy - cumSell >= 0 ? "text-emerald-400" : "text-red-400"} font-mono`}>{(cumBuy - cumSell).toLocaleString("id-ID")}</span></div>
-          </div>
-          <div className="flex gap-4">
-            <div className="flex gap-1.5"><span className="text-[#B8AA96]/30 uppercase">VWAP:</span><span className="text-[#C6A15B] font-mono">{vwap.toFixed(0)}</span></div>
-            <div className="flex gap-1.5"><span className="text-[#B8AA96]/30 uppercase">Total:</span><span className="text-white font-mono">{totalLots.toLocaleString("id-ID")}</span></div>
-            <div className="flex gap-1.5"><span className="text-[#B8AA96]/30 uppercase">Change:</span><span className={`${ticker.change >= 0 ? "text-emerald-400" : "text-red-400"} font-mono`}>{ticker.change >= 0 ? "+" : ""}{ticker.change.toFixed(2)}%</span></div>
-          </div>
+        <div className="flex items-center gap-2 text-[11px] font-mono">
+          <span className="text-[#F0B90B] font-bold min-w-[64px]">{currentTime}</span>
+          <span className="text-[#5E6673]">/</span>
+          <span className="text-[#848E9C] min-w-[64px]">{endTime}</span>
+        </div>
+
+        {/* Progress slider */}
+        <div className="flex-1 min-w-[120px] max-w-[360px]">
+          <input
+            type="range"
+            min={0}
+            max={Math.max(0, trades.length - 1)}
+            value={Math.max(0, currentIdx)}
+            onChange={(e) => {
+              setPlaying(false);
+              setCurrentIdx(Number(e.target.value));
+            }}
+            className="w-full h-1.5 accent-[#F0B90B] cursor-pointer"
+            disabled={trades.length === 0}
+          />
+        </div>
+
+        <button
+          onClick={cycleSpeed}
+          className="px-2 py-0.5 rounded bg-[#1E2329] border border-[#2B3139] text-[#F0B90B] font-mono font-bold text-[11px] hover:border-[#F0B90B]/50 min-w-[44px]"
+          title="Cycle speed"
+        >
+          {speed}x
+        </button>
+
+        <div className="text-[10px] text-[#5E6673] hidden sm:block">
+          Space play · ← → step
         </div>
       </div>
+
+      {/* ── Price summary ── */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 bg-[#12161C] border-b border-[#1E2329] px-3 py-1.5 text-[11px]">
+        <div className="flex items-baseline gap-2">
+          <span className="text-[15px] font-bold text-white">{tickerCode}</span>
+          <span className="text-[15px] font-bold text-[#F0B90B] font-mono">
+            {ticker.last ? fmtPrice(ticker.last) : "—"}
+          </span>
+        </div>
+        <Stat label="Prev" value={fmtPrice(prevPrice)} />
+        <Stat
+          label="Chg"
+          value={`${changeAbs >= 0 ? "+" : ""}${fmtPrice(changeAbs)} (${changePct >= 0 ? "+" : ""}${changePct.toFixed(2)}%)`}
+          color={changeAbs >= 0 ? "text-[#0ECB81]" : "text-[#F6465D]"}
+        />
+        <Stat label="Open" value={fmtPrice(ticker.open)} />
+        <Stat label="High" value={fmtPrice(ticker.high)} color="text-[#0ECB81]" />
+        <Stat label="Low" value={fmtPrice(ticker.low)} color="text-[#F6465D]" />
+        <Stat label="Lot" value={fmt(totalLots)} />
+        <Stat
+          label="Value"
+          value={
+            totalValue >= 1e9
+              ? `${(totalValue / 1e9).toFixed(2)} B`
+              : totalValue >= 1e6
+              ? `${(totalValue / 1e6).toFixed(1)} M`
+              : fmt(totalValue)
+          }
+        />
+        <Stat label="WAP" value={vwap ? fmtPrice(Math.round(vwap)) : "—"} color="text-[#F0B90B]" />
+        <Stat label="Freq" value={fmt(totalFreq)} />
+      </div>
+
+      {/* ── Main 4-panel grid ── */}
+      <div className="flex-1 grid grid-cols-12 min-h-0 overflow-hidden">
+        {/* BUY ORDERS */}
+        <Panel
+          className="col-span-3 border-r border-[#1E2329]"
+          headerClass="bg-[#0B2E21] text-[#0ECB81]"
+          title="Buy Orders"
+          count={`${buyTrades.length} orders`}
+        >
+          <TableHead cols={["Ord", "Time", "Price", "Lot", "Inv", showBroker ? "Br" : "", "St"]} />
+          <div ref={buyRef} className="flex-1 overflow-y-auto scrollbar-thin">
+            {buyTrades.map((t, i) => (
+              <Row key={`b-${i}`} green hover>
+                <Cell muted>{buyTrades.length - i}</Cell>
+                <Cell muted>{t.time}</Cell>
+                <Cell className="text-[#0ECB81] font-bold">{fmtPrice(t.price)}</Cell>
+                <Cell className="text-white font-bold text-right">{fmt(t.lot)}</Cell>
+                <Cell className="text-white text-right">{fmt(t.lot)}</Cell>
+                {showBroker && <Cell className="text-[#F0B90B] font-bold text-right">{t.broker || "—"}</Cell>}
+                <Cell className="text-[#0ECB81]/70 text-right">O</Cell>
+              </Row>
+            ))}
+            {buyTrades.length === 0 && <Empty />}
+          </div>
+        </Panel>
+
+        {/* ORDERBOOK DEPTH */}
+        <Panel
+          className="col-span-3 border-r border-[#1E2329]"
+          headerClass="bg-[#1E2329] text-[#848E9C]"
+          title="Orderbook Depth"
+          count={`${levels.length} levels`}
+        >
+          <div className="grid grid-cols-6 gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] sticky top-0 z-10">
+            <span className="text-center">Freq</span>
+            <span className="text-right">BLot</span>
+            <span className="text-right">Bid</span>
+            <span className="text-right">Offer</span>
+            <span className="text-right">SLot</span>
+            <span className="text-center">Freq</span>
+          </div>
+          <div ref={orderBookRef} className="flex-1 overflow-y-auto scrollbar-thin">
+            {levels.map((lv, i) => {
+              const isLast = lv.price === ticker.last;
+              const maxVol = Math.max(...levels.map((l) => Math.max(l.bidVol, l.offerVol)), 1);
+              const bidPct = (lv.bidVol / maxVol) * 100;
+              const offerPct = (lv.offerVol / maxVol) * 100;
+              return (
+                <div
+                  key={i}
+                  className={`relative grid grid-cols-6 gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
+                    isLast ? "bg-[#F0B90B]/10" : "hover:bg-white/[0.02]"
+                  }`}
+                  style={{ fontVariantNumeric: "tabular-nums" }}
+                >
+                  {/* depth bars */}
+                  <div
+                    className="absolute inset-y-0 left-0 bg-[#0ECB81]/10 pointer-events-none"
+                    style={{ width: `${bidPct / 2}%` }}
+                  />
+                  <div
+                    className="absolute inset-y-0 right-0 bg-[#F6465D]/10 pointer-events-none"
+                    style={{ width: `${offerPct / 2}%` }}
+                  />
+                  <span className="relative text-center text-[#0ECB81]/70 font-bold z-[1]">
+                    {lv.freq}
+                  </span>
+                  <span className="relative text-right text-[#0ECB81] font-bold z-[1]">
+                    {fmt(lv.bidVol)}
+                  </span>
+                  <span
+                    className={`relative text-right font-bold z-[1] ${
+                      isLast ? "text-[#F0B90B] bg-[#F0B90B]/20 px-0.5 rounded" : "text-white"
+                    }`}
+                  >
+                    {fmtPrice(lv.price)}
+                  </span>
+                  <span
+                    className={`relative text-right font-bold z-[1] ${
+                      isLast ? "text-[#F0B90B] bg-[#F0B90B]/20 px-0.5 rounded" : "text-white"
+                    }`}
+                  >
+                    {fmtPrice(lv.price)}
+                  </span>
+                  <span className="relative text-right text-[#F6465D] font-bold z-[1]">
+                    {fmt(lv.offerVol)}
+                  </span>
+                  <span className="relative text-center text-[#F6465D]/70 font-bold z-[1]">
+                    {lv.freq}
+                  </span>
+                </div>
+              );
+            })}
+            {levels.length === 0 && <Empty />}
+          </div>
+          {/* Bottom aggregate */}
+          <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-7 gap-0">
+            <span className="text-[#5E6673]">TOTAL</span>
+            <span className="text-[#0ECB81] text-right">{fmt(totalFreq)}</span>
+            <span className="text-[#0ECB81] text-right">{fmt(totalBidLot)}</span>
+            <span className="text-right">—</span>
+            <span className="text-[#F6465D] text-right">{fmt(totalOfferLot)}</span>
+            <span className="text-[#F6465D] text-right">{fmt(totalFreq)}</span>
+            <span className="text-white text-right font-bold">{fmt(totalBidLot + totalOfferLot)}</span>
+          </div>
+          {showBroker && ticker.last > 0 && (
+            <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] flex flex-wrap gap-x-2 gap-y-0.5">
+              <span className="text-[#5E6673]">@ {fmtPrice(ticker.last)}</span>
+              {brokersAtLast.buy.map((b) => (
+                <span key={`bb-${b}`} className="text-[#0ECB81] font-bold">
+                  {b}
+                </span>
+              ))}
+              {brokersAtLast.sell.map((b) => (
+                <span key={`bs-${b}`} className="text-[#F6465D] font-bold">
+                  {b}
+                </span>
+              ))}
+            </div>
+          )}
+        </Panel>
+
+        {/* SELL ORDERS */}
+        <Panel
+          className="col-span-3 border-r border-[#1E2329]"
+          headerClass="bg-[#3D1218] text-[#F6465D]"
+          title="Sell Orders"
+          count={`${sellTrades.length} orders`}
+        >
+          <TableHead cols={["Ord", "Time", "Price", "Lot", "Inv", showBroker ? "Br" : "", "St"]} />
+          <div ref={sellRef} className="flex-1 overflow-y-auto scrollbar-thin">
+            {sellTrades.map((t, i) => (
+              <Row key={`s-${i}`} red hover>
+                <Cell muted>{sellTrades.length - i}</Cell>
+                <Cell muted>{t.time}</Cell>
+                <Cell className="text-[#F6465D] font-bold">{fmtPrice(t.price)}</Cell>
+                <Cell className="text-white font-bold text-right">{fmt(t.lot)}</Cell>
+                <Cell className="text-white text-right">{fmt(t.lot)}</Cell>
+                {showBroker && <Cell className="text-[#F0B90B] font-bold text-right">{t.broker || "—"}</Cell>}
+                <Cell className="text-[#F6465D]/70 text-right">O</Cell>
+              </Row>
+            ))}
+            {sellTrades.length === 0 && <Empty />}
+          </div>
+        </Panel>
+
+        {/* RUNNING TRADE */}
+        <Panel
+          className="col-span-3"
+          headerClass="bg-[#0D1F3C] text-[#3B82F6]"
+          title="Running Trade"
+          count={`${visibleTrades.length} trades`}
+        >
+          <div className="grid grid-cols-7 gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] sticky top-0 z-10">
+            <span>Time</span>
+            <span className="text-center">Stock</span>
+            <span className="text-right">Price</span>
+            <span className="text-right">Lot</span>
+            <span className="text-right">Buyer</span>
+            <span className="text-right">Seller</span>
+            <span className="text-right">Side</span>
+          </div>
+          <div ref={tradesRef} className="flex-1 overflow-y-auto scrollbar-thin">
+            {visibleTrades.map((t, i) => {
+              const isBuy = t.side === "BUY";
+              return (
+                <div
+                  key={`rt-${i}`}
+                  className={`grid grid-cols-7 gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 hover:bg-[#0D1F3C]/40 ${
+                    i === 0 ? "bg-[#F0B90B]/[0.06]" : ""
+                  }`}
+                  style={{ fontVariantNumeric: "tabular-nums" }}
+                >
+                  <span className="text-[#848E9C]">{t.time}</span>
+                  <span className="text-center text-[#F0B90B] font-bold">{t.code}</span>
+                  <span className="text-right text-white font-bold">{fmtPrice(t.price)}</span>
+                  <span className="text-right text-[#F0B90B] font-bold">{fmt(t.lot)}</span>
+                  <span className={`text-right font-bold ${isBuy ? "text-[#0ECB81]" : "text-[#5E6673]"}`}>
+                    {isBuy ? t.broker || "??" : "—"}
+                  </span>
+                  <span className={`text-right font-bold ${!isBuy ? "text-[#F6465D]" : "text-[#5E6673]"}`}>
+                    {!isBuy ? t.broker || "??" : "—"}
+                  </span>
+                  <span className={`text-right font-bold ${isBuy ? "text-[#0ECB81]" : "text-[#F6465D]"}`}>
+                    {isBuy ? "B" : "S"}
+                  </span>
+                </div>
+              );
+            })}
+            {visibleTrades.length === 0 && <Empty />}
+          </div>
+        </Panel>
+      </div>
+
+      {/* ── Bottom bar ── */}
+      <div className="h-7 bg-[#0E1218] border-t border-[#1E2329] px-3 flex items-center justify-between text-[10px] font-bold">
+        <div className="flex gap-4">
+          <span>
+            <span className="text-[#5E6673] uppercase mr-1">Buy Vol</span>
+            <span className="text-[#0ECB81] font-mono">{fmt(cumBuy)}</span>
+          </span>
+          <span>
+            <span className="text-[#5E6673] uppercase mr-1">Sell Vol</span>
+            <span className="text-[#F6465D] font-mono">{fmt(cumSell)}</span>
+          </span>
+          <span>
+            <span className="text-[#5E6673] uppercase mr-1">Net</span>
+            <span
+              className={`font-mono ${
+                cumBuy - cumSell >= 0 ? "text-[#0ECB81]" : "text-[#F6465D]"
+              }`}
+            >
+              {fmt(cumBuy - cumSell)}
+            </span>
+          </span>
+        </div>
+        <div className="flex gap-4 items-center">
+          {/* mini progress */}
+          <div className="w-24 h-1 bg-[#1E2329] rounded overflow-hidden hidden sm:block">
+            <div
+              className="h-full bg-[#F0B90B] transition-all duration-100"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <span>
+            <span className="text-[#5E6673] uppercase mr-1">VWAP</span>
+            <span className="text-[#F0B90B] font-mono">{vwap ? fmtPrice(Math.round(vwap)) : "—"}</span>
+          </span>
+          <span>
+            <span className="text-[#5E6673] uppercase mr-1">Total</span>
+            <span className="text-white font-mono">{fmt(totalLots)}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── small UI atoms ── */
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-1.5 shrink-0">
+      <span className="text-[9px] text-[#5E6673] uppercase font-bold tracking-wide">{label}</span>
+      {children}
+    </div>
+  );
+}
+
+function Box({ children, min = "60px" }: { children: React.ReactNode; min?: string }) {
+  return (
+    <div
+      className="bg-[#0B0E11] border border-[#2B3139] px-2 py-1 rounded text-[11px] text-[#EAECEF] font-mono"
+      style={{ minWidth: min }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Ctrl({
+  children,
+  onClick,
+  title,
+  active,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  title?: string;
+  active?: boolean;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      title={title}
+      className={`w-7 h-7 flex items-center justify-center rounded border text-[11px] transition-colors ${
+        active
+          ? "bg-[#F0B90B] border-[#F0B90B] text-[#0B0E11]"
+          : "bg-[#1E2329] border-[#2B3139] text-[#EAECEF] hover:border-[#F0B90B]/50 hover:text-[#F0B90B]"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  color = "text-white",
+}: {
+  label: string;
+  value: string;
+  color?: string;
+}) {
+  return (
+    <div className="flex items-center gap-1">
+      <span className="text-[#5E6673] text-[9px] uppercase">{label}</span>
+      <span className={`font-mono font-bold ${color}`}>{value}</span>
+    </div>
+  );
+}
+
+function Panel({
+  className,
+  headerClass,
+  title,
+  count,
+  children,
+}: {
+  className?: string;
+  headerClass: string;
+  title: string;
+  count: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={`flex flex-col overflow-hidden min-h-0 ${className || ""}`}>
+      <div
+        className={`text-[10px] font-bold px-2 py-1 uppercase tracking-wider flex justify-between shrink-0 ${headerClass}`}
+      >
+        <span>{title}</span>
+        <span className="opacity-60 normal-case tracking-normal">{count}</span>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function TableHead({ cols }: { cols: string[] }) {
+  const filtered = cols.filter(Boolean);
+  return (
+    <div
+      className="grid gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] sticky top-0 z-10"
+      style={{ gridTemplateColumns: `repeat(${filtered.length}, minmax(0, 1fr))` }}
+    >
+      {filtered.map((c, i) => (
+        <span
+          key={c + i}
+          className={i === 0 ? "text-left" : i === 1 ? "text-center" : "text-right"}
+        >
+          {c}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function Row({
+  children,
+  green,
+  red,
+  hover,
+}: {
+  children: React.ReactNode;
+  green?: boolean;
+  red?: boolean;
+  hover?: boolean;
+}) {
+  const cols = Array.isArray(children) ? children.filter(Boolean).length : 1;
+  return (
+    <div
+      className={`grid gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
+        hover
+          ? green
+            ? "hover:bg-[#0B2E21]/40"
+            : red
+            ? "hover:bg-[#3D1218]/40"
+            : "hover:bg-white/[0.02]"
+          : ""
+      }`}
+      style={{
+        fontVariantNumeric: "tabular-nums",
+        gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Cell({
+  children,
+  className = "",
+  muted,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  muted?: boolean;
+}) {
+  return (
+    <span className={`${muted ? "text-[#5E6673]" : ""} ${className}`}>{children}</span>
+  );
+}
+
+function Empty() {
+  return (
+    <div className="flex items-center justify-center h-24 text-[#5E6673] text-[11px]">
+      No data
     </div>
   );
 }
