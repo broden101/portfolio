@@ -408,10 +408,10 @@ export default function OrderBookPage() {
     for (let i = prices.length - 1; i >= 0; i--) {
       const lots = bidLots[i];
       if (lots > 0) {
-        let brk = bk[String(i)]?.[0] ?? "—";
+        let brk = "—";
         for (let ti = currentIdx; ti >= 0; ti--) {
           const t = trades[ti];
-          if (t.price === prices[i] && t.side === "SELL" && t.buyer && t.buyer !== "--") { brk = t.buyer; break; }
+          if (t.price === prices[i] && t.broker) { brk = t.broker; break; }
         }
         out.push({ price: prices[i], lot: lots, broker: brk });
       }
@@ -432,10 +432,10 @@ export default function OrderBookPage() {
     for (let i = 0; i < prices.length; i++) {
       const lots = offerLots[i];
       if (lots > 0) {
-        let brk = sk[String(i)]?.[0] ?? "—";
+        let brk = "—";
         for (let ti = currentIdx; ti >= 0; ti--) {
           const t = trades[ti];
-          if (t.price === prices[i] && t.side === "BUY" && t.seller && t.seller !== "--") { brk = t.seller; break; }
+          if (t.price === prices[i] && t.broker) { brk = t.broker; break; }
         }
         out.push({ price: prices[i], lot: lots, broker: brk });
       }
@@ -560,27 +560,27 @@ export default function OrderBookPage() {
       const tradeBuyLots = tv.buyLots;
       const tradeSellLots = tv.sellLots;
 
-      // Find most recent broker from running trades at this price
+      // Broker from running trade only, no bk/sk fallback
       let recentBidBrk = "—";
       for (let i = currentIdx; i >= 0; i--) {
         const t = trades[i];
-        if (t.price === bidPrice && t.side === "SELL" && t.buyer && t.buyer !== "--") { recentBidBrk = t.buyer; break; }
+        if (t.price === bidPrice && t.broker) { recentBidBrk = t.broker; break; }
       }
       let recentOfferBrk = "—";
       for (let i = currentIdx; i >= 0; i--) {
         const t = trades[i];
-        if (t.price === offerPrice && t.side === "BUY" && t.seller && t.seller !== "--") { recentOfferBrk = t.seller; break; }
+        if (t.price === offerPrice && t.broker) { recentOfferBrk = t.broker; break; }
       }
 
       rows.push({
         bidPrice,
         bidFreq: 0,
         bidLots: bidLotsVal,
-        bidBroker: recentBidBrk !== "—" ? recentBidBrk : (hasBid ? (bk[String(bidIdx)]?.[0] ?? "—") : "—"),
+        bidBroker: recentBidBrk,
         offerPrice,
         offerFreq: 0,
         offerLots: offerLotsVal,
-        offerBroker: recentOfferBrk !== "—" ? recentOfferBrk : (hasOffer ? (sk[String(offerIdx)]?.[0] ?? "—") : "—"),
+        offerBroker: recentOfferBrk,
         bidShown: hasBid,
         offerShown: hasOffer,
         isLast: hasBid && prices[bidIdx] === ticker.last,
