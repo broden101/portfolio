@@ -670,19 +670,18 @@ export default function OrderBookPage() {
           </div>
         </Panel>
 
-        {/* DEPTH — 9-column: Freq | B-Brk | BLot | BID | Price | OFFER | SLot | S-Brk | Freq */}
+        {/* DEPTH — 8-col: Freq | B-Brk | BLot | Bid Price | Offer Price | SLot | S-Brk | Freq */}
         <Panel
           className="col-span-3 border-r border-[#1E2329]"
           headerClass="bg-[#1E2329] text-[#848E9C]"
           title="Orderbook Depth"
           count={`${depthLevels.length} levels`}
         >
-          <div className="grid grid-cols-9 gap-0 border-b border-[#1E2329] px-1 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] shrink-0">
+          <div className="grid grid-cols-8 gap-0 border-b border-[#1E2329] px-1 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] shrink-0">
             <span className="text-center">Freq</span>
             <span className="text-center">B-Brk</span>
             <span className="text-right">BLot</span>
             <span className="text-right">Bid</span>
-            <span className="text-center bg-[#1E2329] text-white">Price</span>
             <span className="text-left">Offer</span>
             <span className="text-left">SLot</span>
             <span className="text-center">S-Brk</span>
@@ -694,7 +693,7 @@ export default function OrderBookPage() {
               return (
                 <div
                   key={lv.price}
-                  className={`grid grid-cols-9 gap-0 px-1 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
+                  className={`grid grid-cols-8 gap-0 px-1 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
                     isLast ? "bg-[#F0B90B]/10" : ""
                   }`}
                   style={{ fontVariantNumeric: "tabular-nums" }}
@@ -702,9 +701,8 @@ export default function OrderBookPage() {
                   <span className="text-center text-[#0ECB81]/70 font-bold">{lv.bidFreq || "—"}</span>
                   <span className="text-center text-[#0ECB81] font-bold">{lv.bidBrokers[0] || "—"}</span>
                   <span className="text-right text-[#0ECB81] font-bold">{lv.bidLots ? fmt(lv.bidLots) : "—"}</span>
-                  <span className="text-right text-[#0ECB81] font-bold">{lv.bidLots ? fmtPrice(lv.price) : "—"}</span>
-                  <span className={`text-center font-bold ${isLast ? "text-[#F0B90B]" : "text-white"}`}>{fmtPrice(lv.price)}</span>
-                  <span className="text-left text-[#F6465D] font-bold">{lv.offerLots ? fmtPrice(lv.price) : "—"}</span>
+                  <span className="text-right font-bold text-[#0ECB81]">{lv.bidLots ? fmtPrice(lv.price) : "—"}</span>
+                  <span className="text-left font-bold text-[#F6465D]">{lv.offerLots ? fmtPrice(lv.price) : "—"}</span>
                   <span className="text-left text-[#F6465D] font-bold">{lv.offerLots ? fmt(lv.offerLots) : "—"}</span>
                   <span className="text-center text-[#F6465D] font-bold">{lv.offerBrokers[0] || "—"}</span>
                   <span className="text-center text-[#F6465D]/70 font-bold">{lv.offerFreq || "—"}</span>
@@ -713,12 +711,15 @@ export default function OrderBookPage() {
             })}
             {depthLevels.length === 0 && <Empty />}
           </div>
-          <div className="border-t border-[#1E2329] bg-[#0E1218] px-1 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-9 gap-0 shrink-0">
-            <span className="text-[#5E6673] col-span-3 text-center">TOTAL</span>
+          <div className="border-t border-[#1E2329] bg-[#0E1218] px-1 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-8 gap-0 shrink-0">
+            <span className="text-[#5E6673]">TOTAL</span>
+            <span className="text-[#0ECB81] text-right">{fmt(totalDepthBidFreq)}</span>
             <span className="text-[#0ECB81] text-right">{fmt(totalDepthBidLot)}</span>
-            <span className="text-center">—</span>
+            <span className="text-center text-white">—</span>
+            <span className="text-center text-white">—</span>
             <span className="text-[#F6465D] text-left">{fmt(totalDepthOfferLot)}</span>
-            <span className="text-[#F6465D] col-span-3 text-center">{fmt(totalDepthBidFreq + totalDepthOfferFreq)}</span>
+            <span className="text-[#F6465D] text-center">{fmt(totalDepthOfferFreq)}</span>
+            <span className="text-white text-center font-bold">{fmt(totalDepthBidLot + totalDepthOfferLot)}</span>
           </div>
           {showBroker && ticker.last > 0 && (
             <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] flex flex-wrap gap-x-2 gap-y-0.5 shrink-0">
