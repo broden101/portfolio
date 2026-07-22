@@ -487,9 +487,20 @@ export default function OrderBookPage() {
       offerPrice: number; offerFreq: number; offerLots: number; offerBroker: string;
       bidShown: boolean; offerShown: boolean; isLast: boolean;
       tradeLot: number; tradeSide: "BUY" | "SELL" | null;
+      cumTradeBuy: number; cumTradeSell: number;
     }[] = [];
 
     const trade = trades[currentIdx];
+
+    // Compute cumulative trade volume per price up to currentIdx
+    const tradeVolMap = new Map<number, { buyLots: number; sellLots: number }>();
+    for (let i = 0; i <= currentIdx; i++) {
+      const t = trades[i];
+      if (!tradeVolMap.has(t.price)) tradeVolMap.set(t.price, { buyLots: 0, sellLots: 0 });
+      const entry = tradeVolMap.get(t.price)!;
+      if (t.side === "BUY") entry.buyLots += t.lot;
+      else entry.sellLots += t.lot;
+    }
 
     for (let k = 0; k < NUM_LEVELS; k++) {
       const bidIdx = centerIdx - k;
@@ -506,6 +517,10 @@ export default function OrderBookPage() {
       const offerLotsVal = hasOffer ? offerLots[offerIdx] : 0;
       const offerBroker = hasOffer ? (sk[String(offerIdx)]?.[0] ?? "—") : "—";
 
+      const tv = tradeVolMap.get(bidPrice) ?? { buyLots: 0, sellLots: 0 };
+      const tradeBuyLots = tv.buyLots;
+      const tradeSellLots = tv.sellLots;
+
       rows.push({
         bidPrice,
         bidFreq: 0,
@@ -520,6 +535,8 @@ export default function OrderBookPage() {
         isLast: hasBid && prices[bidIdx] === ticker.last,
         tradeLot: (trade.price === bidPrice || trade.price === offerPrice) ? trade.lot : 0,
         tradeSide: (trade.price === bidPrice || trade.price === offerPrice) ? trade.side : null,
+        cumTradeBuy: tradeBuyLots,
+        cumTradeSell: tradeSellLots,
       });
     }
     return rows;
@@ -824,9 +841,19 @@ export default function OrderBookPage() {
                       <span className="absolute -left-2 top-0 text-[8px] bg-[#0ECB81]/20 px-0.5 rounded">↑{fmt(row.tradeLot)}</span>
                     )}
                   </span>
-                  <span className="text-right font-bold text-[#0ECB81]">{row.bidShown ? fmtPrice(row.bidPrice) : ""}</span>
+                  <span className="text-right font-bold text-[#0ECB81]">
+                    {row.bidShown ? fmtPrice(row.bidPrice) : ""}
+                    {row.cumTradeBuy > 0 && (
+                      <span className="block text-[7px] text-[#0ECB81]/60 leading-none">{fmt(row.cumTradeBuy)}B</span>
+                    )}
+                  </span>
                   <span className="text-center text-[#2B3139] text-[8px] font-bold">{row.bidShown && row.offerShown ? "┃" : ""}</span>
-                  <span className="text-left font-bold text-[#F6465D]">{row.offerShown ? fmtPrice(row.offerPrice) : ""}</span>
+                  <span className="text-left font-bold text-[#F6465D]">
+                    {row.offerShown ? fmtPrice(row.offerPrice) : ""}
+                    {row.cumTradeSell > 0 && (
+                      <span className="block text-[7px] text-[#F6465D]/60 leading-none">{fmt(row.cumTradeSell)}S</span>
+                    )}
+                  </span>
                   <span className="text-left text-[#F6465D] font-bold relative">
                     {row.offerLots ? fmt(row.offerLots) : ""}
                     {row.tradeLot > 0 && row.tradeSide === "SELL" && (
