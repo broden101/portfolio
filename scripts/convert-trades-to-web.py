@@ -77,23 +77,26 @@ def convert_depth(ticker, date):
                 if brk and brk not in entry["brokers"]:
                     entry["brokers"].append(brk)
 
-    # Merge bid/offer at same price
-    all_prices = set(list(bids.keys()) + list(offers.keys()))
-    levels = []
-    for p in all_prices:
-        b = bids.get(p, {"lots": 0, "freq": 0, "brokers": []})
-        o = offers.get(p, {"lots": 0, "freq": 0, "brokers": []})
-        levels.append({
-            "price": p,
-            "bidLots": b["lots"],
-            "bidFreq": b["freq"],
-            "bidBrokers": b["brokers"],
-            "offerLots": o["lots"],
-            "offerFreq": o["freq"],
-            "offerBrokers": o["brokers"],
-        })
-
-    levels.sort(key=lambda x: -x["price"])
+        # Merge bid/offer at same price
+        all_prices = sorted(list(set(list(bids.keys()) + list(offers.keys()))), reverse=True)
+        levels = []
+        for p in all_prices:
+            b = bids.get(p, {"lots": 0, "freq": 0, "brokers": []})
+            o = offers.get(p, {"lots": 0, "freq": 0, "brokers": []})
+            
+            # Filter: Skip level if no standing orders
+            if b["lots"] == 0 and o["lots"] == 0:
+                continue
+                
+            levels.append({
+                "price": p,
+                "bidLots": b["lots"],
+                "bidFreq": b["freq"],
+                "bidBrokers": [x for x in b["brokers"] if x != "--"],
+                "offerLots": o["lots"],
+                "offerFreq": o["freq"],
+                "offerBrokers": [x for x in o["brokers"] if x != "--"],
+            })
     return levels
 
 def tickers_for_date(date):
