@@ -560,13 +560,13 @@ export default function OrderBookPage() {
       const tradeBuyLots = tv.buyLots;
       const tradeSellLots = tv.sellLots;
 
-      // Broker: B-BRK = buyer, S-BRK = seller dari most recent trade di harga tsb
-      let recentBidBrk = "—";
+      // Broker: most recent trade at price, fallback ke current trade
+      let recentBidBrk = trade.buyer || "—";
       for (let i = currentIdx; i >= 0; i--) {
         const t = trades[i];
         if (t.price === bidPrice && t.buyer) { recentBidBrk = t.buyer; break; }
       }
-      let recentOfferBrk = "—";
+      let recentOfferBrk = trade.seller || "—";
       for (let i = currentIdx; i >= 0; i--) {
         const t = trades[i];
         if (t.price === offerPrice && t.seller) { recentOfferBrk = t.seller; break; }
