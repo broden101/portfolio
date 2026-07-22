@@ -7,6 +7,7 @@ import {
   calcVWAP,
   type RunningTrade,
   type OrderLevel,
+  type DepthLevel,
   type TickerInfo,
 } from "@/lib/orderbook";
 
@@ -51,6 +52,7 @@ export default function OrderBookPage() {
   const [loadingData, setLoadingData] = useState(false);
   const tickerBoxRef = useRef<HTMLDivElement>(null);
   const [levels, setLevels] = useState<OrderLevel[]>([]);
+  const [depthLevels, setDepthLevels] = useState<DepthLevel[]>([]);
   const [showBroker, setShowBroker] = useState(true);
 
   const filteredTickers = useMemo(() => {
@@ -203,10 +205,18 @@ export default function OrderBookPage() {
         const url = isLatest
           ? `/data/trades/${code}.json`
           : `/data/trades-history/${targetDate}/${code}.json`;
-        const res = await fetch(url);
+        const depthUrl = isLatest
+          ? `/data/depth/${code}.json`
+          : `/data/depth-history/${targetDate}/${code}.json`;
+        
+        const [res, dRes] = await Promise.all([fetch(url), fetch(depthUrl)]);
         if (res.ok) {
           const data = await res.json();
           loadData(data, code);
+        }
+        if (dRes.ok) {
+          const depthData = await dRes.json();
+          setDepthLevels(depthData);
         }
       } catch (e) {
         console.error("Load failed", e);
@@ -391,9 +401,10 @@ export default function OrderBookPage() {
 
   const totalLots = cumBuy + cumSell;
   const vwap = useMemo(() => calcVWAP(trades, currentIdx), [trades, currentIdx]);
-  const totalFreq = useMemo(() => levels.reduce((s, l) => s + l.freq, 0), [levels]);
-  const totalBidLot = useMemo(() => levels.reduce((s, l) => s + l.bidVol, 0), [levels]);
-  const totalOfferLot = useMemo(() => levels.reduce((s, l) => s + l.offerVol, 0), [levels]);
+  const totalDepthBidFreq = useMemo(() => depthLevels.reduce((s, l) => s + l.bidFreq, 0), [depthLevels]);
+  const totalDepthBidLot = useMemo(() => depthLevels.reduce((s, l) => s + l.bidLots, 0), [depthLevels]);
+  const totalDepthOfferLot = useMemo(() => depthLevels.reduce((s, l) => s + l.offerLots, 0), [depthLevels]);
+  const totalDepthOfferFreq = useMemo(() => depthLevels.reduce((s, l) => s + l.offerFreq, 0), [depthLevels]);
   const maxVol = useMemo(
     () => Math.max(...levels.map((l) => Math.max(l.bidVol, l.offerVol)), 1),
     [levels]
@@ -623,7 +634,7 @@ export default function OrderBookPage() {
           }
         />
         <Stat label="WAP" value={vwap ? fmtPrice(Math.round(vwap)) : "—"} color="text-[#F0B90B]" />
-        <Stat label="Freq" value={fmt(totalFreq)} />
+        <Stat label="Freq" value={fmt(currentIdx + 1)} />
       </div>
 
       {loadingData && (
@@ -677,10 +688,8 @@ export default function OrderBookPage() {
             <span className="text-center">Freq</span>
           </div>
           <div ref={orderBookRef} className="flex-1 overflow-y-auto overscroll-contain">
-            {levels.map((lv) => {
+            {depthLevels.map((lv) => {
               const isLast = lv.price === ticker.last;
-              const bidPct = (lv.bidVol / maxVol) * 100;
-              const offerPct = (lv.offerVol / maxVol) * 100;
               return (
                 <div
                   key={lv.price}
@@ -689,22 +698,14 @@ export default function OrderBookPage() {
                   }`}
                   style={{ fontVariantNumeric: "tabular-nums" }}
                 >
-                  <div
-                    className="absolute inset-y-0 left-0 bg-[#0ECB81]/10 pointer-events-none"
-                    style={{ width: `${bidPct / 2}%` }}
-                  />
-                  <div
-                    className="absolute inset-y-0 right-0 bg-[#F6465D]/10 pointer-events-none"
-                    style={{ width: `${offerPct / 2}%` }}
-                  />
                   <span className="relative text-center text-[#0ECB81]/70 font-bold z-[1]">
-                    {lv.freq}
+                    {lv.bidFreq}
                   </span>
                   <span className="relative text-center text-[#0ECB81] font-bold z-[1]">
-                    {lv.buyBrokers[0] || "—"}
+                    {lv.bidBrokers[0] || "—"}
                   </span>
                   <span className="relative text-right text-[#0ECB81] font-bold z-[1]">
-                    {fmt(lv.bidVol)}
+                    {fmt(lv.bidLots)}
                   </span>
                   <span
                     className={`relative text-right font-bold z-[1] ${
@@ -721,28 +722,28 @@ export default function OrderBookPage() {
                     {fmtPrice(lv.price)}
                   </span>
                   <span className="relative text-right text-[#F6465D] font-bold z-[1]">
-                    {fmt(lv.offerVol)}
+                    {fmt(lv.offerLots)}
                   </span>
                   <span className="relative text-center text-[#F6465D] font-bold z-[1]">
-                    {lv.sellBrokers[0] || "—"}
+                    {lv.offerBrokers[0] || "—"}
                   </span>
                   <span className="relative text-center text-[#F6465D]/70 font-bold z-[1]">
-                    {lv.freq}
+                    {lv.offerFreq}
                   </span>
                 </div>
               );
             })}
-            {levels.length === 0 && <Empty />}
+            {depthLevels.length === 0 && <Empty />}
           </div>
           <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-10 gap-0 shrink-0">
             <span className="text-[#5E6673]">TOTAL</span>
-            <span className="text-[#0ECB81] text-right">{fmt(totalFreq)}</span>
-            <span className="text-[#0ECB81] text-right">{fmt(totalBidLot)}</span>
+            <span className="text-[#0ECB81] text-right">{fmt(totalDepthBidFreq)}</span>
+            <span className="text-[#0ECB81] text-right">{fmt(totalDepthBidLot)}</span>
             <span className="text-right">—</span>
-            <span className="text-[#F6465D] text-right">{fmt(totalOfferLot)}</span>
-            <span className="text-[#F6465D] text-right">{fmt(totalFreq)}</span>
+            <span className="text-[#F6465D] text-right">{fmt(totalDepthOfferLot)}</span>
+            <span className="text-[#F6465D] text-right">{fmt(totalDepthOfferFreq)}</span>
             <span className="text-white text-right font-bold">
-              {fmt(totalBidLot + totalOfferLot)}
+              {fmt(totalDepthBidLot + totalDepthOfferLot)}
             </span>
           </div>
           {showBroker && ticker.last > 0 && (

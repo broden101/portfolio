@@ -23,6 +23,17 @@ export interface OrderLevel {
   sellBrokers: string[];
 }
 
+/** Orderbook depth level from actual standing orders (order_detail.csv) */
+export interface DepthLevel {
+  price: number;
+  bidLots: number;
+  bidFreq: number;
+  bidBrokers: string[];
+  offerLots: number;
+  offerFreq: number;
+  offerBrokers: string[];
+}
+
 export interface TickerInfo {
   code: string;
   last: number;
