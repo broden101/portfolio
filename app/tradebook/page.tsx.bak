@@ -458,7 +458,6 @@ export default function OrderBookPage() {
 
     const { cumBid, cumOffer, priceLen, times, prices, bk, sk } = depthCumData;
     const ct = trades[currentIdx].time;
-    const NUM_LEVELS = 14;
 
     // Binary search: find latest time ≤ current trade time
     let timeIdx = -1;
@@ -474,13 +473,29 @@ export default function OrderBookPage() {
     const bidLots = cumBid.subarray(offset, offset + priceLen);
     const offerLots = cumOffer.subarray(offset, offset + priceLen);
 
-    // Find center index: closest price to ticker.last
-    let centerIdx = 0;
-    let minDist = Infinity;
-    for (let i = 0; i < prices.length; i++) {
-      const d = Math.abs(prices[i] - ticker.last);
-      if (d < minDist) { minDist = d; centerIdx = i; }
+    // Build bid levels (≤ lastPrice, lot > 0), desc
+    const bids: { price: number; lots: number; brk: string }[] = [];
+    const offers: { price: number; lots: number; brk: string }[] = [];
+
+    for (let i = 0; i < priceLen; i++) {
+      if (bidLots[i] > 0 && prices[i] <= ticker.last) {
+        bids.push({
+          price: prices[i],
+          lots: bidLots[i],
+          brk: bk[String(i)]?.[0] ?? "—",
+        });
+      }
+      if (offerLots[i] > 0 && prices[i] >= ticker.last) {
+        offers.push({
+          price: prices[i],
+          lots: offerLots[i],
+          brk: sk[String(i)]?.[0] ?? "—",
+        });
+      }
     }
+
+    bids.sort((a, b) => b.price - a.price);
+    offers.sort((a, b) => a.price - b.price);
 
     const rows: {
       bidPrice: number; bidFreq: number; bidLots: number; bidBroker: string;
@@ -488,33 +503,23 @@ export default function OrderBookPage() {
       bidShown: boolean; offerShown: boolean; isLast: boolean;
     }[] = [];
 
-    for (let k = 0; k < NUM_LEVELS; k++) {
-      const bidIdx = centerIdx - k;
-      const offerIdx = centerIdx + 1 + k;
-
-      const hasBid = bidIdx >= 0;
-      const hasOffer = offerIdx < priceLen;
-
-      const bidPrice = hasBid ? prices[bidIdx] : 0;
-      const bidLotsVal = hasBid ? bidLots[bidIdx] : 0;
-      const bidBroker = hasBid ? (bk[String(bidIdx)]?.[0] ?? "—") : "—";
-
-      const offerPrice = hasOffer ? prices[offerIdx] : 0;
-      const offerLotsVal = hasOffer ? offerLots[offerIdx] : 0;
-      const offerBroker = hasOffer ? (sk[String(offerIdx)]?.[0] ?? "—") : "—";
-
+    const maxRows = Math.max(bids.length, offers.length);
+    for (let i = 0; i < maxRows; i++) {
+      const b = i < bids.length ? bids[i] : null;
+      const o = i < offers.length ? offers[i] : null;
+      if (!b && !o) continue;
       rows.push({
-        bidPrice,
+        bidPrice: b?.price ?? o?.price ?? 0,
         bidFreq: 0,
-        bidLots: bidLotsVal,
-        bidBroker,
-        offerPrice,
+        bidLots: b?.lots ?? 0,
+        bidBroker: b?.brk ?? "—",
+        offerPrice: o?.price ?? b?.price ?? 0,
         offerFreq: 0,
-        offerLots: offerLotsVal,
-        offerBroker,
-        bidShown: hasBid,
-        offerShown: hasOffer,
-        isLast: hasBid && prices[bidIdx] === ticker.last,
+        offerLots: o?.lots ?? 0,
+        offerBroker: o?.brk ?? "—",
+        bidShown: !!b,
+        offerShown: !!o,
+        isLast: (b?.price ?? 0) === ticker.last || (o?.price ?? 0) === ticker.last,
       });
     }
     return rows;
