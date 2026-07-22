@@ -411,7 +411,7 @@ export default function OrderBookPage() {
         let brk = "—";
         for (let ti = currentIdx; ti >= 0; ti--) {
           const t = trades[ti];
-          if (t.price === prices[i] && t.broker) { brk = t.broker; break; }
+          if (t.price === prices[i] && t.buyer) { brk = t.buyer; break; }
         }
         out.push({ price: prices[i], lot: lots, broker: brk });
       }
@@ -435,7 +435,7 @@ export default function OrderBookPage() {
         let brk = "—";
         for (let ti = currentIdx; ti >= 0; ti--) {
           const t = trades[ti];
-          if (t.price === prices[i] && t.broker) { brk = t.broker; break; }
+          if (t.price === prices[i] && t.seller) { brk = t.seller; break; }
         }
         out.push({ price: prices[i], lot: lots, broker: brk });
       }
@@ -560,16 +560,16 @@ export default function OrderBookPage() {
       const tradeBuyLots = tv.buyLots;
       const tradeSellLots = tv.sellLots;
 
-      // Broker from running trade only, no bk/sk fallback
+      // Broker: B-BRK = buyer, S-BRK = seller dari most recent trade di harga tsb
       let recentBidBrk = "—";
       for (let i = currentIdx; i >= 0; i--) {
         const t = trades[i];
-        if (t.price === bidPrice && t.broker) { recentBidBrk = t.broker; break; }
+        if (t.price === bidPrice && t.buyer) { recentBidBrk = t.buyer; break; }
       }
       let recentOfferBrk = "—";
       for (let i = currentIdx; i >= 0; i--) {
         const t = trades[i];
-        if (t.price === offerPrice && t.broker) { recentOfferBrk = t.broker; break; }
+        if (t.price === offerPrice && t.seller) { recentOfferBrk = t.seller; break; }
       }
 
       rows.push({
