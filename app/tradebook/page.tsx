@@ -486,7 +486,10 @@ export default function OrderBookPage() {
       bidPrice: number; bidFreq: number; bidLots: number; bidBroker: string;
       offerPrice: number; offerFreq: number; offerLots: number; offerBroker: string;
       bidShown: boolean; offerShown: boolean; isLast: boolean;
+      tradeLot: number; tradeSide: "BUY" | "SELL" | null;
     }[] = [];
+
+    const trade = trades[currentIdx];
 
     for (let k = 0; k < NUM_LEVELS; k++) {
       const bidIdx = centerIdx - k;
@@ -515,6 +518,8 @@ export default function OrderBookPage() {
         bidShown: hasBid,
         offerShown: hasOffer,
         isLast: hasBid && prices[bidIdx] === ticker.last,
+        tradeLot: (trade.price === bidPrice || trade.price === offerPrice) ? trade.lot : 0,
+        tradeSide: (trade.price === bidPrice || trade.price === offerPrice) ? trade.side : null,
       });
     }
     return rows;
@@ -813,11 +818,21 @@ export default function OrderBookPage() {
                 >
                   <span className="text-center text-[#0ECB81]/70 font-bold">{row.bidFreq || ""}</span>
                   <span className="text-center text-[#0ECB81] font-bold">{row.bidBroker !== "—" ? row.bidBroker : ""}</span>
-                  <span className="text-right text-[#0ECB81] font-bold">{row.bidLots ? fmt(row.bidLots) : ""}</span>
+                  <span className="text-right text-[#0ECB81] font-bold relative">
+                    {row.bidLots ? fmt(row.bidLots) : ""}
+                    {row.tradeLot > 0 && row.tradeSide === "BUY" && (
+                      <span className="absolute -left-2 top-0 text-[8px] bg-[#0ECB81]/20 px-0.5 rounded">↑{fmt(row.tradeLot)}</span>
+                    )}
+                  </span>
                   <span className="text-right font-bold text-[#0ECB81]">{row.bidShown ? fmtPrice(row.bidPrice) : ""}</span>
                   <span className="text-center text-[#2B3139] text-[8px] font-bold">{row.bidShown && row.offerShown ? "┃" : ""}</span>
                   <span className="text-left font-bold text-[#F6465D]">{row.offerShown ? fmtPrice(row.offerPrice) : ""}</span>
-                  <span className="text-left text-[#F6465D] font-bold">{row.offerLots ? fmt(row.offerLots) : ""}</span>
+                  <span className="text-left text-[#F6465D] font-bold relative">
+                    {row.offerLots ? fmt(row.offerLots) : ""}
+                    {row.tradeLot > 0 && row.tradeSide === "SELL" && (
+                      <span className="absolute -right-2 top-0 text-[8px] bg-[#F6465D]/20 px-0.5 rounded">↓{fmt(row.tradeLot)}</span>
+                    )}
+                  </span>
                   <span className="text-center text-[#F6465D] font-bold">{row.offerBroker !== "—" ? row.offerBroker : ""}</span>
                   <span className="text-center text-[#F6465D]/70 font-bold">{row.offerFreq || ""}</span>
                 </div>
