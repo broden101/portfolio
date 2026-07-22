@@ -562,18 +562,14 @@ export default function OrderBookPage() {
 
       // Find most recent broker from running trades at this price
       let recentBidBrk = "—";
+      for (let i = currentIdx; i >= 0; i--) {
+        const t = trades[i];
+        if (t.price === bidPrice && t.side === "SELL" && t.buyer && t.buyer !== "--") { recentBidBrk = t.buyer; break; }
+      }
       let recentOfferBrk = "—";
       for (let i = currentIdx; i >= 0; i--) {
         const t = trades[i];
-        if (t.price === bidPrice && t.side === "SELL" && t.buyer && t.buyer !== "--") {
-          recentBidBrk = t.buyer; break;
-        }
-      }
-      for (let i = currentIdx; i >= 0; i--) {
-        const t = trades[i];
-        if (t.price === offerPrice && t.side === "BUY" && t.seller && t.seller !== "--") {
-          recentOfferBrk = t.seller; break;
-        }
+        if (t.price === offerPrice && t.side === "BUY" && t.seller && t.seller !== "--") { recentOfferBrk = t.seller; break; }
       }
 
       rows.push({
@@ -872,8 +868,9 @@ export default function OrderBookPage() {
             <span className="text-center">Freq</span>
             <span className="text-center">B-Brk</span>
             <span className="text-right">BLot</span>
-            <span className="text-right col-span-2">Bid</span>
-            <span className="text-left col-span-2">Offer</span>
+            <span className="text-right">Bid</span>
+            <span className="text-center text-[#2B3139]">┃</span>
+            <span className="text-left">Offer</span>
             <span className="text-left">SLot</span>
             <span className="text-center">S-Brk</span>
             <span className="text-center">Freq</span>
@@ -924,13 +921,14 @@ export default function OrderBookPage() {
           </div>
           <div className="border-t border-[#1E2329] bg-[#0E1218] px-1 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-9 gap-0 shrink-0">
             <span className="text-[#5E6673]">TOTAL</span>
-            <span className="text-[#0ECB81] text-right">{fmt(totalDepthBidFreq)}</span>
-            <span className="text-[#0ECB81] text-right">{fmt(totalDepthBidLot)}</span>
-            <span className="text-center col-span-2 text-white font-bold">{fmt(totalDepthBidLot + totalDepthOfferLot)}</span>
-            <span className="text-center text-[#2B3139] text-[8px]">┃</span>
-            <span className="text-[#F6465D] text-left">{fmt(totalDepthOfferLot)}</span>
-            <span className="text-[#F6465D] text-center">{fmt(totalDepthOfferFreq)}</span>
-            <span className="text-white text-center font-bold">{fmt(totalDepthBidLot + totalDepthOfferLot)}</span>
+            <span className="text-center">{fmt(totalDepthBidFreq)}</span>
+            <span className="text-right">{fmt(totalDepthBidLot)}</span>
+            <span className="text-right font-bold text-white">{fmt(totalDepthBidLot)}</span>
+            <span className="text-center text-[#2B3139]">┃</span>
+            <span className="text-left font-bold text-white">{fmt(totalDepthOfferLot)}</span>
+            <span className="text-left">{fmt(totalDepthOfferLot)}</span>
+            <span className="text-center">{fmt(totalDepthOfferFreq)}</span>
+            <span className="text-center font-bold text-white">{fmt(totalDepthBidLot + totalDepthOfferLot)}</span>
           </div>
           {showBroker && ticker.last > 0 && (
             <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] flex flex-wrap gap-x-2 gap-y-0.5 shrink-0">
