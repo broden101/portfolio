@@ -521,15 +521,31 @@ export default function OrderBookPage() {
       const tradeBuyLots = tv.buyLots;
       const tradeSellLots = tv.sellLots;
 
+      // Find most recent broker from running trades at this price
+      let recentBidBrk = "—";
+      let recentOfferBrk = "—";
+      for (let i = currentIdx; i >= 0; i--) {
+        const t = trades[i];
+        if (t.price === bidPrice && t.side === "SELL" && t.buyer && t.buyer !== "--") {
+          recentBidBrk = t.buyer; break;
+        }
+      }
+      for (let i = currentIdx; i >= 0; i--) {
+        const t = trades[i];
+        if (t.price === offerPrice && t.side === "BUY" && t.seller && t.seller !== "--") {
+          recentOfferBrk = t.seller; break;
+        }
+      }
+
       rows.push({
         bidPrice,
         bidFreq: 0,
         bidLots: bidLotsVal,
-        bidBroker,
+        bidBroker: recentBidBrk !== "—" ? recentBidBrk : (hasBid ? (bk[String(bidIdx)]?.[0] ?? "—") : "—"),
         offerPrice,
         offerFreq: 0,
         offerLots: offerLotsVal,
-        offerBroker,
+        offerBroker: recentOfferBrk !== "—" ? recentOfferBrk : (hasOffer ? (sk[String(offerIdx)]?.[0] ?? "—") : "—"),
         bidShown: hasBid,
         offerShown: hasOffer,
         isLast: hasBid && prices[bidIdx] === ticker.last,
