@@ -17,6 +17,10 @@ export interface OrderLevel {
   bidVol: number;
   offerVol: number;
   freq: number;
+  /** broker codes that bought at this price (unique) */
+  buyBrokers: string[];
+  /** broker codes that sold at this price (unique) */
+  sellBrokers: string[];
 }
 
 export interface TickerInfo {
@@ -70,13 +74,17 @@ export function buildOrderBook(trades: RunningTrade[], currentIdx: number): { le
   for (let i = 0; i <= currentIdx && i < trades.length; i++) {
     const t = trades[i];
     if (!levels[t.price]) {
-      levels[t.price] = { price: t.price, bidVol: 0, offerVol: 0, freq: 0 };
+      levels[t.price] = { price: t.price, bidVol: 0, offerVol: 0, freq: 0, buyBrokers: [], sellBrokers: [] };
     }
 
     if (t.side === "BUY") {
       levels[t.price].bidVol += t.lot;
+      const b = t.buyer || t.broker;
+      if (b && !levels[t.price].buyBrokers.includes(b)) levels[t.price].buyBrokers.push(b);
     } else {
       levels[t.price].offerVol += t.lot;
+      const s = t.seller || t.broker;
+      if (s && !levels[t.price].sellBrokers.includes(s)) levels[t.price].sellBrokers.push(s);
     }
     levels[t.price].freq++;
 

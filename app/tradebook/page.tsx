@@ -146,11 +146,18 @@ export default function OrderBookPage() {
       const t = data[i];
       let lv = map.get(t.price);
       if (!lv) {
-        lv = { price: t.price, bidVol: 0, offerVol: 0, freq: 0 };
+        lv = { price: t.price, bidVol: 0, offerVol: 0, freq: 0, buyBrokers: [], sellBrokers: [] };
         map.set(t.price, lv);
       }
-      if (t.side === "BUY") lv.bidVol += t.lot;
-      else lv.offerVol += t.lot;
+      if (t.side === "BUY") {
+        lv.bidVol += t.lot;
+        const b = t.buyer || t.broker;
+        if (b && !lv.buyBrokers.includes(b)) lv.buyBrokers.push(b);
+      } else {
+        lv.offerVol += t.lot;
+        const s = t.seller || t.broker;
+        if (s && !lv.sellBrokers.includes(s)) lv.sellBrokers.push(s);
+      }
       lv.freq++;
       st.volume += t.lot;
       if (i === 0 || st.open === 0) st.open = t.price;
@@ -659,12 +666,14 @@ export default function OrderBookPage() {
           title="Orderbook Depth"
           count={`${levels.length} levels`}
         >
-          <div className="grid grid-cols-6 gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] shrink-0">
+          <div className="grid grid-cols-10 gap-0 border-b border-[#1E2329] px-1.5 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] shrink-0">
             <span className="text-center">Freq</span>
+            <span className="text-center">B-Brk</span>
             <span className="text-right">BLot</span>
             <span className="text-right">Bid</span>
             <span className="text-right">Offer</span>
             <span className="text-right">SLot</span>
+            <span className="text-center">S-Brk</span>
             <span className="text-center">Freq</span>
           </div>
           <div ref={orderBookRef} className="flex-1 overflow-y-auto overscroll-contain">
@@ -675,7 +684,7 @@ export default function OrderBookPage() {
               return (
                 <div
                   key={lv.price}
-                  className={`relative grid grid-cols-6 gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
+                  className={`relative grid grid-cols-10 gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
                     isLast ? "bg-[#F0B90B]/10" : ""
                   }`}
                   style={{ fontVariantNumeric: "tabular-nums" }}
@@ -690,6 +699,9 @@ export default function OrderBookPage() {
                   />
                   <span className="relative text-center text-[#0ECB81]/70 font-bold z-[1]">
                     {lv.freq}
+                  </span>
+                  <span className="relative text-center text-[#0ECB81] font-bold z-[1]">
+                    {lv.buyBrokers[0] || "—"}
                   </span>
                   <span className="relative text-right text-[#0ECB81] font-bold z-[1]">
                     {fmt(lv.bidVol)}
@@ -711,6 +723,9 @@ export default function OrderBookPage() {
                   <span className="relative text-right text-[#F6465D] font-bold z-[1]">
                     {fmt(lv.offerVol)}
                   </span>
+                  <span className="relative text-center text-[#F6465D] font-bold z-[1]">
+                    {lv.sellBrokers[0] || "—"}
+                  </span>
                   <span className="relative text-center text-[#F6465D]/70 font-bold z-[1]">
                     {lv.freq}
                   </span>
@@ -719,7 +734,7 @@ export default function OrderBookPage() {
             })}
             {levels.length === 0 && <Empty />}
           </div>
-          <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-7 gap-0 shrink-0">
+          <div className="border-t border-[#1E2329] bg-[#0E1218] px-1.5 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-10 gap-0 shrink-0">
             <span className="text-[#5E6673]">TOTAL</span>
             <span className="text-[#0ECB81] text-right">{fmt(totalFreq)}</span>
             <span className="text-[#0ECB81] text-right">{fmt(totalBidLot)}</span>
