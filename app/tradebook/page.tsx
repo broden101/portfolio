@@ -53,6 +53,13 @@ export default function OrderBookPage() {
   const tickerBoxRef = useRef<HTMLDivElement>(null);
   const [levels, setLevels] = useState<OrderLevel[]>([]);
   const [depthLevels, setDepthLevels] = useState<DepthLevel[]>([]);
+  const [depthSeriesData, setDepthSeriesData] = useState<{
+    times: string[];
+    prices: number[];
+    snapshots: { b: Record<string, number>; o: Record<string, number> }[];
+    bk: Record<string, string[]>;
+    sk: Record<string, string[]>;
+  } | null>(null);
   const [showBroker, setShowBroker] = useState(true);
 
   const filteredTickers = useMemo(() => {
@@ -208,8 +215,16 @@ export default function OrderBookPage() {
         const depthUrl = isLatest
           ? `/data/depth/${code}.json`
           : `/data/depth-history/${targetDate}/${code}.json`;
+        const dsUrl = isLatest
+          ? `/data/depth_series/${code}.json`
+          : null;
         
-        const [res, dRes] = await Promise.all([fetch(url), fetch(depthUrl)]);
+        const [res, dRes, dsRes] = await Promise.all([
+          fetch(url),
+          fetch(depthUrl),
+          dsUrl ? fetch(dsUrl) : Promise.resolve(new Response(null, { status: 404 }))
+        ]);
+        
         if (res.ok) {
           const data = await res.json();
           loadData(data, code);
@@ -217,6 +232,10 @@ export default function OrderBookPage() {
         if (dRes.ok) {
           const depthData = await dRes.json();
           setDepthLevels(depthData);
+        }
+        if (dsRes && dsRes.ok) {
+          const dsData = await dsRes.json();
+          setDepthSeriesData(dsData);
         }
       } catch (e) {
         console.error("Load failed", e);
@@ -406,53 +425,105 @@ export default function OrderBookPage() {
   const totalDepthOfferLot = useMemo(() => depthLevels.reduce((s, l) => s + l.offerLots, 0), [depthLevels]);
   const totalDepthOfferFreq = useMemo(() => depthLevels.reduce((s, l) => s + l.offerFreq, 0), [depthLevels]);
 
-  /** Pair bid levels (from trades) with offer levels side-by-side around last price */
-  const pairedDepth = useMemo(() => {
-    // Bid: levels ≤ lastP, sorted desc (440, 438, ...)
-    const bids = levels
-      .filter((l) => l.bidVol > 0 && l.price <= ticker.last)
-      .sort((a, b) => b.price - a.price);
-    
-    // Offer: levels ≥ lastP, sorted asc (440, 442, ...)
-    const offers = levels
-      .filter((l) => l.offerVol > 0 && l.price >= ticker.last)
-      .sort((a, b) => a.price - b.price);
+  /** Pre-compute cumulative bid/offer state from depth series as flat Uint32Array */
+  const depthCumData = useMemo(() => {
+    if (!depthSeriesData) return null;
+    const { prices, snapshots, bk, sk } = depthSeriesData;
+    const priceLen = prices.length;
+    const timeLen = snapshots.length;
 
-    const isActive = currentIdx >= 0 && ticker.last > 0;
+    const cumBid = new Uint32Array(timeLen * priceLen);
+    const cumOffer = new Uint32Array(timeLen * priceLen);
+
+    const cb = new Uint32Array(priceLen);
+    const co = new Uint32Array(priceLen);
+
+    for (let t = 0; t < timeLen; t++) {
+      const snap = snapshots[t];
+      for (const [piStr, val] of Object.entries(snap.b)) cb[parseInt(piStr)] = val as number;
+      for (const [piStr, val] of Object.entries(snap.o)) co[parseInt(piStr)] = val as number;
+      cumBid.set(cb, t * priceLen);
+      cumOffer.set(co, t * priceLen);
+    }
+
+    return { cumBid, cumOffer, priceLen, times: depthSeriesData.times, prices, bk, sk };
+  }, [depthSeriesData]);
+
+  /**
+   * Depth from time-series order queue.
+   * At each currentIdx, find matching time → snapshot → build bid/offer levels.
+   */
+  const pairedDepth = useMemo(() => {
+    if (!depthCumData || currentIdx < 0 || ticker.last <= 0 || !trades[currentIdx]) return [];
+
+    const { cumBid, cumOffer, priceLen, times, prices, bk, sk } = depthCumData;
+    const ct = trades[currentIdx].time;
+
+    // Binary search: find latest time ≤ current trade time
+    let timeIdx = -1;
+    let lo = 0, hi = times.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (times[mid] <= ct) { timeIdx = mid; lo = mid + 1; }
+      else hi = mid - 1;
+    }
+    if (timeIdx < 0) return [];
+
+    const offset = timeIdx * priceLen;
+    const bidLots = cumBid.subarray(offset, offset + priceLen);
+    const offerLots = cumOffer.subarray(offset, offset + priceLen);
+
+    // Build bid levels (≤ lastPrice, lot > 0), desc
+    const bids: { price: number; lots: number; brk: string }[] = [];
+    const offers: { price: number; lots: number; brk: string }[] = [];
+
+    for (let i = 0; i < priceLen; i++) {
+      if (bidLots[i] > 0 && prices[i] <= ticker.last) {
+        bids.push({
+          price: prices[i],
+          lots: bidLots[i],
+          brk: bk[String(i)]?.[0] ?? "—",
+        });
+      }
+      if (offerLots[i] > 0 && prices[i] >= ticker.last) {
+        offers.push({
+          price: prices[i],
+          lots: offerLots[i],
+          brk: sk[String(i)]?.[0] ?? "—",
+        });
+      }
+    }
+
+    bids.sort((a, b) => b.price - a.price);
+    offers.sort((a, b) => a.price - b.price);
+
     const rows: {
       bidPrice: number; bidFreq: number; bidLots: number; bidBroker: string;
       offerPrice: number; offerFreq: number; offerLots: number; offerBroker: string;
       bidShown: boolean; offerShown: boolean; isLast: boolean;
     }[] = [];
 
-    if (!isActive) return rows;
-
     const maxRows = Math.max(bids.length, offers.length);
     for (let i = 0; i < maxRows; i++) {
       const b = i < bids.length ? bids[i] : null;
       const o = i < offers.length ? offers[i] : null;
       if (!b && !o) continue;
-      
-      const bidPrice = b?.price ?? o?.price ?? 0;
-      const offerPrice = o?.price ?? b?.price ?? 0;
-      const isLastRow = bidPrice === ticker.last || offerPrice === ticker.last;
-      
       rows.push({
-        bidPrice,
-        bidFreq: b?.freq ?? 0,
-        bidLots: b?.bidVol ?? 0,
-        bidBroker: b?.buyBrokers?.[0] ?? "—",
-        offerPrice,
-        offerFreq: o?.freq ?? 0,
-        offerLots: o?.offerVol ?? 0,
-        offerBroker: o?.sellBrokers?.[0] ?? "—",
+        bidPrice: b?.price ?? o?.price ?? 0,
+        bidFreq: 0,
+        bidLots: b?.lots ?? 0,
+        bidBroker: b?.brk ?? "—",
+        offerPrice: o?.price ?? b?.price ?? 0,
+        offerFreq: 0,
+        offerLots: o?.lots ?? 0,
+        offerBroker: o?.brk ?? "—",
         bidShown: !!b,
         offerShown: !!o,
-        isLast: isLastRow,
+        isLast: (b?.price ?? 0) === ticker.last || (o?.price ?? 0) === ticker.last,
       });
     }
     return rows;
-  }, [levels, ticker.last, currentIdx]);
+  }, [depthCumData, currentIdx, ticker.last, trades]);
   const maxVol = useMemo(
     () => Math.max(...levels.map((l) => Math.max(l.bidVol, l.offerVol)), 1),
     [levels]
