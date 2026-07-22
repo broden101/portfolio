@@ -406,65 +406,53 @@ export default function OrderBookPage() {
   const totalDepthOfferLot = useMemo(() => depthLevels.reduce((s, l) => s + l.offerLots, 0), [depthLevels]);
   const totalDepthOfferFreq = useMemo(() => depthLevels.reduce((s, l) => s + l.offerFreq, 0), [depthLevels]);
 
-  /**
-   * Merge standing orders (depthLevels, static) with trade data (levels, dynamic).
-   * Price levels from depthLevels → shows all queued orders.
-   * Volumes & brokers from levels → animates as trades play.
-   */
+  /** Pair bid levels (from trades) with offer levels side-by-side around last price */
   const pairedDepth = useMemo(() => {
-    if (currentIdx < 0 || ticker.last <= 0) return [];
-
-    // Trade lookup: price → OrderLevel (changes with currentIdx)
-    const tradeByPrice: Record<number, typeof levels[number]> = {};
-    for (const l of levels) tradeByPrice[l.price] = l;
-
-    // Bid: all standing buy orders ≤ lastP, sort desc
-    const bids = depthLevels
-      .filter((l) => l.bidLots > 0 && l.price <= ticker.last)
+    // Bid: levels ≤ lastP, sorted desc (440, 438, ...)
+    const bids = levels
+      .filter((l) => l.bidVol > 0 && l.price <= ticker.last)
       .sort((a, b) => b.price - a.price);
-
-    // Offer: all standing sell orders ≥ lastP, sort asc
-    const offers = depthLevels
-      .filter((l) => l.offerLots > 0 && l.price >= ticker.last)
+    
+    // Offer: levels ≥ lastP, sorted asc (440, 442, ...)
+    const offers = levels
+      .filter((l) => l.offerVol > 0 && l.price >= ticker.last)
       .sort((a, b) => a.price - b.price);
 
+    const isActive = currentIdx >= 0 && ticker.last > 0;
     const rows: {
       bidPrice: number; bidFreq: number; bidLots: number; bidBroker: string;
       offerPrice: number; offerFreq: number; offerLots: number; offerBroker: string;
       bidShown: boolean; offerShown: boolean; isLast: boolean;
     }[] = [];
 
+    if (!isActive) return rows;
+
     const maxRows = Math.max(bids.length, offers.length);
     for (let i = 0; i < maxRows; i++) {
       const b = i < bids.length ? bids[i] : null;
       const o = i < offers.length ? offers[i] : null;
       if (!b && !o) continue;
-
-      // Trade data at this price (may not exist yet)
-      const bTrade = b ? tradeByPrice[b.price] : null;
-      const oTrade = o ? tradeByPrice[o.price] : null;
-
+      
       const bidPrice = b?.price ?? o?.price ?? 0;
       const offerPrice = o?.price ?? b?.price ?? 0;
       const isLastRow = bidPrice === ticker.last || offerPrice === ticker.last;
-
+      
       rows.push({
         bidPrice,
-        // Prefer trade data (dynamic), fallback to standing (static)
-        bidFreq: bTrade?.freq ?? b?.bidFreq ?? 0,
-        bidLots: bTrade?.bidVol ?? b?.bidLots ?? 0,
-        bidBroker: bTrade?.buyBrokers?.[0] ?? b?.bidBrokers?.[0] ?? "—",
+        bidFreq: b?.freq ?? 0,
+        bidLots: b?.bidVol ?? 0,
+        bidBroker: b?.buyBrokers?.[0] ?? "—",
         offerPrice,
-        offerFreq: oTrade?.freq ?? o?.offerFreq ?? 0,
-        offerLots: oTrade?.offerVol ?? o?.offerLots ?? 0,
-        offerBroker: oTrade?.sellBrokers?.[0] ?? o?.offerBrokers?.[0] ?? "—",
+        offerFreq: o?.freq ?? 0,
+        offerLots: o?.offerVol ?? 0,
+        offerBroker: o?.sellBrokers?.[0] ?? "—",
         bidShown: !!b,
         offerShown: !!o,
         isLast: isLastRow,
       });
     }
     return rows;
-  }, [depthLevels, levels, ticker.last, currentIdx]);
+  }, [levels, ticker.last, currentIdx]);
   const maxVol = useMemo(
     () => Math.max(...levels.map((l) => Math.max(l.bidVol, l.offerVol)), 1),
     [levels]
