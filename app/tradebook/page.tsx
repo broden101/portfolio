@@ -690,46 +690,26 @@ export default function OrderBookPage() {
           <div ref={orderBookRef} className="flex-1 overflow-y-auto overscroll-contain">
             {depthLevels.map((lv) => {
               const isLast = lv.price === ticker.last;
+              // Align: bid/offer di baris yang sama, tapi kalau bid kosong isi kosong, offer kosong isi kosong
               return (
                 <div
                   key={lv.price}
-                  className={`relative grid grid-cols-10 gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
+                  className={`grid grid-cols-10 gap-0 px-1.5 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
                     isLast ? "bg-[#F0B90B]/10" : ""
                   }`}
                   style={{ fontVariantNumeric: "tabular-nums" }}
                 >
-                  <span className="relative text-center text-[#0ECB81]/70 font-bold z-[1]">
-                    {lv.bidFreq}
-                  </span>
-                  <span className="relative text-center text-[#0ECB81] font-bold z-[1]">
-                    {lv.bidBrokers[0] || "—"}
-                  </span>
-                  <span className="relative text-right text-[#0ECB81] font-bold z-[1]">
-                    {fmt(lv.bidLots)}
-                  </span>
-                  <span
-                    className={`relative text-right font-bold z-[1] ${
-                      isLast ? "text-[#F0B90B] bg-[#F0B90B]/20 px-0.5 rounded" : "text-white"
-                    }`}
-                  >
-                    {fmtPrice(lv.price)}
-                  </span>
-                  <span
-                    className={`relative text-right font-bold z-[1] ${
-                      isLast ? "text-[#F0B90B] bg-[#F0B90B]/20 px-0.5 rounded" : "text-white"
-                    }`}
-                  >
-                    {fmtPrice(lv.price)}
-                  </span>
-                  <span className="relative text-right text-[#F6465D] font-bold z-[1]">
-                    {fmt(lv.offerLots)}
-                  </span>
-                  <span className="relative text-center text-[#F6465D] font-bold z-[1]">
-                    {lv.offerBrokers[0] || "—"}
-                  </span>
-                  <span className="relative text-center text-[#F6465D]/70 font-bold z-[1]">
-                    {lv.offerFreq}
-                  </span>
+                  <span className="text-center text-[#0ECB81]/70 font-bold">{lv.bidFreq || "—"}</span>
+                  <span className="text-center text-[#0ECB81] font-bold">{lv.bidBrokers[0] || "—"}</span>
+                  <span className="text-right text-[#0ECB81] font-bold">{lv.bidLots ? fmt(lv.bidLots) : "—"}</span>
+                  
+                  {/* Price col center */}
+                  <span className={`text-right font-bold ${isLast ? "text-[#F0B90B]" : "text-white"}`}>{fmtPrice(lv.price)}</span>
+                  <span className={`text-right font-bold ${isLast ? "text-[#F0B90B]" : "text-white"}`}>{fmtPrice(lv.price)}</span>
+                  
+                  <span className="text-right text-[#F6465D] font-bold">{lv.offerLots ? fmt(lv.offerLots) : "—"}</span>
+                  <span className="text-center text-[#F6465D] font-bold">{lv.offerBrokers[0] || "—"}</span>
+                  <span className="text-center text-[#F6465D]/70 font-bold">{lv.offerFreq || "—"}</span>
                 </div>
               );
             })}
