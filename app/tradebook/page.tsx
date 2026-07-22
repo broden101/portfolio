@@ -550,37 +550,34 @@ export default function OrderBookPage() {
 
       const bidPrice = hasBid ? prices[bidIdx] : 0;
       const bidLotsVal = hasBid ? bidLots[bidIdx] : 0;
-      const bidBroker = hasBid ? (bk[String(bidIdx)]?.[0] ?? "—") : "—";
-
       const offerPrice = hasOffer ? prices[offerIdx] : 0;
       const offerLotsVal = hasOffer ? offerLots[offerIdx] : 0;
-      const offerBroker = hasOffer ? (sk[String(offerIdx)]?.[0] ?? "—") : "—";
 
       const tv = tradeVolMap.get(bidPrice) ?? { buyLots: 0, sellLots: 0 };
       const tradeBuyLots = tv.buyLots;
       const tradeSellLots = tv.sellLots;
 
-      // Broker: most recent trade at price, fallback ke current trade
-      let recentBidBrk = trade.buyer || "—";
+      // B-BRK = buyer, S-BRK = seller dari running trade di harga tsb
+      let bbrk = "—";
       for (let i = currentIdx; i >= 0; i--) {
         const t = trades[i];
-        if (t.price === bidPrice && t.buyer) { recentBidBrk = t.buyer; break; }
+        if (t.price === bidPrice && t.buyer) { bbrk = t.buyer; break; }
       }
-      let recentOfferBrk = trade.seller || "—";
+      let sbrk = "—";
       for (let i = currentIdx; i >= 0; i--) {
         const t = trades[i];
-        if (t.price === offerPrice && t.seller) { recentOfferBrk = t.seller; break; }
+        if (t.price === offerPrice && t.seller) { sbrk = t.seller; break; }
       }
 
       rows.push({
         bidPrice,
         bidFreq: 0,
         bidLots: bidLotsVal,
-        bidBroker: recentBidBrk,
+        bidBroker: bbrk,
         offerPrice,
         offerFreq: 0,
         offerLots: offerLotsVal,
-        offerBroker: recentOfferBrk,
+        offerBroker: sbrk,
         bidShown: hasBid,
         offerShown: hasOffer,
         isLast: hasBid && prices[bidIdx] === ticker.last,
