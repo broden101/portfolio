@@ -90,13 +90,15 @@ export function buildOrderBook(trades: RunningTrade[], currentIdx: number): { le
 
     if (t.side === "BUY") {
       levels[t.price].bidVol += t.lot;
-      const b = t.buyer || t.broker;
-      if (b && !levels[t.price].buyBrokers.includes(b)) levels[t.price].buyBrokers.push(b);
     } else {
       levels[t.price].offerVol += t.lot;
-      const s = t.seller || t.broker;
-      if (s && !levels[t.price].sellBrokers.includes(s)) levels[t.price].sellBrokers.push(s);
     }
+    
+    // Track both buyer and seller at every price level
+    const b = t.buyer || t.broker;
+    if (b && !levels[t.price].buyBrokers.includes(b)) levels[t.price].buyBrokers.push(b);
+    const s = t.seller || t.broker;
+    if (s && !levels[t.price].sellBrokers.includes(s)) levels[t.price].sellBrokers.push(s);
     levels[t.price].freq++;
 
     volume += t.lot;
