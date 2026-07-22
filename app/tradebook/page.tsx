@@ -395,14 +395,53 @@ export default function OrderBookPage() {
     return out;
   }, [trades, currentIdx]);
 
-  const buyTrades = useMemo(
-    () => windowSlice.filter((t) => t.side === "BUY"),
-    [windowSlice]
-  );
-  const sellTrades = useMemo(
-    () => windowSlice.filter((t) => t.side === "SELL"),
-    [windowSlice]
-  );
+  const buyOrderBook = useMemo(() => {
+    if (!depthCumData || currentIdx < 0 || !trades[currentIdx]) return [];
+    const { cumBid, cumOffer, priceLen, times, prices, bk, sk } = depthCumData;
+    const ct = trades[currentIdx].time;
+    let timeIdx = -1, lo = 0, hi = times.length - 1;
+    while (lo <= hi) { const mid = (lo + hi) >> 1; if (times[mid] <= ct) { timeIdx = mid; lo = mid + 1; } else hi = mid - 1; }
+    if (timeIdx < 0) return [];
+    const offset = timeIdx * priceLen;
+    const bidLots = cumBid.subarray(offset, offset + priceLen);
+    const out = [];
+    for (let i = prices.length - 1; i >= 0; i--) {
+      const lots = bidLots[i];
+      if (lots > 0) {
+        let brk = bk[String(i)]?.[0] ?? "—";
+        for (let ti = currentIdx; ti >= 0; ti--) {
+          const t = trades[ti];
+          if (t.price === prices[i] && t.side === "SELL" && t.buyer && t.buyer !== "--") { brk = t.buyer; break; }
+        }
+        out.push({ price: prices[i], lot: lots, broker: brk });
+      }
+    }
+    return out;
+  }, [depthCumData, currentIdx, trades]);
+
+  const sellOrderBook = useMemo(() => {
+    if (!depthCumData || currentIdx < 0 || !trades[currentIdx]) return [];
+    const { cumBid, cumOffer, priceLen, times, prices, bk, sk } = depthCumData;
+    const ct = trades[currentIdx].time;
+    let timeIdx = -1, lo = 0, hi = times.length - 1;
+    while (lo <= hi) { const mid = (lo + hi) >> 1; if (times[mid] <= ct) { timeIdx = mid; lo = mid + 1; } else hi = mid - 1; }
+    if (timeIdx < 0) return [];
+    const offset = timeIdx * priceLen;
+    const offerLots = cumOffer.subarray(offset, offset + priceLen);
+    const out = [];
+    for (let i = 0; i < prices.length; i++) {
+      const lots = offerLots[i];
+      if (lots > 0) {
+        let brk = sk[String(i)]?.[0] ?? "—";
+        for (let ti = currentIdx; ti >= 0; ti--) {
+          const t = trades[ti];
+          if (t.price === prices[i] && t.side === "BUY" && t.seller && t.seller !== "--") { brk = t.seller; break; }
+        }
+        out.push({ price: prices[i], lot: lots, broker: brk });
+      }
+    }
+    return out;
+  }, [depthCumData, currentIdx, trades]);
 
   // Cumulative stats from full range 0..currentIdx (lightweight loop)
   const { cumBuy, cumSell, totalValue } = useMemo(() => {
@@ -802,23 +841,23 @@ export default function OrderBookPage() {
           className="col-span-3 border-r border-[#1E2329]"
           headerClass="bg-[#0B2E21] text-[#0ECB81]"
           title="Buy Orders"
-          count={`${buyTrades.length}${currentIdx + 1 > LIST_WINDOW ? "+" : ""} shown`}
+          count={`${buyOrderBook.length} levels`}
         >
           <TableHead cols={["#", "Time", "Price", "Lot", showBroker ? "Br" : "", "St"]} />
           <div className="flex-1 overflow-y-auto overscroll-contain">
-            {buyTrades.map((t, i) => (
-              <Row key={`b-${currentIdx}-${i}`} green>
+            {buyOrderBook.map((entry, i) => (
+              <Row key={`bob-${i}`} green>
                 <Cell muted>{i + 1}</Cell>
-                <Cell muted>{t.time}</Cell>
-                <Cell className="text-[#0ECB81] font-bold">{fmtPrice(t.price)}</Cell>
-                <Cell className="text-white font-bold text-right">{fmt(t.lot)}</Cell>
+                <Cell muted>{currentTime}</Cell>
+                <Cell className="text-[#0ECB81] font-bold">{fmtPrice(entry.price)}</Cell>
+                <Cell className="text-white font-bold text-right">{fmt(entry.lot)}</Cell>
                 {showBroker && (
-                  <Cell className="text-[#F0B90B] font-bold text-right">{t.broker || "—"}</Cell>
+                  <Cell className="text-[#F0B90B] font-bold text-right">{entry.broker || "—"}</Cell>
                 )}
                 <Cell className="text-[#0ECB81]/70 text-right">O</Cell>
               </Row>
             ))}
-            {buyTrades.length === 0 && <Empty />}
+            {buyOrderBook.length === 0 && <Empty />}
           </div>
         </Panel>
 
@@ -915,23 +954,23 @@ export default function OrderBookPage() {
           className="col-span-3 border-r border-[#1E2329]"
           headerClass="bg-[#3D1218] text-[#F6465D]"
           title="Sell Orders"
-          count={`${sellTrades.length}${currentIdx + 1 > LIST_WINDOW ? "+" : ""} shown`}
+          count={`${sellOrderBook.length} levels`}
         >
           <TableHead cols={["#", "Time", "Price", "Lot", showBroker ? "Br" : "", "St"]} />
           <div className="flex-1 overflow-y-auto overscroll-contain">
-            {sellTrades.map((t, i) => (
-              <Row key={`s-${currentIdx}-${i}`} red>
+            {sellOrderBook.map((entry, i) => (
+              <Row key={`sob-${i}`} red>
                 <Cell muted>{i + 1}</Cell>
-                <Cell muted>{t.time}</Cell>
-                <Cell className="text-[#F6465D] font-bold">{fmtPrice(t.price)}</Cell>
-                <Cell className="text-white font-bold text-right">{fmt(t.lot)}</Cell>
+                <Cell muted>{currentTime}</Cell>
+                <Cell className="text-[#F6465D] font-bold">{fmtPrice(entry.price)}</Cell>
+                <Cell className="text-white font-bold text-right">{fmt(entry.lot)}</Cell>
                 {showBroker && (
-                  <Cell className="text-[#F0B90B] font-bold text-right">{t.broker || "—"}</Cell>
+                  <Cell className="text-[#F0B90B] font-bold text-right">{entry.broker || "—"}</Cell>
                 )}
                 <Cell className="text-[#F6465D]/70 text-right">O</Cell>
               </Row>
             ))}
-            {sellTrades.length === 0 && <Empty />}
+            {sellOrderBook.length === 0 && <Empty />}
           </div>
         </Panel>
 
