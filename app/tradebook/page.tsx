@@ -410,20 +410,36 @@ export default function OrderBookPage() {
   const pairedDepth = useMemo(() => {
     const bids = depthLevels.filter((l) => l.bidLots > 0);
     const offers = depthLevels.filter((l) => l.offerLots > 0);
-    // bids are already sorted price desc (highest first)
-    // offers are sorted price asc (lowest first = nearest spread)
+    
+    // Kalau trade belum mulai, depth dikosongin
+    // Kalau udah jalan, filter depth cuma di sekitar harga yang udah ke-touch
+    const lastP = ticker.last;
+    const isActive = currentIdx >= 0 && lastP > 0;
+    
     const rows: {
       bidPrice: number; bidFreq: number; bidLots: number; bidBroker: string;
       offerPrice: number; offerFreq: number; offerLots: number; offerBroker: string;
       bidShown: boolean; offerShown: boolean; isLast: boolean;
     }[] = [];
+    
+    if (!isActive) return rows;
+
+    // Filter: hanya level yang jaraknya max 100 poin dari last price
+    const range = 100;
+    
     const maxRows = Math.max(bids.length, offers.length);
     for (let i = 0; i < maxRows; i++) {
       const b = i < bids.length ? bids[i] : null;
       const o = i < offers.length ? offers[offers.length - 1 - i] : null;
+      
+      // Skip if both too far from last price
+      const bDist = b ? Math.abs(b.price - lastP) : Infinity;
+      const oDist = o ? Math.abs(o.price - lastP) : Infinity;
+      if (bDist > range && oDist > range) continue;
+      
       const bidPrice = b?.price ?? o?.price ?? 0;
       const offerPrice = o?.price ?? b?.price ?? 0;
-      const isLast = b?.price === ticker.last || o?.price === ticker.last;
+      const isLastRow = b?.price === lastP || o?.price === lastP;
       rows.push({
         bidPrice,
         bidFreq: b?.bidFreq ?? 0,
@@ -435,11 +451,11 @@ export default function OrderBookPage() {
         offerBroker: o?.offerBrokers?.[0] ?? "—",
         bidShown: !!b,
         offerShown: !!o,
-        isLast,
+        isLast: isLastRow,
       });
     }
     return rows;
-  }, [depthLevels, ticker.last]);
+  }, [depthLevels, ticker.last, currentIdx]);
   const maxVol = useMemo(
     () => Math.max(...levels.map((l) => Math.max(l.bidVol, l.offerVol)), 1),
     [levels]
@@ -705,19 +721,19 @@ export default function OrderBookPage() {
           </div>
         </Panel>
 
-        {/* DEPTH — 8-col: Freq | B-Brk | BLot | Bid | Offer | SLot | S-Brk | Freq */}
+        {/* DEPTH — 9-col: Freq | B-Brk | BLot | Bid | │ | Offer | SLot | S-Brk | Freq */}
         <Panel
           className="col-span-3 border-r border-[#1E2329]"
           headerClass="bg-[#1E2329] text-[#848E9C]"
           title="Orderbook Depth"
           count={`${depthLevels.length} levels`}
         >
-          <div className="grid grid-cols-8 gap-0 border-b border-[#1E2329] px-1 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] shrink-0">
+          <div className="grid grid-cols-9 gap-0 border-b border-[#1E2329] px-1 py-1 text-[9px] text-[#5E6673] uppercase font-bold bg-[#0E1218] shrink-0">
             <span className="text-center">Freq</span>
             <span className="text-center">B-Brk</span>
             <span className="text-right">BLot</span>
-            <span className="text-right">Bid</span>
-            <span className="text-left">Offer</span>
+            <span className="text-right col-span-2">Bid</span>
+            <span className="text-left col-span-2">Offer</span>
             <span className="text-left">SLot</span>
             <span className="text-center">S-Brk</span>
             <span className="text-center">Freq</span>
@@ -727,30 +743,31 @@ export default function OrderBookPage() {
               return (
                 <div
                   key={`${row.bidPrice}-${row.offerPrice}`}
-                  className={`grid grid-cols-8 gap-0 px-1 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
+                  className={`grid grid-cols-9 gap-0 px-1 py-[2px] text-[10px] border-b border-[#1E2329]/40 ${
                     row.isLast ? "bg-[#F0B90B]/10" : ""
                   }`}
                   style={{ fontVariantNumeric: "tabular-nums" }}
                 >
-                  <span className="text-center text-[#0ECB81]/70 font-bold">{row.bidFreq || "—"}</span>
-                  <span className="text-center text-[#0ECB81] font-bold">{row.bidBroker || "—"}</span>
-                  <span className="text-right text-[#0ECB81] font-bold">{row.bidLots ? fmt(row.bidLots) : "—"}</span>
-                  <span className="text-right font-bold text-[#0ECB81]">{row.bidShown ? fmtPrice(row.bidPrice) : "—"}</span>
-                  <span className="text-left font-bold text-[#F6465D]">{row.offerShown ? fmtPrice(row.offerPrice) : "—"}</span>
-                  <span className="text-left text-[#F6465D] font-bold">{row.offerLots ? fmt(row.offerLots) : "—"}</span>
-                  <span className="text-center text-[#F6465D] font-bold">{row.offerBroker || "—"}</span>
-                  <span className="text-center text-[#F6465D]/70 font-bold">{row.offerFreq || "—"}</span>
+                  <span className="text-center text-[#0ECB81]/70 font-bold">{row.bidFreq || ""}</span>
+                  <span className="text-center text-[#0ECB81] font-bold">{row.bidBroker !== "—" ? row.bidBroker : ""}</span>
+                  <span className="text-right text-[#0ECB81] font-bold">{row.bidLots ? fmt(row.bidLots) : ""}</span>
+                  <span className="text-right font-bold text-[#0ECB81]">{row.bidShown ? fmtPrice(row.bidPrice) : ""}</span>
+                  <span className="text-center text-[#2B3139] text-[8px] font-bold">{row.bidShown && row.offerShown ? "┃" : ""}</span>
+                  <span className="text-left font-bold text-[#F6465D]">{row.offerShown ? fmtPrice(row.offerPrice) : ""}</span>
+                  <span className="text-left text-[#F6465D] font-bold">{row.offerLots ? fmt(row.offerLots) : ""}</span>
+                  <span className="text-center text-[#F6465D] font-bold">{row.offerBroker !== "—" ? row.offerBroker : ""}</span>
+                  <span className="text-center text-[#F6465D]/70 font-bold">{row.offerFreq || ""}</span>
                 </div>
               );
             })}
             {pairedDepth.length === 0 && <Empty />}
           </div>
-          <div className="border-t border-[#1E2329] bg-[#0E1218] px-1 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-8 gap-0 shrink-0">
+          <div className="border-t border-[#1E2329] bg-[#0E1218] px-1 py-1 text-[9px] font-mono text-[#848E9C] grid grid-cols-9 gap-0 shrink-0">
             <span className="text-[#5E6673]">TOTAL</span>
             <span className="text-[#0ECB81] text-right">{fmt(totalDepthBidFreq)}</span>
             <span className="text-[#0ECB81] text-right">{fmt(totalDepthBidLot)}</span>
-            <span className="text-center text-white">—</span>
-            <span className="text-center text-white">—</span>
+            <span className="text-center col-span-2 text-white font-bold">{fmt(totalDepthBidLot + totalDepthOfferLot)}</span>
+            <span className="text-center text-[#2B3139] text-[8px]">┃</span>
             <span className="text-[#F6465D] text-left">{fmt(totalDepthOfferLot)}</span>
             <span className="text-[#F6465D] text-center">{fmt(totalDepthOfferFreq)}</span>
             <span className="text-white text-center font-bold">{fmt(totalDepthBidLot + totalDepthOfferLot)}</span>
