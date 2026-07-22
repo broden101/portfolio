@@ -406,56 +406,53 @@ export default function OrderBookPage() {
   const totalDepthOfferLot = useMemo(() => depthLevels.reduce((s, l) => s + l.offerLots, 0), [depthLevels]);
   const totalDepthOfferFreq = useMemo(() => depthLevels.reduce((s, l) => s + l.offerFreq, 0), [depthLevels]);
 
-  /** Pair bids (desc) with offers (asc) into rows: Bid 440 — Offer 442 */
+  /** Pair bid levels (from trades) with offer levels side-by-side around last price */
   const pairedDepth = useMemo(() => {
-    const bids = depthLevels.filter((l) => l.bidLots > 0);
-    const offers = depthLevels.filter((l) => l.offerLots > 0);
+    // Bid: levels ≤ lastP, sorted desc (440, 438, ...)
+    const bids = levels
+      .filter((l) => l.bidVol > 0 && l.price <= ticker.last)
+      .sort((a, b) => b.price - a.price);
     
-    // Kalau trade belum mulai, depth dikosongin
-    // Kalau udah jalan, filter depth cuma di sekitar harga yang udah ke-touch
-    const lastP = ticker.last;
-    const isActive = currentIdx >= 0 && lastP > 0;
-    
+    // Offer: levels ≥ lastP, sorted asc (440, 442, ...)
+    const offers = levels
+      .filter((l) => l.offerVol > 0 && l.price >= ticker.last)
+      .sort((a, b) => a.price - b.price);
+
+    const isActive = currentIdx >= 0 && ticker.last > 0;
     const rows: {
       bidPrice: number; bidFreq: number; bidLots: number; bidBroker: string;
       offerPrice: number; offerFreq: number; offerLots: number; offerBroker: string;
       bidShown: boolean; offerShown: boolean; isLast: boolean;
     }[] = [];
-    
+
     if (!isActive) return rows;
 
-    // Filter: hanya level yang jaraknya max 100 poin dari last price
-    const range = 100;
-    
     const maxRows = Math.max(bids.length, offers.length);
     for (let i = 0; i < maxRows; i++) {
       const b = i < bids.length ? bids[i] : null;
-      const o = i < offers.length ? offers[offers.length - 1 - i] : null;
-      
-      // Skip if both too far from last price
-      const bDist = b ? Math.abs(b.price - lastP) : Infinity;
-      const oDist = o ? Math.abs(o.price - lastP) : Infinity;
-      if (bDist > range && oDist > range) continue;
+      const o = i < offers.length ? offers[i] : null;
+      if (!b && !o) continue;
       
       const bidPrice = b?.price ?? o?.price ?? 0;
       const offerPrice = o?.price ?? b?.price ?? 0;
-      const isLastRow = b?.price === lastP || o?.price === lastP;
+      const isLastRow = bidPrice === ticker.last || offerPrice === ticker.last;
+      
       rows.push({
         bidPrice,
-        bidFreq: b?.bidFreq ?? 0,
-        bidLots: b?.bidLots ?? 0,
-        bidBroker: b?.bidBrokers?.[0] ?? "—",
+        bidFreq: b?.freq ?? 0,
+        bidLots: b?.bidVol ?? 0,
+        bidBroker: b?.buyBrokers?.[0] ?? "—",
         offerPrice,
-        offerFreq: o?.offerFreq ?? 0,
-        offerLots: o?.offerLots ?? 0,
-        offerBroker: o?.offerBrokers?.[0] ?? "—",
+        offerFreq: o?.freq ?? 0,
+        offerLots: o?.offerVol ?? 0,
+        offerBroker: o?.sellBrokers?.[0] ?? "—",
         bidShown: !!b,
         offerShown: !!o,
         isLast: isLastRow,
       });
     }
     return rows;
-  }, [depthLevels, ticker.last, currentIdx]);
+  }, [levels, ticker.last, currentIdx]);
   const maxVol = useMemo(
     () => Math.max(...levels.map((l) => Math.max(l.bidVol, l.offerVol)), 1),
     [levels]
