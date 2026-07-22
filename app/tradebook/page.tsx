@@ -406,53 +406,50 @@ export default function OrderBookPage() {
   const totalDepthOfferLot = useMemo(() => depthLevels.reduce((s, l) => s + l.offerLots, 0), [depthLevels]);
   const totalDepthOfferFreq = useMemo(() => depthLevels.reduce((s, l) => s + l.offerFreq, 0), [depthLevels]);
 
-  /** Pair bid levels (from trades) with offer levels side-by-side around last price */
+  /** Pair orderbook depth (standing orders) around last price */
   const pairedDepth = useMemo(() => {
-    // Bid: levels ≤ lastP, sorted desc (440, 438, ...)
-    const bids = levels
-      .filter((l) => l.bidVol > 0 && l.price <= ticker.last)
+    if (currentIdx < 0 || ticker.last <= 0) return [];
+
+    // Bid: standing buy orders ≤ lastP, sort desc
+    const bids = depthLevels
+      .filter((l) => l.bidLots > 0 && l.price <= ticker.last)
       .sort((a, b) => b.price - a.price);
-    
-    // Offer: levels ≥ lastP, sorted asc (440, 442, ...)
-    const offers = levels
-      .filter((l) => l.offerVol > 0 && l.price >= ticker.last)
+
+    // Offer: standing sell orders ≥ lastP, sort asc
+    const offers = depthLevels
+      .filter((l) => l.offerLots > 0 && l.price >= ticker.last)
       .sort((a, b) => a.price - b.price);
 
-    const isActive = currentIdx >= 0 && ticker.last > 0;
     const rows: {
       bidPrice: number; bidFreq: number; bidLots: number; bidBroker: string;
       offerPrice: number; offerFreq: number; offerLots: number; offerBroker: string;
       bidShown: boolean; offerShown: boolean; isLast: boolean;
     }[] = [];
 
-    if (!isActive) return rows;
-
     const maxRows = Math.max(bids.length, offers.length);
     for (let i = 0; i < maxRows; i++) {
       const b = i < bids.length ? bids[i] : null;
       const o = i < offers.length ? offers[i] : null;
       if (!b && !o) continue;
-      
       const bidPrice = b?.price ?? o?.price ?? 0;
       const offerPrice = o?.price ?? b?.price ?? 0;
       const isLastRow = bidPrice === ticker.last || offerPrice === ticker.last;
-      
       rows.push({
         bidPrice,
-        bidFreq: b?.freq ?? 0,
-        bidLots: b?.bidVol ?? 0,
-        bidBroker: b?.buyBrokers?.[0] ?? "—",
+        bidFreq: b?.bidFreq ?? 0,
+        bidLots: b?.bidLots ?? 0,
+        bidBroker: b?.bidBrokers?.[0] ?? "—",
         offerPrice,
-        offerFreq: o?.freq ?? 0,
-        offerLots: o?.offerVol ?? 0,
-        offerBroker: o?.sellBrokers?.[0] ?? "—",
+        offerFreq: o?.offerFreq ?? 0,
+        offerLots: o?.offerLots ?? 0,
+        offerBroker: o?.offerBrokers?.[0] ?? "—",
         bidShown: !!b,
         offerShown: !!o,
         isLast: isLastRow,
       });
     }
     return rows;
-  }, [levels, ticker.last, currentIdx]);
+  }, [depthLevels, ticker.last, currentIdx]);
   const maxVol = useMemo(
     () => Math.max(...levels.map((l) => Math.max(l.bidVol, l.offerVol)), 1),
     [levels]
