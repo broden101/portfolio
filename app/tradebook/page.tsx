@@ -395,6 +395,30 @@ export default function OrderBookPage() {
     return out;
   }, [trades, currentIdx]);
 
+  /** Pre-compute cumulative bid/offer state from depth series as flat Uint32Array */
+  const depthCumData = useMemo(() => {
+    if (!depthSeriesData) return null;
+    const { prices, snapshots, bk, sk } = depthSeriesData;
+    const priceLen = prices.length;
+    const timeLen = snapshots.length;
+
+    const cumBid = new Uint32Array(timeLen * priceLen);
+    const cumOffer = new Uint32Array(timeLen * priceLen);
+
+    const cb = new Uint32Array(priceLen);
+    const co = new Uint32Array(priceLen);
+
+    for (let t = 0; t < timeLen; t++) {
+      const snap = snapshots[t];
+      for (const [piStr, val] of Object.entries(snap.b)) cb[parseInt(piStr)] = val as number;
+      for (const [piStr, val] of Object.entries(snap.o)) co[parseInt(piStr)] = val as number;
+      cumBid.set(cb, t * priceLen);
+      cumOffer.set(co, t * priceLen);
+    }
+
+    return { cumBid, cumOffer, priceLen, times: depthSeriesData.times, prices, bk, sk };
+  }, [depthSeriesData]);
+
   const buyOrderBook = useMemo(() => {
     if (!depthCumData || currentIdx < 0 || !trades[currentIdx]) return [];
     const { cumBid, cumOffer, priceLen, times, prices, bk, sk } = depthCumData;
@@ -463,30 +487,6 @@ export default function OrderBookPage() {
   const totalDepthBidLot = useMemo(() => depthLevels.reduce((s, l) => s + l.bidLots, 0), [depthLevels]);
   const totalDepthOfferLot = useMemo(() => depthLevels.reduce((s, l) => s + l.offerLots, 0), [depthLevels]);
   const totalDepthOfferFreq = useMemo(() => depthLevels.reduce((s, l) => s + l.offerFreq, 0), [depthLevels]);
-
-  /** Pre-compute cumulative bid/offer state from depth series as flat Uint32Array */
-  const depthCumData = useMemo(() => {
-    if (!depthSeriesData) return null;
-    const { prices, snapshots, bk, sk } = depthSeriesData;
-    const priceLen = prices.length;
-    const timeLen = snapshots.length;
-
-    const cumBid = new Uint32Array(timeLen * priceLen);
-    const cumOffer = new Uint32Array(timeLen * priceLen);
-
-    const cb = new Uint32Array(priceLen);
-    const co = new Uint32Array(priceLen);
-
-    for (let t = 0; t < timeLen; t++) {
-      const snap = snapshots[t];
-      for (const [piStr, val] of Object.entries(snap.b)) cb[parseInt(piStr)] = val as number;
-      for (const [piStr, val] of Object.entries(snap.o)) co[parseInt(piStr)] = val as number;
-      cumBid.set(cb, t * priceLen);
-      cumOffer.set(co, t * priceLen);
-    }
-
-    return { cumBid, cumOffer, priceLen, times: depthSeriesData.times, prices, bk, sk };
-  }, [depthSeriesData]);
 
   /**
    * Depth from time-series order queue.
