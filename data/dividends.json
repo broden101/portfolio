@@ -5237,16 +5237,16 @@
     "sector": "Industrials",
     "industry": "Engineering & Construction",
     "ipoDate": "2007-11-12",
-    "totalDividends": 1329.84,
-    "dividendCount": 18,
+    "totalDividends": 1252.7,
+    "dividendCount": 17,
     "latestDividend": {
       "date": "2026-06-03",
-      "amount": 156.23,
+      "amount": 156.229,
       "type": "final",
       "paymentDate": "2026-06-19"
     },
-    "yearsOfHistory": 17,
-    "avgDividendPerYear": 78.23,
+    "yearsOfHistory": 19,
+    "avgDividendPerYear": 65.93,
     "fiscalYears": [
       "2025",
       "2024",
@@ -5257,133 +5257,126 @@
     "allDividends": [
       {
         "exDate": "2026-06-03",
-        "amount": 156.23,
+        "amount": 156.229,
         "paymentDate": "2026-06-19",
         "fiscalYear": "2025",
         "type": "final"
       },
       {
-        "exDate": "2025-05-20",
-        "amount": 156.23,
+        "exDate": "2025-05-19",
+        "amount": 156.229,
         "paymentDate": "2025-06-05",
         "fiscalYear": "2024",
         "type": "final"
       },
       {
-        "exDate": "2024-05-21",
-        "amount": 37.86353,
-        "paymentDate": "2024-06-07",
+        "exDate": "2024-05-20",
+        "amount": 37.8635,
+        "paymentDate": "2024-06-04",
         "fiscalYear": "2023",
         "type": "final"
       },
       {
-        "exDate": "2023-05-22",
-        "amount": 75.69393,
+        "exDate": "2023-05-19",
+        "amount": 75.6939,
         "paymentDate": "2023-06-09",
         "fiscalYear": "2022",
         "type": "final"
       },
       {
-        "exDate": "2020-06-22",
-        "amount": 15.20499,
+        "exDate": "2020-06-19",
+        "amount": 15.205,
         "paymentDate": "2020-07-10",
         "fiscalYear": "2019",
         "type": "final"
       },
       {
-        "exDate": "2019-05-15",
-        "amount": 45.52162,
+        "exDate": "2019-05-14",
+        "amount": 45.5216,
         "paymentDate": "2019-05-28",
         "fiscalYear": "2018",
         "type": "final"
       },
       {
-        "exDate": "2018-04-18",
+        "exDate": "2018-04-17",
         "amount": 60.6309,
         "paymentDate": "2018-05-11",
         "fiscalYear": "2017",
         "type": "final"
       },
       {
-        "exDate": "2017-03-23",
+        "exDate": "2017-03-22",
         "amount": 78.0937,
         "paymentDate": "2017-04-13",
         "fiscalYear": "2016",
         "type": "final"
       },
       {
-        "exDate": "2016-04-07",
-        "amount": 43.02813,
-        "paymentDate": "",
+        "exDate": "2016-04-06",
+        "amount": 43.1289,
+        "paymentDate": "2016-04-29",
         "fiscalYear": "2015",
         "type": "final"
       },
       {
-        "exDate": "2015-03-26",
-        "amount": 72.06652,
-        "paymentDate": "",
+        "exDate": "2015-03-25",
+        "amount": 72.2353,
+        "paymentDate": "2015-04-17",
         "fiscalYear": "2014",
         "type": "final"
       },
       {
-        "exDate": "2014-04-11",
+        "exDate": "2014-04-04",
         "amount": 78.6069,
-        "paymentDate": "",
-        "fiscalYear": "2014",
-        "type": "interim"
-      },
-      {
-        "exDate": "2014-04-07",
-        "amount": 78.42323,
-        "paymentDate": "",
+        "paymentDate": "2014-04-23",
         "fiscalYear": "2013",
         "type": "final"
       },
       {
-        "exDate": "2013-05-30",
-        "amount": 94.0204,
-        "paymentDate": "",
+        "exDate": "2013-05-29",
+        "amount": 94.2406,
+        "paymentDate": "2013-06-18",
         "fiscalYear": "2012",
         "type": "final"
       },
       {
-        "exDate": "2012-06-05",
-        "amount": 78.6941,
-        "paymentDate": "",
+        "exDate": "2012-06-04",
+        "amount": 78.8784,
+        "paymentDate": "2012-06-21",
         "fiscalYear": "2011",
         "type": "final"
       },
       {
-        "exDate": "2011-07-07",
-        "amount": 105.44186,
-        "paymentDate": "",
+        "exDate": "2011-07-06",
+        "amount": 105.689,
+        "paymentDate": "2011-07-13",
         "fiscalYear": "2010",
         "type": "final"
       },
       {
-        "exDate": "2010-06-29",
-        "amount": 87.7022,
-        "paymentDate": "",
+        "exDate": "2010-06-28",
+        "amount": 87.9076,
+        "paymentDate": "2010-07-15",
         "fiscalYear": "2009",
         "type": "final"
       },
       {
-        "exDate": "2009-06-19",
-        "amount": 52.11026,
-        "paymentDate": "",
+        "exDate": "2009-06-18",
+        "amount": 52.2323,
+        "paymentDate": "2009-07-07",
         "fiscalYear": "2008",
         "type": "final"
       },
       {
-        "exDate": "2008-05-22",
-        "amount": 14.27656,
-        "paymentDate": "",
+        "exDate": "2008-05-26",
+        "amount": 14.31,
+        "paymentDate": "2008-05-29",
         "fiscalYear": "2007",
         "type": "final"
       }
     ],
     "price": 2720.0,
-    "latestFYDPS": 156.23,
+    "latestFYDPS": 156.229,
     "latestFYDate": "2026-06-03",
     "dividendYield": 5.74,
     "rank": 23
