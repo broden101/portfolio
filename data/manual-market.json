@@ -5,8 +5,10 @@
     "lastUpdated": "2026-06-18"
   },
   "tradeBalance": {
-    "value": 4.03,
-    "note": "Surplus Jan-Mei 2026"
+    "value": -0.45,
+    "note": "Defisit Juni 2026",
+    "lastUpdated": "2026-08-08T00:21:12.425093+07:00",
+    "source": "tradingeconomics.com"
   },
   "foreignFlow": {
     "date": "2026-08-07",
@@ -505,9 +507,11 @@
     "fetchedAt": "2026-08-07T15:15:33.446881+00:00"
   },
   "inflation": {
-    "value": 3.08,
+    "value": 2.88,
     "note": "yoy",
-    "month": "Mei"
+    "month": "Juli",
+    "lastUpdated": "2026-08-08T00:21:12.425093+07:00",
+    "source": "tradingeconomics.com"
   },
   "apbn": {
     "pendapatan": 1459.4,
