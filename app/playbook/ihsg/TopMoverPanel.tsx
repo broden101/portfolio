@@ -144,7 +144,7 @@ export function TopMoverPanel({
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <h3 className="text-[#F4EFE6] font-heading font-medium tracking-wide text-sm">
-            Top Mover Saham
+            Top Mover Foreign
           </h3>
           {aggData?.days && aggData.days > 1 && (
             <span className="text-[9px] text-[#B8AA96]/40">
