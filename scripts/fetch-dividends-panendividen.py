@@ -18,7 +18,7 @@ from pathlib import Path
 
 import requests
 
-# ── Kompas 100 constituents ──────────────────────────────────────────
+# ── Ticker Lists ─────────────────────────────────────────────────────
 KOMPAS_100 = [
     "AADI", "ABMM", "ACES", "ADMR", "ADRO", "AGII", "AKRA", "AMMN", "AMRT", "ANTM",
     "ARCI", "ARTO", "ASII", "ASSA", "BBCA", "BBNI", "BBRI", "BBTN", "BBYB",
@@ -33,6 +33,8 @@ KOMPAS_100 = [
     "SCMA", "SGER", "SIDO", "SMGR", "SMIL", "SMRA", "SSIA", "TAPG", "TCPI",
     "TINS", "TLKM", "TOBA", "TOWR", "TPIA", "TSPC", "UNTR", "UNVR", "WIFI", "WIRG",
 ]
+EXTRA_TICKERS = ["DLTA", "POWR"]
+ALL_WATCHLIST = sorted(list(set(KOMPAS_100 + EXTRA_TICKERS)))
 
 PANENDIVIDEN_BASE = "https://raw.githubusercontent.com/mitbal/daguerreo-data/main/jkse"
 COMPANY_PROFILES_URL = f"{PANENDIVIDEN_BASE}/company_profiles/company_profiles.csv"
@@ -260,13 +262,13 @@ def main():
     profiles = fetch_company_profiles()
 
     # 2. Fetch dividend data for all tickers
-    print(f"\n📥 Fetching dividend data for {len(KOMPAS_100)} stocks...")
-    all_tickers = set(KOMPAS_100)
+    print(f"\n📥 Fetching dividend data for {len(ALL_WATCHLIST)} stocks...")
+    all_tickers = set(ALL_WATCHLIST)
     dividend_data = {}
     has_data = 0
     no_data = 0
 
-    for i, ticker in enumerate(KOMPAS_100):
+    for i, ticker in enumerate(ALL_WATCHLIST):
         divs = fetch_dividend_csv(ticker)
         dividend_data[ticker] = divs
         if divs:
@@ -274,7 +276,7 @@ def main():
         else:
             no_data += 1
         if (i + 1) % 20 == 0:
-            print(f"  ... {i+1}/{len(KOMPAS_100)}")
+            print(f"  ... {i+1}/{len(ALL_WATCHLIST)}")
             time.sleep(0.3)
 
     print(f"  ✓ Has data: {has_data}, No data: {no_data}")
@@ -283,7 +285,7 @@ def main():
     prices = fetch_prices_tradersaham(all_tickers)
 
     # Merge with existing prices as fallback
-    for ticker in KOMPAS_100:
+    for ticker in ALL_WATCHLIST:
         if ticker not in prices and ticker in existing:
             old_price = existing[ticker].get("price")
             if old_price:
@@ -292,7 +294,7 @@ def main():
     # 4. Build final data
     print(f"\n🔧 Computing yield for all stocks...")
     results = []
-    for ticker in KOMPAS_100:
+    for ticker in ALL_WATCHLIST:
         profile = profiles.get(ticker, {})
         # Fallback to existing profile data
         if not profile.get("companyName") and ticker in existing:
