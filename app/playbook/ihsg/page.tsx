@@ -35,14 +35,12 @@ const TAB_COLUMNS: Record<PerfTab, (q: Quote) => number | null> = {
   YTD: (q) => q.perfYTD,
 };
 
-/** Fetch foreign flow directly from Tradersaham (client-side, bypasses Vercel Cloudflare) */
+/** Fetch foreign flow via Next.js API proxy (server-side, bypasses browser CORS/Cloudflare) */
 async function fetchForeignFlowClient(): Promise<ForeignFlowData | null> {
   try {
-    const resp = await fetch("https://apiv2.tradersaham.com/api/market-insight/foreign-flow", {
+    const resp = await fetch("/api/market/foreign-flow", {
       headers: {
         "Accept": "application/json",
-        "Origin": "https://www.tradersaham.com",
-        "Referer": "https://www.tradersaham.com/market-overview",
       },
     });
     if (!resp.ok) return null;
