@@ -65,7 +65,28 @@
             );
             border-color: rgba(239, 68, 68, 0.3);
         }
+        .cell.weekend {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.02),
+                rgba(255,255,255,0.02) 10px,
+                rgba(255,255,255,0.06) 10px,
+                rgba(255,255,255,0.06) 20px
+            );
+            border-color: rgba(139,127,109,0.2);
+        }
+        .cell.weekend.holiday {
+            background: repeating-linear-gradient(
+                45deg,
+                #1a1008,
+                #1a1008 10px,
+                #2a1808 10px,
+                #2a1808 20px
+            );
+            border-color: rgba(239, 68, 68, 0.45);
+        }
         .date { font-size: 11px; color: var(--muted); font-weight: 600; }
+        .wk { font-size: 9px; color: #8b7f6d; font-weight: 500; margin-left: 3px; letter-spacing: 0.5px; }
         .ev {
             font-size: 8.5px; line-height: 1.15;
             padding: 1px 4px; border-radius: 4px;
@@ -107,8 +128,8 @@
         const EVENTS = {
             "2026-08-05": [{"t": "id", "n": "PDB Indo Q2", "w": "Rilis 5,29%"}],
             "2026-08-07": [{"t": "us", "n": "NFP US (Juli)", "w": "19:30"}],
-            "2026-08-08": [{"t": "us", "n": "PPI US", "w": "19:30"}],
             "2026-08-12": [{"t": "us", "n": "CPI US (Juli)", "w": "19:30"}],
+            "2026-08-13": [{"t": "us", "n": "PPI US (Juli)", "w": "19:30"}],
             "2026-08-17": [{"t": "hol", "n": "LIBUR: Proklamasi Kemerdekaan", "w": "Bursa Tutup"}],
             "2026-08-20": [{"t": "pol", "n": "RDG BI — Suku Bunga", "w": "14:00"}],
             "2026-08-25": [{"t": "hol", "n": "LIBUR: Maulid Nabi", "w": "Bursa Tutup"}],
@@ -116,9 +137,22 @@
             "2026-09-04": [{"t": "us", "n": "NFP US (Ags)", "w": "19:30"}],
             "2026-09-11": [{"t": "us", "n": "CPI US (Ags)", "w": "19:30"}],
             "2026-09-12": [{"t": "us", "n": "PPI US (Ags)", "w": "19:30"}],
-            "2026-09-16": [{"t": "pol", "n": "FOMC — Suku Bunga", "w": "01:00 (17/9)"}],
-            "2026-09-30": [{"t": "us", "n": "GDP US Q3 Adv", "w": "19:30"}],
-            "2026-10-29": [{"t": "us", "n": "GDP US Q3", "w": "19:30"}],
+            "2026-09-17": [{"t": "pol", "n": "FOMC — Suku Bunga", "w": "01:00 (18/9)"}],
+            "2026-09-23": [{"t": "pol", "n": "RDG BI — Suku Bunga", "w": "14:00"}],
+            "2026-10-02": [{"t": "us", "n": "NFP US (Sep)", "w": "19:30"}],
+            "2026-10-13": [{"t": "us", "n": "CPI US (Sep)", "w": "19:30"}],
+            "2026-10-14": [{"t": "us", "n": "PPI US (Sep)", "w": "19:30"}],
+            "2026-10-22": [{"t": "pol", "n": "RDG BI — Suku Bunga", "w": "14:00"}],
+            "2026-10-29": [{"t": "us", "n": "GDP US Q3 Advance", "w": "19:30"}],
+            "2026-11-05": [{"t": "id", "n": "PDB Indo Q3", "w": "Rilis Q3"}],
+            "2026-11-06": [{"t": "us", "n": "NFP US (Okt)", "w": "19:30"}],
+            "2026-11-12": [{"t": "us", "n": "CPI US (Okt)", "w": "19:30"}],
+            "2026-11-13": [{"t": "us", "n": "PPI US (Okt)", "w": "19:30"}],
+            "2026-11-19": [{"t": "pol", "n": "RDG BI — Suku Bunga", "w": "14:00"}],
+            "2026-12-04": [{"t": "us", "n": "NFP US (Nov)", "w": "19:30"}],
+            "2026-12-11": [{"t": "us", "n": "CPI US (Nov)", "w": "19:30"}],
+            "2026-12-12": [{"t": "us", "n": "PPI US (Nov)", "w": "19:30"}],
+            "2026-12-17": [{"t": "pol", "n": "FOMC / RDG BI", "w": "01:00 / 14:00"}],
             "2026-12-24": [{"t": "hol", "n": "LIBUR: Cuti Bersama Natal", "w": "Bursa Tutup"}],
             "2026-12-25": [{"t": "hol", "n": "LIBUR: Natal", "w": "Bursa Tutup"}],
             "2026-12-31": [{"t": "hol", "n": "LIBUR: Tutup Tahun", "w": "Bursa Tutup"}],
@@ -147,9 +181,11 @@
                 const dateStr = `${view.y}-${pad(view.m + 1)}-${pad(day)}`;
                 const evs = EVENTS[dateStr] || [];
                 const hasHoliday = evs.some(e => e.t === "hol");
+                const dow = new Date(view.y, view.m, day).getDay();
+                const isWeekend = dow === 0 || dow === 6;
                 const cell = document.createElement("div");
-                cell.className = "cell" + (dateStr === todayStr ? " today" : "") + (hasHoliday ? " holiday" : "");
-                cell.innerHTML = `<div class="date">${day}</div>` +
+                cell.className = "cell" + (dateStr === todayStr ? " today" : "") + (hasHoliday ? " holiday" : "") + (isWeekend ? " weekend" : "");
+                cell.innerHTML = `<div class="date">${day}${isWeekend && !hasHoliday ? ' <span class="wk">libur</span>' : ''}</div>` +
                     evs.map(e => `<div class="ev ${e.t}"><span class="time">${e.w}</span>${e.n}</div>`).join("");
                 grid.appendChild(cell);
             }
