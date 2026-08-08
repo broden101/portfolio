@@ -64,6 +64,7 @@
         .ev.us { background: rgba(59,130,246,0.15); color: #7FB2FF; border-left: 2px solid var(--us); }
         .ev.id { background: rgba(16,185,129,0.15); color: #5EE0A8; border-left: 2px solid var(--id); }
         .ev.pol { background: rgba(245,158,11,0.15); color: #FFC466; border-left: 2px solid var(--pol); }
+        .ev.hol { background: rgba(239, 68, 68, 0.15); color: #FCA5A5; border-left: 2px solid var(--red); }
         .ev .time { color: var(--muted); font-size: 7.5px; display: block; }
         .legend { display: flex; gap: 14px; margin-top: 14px; flex-wrap: wrap; font-size: 10px; color: var(--muted); }
         .legend span { display: inline-flex; align-items: center; gap: 5px; }
@@ -86,6 +87,7 @@
             <span><i class="dot" style="background:var(--us)"></i> US Data</span>
             <span><i class="dot" style="background:var(--id)"></i> Indonesia</span>
             <span><i class="dot" style="background:var(--pol)"></i> Rate/FOMC</span>
+            <span><i class="dot" style="background:var(--red)"></i> Libur</span>
         </div>
         <div class="footer">Waktu WIB • RagaPlaybook</div>
     </div>
@@ -96,7 +98,9 @@
             "2026-08-05": [{ t: "id", n: "PDB Indo Q2", w: "Rilis 5,29%" }],
             "2026-08-07": [{ t: "us", n: "NFP US (Juli)", w: "19:30" }],
             "2026-08-08": [{ t: "us", n: "PPI US", w: "19:30" }],
+            "2026-08-17": [{ t: "hol", n: "LIBUR: Proklamasi Kemerdekaan", w: "Bursa Tutup" }],
             "2026-08-20": [{ t: "pol", n: "RDG BI — Suku Bunga", w: "14:00" }],
+            "2026-08-25": [{ t: "hol", n: "LIBUR: Maulid Nabi", w: "Bursa Tutup" }],
             "2026-08-27": [{ t: "us", n: "GDP US Q2 Final", w: "19:30" }],
             "2026-09-04": [{ t: "us", n: "NFP US (Ags)", w: "19:30" }],
             "2026-09-11": [{ t: "us", n: "CPI US (Ags)", w: "19:30" }],
@@ -104,6 +108,9 @@
             "2026-09-16": [{ t: "pol", n: "FOMC — Suku Bunga", w: "01:00 (17/9)" }],
             "2026-09-30": [{ t: "us", n: "GDP US Q3 Adv", w: "19:30" }],
             "2026-10-29": [{ t: "us", n: "GDP US Q3", w: "19:30" }],
+            "2026-12-24": [{ t: "hol", n: "LIBUR: Cuti Bersama Natal", w: "Bursa Tutup" }],
+            "2026-12-25": [{ t: "hol", n: "LIBUR: Natal", w: "Bursa Tutup" }],
+            "2026-12-31": [{ t: "hol", n: "LIBUR: Tutup Tahun", w: "Bursa Tutup" }],
         };
 
         const MONTH_NAMES = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
