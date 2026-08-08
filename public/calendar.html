@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Calendar — Agenda & Jam</title>
+    <style>
+        :root {
+            --bg: #0A0908;
+            --card: #14120E;
+            --border: #2C261E;
+            --text: #F4EFE6;
+            --muted: #8A7F6D;
+            --gold: #C6A15B;
+            --us: #3B82F6;
+            --id: #10B981;
+            --pol: #F59E0B;
+            --red: #EF4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg); color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex; justify-content: center; padding: 20px;
+        }
+        .calendar {
+            width: 100%; max-width: 460px;
+            background: var(--card);
+            border: 1px solid var(--border); border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        }
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        .header h2 { font-size: 17px; font-weight: 600; letter-spacing: 0.5px; }
+        .nav-btn {
+            background: none; border: 1px solid var(--border); color: var(--text);
+            width: 32px; height: 32px; border-radius: 8px; font-size: 16px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .dow {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+            margin-bottom: 8px;
+        }
+        .dow span { text-align: center; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+        .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+        .cell {
+            min-height: 76px; background: #0E0C09;
+            border: 1px solid var(--border); border-radius: 10px;
+            padding: 6px; display: flex; flex-direction: column; gap: 2px;
+            position: relative; overflow: hidden;
+        }
+        .cell.empty { border-color: transparent; background: transparent; }
+        .cell.today { border-color: var(--gold); }
+        .date { font-size: 11px; color: var(--muted); font-weight: 600; }
+        .ev {
+            font-size: 8.5px; line-height: 1.15;
+            padding: 1px 4px; border-radius: 4px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .ev.us { background: rgba(59,130,246,0.15); color: #7FB2FF; border-left: 2px solid var(--us); }
+        .ev.id { background: rgba(16,185,129,0.15); color: #5EE0A8; border-left: 2px solid var(--id); }
+        .ev.pol { background: rgba(245,158,11,0.15); color: #FFC466; border-left: 2px solid var(--pol); }
+        .ev .time { color: var(--muted); font-size: 7.5px; display: block; }
+        .legend { display: flex; gap: 14px; margin-top: 14px; flex-wrap: wrap; font-size: 10px; color: var(--muted); }
+        .legend span { display: inline-flex; align-items: center; gap: 5px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .footer { margin-top: 12px; font-size: 9px; color: var(--muted); text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="calendar">
+        <div class="header">
+            <button class="nav-btn" onclick="shiftMonth(-1)">‹</button>
+            <h2 id="monthTitle">Agustus 2026</h2>
+            <button class="nav-btn" onclick="shiftMonth(1)">›</button>
+        </div>
+        <div class="dow">
+            <span>Min</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+        </div>
+        <div class="grid" id="grid"></div>
+        <div class="legend">
+            <span><i class="dot" style="background:var(--us)"></i> US Data</span>
+            <span><i class="dot" style="background:var(--id)"></i> Indonesia</span>
+            <span><i class="dot" style="background:var(--pol)"></i> Rate/FOMC</span>
+        </div>
+        <div class="footer">Waktu WIB • RagaPlaybook</div>
+    </div>
+
+    <script>
+        // Format: "YYYY-MM-DD": [ { t: "us|id|pol", n: "Nama Agenda", w: "Jam WIB" } ]
+        const EVENTS = {
+            "2026-08-05": [{ t: "id", n: "PDB Indo Q2", w: "Rilis 5,29%" }],
+            "2026-08-07": [{ t: "us", n: "NFP US (Juli)", w: "19:30" }],
+            "2026-08-08": [{ t: "us", n: "PPI US", w: "19:30" }],
+            "2026-08-20": [{ t: "pol", n: "RDG BI — Suku Bunga", w: "14:00" }],
+            "2026-08-27": [{ t: "us", n: "GDP US Q2 Final", w: "19:30" }],
+            "2026-09-04": [{ t: "us", n: "NFP US (Ags)", w: "19:30" }],
+            "2026-09-11": [{ t: "us", n: "CPI US (Ags)", w: "19:30" }],
+            "2026-09-12": [{ t: "us", n: "PPI US (Ags)", w: "19:30" }],
+            "2026-09-16": [{ t: "pol", n: "FOMC — Suku Bunga", w: "01:00 (17/9)" }],
+            "2026-09-30": [{ t: "us", n: "GDP US Q3 Adv", w: "19:30" }],
+            "2026-10-29": [{ t: "us", n: "GDP US Q3", w: "19:30" }],
+        };
+
+        const MONTH_NAMES = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+        let view = { y: 2026, m: 7 }; // Aug 2026
+
+        function pad(n) { return String(n).padStart(2, "0"); }
+
+        function render() {
+            document.getElementById("monthTitle").textContent = MONTH_NAMES[view.m] + " " + view.y;
+            const grid = document.getElementById("grid");
+            grid.innerHTML = "";
+            const first = new Date(view.y, view.m, 1);
+            const daysInMonth = new Date(view.y, view.m + 1, 0).getDate();
+            const startOffset = first.getDay(); // 0=Min
+            const todayStr = new Date().toISOString().slice(0, 10);
+
+            for (let i = 0; i < startOffset; i++) {
+                const d = document.createElement("div");
+                d.className = "cell empty";
+                grid.appendChild(d);
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${view.y}-${pad(view.m + 1)}-${pad(day)}`;
+                const evs = EVENTS[dateStr] || [];
+                const cell = document.createElement("div");
+                cell.className = "cell" + (dateStr === todayStr ? " today" : "");
+                cell.innerHTML = `<div class="date">${day}</div>` +
+                    evs.map(e => `<div class="ev ${e.t}"><span class="time">${e.w}</span>${e.n}</div>`).join("");
+                grid.appendChild(cell);
+            }
+        }
+
+        function shiftMonth(d) {
+            view.m += d;
+            if (view.m < 0) { view.m = 11; view.y--; }
+            if (view.m > 11) { view.m = 0; view.y++; }
+            render();
+        }
+
+        render();
+    </script>
+</body>
+</html>
