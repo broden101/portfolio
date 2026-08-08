@@ -143,10 +143,16 @@
 
         function pad(n) { return String(n).padStart(2, "0"); }
 
+        const BURSA_DAYS = { 7: 19, 8: 22, 9: 22, 10: 21, 11: 20 }; // index 0=Jan
+
         function render() {
             document.getElementById("monthTitle").textContent = MONTH_NAMES[view.m] + " " + view.y;
             const grid = document.getElementById("grid");
             grid.innerHTML = "";
+            
+            // Update footer
+            const footer = document.querySelector(".footer");
+            if (footer) footer.textContent = `${BURSA_DAYS[view.m] || 0} Hari Bursa • RagaPlaybook`;
             const first = new Date(view.y, view.m, 1);
             const daysInMonth = new Date(view.y, view.m + 1, 0).getDate();
             const startOffset = first.getDay(); // 0=Min
