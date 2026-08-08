@@ -120,7 +120,7 @@ def fetch_dividend_data():
             print(f"✓ Yield: {div_yield}%")
             
             # Rate limiting - sleep between requests
-            time.sleep(1)
+            time.sleep(3)
             
         except Exception as e:
             print(f"✗ Error: {e}")
@@ -142,7 +142,7 @@ def fetch_dividend_data():
                 "dividendHistory": [],
                 "error": str(e),
             })
-            time.sleep(2)  # Extra sleep on error
+            time.sleep(5)  # Extra sleep on error
     
     # Sort by dividend yield (descending)
     results.sort(key=lambda x: x.get("dividendYield", 0), reverse=True)
