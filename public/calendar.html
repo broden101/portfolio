@@ -55,7 +55,8 @@
         }
         .cell.empty { border-color: transparent; background: transparent; }
         .cell.today { border-color: var(--gold); }
-        .cell.holiday {
+        .cell.holiday,
+        .cell.weekend {
             background: repeating-linear-gradient(
                 45deg,
                 #110c09,
@@ -64,26 +65,6 @@
                 #1a1512 20px
             );
             border-color: rgba(239, 68, 68, 0.3);
-        }
-        .cell.weekend {
-            background: repeating-linear-gradient(
-                45deg,
-                rgba(255,255,255,0.02),
-                rgba(255,255,255,0.02) 10px,
-                rgba(255,255,255,0.06) 10px,
-                rgba(255,255,255,0.06) 20px
-            );
-            border-color: rgba(139,127,109,0.2);
-        }
-        .cell.weekend.holiday {
-            background: repeating-linear-gradient(
-                45deg,
-                #1a1008,
-                #1a1008 10px,
-                #2a1808 10px,
-                #2a1808 20px
-            );
-            border-color: rgba(239, 68, 68, 0.45);
         }
         .date { font-size: 11px; color: var(--muted); font-weight: 600; }
         .wk { font-size: 9px; color: #8b7f6d; font-weight: 500; margin-left: 3px; letter-spacing: 0.5px; }
