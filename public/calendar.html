@@ -67,7 +67,6 @@
             border-color: rgba(239, 68, 68, 0.3);
         }
         .date { font-size: 11px; color: var(--muted); font-weight: 600; }
-        .wk { font-size: 9px; color: #8b7f6d; font-weight: 500; margin-left: 3px; letter-spacing: 0.5px; }
         .ev {
             font-size: 8.5px; line-height: 1.15;
             padding: 1px 4px; border-radius: 4px;
@@ -166,7 +165,7 @@
                 const isWeekend = dow === 0 || dow === 6;
                 const cell = document.createElement("div");
                 cell.className = "cell" + (dateStr === todayStr ? " today" : "") + (hasHoliday ? " holiday" : "") + (isWeekend ? " weekend" : "");
-                cell.innerHTML = `<div class="date">${day}${isWeekend && !hasHoliday ? ' <span class="wk">libur</span>' : ''}</div>` +
+                cell.innerHTML = `<div class="date">${day}</div>` +
                     evs.map(e => `<div class="ev ${e.t}"><span class="time">${e.w}</span>${e.n}</div>`).join("");
                 grid.appendChild(cell);
             }
