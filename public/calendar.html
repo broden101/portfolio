@@ -55,6 +55,16 @@
         }
         .cell.empty { border-color: transparent; background: transparent; }
         .cell.today { border-color: var(--gold); }
+        .cell.holiday {
+            background: repeating-linear-gradient(
+                45deg,
+                #110c09,
+                #110c09 10px,
+                #1a1512 10px,
+                #1a1512 20px
+            );
+            border-color: rgba(239, 68, 68, 0.3);
+        }
         .date { font-size: 11px; color: var(--muted); font-weight: 600; }
         .ev {
             font-size: 8.5px; line-height: 1.15;
@@ -135,8 +145,9 @@
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateStr = `${view.y}-${pad(view.m + 1)}-${pad(day)}`;
                 const evs = EVENTS[dateStr] || [];
+                const hasHoliday = evs.some(e => e.t === "hol");
                 const cell = document.createElement("div");
-                cell.className = "cell" + (dateStr === todayStr ? " today" : "");
+                cell.className = "cell" + (dateStr === todayStr ? " today" : "") + (hasHoliday ? " holiday" : "");
                 cell.innerHTML = `<div class="date">${day}</div>` +
                     evs.map(e => `<div class="ev ${e.t}"><span class="time">${e.w}</span>${e.n}</div>`).join("");
                 grid.appendChild(cell);
