@@ -7,6 +7,7 @@ import { CommodityPricesPanel } from "./CommodityPricesPanel";
 import { Idx100Panel } from "./Idx100Panel";
 import Footer from "@/components/Footer";
 import SectorStocksPanel from "@/components/SectorStocksPanel";
+import CalendarWidget from "@/components/CalendarWidget";
 import { Disclaimer, SourceNote, EmptyState } from "@/components/DataState";
 import {
   fetchMarketData,
@@ -164,6 +165,8 @@ export default function IHSGDashboard() {
       { label: "USD/IDR", value: usdIdr?.close != null ? fmtNum(usdIdr.close) : "—", change: usdIdr?.change != null ? fmtPct(usdIdr.change) : "", up: (usdIdr?.change ?? 0) >= 0, note: "Spot" },
       { label: "BI Rate", value: `${(manual.biRate?.value ?? 5.50).toFixed(2)}%`, change: "Otomatis", up: true, note: manual.biRate?.note ?? "" },
       { label: "Yield SBN 10Th", value: `${(manual.bondYield10y?.value ?? 6.85).toFixed(2)}%`, change: manual.bondYield10y?.change != null ? `${manual.bondYield10y.change >= 0 ? "+" : ""}${manual.bondYield10y.change.toFixed(2)}%` : "", up: (manual.bondYield10y?.change ?? 0) >= 0, note: manual.bondYield10y?.note ?? "SBN FR" },
+      { label: "Inflasi", value: `${(manual.inflation?.value ?? 3.08).toFixed(2)}%`, change: manual.inflation?.note ?? "yoy", up: (manual.inflation?.value ?? 0) > 0, note: manual.inflation?.month ? `${manual.inflation.month} (BPS)` : "BPS" },
+      { label: "Neraca Dagang", value: `$${(manual.tradeBalance?.value ?? 3.32).toFixed(2)}B`, change: manual.tradeBalance?.note ?? "", up: (manual.tradeBalance?.value ?? 3.32) >= 0, note: "Manual" },
       (() => {
         const pendapatan = manual.apbn?.pendapatan ?? 1185.0;
         const pendapatanTarget = manual.apbn?.pendapatanTarget ?? 3153.6;
@@ -179,8 +182,6 @@ export default function IHSGDashboard() {
         ] } };
       })(),
       { label: "GDP", value: `${(manual.gdp?.growth ?? 5.6).toFixed(1)}%`, change: manual.gdp?.note ?? "yoy", up: true, note: manual.gdp?.quarter ?? "Q1-2026" },
-      { label: "Inflasi", value: `${(manual.inflation?.value ?? 3.08).toFixed(2)}%`, change: manual.inflation?.note ?? "yoy", up: (manual.inflation?.value ?? 0) > 0, note: manual.inflation?.month ? `${manual.inflation.month} (BPS)` : "BPS" },
-      { label: "Neraca Dagang", value: `$${(manual.tradeBalance?.value ?? 3.32).toFixed(2)}B`, change: manual.tradeBalance?.note ?? "", up: (manual.tradeBalance?.value ?? 3.32) >= 0, note: "Manual" },
     ];
   }, [data, ihsg, ihsgUp, manual]);
 
@@ -354,7 +355,7 @@ export default function IHSGDashboard() {
         </div>
 
         {/* MACRO INDICATORS BAR */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8">
           {macroRows.map((m) => {
             const hasDetail = "detail" in m;
             return (
@@ -381,121 +382,128 @@ export default function IHSGDashboard() {
           })}
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 mb-8">
-          {/* INDEKS GLOBAL */}
-          <div className="card-luxury p-6">
-            <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">Indeks Global</h2>
-            {(() => {
-              const m = data?.macro ?? {};
-              const q = (k: string) => m[k] ?? null;
-              const row = (label: string, quote: {close?: number|null, change?: number|null}|null, fmt: (n:number)=>string = n=>`${n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})}`) => {
-                if (!quote || quote.close == null) return <div key={label} className="flex justify-between py-1.5 border-b border-[#2C261E]/30"><span className="text-[#B8AA96]/50 text-[11px]">{label}</span><span className="text-[#B8AA96]/30 text-[11px]">—</span></div>;
-                const up = (quote.change ?? 0) >= 0;
-                return <div key={label} className="flex justify-between py-1.5 border-b border-[#2C261E]/30">
-                  <span className="text-[#B8AA96]/70 text-[11px]">{label}</span>
-                  <span className="text-[11px] font-mono">
-                    <span className="text-[#F4EFE6]">{fmt(quote.close)}</span>
-                    <span className={`ml-1.5 ${up ? "text-emerald-400" : "text-red-400"}`}>{up ? "▲" : "▼"} {(quote.change ?? 0) >= 0 ? "+" : ""}{(quote.change ?? 0).toFixed(2)}%</span>
-                  </span>
-                </div>;
-              };
-              const usFmt = (n:number) => n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1});
-              const asiaFmt = (n:number) => n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1});
-              return <>
-                <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-1">US</div>
-                {["SPX","IXIC","DJI","DXY","VIX"].map(k => row(k === "SPX" ? "S&P 500" : k === "IXIC" ? "Nasdaq" : k === "DJI" ? "Dow Jones" : k, q(k), k === "DXY" ? n=>n.toFixed(2) : k === "VIX" ? n=>n.toFixed(2) : usFmt))}
-                {(() => { const e = q("AMEX_EIDO") ?? data?.eido; return row("EIDO", e, n=>n.toFixed(2)); })()}
-                <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">ASIA</div>
-                {[
-                  ["NI225","Nikkei 225"],
-                  ["HSI","Hang Seng"],
-                  ["KOSPI","KOSPI"],
-                  ["STI","STI"],
-                  ["NIFTY","NIFTY 50"],
-                ].map(([k,label]) => row(label, q(k), asiaFmt))}
-                <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">CRYPTO</div>
-                {row("BTC", q("BTC"), n=>`$${n.toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:0})}`)}
-              </>;
-            })()}
+        <div className="grid lg:grid-cols-4 gap-8 mb-8">
+          {/* CALENDAR WIDGET */}
+          <div className="lg:col-span-1">
+            <CalendarWidget />
           </div>
 
-          {/* COMMODITY PRICES — fetched from /api/commodities */}
-          <CommodityPricesPanel data={commodityData} live={live} />
+          <div className="lg:col-span-3 grid lg:grid-cols-3 gap-8">
+            {/* INDEKS GLOBAL */}
+            <div className="card-luxury p-6">
+              <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">Indeks Global</h2>
+              {(() => {
+                const m = data?.macro ?? {};
+                const q = (k: string) => m[k] ?? null;
+                const row = (label: string, quote: {close?: number|null, change?: number|null}|null, fmt: (n:number)=>string = n=>`${n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})}`) => {
+                  if (!quote || quote.close == null) return <div key={label} className="flex justify-between py-1.5 border-b border-[#2C261E]/30"><span className="text-[#B8AA96]/50 text-[11px]">{label}</span><span className="text-[#B8AA96]/30 text-[11px]">—</span></div>;
+                  const up = (quote.change ?? 0) >= 0;
+                  return <div key={label} className="flex justify-between py-1.5 border-b border-[#2C261E]/30">
+                    <span className="text-[#B8AA96]/70 text-[11px]">{label}</span>
+                    <span className="text-[11px] font-mono">
+                      <span className="text-[#F4EFE6]">{fmt(quote.close)}</span>
+                      <span className={`ml-1.5 ${up ? "text-emerald-400" : "text-red-400"}`}>{up ? "▲" : "▼"} {(quote.change ?? 0) >= 0 ? "+" : ""}{(quote.change ?? 0).toFixed(2)}%</span>
+                    </span>
+                  </div>;
+                };
+                const usFmt = (n:number) => n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1});
+                const asiaFmt = (n:number) => n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1});
+                return <>
+                  <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-1">US</div>
+                  {["SPX","IXIC","DJI","DXY","VIX"].map(k => row(k === "SPX" ? "S&P 500" : k === "IXIC" ? "Nasdaq" : k === "DJI" ? "Dow Jones" : k, q(k), k === "DXY" ? n=>n.toFixed(2) : k === "VIX" ? n=>n.toFixed(2) : usFmt))}
+                  {(() => { const e = q("AMEX_EIDO") ?? data?.eido; return row("EIDO", e, n=>n.toFixed(2)); })()}
+                  <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">ASIA</div>
+                  {[
+                    ["NI225","Nikkei 225"],
+                    ["HSI","Hang Seng"],
+                    ["KOSPI","KOSPI"],
+                    ["STI","STI"],
+                    ["NIFTY","NIFTY 50"],
+                  ].map(([k,label]) => row(label, q(k), asiaFmt))}
+                  <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">CRYPTO</div>
+                  {row("BTC", q("BTC"), n=>`$${n.toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:0})}`)}
+                </>;
+              })()}
+            </div>
 
-          {/* KEY LEVELS */}
-          <div className="card-luxury p-6">
-            <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">Level Kunci IHSG</h2>
-            <div className="text-center py-4 mb-5 border border-[#2C261E] bg-[#0B0B0A]">
-              <div className="text-[#B8AA96]/40 text-[10px] tracking-[0.15em] uppercase mb-1">IHSG Live</div>
-              <div className={`font-heading text-3xl font-medium ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtNum(ihsgClose)}</div>
-              <div className={`text-xs font-mono mt-1 ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>
-                {ihsgUp ? "▲" : "▼"} {fmtPct(ihsg.change)} {ihsg.changeAbs != null && `(${ihsgUp ? "+" : ""}${ihsg.changeAbs.toFixed(0)})`}
+            {/* COMMODITY PRICES — fetched from /api/commodities */}
+            <CommodityPricesPanel data={commodityData} live={live} />
+
+            {/* KEY LEVELS */}
+            <div className="card-luxury p-6">
+              <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">Level Kunci IHSG</h2>
+              <div className="text-center py-4 mb-5 border border-[#2C261E] bg-[#0B0B0A]">
+                <div className="text-[#B8AA96]/40 text-[10px] tracking-[0.15em] uppercase mb-1">IHSG Live</div>
+                <div className={`font-heading text-3xl font-medium ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtNum(ihsgClose)}</div>
+                <div className={`text-xs font-mono mt-1 ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>
+                  {ihsgUp ? "▲" : "▼"} {fmtPct(ihsg.change)} {ihsg.changeAbs != null && `(${ihsgUp ? "+" : ""}${ihsg.changeAbs.toFixed(0)})`}
+                </div>
+                {/* Candle Terakhir */}
+                {ihsg.open != null && ihsg.high != null && ihsg.low != null && (
+                  <div className="mt-4 pt-3 border-t border-[#2C261E]/50">
+                    <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Candle Terakhir</div>
+                    <div className="flex items-center justify-center gap-4">
+                      {/* Visual candle */}
+                      <div className="flex flex-col items-center" style={{ height: 60 }}>
+                        <CandleSVG o={ihsg.open} h={ihsg.high} l={ihsg.low} c={ihsgClose} />
+                      </div>
+                      {/* OHLC numbers */}
+                      <div className="text-left space-y-0.5">
+                        {[
+                          ["O", ihsg.open],
+                          ["H", ihsg.high],
+                          ["L", ihsg.low],
+                          ["C", ihsgClose],
+                        ].map(([l, v]) => (
+                          <div key={l as string} className="flex items-center gap-2">
+                            <span className="text-[#B8AA96]/40 text-[10px] w-3">{l}</span>
+                            <span className="text-[#B8AA96] text-[11px] font-mono">{fmtNum(v as number)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-              {/* Candle Terakhir */}
-              {ihsg.open != null && ihsg.high != null && ihsg.low != null && (
-                <div className="mt-4 pt-3 border-t border-[#2C261E]/50">
-                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Candle Terakhir</div>
-                  <div className="flex items-center justify-center gap-4">
-                    {/* Visual candle */}
-                    <div className="flex flex-col items-center" style={{ height: 60 }}>
-                      <CandleSVG o={ihsg.open} h={ihsg.high} l={ihsg.low} c={ihsgClose} />
-                    </div>
-                    {/* OHLC numbers */}
-                    <div className="text-left space-y-0.5">
-                      {[
-                        ["O", ihsg.open],
-                        ["H", ihsg.high],
-                        ["L", ihsg.low],
-                        ["C", ihsgClose],
-                      ].map(([l, v]) => (
-                        <div key={l as string} className="flex items-center gap-2">
-                          <span className="text-[#B8AA96]/40 text-[10px] w-3">{l}</span>
-                          <span className="text-[#B8AA96] text-[11px] font-mono">{fmtNum(v as number)}</span>
-                        </div>
-                      ))}
-                    </div>
+              <div className="space-y-1.5">
+                {keyLevels.resistance.map((r, i) => (
+                  <LevelRow key={`r-${i}`} label={`R${keyLevels.resistance.length - i}`} value={r.value} tone="resistance" price={ihsgClose} sub={r.label} />
+                ))}
+                <div className="flex items-center gap-3 py-1">
+                  <span className="text-[#C6A15B] text-[10px] tracking-wider uppercase w-16">SEKARANG</span>
+                  <div className="flex-1 h-0.5 bg-[#C6A15B]/40" />
+                  <span className={`text-xs font-mono font-medium ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtNum(ihsgClose)}</span>
+                </div>
+                {keyLevels.support.map((s, i) => (
+                  <LevelRow key={`s-${i}`} label={`S${i + 1}`} value={s.value} tone="support" price={ihsgClose} sub={s.label} />
+                ))}
+                <div className="mt-2 pt-2 border-t border-[#2C261E]" />
+                {ihsg.sma20 != null && <LevelRow label="MA20" value={ihsg.sma20} tone="ma-cyan" price={ihsgClose} />}
+                {ihsg.sma50 != null && <LevelRow label="MA50" value={ihsg.sma50} tone="ma-blue" price={ihsgClose} />}
+              </div>
+              {/* Gap Levels */}
+              {keyLevels.gaps.length > 0 && (
+                <div className="mt-3 pt-3 border-t border-[#2C261E]">
+                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Gap & Level Psikologis</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {keyLevels.gaps.map((g) => {
+                      const above = g > ihsgClose;
+                      return (
+                        <span key={g} className={`text-[10px] font-mono px-2 py-0.5 border ${
+                          above
+                            ? "border-red-400/20 text-red-400/70 bg-red-400/5"
+                            : "border-emerald-400/20 text-emerald-400/70 bg-emerald-400/5"
+                        }`}>
+                          {fmtNum(g)}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
               )}
             </div>
-            <div className="space-y-1.5">
-              {keyLevels.resistance.map((r, i) => (
-                <LevelRow key={`r-${i}`} label={`R${keyLevels.resistance.length - i}`} value={r.value} tone="resistance" price={ihsgClose} sub={r.label} />
-              ))}
-              <div className="flex items-center gap-3 py-1">
-                <span className="text-[#C6A15B] text-[10px] tracking-wider uppercase w-16">SEKARANG</span>
-                <div className="flex-1 h-0.5 bg-[#C6A15B]/40" />
-                <span className={`text-xs font-mono font-medium ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtNum(ihsgClose)}</span>
-              </div>
-              {keyLevels.support.map((s, i) => (
-                <LevelRow key={`s-${i}`} label={`S${i + 1}`} value={s.value} tone="support" price={ihsgClose} sub={s.label} />
-              ))}
-              <div className="mt-2 pt-2 border-t border-[#2C261E]" />
-              {ihsg.sma20 != null && <LevelRow label="MA20" value={ihsg.sma20} tone="ma-cyan" price={ihsgClose} />}
-              {ihsg.sma50 != null && <LevelRow label="MA50" value={ihsg.sma50} tone="ma-blue" price={ihsgClose} />}
-            </div>
-            {/* Gap Levels */}
-            {keyLevels.gaps.length > 0 && (
-              <div className="mt-3 pt-3 border-t border-[#2C261E]">
-                <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Gap & Level Psikologis</div>
-                <div className="flex flex-wrap gap-1.5">
-                  {keyLevels.gaps.map((g) => {
-                    const above = g > ihsgClose;
-                    return (
-                      <span key={g} className={`text-[10px] font-mono px-2 py-0.5 border ${
-                        above
-                          ? "border-red-400/20 text-red-400/70 bg-red-400/5"
-                          : "border-emerald-400/20 text-emerald-400/70 bg-emerald-400/5"
-                      }`}>
-                        {fmtNum(g)}
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* Volume Transaksi */}
+          </div>
+        </div>
             <div className="mt-4 pt-4 border-t border-[#2C261E]/30">
               <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-3">Volume Transaksi IHSG</div>
               {ihsg.volume != null ? (

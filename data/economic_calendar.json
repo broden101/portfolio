@@ -1,0 +1,9 @@
+{
+  "events": [
+    {"event": "NFP US", "date": "2026-09-04", "impact": "High"},
+    {"event": "CPI US", "date": "2026-09-11", "impact": "High"},
+    {"event": "FOMC Decision", "date": "2026-09-18", "impact": "High"},
+    {"event": "RDG BI", "date": "2026-08-20", "impact": "High"},
+    {"event": "GDP Indonesia Q2", "date": "2026-08-05", "impact": "High"}
+  ]
+}

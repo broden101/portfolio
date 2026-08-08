@@ -2,5 +2,5 @@
 # Fetch IDX Kompas 100 dividend data
 # Run: bash scripts/update-dividends.sh
 
-cd /root/portfolio
+cd "$(dirname "$0")/.."
 python3 scripts/fetch-dividends.py
