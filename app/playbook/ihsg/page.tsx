@@ -354,41 +354,44 @@ export default function IHSGDashboard() {
           </div>
         </div>
 
-        {/* MACRO INDICATORS BAR */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8">
-          {macroRows.map((m) => {
-            const hasDetail = "detail" in m;
-            return (
-            <div key={m.label} className="card-luxury p-4">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase">{m.label}</span>
-                <span className={`text-[10px] font-mono ${m.up ? "text-emerald-400" : "text-red-400"}`}>{m.change}</span>
-              </div>
-              {hasDetail ? (
-                <div className="space-y-0.5 mt-1">
-                  {(m as any).detail.lines.map((l: { label: string; value: string; up: boolean }, i: number) => (
-                    <div key={i} className="flex justify-between items-center">
-                      <span className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em]">{l.label}</span>
-                      <span className={`text-[11px] font-mono ${l.up ? "text-emerald-400/80" : "text-red-400/80"}`}>{l.value}</span>
-                    </div>
-                  ))}
+        {/* MACRO INDICATORS BAR + CALENDAR WIDGET */}
+        <div className="grid lg:grid-cols-4 gap-6 mb-8">
+          {/* Macro Indicators (3 Cols) */}
+          <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-3">
+            {macroRows.map((m) => {
+              const hasDetail = "detail" in m;
+              return (
+              <div key={m.label} className="card-luxury p-4">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase">{m.label}</span>
+                  <span className={`text-[10px] font-mono ${m.up ? "text-emerald-400" : "text-red-400"}`}>{m.change}</span>
                 </div>
-              ) : (
-              <div className="font-heading text-xl text-[#F4EFE6] font-medium">{m.value}</div>
-              )}
-              <div className="text-[#B8AA96]/30 text-[9px] mt-0.5">{m.note}</div>
-            </div>
-            );
-          })}
-        </div>
+                {hasDetail ? (
+                  <div className="space-y-0.5 mt-1">
+                    {(m as any).detail.lines.map((l: { label: string; value: string; up: boolean }, i: number) => (
+                      <div key={i} className="flex justify-between items-center">
+                        <span className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em]">{l.label}</span>
+                        <span className={`text-[11px] font-mono ${l.up ? "text-emerald-400/80" : "text-red-400/80"}`}>{l.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                <div className="font-heading text-xl text-[#F4EFE6] font-medium">{m.value}</div>
+                )}
+                <div className="text-[#B8AA96]/30 text-[9px] mt-0.5">{m.note}</div>
+              </div>
+              );
+            })}
+          </div>
 
-        <div className="grid lg:grid-cols-4 gap-8 mb-8">
-          {/* CALENDAR WIDGET */}
+          {/* Calendar Widget (1 Col) */}
           <div className="lg:col-span-1">
             <CalendarWidget />
           </div>
+        </div>
 
-          <div className="lg:col-span-3 grid lg:grid-cols-3 gap-8">
+        {/* INDEKS GLOBAL & COMMODITY & KEY LEVELS */}
+        <div className="grid lg:grid-cols-3 gap-8 mb-8">
             {/* INDEKS GLOBAL */}
             <div className="card-luxury p-6">
               <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">Indeks Global</h2>
@@ -582,7 +585,6 @@ export default function IHSGDashboard() {
               </div>
             </div>
           </div>
-        </div>
 
         {/* ═══ MARKET OVERVIEW: Net Flow + Composition + Top Movers ═══ */}
         <div className="mb-8">
