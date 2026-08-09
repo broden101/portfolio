@@ -255,7 +255,10 @@ def main():
     existing = {}
     if output_path.exists():
         with open(output_path) as f:
-            for s in json.load(f):
+            data = json.load(f)
+            # Handle both list and dict-wrapped structure
+            stocks = data.get("stocks", data) if isinstance(data, dict) else data
+            for s in stocks:
                 existing[s["ticker"]] = s
 
     # 1. Fetch company profiles
@@ -324,8 +327,15 @@ def main():
     with_divs = sum(1 for s in results if s["dividendCount"] > 0)
 
     # 5. Save
+    output = {
+        "lastUpdated": datetime.now().isoformat(),
+        "source": "panendividen + tradersaham",
+        "index": "IDX Kompas 100",
+        "totalStocks": len(results),
+        "stocks": results,
+    }
     with open(output_path, "w") as f:
-        json.dump(results, f, indent=2, ensure_ascii=False)
+        json.dump(output, f, indent=2, ensure_ascii=False)
 
     print(f"\n✅ Done! Saved to {output_path}")
     print(f"   Total stocks: {len(results)}")
