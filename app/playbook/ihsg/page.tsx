@@ -164,9 +164,7 @@ export default function IHSGDashboard() {
       { label: "IHSG", value: fmtNum(ihsg.close), change: fmtPct(ihsg.change), up: ihsgUp, note: ihsg.perfYTD != null ? `YTD ${fmtPct(ihsg.perfYTD)}` : "Komposit" },
       { label: "USD/IDR", value: usdIdr?.close != null ? fmtNum(usdIdr.close) : "—", change: usdIdr?.change != null ? fmtPct(usdIdr.change) : "", up: (usdIdr?.change ?? 0) >= 0, note: "Spot" },
       { label: "BI Rate", value: `${(manual.biRate?.value ?? 5.50).toFixed(2)}%`, change: "Otomatis", up: true, note: manual.biRate?.note ?? "" },
-      { label: "Yield SBN 10Th", value: `${(manual.bondYield10y?.value ?? 6.85).toFixed(2)}%`, change: manual.bondYield10y?.change != null ? `${manual.bondYield10y.change >= 0 ? "+" : ""}${manual.bondYield10y.change.toFixed(2)}%` : "", up: (manual.bondYield10y?.change ?? 0) >= 0, note: manual.bondYield10y?.note ?? "SBN FR" },
       { label: "Inflasi", value: `${(manual.inflation?.value ?? 3.08).toFixed(2)}%`, change: manual.inflation?.note ?? "yoy", up: (manual.inflation?.value ?? 0) > 0, note: manual.inflation?.month ? `${manual.inflation.month} (BPS)` : "BPS" },
-      { label: "Neraca Dagang", value: `$${(manual.tradeBalance?.value ?? 3.32).toFixed(2)}B`, change: manual.tradeBalance?.note ?? "", up: (manual.tradeBalance?.value ?? 3.32) >= 0, note: "Manual" },
       (() => {
         const pendapatan = manual.apbn?.pendapatan ?? 1185.0;
         const pendapatanTarget = manual.apbn?.pendapatanTarget ?? 3153.6;
@@ -355,9 +353,9 @@ export default function IHSGDashboard() {
         </div>
 
         {/* MACRO INDICATORS BAR + CALENDAR WIDGET */}
-        <div className="grid lg:grid-cols-4 gap-6 mb-8">
-          {/* Macro Indicators (3 Cols) */}
-          <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid lg:grid-cols-3 gap-6 mb-8">
+          {/* Macro Indicators (2 Cols) */}
+          <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-3">
             {macroRows.map((m) => {
               const hasDetail = "detail" in m;
               return (
