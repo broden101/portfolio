@@ -18,7 +18,7 @@ export async function GET() {
     }
 
     const stocks = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
-    const tickers = stocks.map((s: { ticker: string }) => s.ticker);
+    const tickers = (stocks.stocks || stocks).map((s: { ticker: string }) => s.ticker);
 
     // Batch fetch from TradingView scanner
     const symbols = tickers.map((t: string) => `IDX:${t}`);

@@ -59,8 +59,8 @@ export async function loadDividendData(): Promise<DividendStock[]> {
     const res = await fetch("/api/dividends");
     if (!res.ok) throw new Error("Failed to fetch");
     const data = await res.json();
-    dividendStocksData = data;
-    return data;
+    dividendStocksData = data.stocks || data;
+    return dividendStocksData;
   } catch {
     return [];
   }
