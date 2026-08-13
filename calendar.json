@@ -1,0 +1,62 @@
+[
+  {
+    "date": "2026-08-13",
+    "title": "MSCI August 2026 Index Review Announcement",
+    "category": "Macro"
+  },
+  {
+    "date": "2026-08-17",
+    "title": "Hari Kemerdekaan RI (Market Holiday)",
+    "category": "Market Holiday"
+  },
+  {
+    "date": "2026-08-20",
+    "title": "BI RDG (Rapat Dewan Gubernur)",
+    "category": "Macro"
+  },
+  {
+    "date": "2026-09-01",
+    "title": "MSCI August 2026 Rebalancing Effective Date",
+    "category": "Macro"
+  },
+  {
+    "date": "2026-09-17",
+    "title": "FOMC Meeting Decision",
+    "category": "Macro"
+  },
+  {
+    "date": "2026-09-18",
+    "title": "BI RDG (Rapat Dewan Gubernur)",
+    "category": "Macro"
+  },
+  {
+    "date": "2026-10-15",
+    "title": "Batas Akhir Laporan Keuangan Q3 2026",
+    "category": "Earnings"
+  },
+  {
+    "date": "2026-11-13",
+    "title": "MSCI November 2026 Semi-Annual Review Announcement",
+    "category": "Macro"
+  },
+  {
+    "date": "2026-12-01",
+    "title": "MSCI November 2026 Rebalancing Effective Date",
+    "category": "Macro"
+  },
+  {
+    "date": "2026-10-19",
+    "event": "MSCI Index Review: Monitoring Date",
+    "tag": "MSCI"
+  },
+  {
+    "date": "2026-11-12",
+    "event": "MSCI Index Review: Announcement Date (WIB)",
+    "tag": "MSCI"
+  },
+  {
+    "date": "2026-12-01",
+    "event": "MSCI Index Review: Effective Date",
+    "tag": "MSCI"
+  }
+]
