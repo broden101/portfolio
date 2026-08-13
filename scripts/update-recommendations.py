@@ -80,7 +80,7 @@ def main():
             "state": rec.get("state"),
             "status": rec.get("status"),
             "date": rec.get("openDate"),
-            "source": "Economstock Tracker",
+            "source": "Konsensus Sekuritas",
             "url": "",
             "title": title,
         })
@@ -90,7 +90,7 @@ def main():
 
     out = {
         "updated_at": datetime.now(timezone.utc).astimezone().isoformat(),
-        "source": "terminal.economstock.com (jsDelivr CDN, reverse-engineered)",
+        "source": "Agregator Rekomendasi Sekuritas",
         "tracker_updated_at": tracker.get("updatedAt"),
         "since": tracker.get("since"),
         "total": len(data),

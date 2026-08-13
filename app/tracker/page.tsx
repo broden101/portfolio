@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Disclaimer, DataBadge, SourceNote, EmptyState } from "@/components/DataState";
+import { Disclaimer, EmptyState } from "@/components/DataState";
 
 const gold = "#d6ad5a";
 
@@ -28,7 +28,6 @@ export default function TrackerPage() {
   const [updatedAt, setUpdatedAt] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [sourceFilter, setSourceFilter] = useState("ALL");
 
   useEffect(() => {
     fetch("/data/tracker/latest.json")
@@ -44,15 +43,40 @@ export default function TrackerPage() {
       });
   }, []);
 
-  const filtered = data.filter((item) => {
-    const matchSearch =
-      item.ticker.toLowerCase().includes(search.toLowerCase()) ||
-      item.broker.toLowerCase().includes(search.toLowerCase()) ||
-      item.title.toLowerCase().includes(search.toLowerCase());
-    const matchSource =
-      sourceFilter === "ALL" || item.source.toUpperCase() === sourceFilter.toUpperCase();
-    return matchSearch && matchSource;
-  });
+  // Frekuensi kemunculan (ticker, tanggal) — emiten yang sering direkomendasikan
+  // pada hari yang sama (modus) diurutkan ke paling atas.
+  const freqMap = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const item of data) {
+      const key = `${item.date}|${item.ticker}`;
+      m.set(key, (m.get(key) || 0) + 1);
+    }
+    return m;
+  }, [data]);
+
+  const filtered = useMemo(() => {
+    return data
+      .filter((item) => {
+        const q = search.toLowerCase();
+        return (
+          item.ticker.toLowerCase().includes(q) ||
+          item.broker.toLowerCase().includes(q) ||
+          item.title.toLowerCase().includes(q)
+        );
+      })
+      .sort((a, b) => {
+        // 1. Tanggal rilis terbaru dulu
+        const da = a.date || "";
+        const db = b.date || "";
+        if (da !== db) return da < db ? 1 : -1;
+        // 2. Modus: emiten paling sering muncul di hari yang sama paling atas
+        const fa = freqMap.get(`${a.date}|${a.ticker}`) || 0;
+        const fb = freqMap.get(`${b.date}|${b.ticker}`) || 0;
+        if (fa !== fb) return fb - fa;
+        // 3. Upside tertinggi
+        return (b.upside_pct ?? -999) - (a.upside_pct ?? -999);
+      });
+  }, [data, search, freqMap]);
 
   return (
     <div className="min-h-screen bg-[#0d1117] text-[#e6edf3] font-sans flex flex-col">
@@ -74,7 +98,7 @@ export default function TrackerPage() {
               Rekomendasi Saham Terbaru
             </h1>
             <p className="text-sm text-gray-400 mt-1">
-              Rekomendasi analis sekuritas dari Economstock Terminal (data publik) — entry, TP, SL, harga live, &amp; potensi upside.
+              Rekomendasi analis sekuritas — entry, TP, SL, harga live, &amp; potensi upside.
             </p>
           </div>
 
@@ -94,32 +118,22 @@ export default function TrackerPage() {
           </div>
         </div>
 
-        {/* Filters & Search */}
+        {/* Search */}
         <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between bg-[#161b22] p-4 rounded-xl border border-gray-800">
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <input
               type="text"
-              placeholder="Cari emiten, broker, judul..."
+              placeholder="Cari emiten, broker..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="bg-[#0d1117] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#d6ad5a] w-full sm:w-80"
             />
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
-            {["ALL", "Economstock Tracker"].map((src) => (
-              <button
-                key={src}
-                onClick={() => setSourceFilter(src)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap ${
-                  sourceFilter === src
-                    ? "bg-[#d6ad5a] text-black font-semibold"
-                    : "bg-[#0d1117] text-gray-300 hover:bg-[#21262d] border border-gray-700"
-                }`}
-              >
-                {src}
-              </button>
-            ))}
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <span className="text-xs text-gray-400 whitespace-nowrap">
+              {filtered.length} rekomendasi
+            </span>
           </div>
         </div>
 
@@ -129,7 +143,7 @@ export default function TrackerPage() {
         ) : filtered.length === 0 ? (
           <EmptyState
             title="Tidak ada rekomendasi yang sesuai filter"
-            description="Coba ubah kata kunci pencarian atau pindah filter sumber."
+            description="Coba ubah kata kunci pencarian."
           />
         ) : (
           <div className="bg-[#161b22] rounded-xl border border-gray-800 overflow-hidden shadow-xl">
@@ -137,8 +151,8 @@ export default function TrackerPage() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-gray-800 bg-[#1f242c] text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    <th className="py-3 px-4">Tanggal</th>
                     <th className="py-3 px-4">Emiten</th>
-                    <th className="py-3 px-4">Tanggal Rilis</th>
                     <th className="py-3 px-4">Broker / Sumber</th>
                     <th className="py-3 px-4">Aksi</th>
                     <th className="py-3 px-4 text-right">Entry</th>
@@ -146,23 +160,21 @@ export default function TrackerPage() {
                     <th className="py-3 px-4 text-right">Stop Loss (SL)</th>
                     <th className="py-3 px-4 text-right">Harga Last</th>
                     <th className="py-3 px-4 text-right">Upside</th>
-                    <th className="py-3 px-4">Artikel / Sumber</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-800/60 text-sm">
                   {filtered.map((item, idx) => (
                     <tr key={idx} className="hover:bg-[#1f242c]/50 transition-colors">
+                      <td className="py-3.5 px-4 font-mono text-xs text-gray-300 whitespace-nowrap">
+                        {item.date ? new Date(item.date).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" }) : "—"}
+                      </td>
                       <td className="py-3.5 px-4 font-bold text-white">
                         <span className="font-mono bg-[#21262d] px-2 py-1 rounded text-[#d6ad5a] border border-gray-700">
                           {item.ticker}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 font-mono text-xs text-gray-300 whitespace-nowrap">
-                        {item.date ? new Date(item.date).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" }) : "—"}
-                      </td>
                       <td className="py-3.5 px-4">
                         <div className="font-medium text-gray-200">{item.broker}</div>
-                        <div className="text-xs text-gray-400">{item.source}</div>
                       </td>
                       <td className="py-3.5 px-4">
                         <span
@@ -200,21 +212,6 @@ export default function TrackerPage() {
                           </span>
                         ) : (
                           <span className="text-gray-500">—</span>
-                        )}
-                      </td>
-                      <td className="py-3.5 px-4 text-xs">
-                        {item.url ? (
-                          <a
-                            href={item.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:underline line-clamp-1 max-w-xs"
-                            title={item.title}
-                          >
-                            {item.title}
-                          </a>
-                        ) : (
-                          <span className="text-gray-400">{item.title}</span>
                         )}
                       </td>
                     </tr>
