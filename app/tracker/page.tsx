@@ -138,6 +138,7 @@ export default function TrackerPage() {
                 <thead>
                   <tr className="border-b border-gray-800 bg-[#1f242c] text-xs font-semibold text-gray-400 uppercase tracking-wider">
                     <th className="py-3 px-4">Emiten</th>
+                    <th className="py-3 px-4">Tanggal Rilis</th>
                     <th className="py-3 px-4">Broker / Sumber</th>
                     <th className="py-3 px-4">Aksi</th>
                     <th className="py-3 px-4 text-right">Entry</th>
@@ -155,6 +156,9 @@ export default function TrackerPage() {
                         <span className="font-mono bg-[#21262d] px-2 py-1 rounded text-[#d6ad5a] border border-gray-700">
                           {item.ticker}
                         </span>
+                      </td>
+                      <td className="py-3.5 px-4 font-mono text-xs text-gray-300 whitespace-nowrap">
+                        {item.date ? new Date(item.date).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" }) : "—"}
                       </td>
                       <td className="py-3.5 px-4">
                         <div className="font-medium text-gray-200">{item.broker}</div>
