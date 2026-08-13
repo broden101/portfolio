@@ -73,7 +73,9 @@ export default function TrackerPage() {
         const fa = freqMap.get(`${a.date}|${a.ticker}`) || 0;
         const fb = freqMap.get(`${b.date}|${b.ticker}`) || 0;
         if (fa !== fb) return fb - fa;
-        // 3. Upside tertinggi
+        // 3. Kelompokkan emiten yang sama biar berdampingan
+        if (a.ticker !== b.ticker) return a.ticker < b.ticker ? -1 : 1;
+        // 4. Upside tertinggi di dalam grup
         return (b.upside_pct ?? -999) - (a.upside_pct ?? -999);
       });
   }, [data, search, freqMap]);
