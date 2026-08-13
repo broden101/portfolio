@@ -12,6 +12,7 @@ const navLinks: NavLink[] = [
   { label: "Profile", href: "/#about" },
   { label: "Research", href: "/articles" },
   { label: "Valuation Lab", href: "/calculator" },
+  { label: "Tracker Saham", href: "/tracker" },
   { label: "Dashboard IHSG", href: "/playbook/ihsg" },
   { label: "IDX Screener", href: "/screener" },
   {
