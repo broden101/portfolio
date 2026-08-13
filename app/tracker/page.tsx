@@ -74,7 +74,7 @@ export default function TrackerPage() {
               Rekomendasi Saham Terbaru
             </h1>
             <p className="text-sm text-gray-400 mt-1">
-              Agregator rekomendasi analis sekuritas harian (CNBC, Kontan, &amp; Morning Brief) lengkap dengan harga live &amp; potensi upside.
+              Rekomendasi analis sekuritas dari Economstock Terminal (data publik) — entry, TP, SL, harga live, &amp; potensi upside.
             </p>
           </div>
 
@@ -107,7 +107,7 @@ export default function TrackerPage() {
           </div>
 
           <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
-            {["ALL", "CNBC Indonesia", "Kontan"].map((src) => (
+            {["ALL", "Economstock Tracker"].map((src) => (
               <button
                 key={src}
                 onClick={() => setSourceFilter(src)}
