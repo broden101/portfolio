@@ -262,6 +262,26 @@ export default function IHSGDashboard() {
     return { net7d: sumDays(7), net14d: sumDays(14), net30d: sumDays(30) };
   }, [flowHistory]);
 
+  const fearGreed = useMemo(() => {
+    const m1m = ihsg.perf1M ?? 0;
+    const s1m = Math.max(0, Math.min(100, ((m1m + 5) / 10) * 100));
+    const vix = data?.macro?.VIX?.close ?? 15;
+    const sVix = Math.max(0, Math.min(100, ((30 - vix) / 15) * 100));
+    const net7d = rollingNetFlow.net7d?.total ?? 0;
+    const sFlow = net7d >= 0 ? 65 : 35;
+    const chg = ihsg.change ?? 0;
+    const sChg = Math.max(0, Math.min(100, ((chg + 2) / 4) * 100));
+    const score = Math.round(s1m * 0.35 + sVix * 0.25 + sFlow * 0.25 + sChg * 0.15);
+    let label = "Neutral";
+    let color = "text-yellow-400";
+    let border = "border-yellow-500/20 bg-yellow-500/15";
+    if (score >= 75) { label = "Extreme Greed"; color = "text-emerald-400"; border = "border-emerald-500/20 bg-emerald-500/15"; }
+    else if (score >= 55) { label = "Greed"; color = "text-emerald-400"; border = "border-emerald-500/20 bg-emerald-500/15"; }
+    else if (score <= 25) { label = "Extreme Fear"; color = "text-red-400"; border = "border-red-500/20 bg-red-500/15"; }
+    else if (score <= 45) { label = "Fear"; color = "text-red-400"; border = "border-red-500/20 bg-red-500/15"; }
+    return { score, label, color, border, vix, net7d, m1m };
+  }, [ihsg, data, rollingNetFlow]);
+
   // MTD and YTD cumulative from history
   const cumulativeFlow = useMemo(() => {
     const now = new Date();
@@ -465,6 +485,28 @@ export default function IHSGDashboard() {
                     </div>
                   </div>
                 )}
+              </div>
+              {/* FEAR & GREED INDEX */}
+              <div className={`mt-4 mb-5 p-4 border ${fearGreed.border}`}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[#B8AA96]/50 text-[9px] tracking-[0.15em] uppercase">Fear & Greed Index</span>
+                  <span className={`text-[10px] font-mono ${fearGreed.color}`}>{fearGreed.score}/100</span>
+                </div>
+                <div className={`font-heading text-xl font-medium ${fearGreed.color} mb-3`}>{fearGreed.label}</div>
+                {/* Gradient bar: red → yellow → green */}
+                <div className="relative h-2 mb-1 rounded-full overflow-hidden" style={{ background: "linear-gradient(90deg, #ef4444, #f59e0b 35%, #eab308 50%, #84cc16 65%, #22c55e)" }}>
+                  <div className="absolute top-1/2 -translate-y-1/2 w-1 h-4 bg-[#F4EFE6] rounded-full shadow-[0_0_6px_rgba(255,255,255,0.8)]" style={{ left: `calc(${fearGreed.score}% - 2px)` }} />
+                </div>
+                <div className="flex justify-between text-[8px] text-[#B8AA96]/40 tracking-wider uppercase mb-4">
+                  <span>Fear</span><span>Neutral</span><span>Greed</span>
+                </div>
+                {/* Components */}
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[10px]">
+                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">Momentum 1M</span><span className={`font-mono ${fearGreed.m1m >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fearGreed.m1m >= 0 ? "+" : ""}{fearGreed.m1m.toFixed(1)}%</span></div>
+                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">VIX</span><span className="font-mono text-[#B8AA96]">{fearGreed.vix != null ? fearGreed.vix.toFixed(1) : "—"}</span></div>
+                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">Net Asing 7D</span><span className={`font-mono ${fearGreed.net7d >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fearGreed.net7d >= 0 ? "+" : ""}Rp{(fearGreed.net7d / 1e9).toFixed(0)}M</span></div>
+                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">IHSG Hari Ini</span><span className={`font-mono ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtPct(ihsg.change)}</span></div>
+                </div>
               </div>
               <div className="space-y-1.5">
                 {keyLevels.resistance.map((r, i) => (
