@@ -176,6 +176,7 @@ async function scan(endpoint: string, tickers: string[], columns: string[]): Pro
       method: "POST", headers: TV_HEADERS,
       body: JSON.stringify({ columns, symbols: { tickers }, range: [0, tickers.length] }),
       cache: "no-store",
+      next: { revalidate: 0 },
     });
     if (!resp.ok) return out;
     const data = await resp.json();
@@ -295,7 +296,7 @@ export async function GET() {
         manualData: manualDataClean, // BI Rate, trade balance
         coverage: { ihsg: !!ihsgQuote, sectorIndices: indexCount, sectorBaskets: basketCount, macro: Object.keys(macro).length },
       },
-      { headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120" } }
+      { headers: { "Cache-Control": "no-store, max-age=0" } }
     );
   } catch (error) {
     console.error("market route error:", error);
