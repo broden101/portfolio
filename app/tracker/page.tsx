@@ -21,6 +21,7 @@ interface Recommendation {
   last_price?: number;
   change_pct?: number;
   upside_pct?: number;
+  downside_pct?: number;
 }
 
 export default function TrackerPage() {
@@ -162,6 +163,7 @@ export default function TrackerPage() {
                     <th className="py-3 px-4 text-right">Stop Loss (SL)</th>
                     <th className="py-3 px-4 text-right">Harga Last</th>
                     <th className="py-3 px-4 text-right">Upside</th>
+                    <th className="py-3 px-4 text-right">Downside</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-800/60 text-sm">
@@ -211,6 +213,19 @@ export default function TrackerPage() {
                             }
                           >
                             {item.upside_pct > 0 ? `+${item.upside_pct}%` : `${item.upside_pct}%`}
+                          </span>
+                        ) : (
+                          <span className="text-gray-500">—</span>
+                        )}
+                      </td>
+                      <td className="py-3.5 px-4 text-right font-mono">
+                        {item.downside_pct !== undefined && item.downside_pct !== null ? (
+                          <span
+                            className={
+                              item.downside_pct >= 0 ? "text-green-400 font-bold" : "text-red-400 font-bold"
+                            }
+                          >
+                            {item.downside_pct > 0 ? `+${item.downside_pct}%` : `${item.downside_pct}%`}
                           </span>
                         ) : (
                           <span className="text-gray-500">—</span>

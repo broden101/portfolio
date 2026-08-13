@@ -58,6 +58,10 @@ def main():
         if last and tp1:
             upside = round((tp1 / last - 1) * 100, 2)
 
+        downside = None
+        if last and sl:
+            downside = round((sl / last - 1) * 100, 2)
+
         note = (rec.get("note") or "")[:120]
         title = note or f"Rekomendasi {rec.get('type', 'BUY')} {ticker}"
 
@@ -74,6 +78,7 @@ def main():
             "stop_loss": sl,
             "last_price": last,
             "upside_pct": upside,
+            "downside_pct": downside,
             "floating_pct": rec.get("floatingPct"),
             "score": rec.get("score"),
             "validity": rec.get("validity"),
