@@ -528,8 +528,8 @@ export default function IHSGDashboard() {
                           })}
                         </div>
                         <div className="flex justify-between text-[#B8AA96]/30 text-[7px] mt-1">
-                          <span>{new Date(txnHistory.slice(-7)[0]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
-                          <span>{new Date(txnHistory.slice(-1)[0]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
+                          <span>{new Date(txnHistory[6]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
+                          <span>{new Date(txnHistory[0]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
                         </div>
                       </div>
                     )}
