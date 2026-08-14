@@ -40,9 +40,23 @@ def main():
         print(f"WARN: live.json gagal ({e}), pakai lastPrice dari tracker", file=sys.stderr)
 
     open_list = tracker.get("openList") or []
+    pending_list = tracker.get("pendingList") or []
+
+    # Gabung open (TRIGGERED) + pending (belum kena entry) biar rekomendasi
+    # hari ini langsung muncul meski belum trigger.
+    recs = open_list + pending_list
+    # Dedup by id (satu rekomen bisa muncul di dua list)
+    seen_ids = set()
+    unique_recs = []
+    for rec in recs:
+        rid = rec.get("id")
+        if rid in seen_ids:
+            continue
+        seen_ids.add(rid)
+        unique_recs.append(rec)
 
     data = []
-    for rec in open_list:
+    for rec in unique_recs:
         ticker = rec.get("ticker", "")
         if not ticker:
             continue
@@ -100,6 +114,7 @@ def main():
         "since": tracker.get("since"),
         "total": len(data),
         "open_count": len(open_list),
+        "pending_count": len(pending_list),
         "winrate": tracker.get("winrate"),
         "net_return": tracker.get("netReturn"),
         "data": data,
