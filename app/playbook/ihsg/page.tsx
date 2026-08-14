@@ -488,18 +488,11 @@ export default function IHSGDashboard() {
               </div>
               {/* FEAR & GREED INDEX */}
               <div className={`mt-4 mb-5 p-4 border ${fearGreed.border}`}>
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-2">
                   <span className="text-[#B8AA96]/50 text-[9px] tracking-[0.15em] uppercase">Fear & Greed Index</span>
-                  <span className={`text-[10px] font-mono ${fearGreed.color}`}>{fearGreed.score}/100</span>
+                  <span className={`text-[10px] font-mono ${fearGreed.color}`}>IDX</span>
                 </div>
-                <div className={`font-heading text-xl font-medium ${fearGreed.color} mb-3`}>{fearGreed.label}</div>
-                {/* Gradient bar: red → yellow → green */}
-                <div className="relative h-2 mb-1 rounded-full overflow-hidden" style={{ background: "linear-gradient(90deg, #ef4444, #f59e0b 35%, #eab308 50%, #84cc16 65%, #22c55e)" }}>
-                  <div className="absolute top-1/2 -translate-y-1/2 w-1 h-4 bg-[#F4EFE6] rounded-full shadow-[0_0_6px_rgba(255,255,255,0.8)]" style={{ left: `calc(${fearGreed.score}% - 2px)` }} />
-                </div>
-                <div className="flex justify-between text-[8px] text-[#B8AA96]/40 tracking-wider uppercase mb-4">
-                  <span>Fear</span><span>Neutral</span><span>Greed</span>
-                </div>
+                <FearGreedGauge score={fearGreed.score} label={fearGreed.label} color={fearGreed.color} />
                 {/* Components */}
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[10px]">
                   <div className="flex justify-between"><span className="text-[#B8AA96]/40">Momentum 1M</span><span className={`font-mono ${fearGreed.m1m >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fearGreed.m1m >= 0 ? "+" : ""}{fearGreed.m1m.toFixed(1)}%</span></div>
@@ -873,4 +866,88 @@ function LevelRow({ label, value, tone, price, sub }: { label: string; value: nu
 function PerfCell({ v }: { v: number | null | undefined }) {
   if (v == null || !Number.isFinite(v)) return <td className="py-2 text-right text-[#B8AA96]/30">—</td>;
   return <td className={`py-2 text-right ${v >= 0 ? "text-emerald-400" : "text-red-400"}`}>{v >= 0 ? "+" : ""}{v.toFixed(2)}%</td>;
+}
+
+/* ── Speedometer Gauge SVG for Fear & Greed ── */
+function FearGreedGauge({ score, label, color }: { score: number; label: string; color: string }) {
+  const angleDeg = 180 - (score / 100) * 180;
+  const rad = (angleDeg * Math.PI) / 180;
+
+  const cx = 100;
+  const cy = 92;
+  const r = 68;
+  const innerR = 50;
+
+  const polar = (radius: number, deg: number) => {
+    const a = (deg * Math.PI) / 180;
+    return {
+      x: cx + radius * Math.cos(a),
+      y: cy - radius * Math.sin(a),
+    };
+  };
+
+  const segments = [
+    { start: 0, end: 25, fill: "#ef4444" },
+    { start: 25, end: 45, fill: "#f97316" },
+    { start: 45, end: 55, fill: "#eab308" },
+    { start: 55, end: 75, fill: "#84cc16" },
+    { start: 75, end: 100, fill: "#22c55e" },
+  ];
+
+  const makeArcPath = (startPct: number, endPct: number) => {
+    const startA = 180 - startPct * 1.8;
+    const endA = 180 - endPct * 1.8;
+
+    const p1 = polar(r, startA);
+    const p2 = polar(r, endA);
+    const p3 = polar(innerR, endA);
+    const p4 = polar(innerR, startA);
+
+    return `M ${p1.x} ${p1.y} A ${r} ${r} 0 0 1 ${p2.x} ${p2.y} L ${p3.x} ${p3.y} A ${innerR} ${innerR} 0 0 0 ${p4.x} ${p4.y} Z`;
+  };
+
+  const needleLen = 56;
+  const needleTip = {
+    x: cx + needleLen * Math.cos(rad),
+    y: cy - needleLen * Math.sin(rad),
+  };
+
+  const badgeR = 59;
+  const badgePos = {
+    x: cx + badgeR * Math.cos(rad),
+    y: cy - badgeR * Math.sin(rad),
+  };
+
+  return (
+    <div className="flex flex-col items-center my-2">
+      <svg width={210} height={115} viewBox="0 0 200 115" className="overflow-visible">
+        {segments.map((s, idx) => (
+          <path key={idx} d={makeArcPath(s.start, s.end)} fill={s.fill} opacity={0.9} />
+        ))}
+
+        <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`} fill="none" stroke="#2C261E" strokeWidth={1} />
+        <path d={`M ${cx - innerR} ${cy} A ${innerR} ${innerR} 0 0 1 ${cx + innerR} ${cy}`} fill="none" stroke="#2C261E" strokeWidth={1} />
+
+        <text x={22} y={108} fill="#B8AA96" opacity={0.5} fontSize="8" fontFamily="monospace" textAnchor="middle">0</text>
+        <text x={100} y={16} fill="#B8AA96" opacity={0.5} fontSize="8" fontFamily="monospace" textAnchor="middle">50</text>
+        <text x={178} y={108} fill="#B8AA96" opacity={0.5} fontSize="8" fontFamily="monospace" textAnchor="middle">100</text>
+
+        <line x1={cx} y1={cy} x2={needleTip.x} y2={needleTip.y} stroke="#F4EFE6" strokeWidth={2.5} strokeLinecap="round" />
+        <circle cx={cx} cy={cy} r={5} fill="#F4EFE6" />
+        <circle cx={cx} cy={cy} r={2.5} fill="#0B0B0A" />
+
+        <g transform={`translate(${badgePos.x}, ${badgePos.y})`}>
+          <circle r={10} fill="#0B0B0A" stroke="#F4EFE6" strokeWidth={1.5} />
+          <text x={0} y={3} fill="#F4EFE6" fontSize="8.5" fontWeight="bold" fontFamily="monospace" textAnchor="middle">
+            {score}
+          </text>
+        </g>
+      </svg>
+
+      <div className="mt-1 text-center">
+        <span className="text-[#B8AA96]/50 text-[10px] uppercase tracking-wider">Now: </span>
+        <span className={`font-heading text-lg font-bold ${color}`}>{label}</span>
+      </div>
+    </div>
+  );
 }
