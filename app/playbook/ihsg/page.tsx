@@ -268,7 +268,15 @@ export default function IHSGDashboard() {
     const vix = data?.macro?.VIX?.close ?? 15;
     const sVix = Math.max(0, Math.min(100, ((30 - vix) / 15) * 100));
     const net7d = rollingNetFlow.net7d?.total ?? 0;
-    const sFlow = net7d >= 0 ? 65 : 35;
+    // Proporsional adaptif: skala simetris dari max |rolling 7d| 90 hari terakhir
+    const WINDOW = 90;
+    const hist = flowHistory.slice(-WINDOW);
+    const rolls: number[] = [];
+    for (let i = 0; i + 7 <= hist.length; i++) {
+      rolls.push(hist.slice(i, i + 7).reduce((s, x) => s + (x.dailyNet ?? 0), 0));
+    }
+    const scale = Math.max(Math.abs(Math.min(0, ...rolls)), Math.abs(Math.max(0, ...rolls)), 1e6);
+    const sFlow = Math.max(0, Math.min(100, 50 + (net7d / scale) * 50));
     const chg = ihsg.change ?? 0;
     const sChg = Math.max(0, Math.min(100, ((chg + 2) / 4) * 100));
     const score = Math.round(s1m * 0.35 + sVix * 0.25 + sFlow * 0.25 + sChg * 0.15);
@@ -279,8 +287,8 @@ export default function IHSGDashboard() {
     else if (score >= 55) { label = "Greed"; color = "text-emerald-400"; border = "border-emerald-500/20 bg-emerald-500/15"; }
     else if (score <= 25) { label = "Extreme Fear"; color = "text-red-400"; border = "border-red-500/20 bg-red-500/15"; }
     else if (score <= 45) { label = "Fear"; color = "text-red-400"; border = "border-red-500/20 bg-red-500/15"; }
-    return { score, label, color, border, vix, net7d, m1m };
-  }, [ihsg, data, rollingNetFlow]);
+    return { score, label, color, border, vix, net7d, m1m, sFlow };
+  }, [ihsg, data, rollingNetFlow, flowHistory]);
 
   // MTD and YTD cumulative from history
   const cumulativeFlow = useMemo(() => {
