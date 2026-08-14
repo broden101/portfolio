@@ -12,7 +12,7 @@ import sys
 import urllib.request
 from datetime import datetime, timezone
 
-TRACKER_URL = "https://cdn.jsdelivr.net/gh/chamdani49-boop/terminal@main/public/tracker.json"
+TRACKER_URL = "https://raw.githubusercontent.com/chamdani49-boop/terminal/main/public/tracker.json"
 LIVE_URL = "https://terminal-live.chamdani49.workers.dev/live.json"
 OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "public", "data", "tracker", "latest.json")
 
