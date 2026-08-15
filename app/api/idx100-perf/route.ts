@@ -39,13 +39,20 @@ export async function GET() {
     }
 
     const data = await r.json();
-    const rows = (data.data ?? []).map((row: { s: string; d: (string | number | null)[] }) => ({
-      ticker: row.s.replace("IDX:", ""),
-      name: row.d[0] ?? "",
-      perfDay: row.d[1] != null ? Number(row.d[1]) : null,
-      perfWeek: row.d[2] != null ? Number(row.d[2]) : null,
-      perf1M: row.d[3] != null ? Number(row.d[3]) : null,
-    }));
+    const rows = (data.data ?? []).map((row: { s: string; d: (string | number | null)[] }) => {
+      let perfDay = row.d[1] != null ? Number(row.d[1]) : null;
+      // Sanitize TradingView scanner data glitches (IDX auto rejection limit = max 35%)
+      if (perfDay !== null && (perfDay > 35 || perfDay < -35)) {
+        perfDay = null;
+      }
+      return {
+        ticker: row.s.replace("IDX:", ""),
+        name: row.d[0] ?? "",
+        perfDay,
+        perfWeek: row.d[2] != null ? Number(row.d[2]) : null,
+        perf1M: row.d[3] != null ? Number(row.d[3]) : null,
+      };
+    });
 
     return NextResponse.json(
       { data: rows, total: rows.length },
