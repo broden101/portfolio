@@ -3,6 +3,14 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 const API_BASE = "https://apiv2.tradersaham.com/api/market-insight";
+const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 jam
+
+// In-memory cache (per serverless instance).
+// 1) dateCache: hasil fetch upstream per tanggal — dipakai ulang lintas ticker.
+// 2) responseCache: hasil akhir per ticker — request user berulang tidak fetch ulang.
+const dateCache = new Map<string, { expiresAt: number; payload: any }>();
+const responseCache = new Map<string, { expiresAt: number; payload: unknown }>();
+
 const HEADERS: Record<string, string> = {
   "Content-Type": "application/json",
   "User-Agent": "Mozilla/5.0 (compatible; RagaPlaybook/1.0)",
@@ -14,7 +22,27 @@ interface DayData {
   net_value: number;
 }
 
+function getCached<T>(cache: Map<string, { expiresAt: number; payload: T }>, key: string): T | undefined {
+  const entry = cache.get(key);
+  if (!entry) return undefined;
+  if (Date.now() > entry.expiresAt) {
+    cache.delete(key);
+    return undefined;
+  }
+  return entry.payload;
+}
+
+function setCached<T>(cache: Map<string, { expiresAt: number; payload: T }>, key: string, payload: T) {
+  cache.set(key, { expiresAt: Date.now() + CACHE_TTL_MS, payload });
+}
+
 async function fetchTickerForDay(date: string, ticker: string): Promise<number | null> {
+  const dayKey = `day:${date}`;
+  const cachedDay = getCached(dateCache, dayKey);
+  if (cachedDay !== undefined) {
+    return typeof cachedDay[ticker] === "number" ? Number(cachedDay[ticker]) : 0;
+  }
+
   try {
     const r = await fetch(`${API_BASE}/foreign-flow?date=${date}`, {
       headers: HEADERS,
@@ -24,7 +52,20 @@ async function fetchTickerForDay(date: string, ticker: string): Promise<number |
     const d = await r.json();
     const all = [...(d.topBuy ?? d.accumulation ?? []), ...(d.topSell ?? d.distribution ?? [])];
     const found = all.find((s: any) => s.stock_code === ticker);
-    return found ? Number(found.net_value) : 0;
+    const value = found ? Number(found.net_value) : 0;
+
+    // Simpan seluruh daftar foreign flow tanggal tsb (bukan hanya ticker ini)
+    // supaya request ticker lain di tanggal yang sama tidak fetch ulang.
+    const dayPayload: Record<string, number> = {};
+    for (const s of all) {
+      if (s && s.stock_code && typeof s.net_value === "number") {
+        dayPayload[s.stock_code] = Number(s.net_value);
+      }
+    }
+    if (Object.keys(dayPayload).length > 0) {
+      setCached(dateCache, dayKey, dayPayload);
+    }
+    return value;
   } catch {
     return null;
   }
@@ -34,6 +75,15 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const ticker = searchParams.get("ticker")?.toUpperCase();
   if (!ticker) return NextResponse.json({ error: "Missing ticker" }, { status: 400 });
+
+  // Response-level cache: request user berulang dalam 6 jam tidak hit upstream sama sekali.
+  const respKey = `ticker:${ticker}`;
+  const cachedResp = getCached(responseCache, respKey);
+  if (cachedResp !== undefined) {
+    return NextResponse.json(cachedResp, {
+      headers: { "Cache-Control": "no-store, max-age=0", "X-Cache": "HIT" },
+    });
+  }
 
   const today = new Date();
   const getDates = (n: number) => {
@@ -48,7 +98,17 @@ export async function GET(req: Request) {
   };
 
   const dates = getDates(130);
-  const results = await Promise.all(dates.map((dt) => fetchTickerForDay(dt, ticker)));
+
+  // Batch: jalankan 6 tanggal per gelombang supaya tidak membuka 130 koneksi sekaligus.
+  const results: (number | null)[] = new Array(dates.length).fill(null);
+  const BATCH = 6;
+  for (let i = 0; i < dates.length; i += BATCH) {
+    const batch = dates.slice(i, i + BATCH);
+    const batchResults = await Promise.all(batch.map((dt) => fetchTickerForDay(dt, ticker)));
+    batchResults.forEach((v, j) => {
+      results[i + j] = v;
+    });
+  }
 
   const periods = {
     "1d": results[0] ?? 0,
@@ -58,5 +118,10 @@ export async function GET(req: Request) {
     "YTD": results.reduce((a: number, b) => a + (b ?? 0), 0),
   };
 
-  return NextResponse.json({ ticker, periods });
+  const payload = { ticker, periods };
+  setCached(responseCache, respKey, payload);
+
+  return NextResponse.json(payload, {
+    headers: { "Cache-Control": "no-store, max-age=0", "X-Cache": "MISS" },
+  });
 }
