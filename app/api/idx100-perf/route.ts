@@ -42,8 +42,8 @@ export async function GET() {
     const rows = (data.data ?? []).map((row: { s: string; d: (string | number | null)[] }) => {
       let perfDay = row.d[1] != null ? Number(row.d[1]) : null;
       // Sanitize TradingView scanner data glitches
-      // IDX Auto Rejection (ARA) limits: >200 = 25%, >5000 = 20%
-      if (perfDay !== null && (perfDay > 25 || perfDay < -25)) {
+      // IDX Auto Rejection (ARA) upper band can reach 35% for low-price names.
+      if (perfDay !== null && (perfDay > 35 || perfDay < -35)) {
         perfDay = null;
       }
       return {
