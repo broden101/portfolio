@@ -118,6 +118,11 @@ export default function IHSGDashboard() {
     } finally {
       setLoading(false);
     }
+    // Refresh foreign flow history on same cadence (rolling 7D/14D/30D + historis harian fresh)
+    fetch("/api/foreign-flow-history")
+      .then((r) => r.json())
+      .then((d) => setFlowHistory(d.days ?? []))
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -125,14 +130,6 @@ export default function IHSGDashboard() {
     intervalRef.current = setInterval(refresh, 30_000);
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [refresh]);
-
-  // Fetch foreign flow history (rolling net flow)
-  useEffect(() => {
-    fetch("/api/foreign-flow-history")
-      .then((r) => r.json())
-      .then((d) => setFlowHistory(d.days ?? []))
-      .catch(() => {});
-  }, []);
 
   // Fetch commodity prices
   useEffect(() => {
@@ -505,7 +502,7 @@ export default function IHSGDashboard() {
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[10px]">
                   <div className="flex justify-between"><span className="text-[#B8AA96]/40">Momentum 1M</span><span className={`font-mono ${fearGreed.m1m >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fearGreed.m1m >= 0 ? "+" : ""}{fearGreed.m1m.toFixed(1)}%</span></div>
                   <div className="flex justify-between"><span className="text-[#B8AA96]/40">VIX</span><span className="font-mono text-[#B8AA96]">{fearGreed.vix != null ? fearGreed.vix.toFixed(1) : "—"}</span></div>
-                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">Net Asing 7D</span><span className={`font-mono ${fearGreed.net7d >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fearGreed.net7d >= 0 ? "+" : ""}Rp{(fearGreed.net7d / 1e9).toFixed(0)}M</span></div>
+                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">Net Asing 7D</span><span className={`font-mono ${fearGreed.net7d >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fmtMiliar(Math.round(fearGreed.net7d / 1e3))}</span></div>
                   <div className="flex justify-between"><span className="text-[#B8AA96]/40">IHSG Hari Ini</span><span className={`font-mono ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtPct(ihsg.change)}</span></div>
                 </div>
               </div>
