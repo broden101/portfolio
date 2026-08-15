@@ -5,11 +5,11 @@ const TV_SCANNER_URL = "https://scanner.tradingview.com/indonesia/scan";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { tickers, sector } = body;
+    const { tickers, sector, sectors } = body;
 
-    // Support either ticker list or sector filter
-    if (!tickers && !sector) {
-      return NextResponse.json({ error: "tickers or sector required" }, { status: 400 });
+    // Support ticker list, single sector, or multi-sector array
+    if (!tickers && !sector && (!sectors || !Array.isArray(sectors) || sectors.length === 0)) {
+      return NextResponse.json({ error: "tickers, sector, or sectors required" }, { status: 400 });
     }
 
     const payload: Record<string, unknown> = {
@@ -32,6 +32,13 @@ export async function POST(req: NextRequest) {
       payload.filter = [
         { left: "name", operation: "in_range", right: unique },
         { left: "is_primary", operation: "equal", right: true },
+      ];
+    } else if (Array.isArray(sectors) && sectors.length > 0) {
+      const uniq = Array.from(new Set(sectors));
+      payload.filter = [
+        { left: "sector", operation: "in_range", right: uniq },
+        { left: "is_primary", operation: "equal", right: true },
+        { left: "market_cap_basic", operation: "greater", right: 0 },
       ];
     } else if (sector) {
       payload.filter = [

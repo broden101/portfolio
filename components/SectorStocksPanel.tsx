@@ -37,17 +37,17 @@ export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor,
         // Basket sectors: use explicit ticker list (just ticker, not IDX:TICKER)
         body = { tickers: sectorTickers };
       } else {
-        // Index sectors: filter by TradingView sector name
-        const sectorMap: Record<string, string> = {
-          IDXFINANCE: "Finance",
-          IDXBASIC: "Basic Materials",
-          IDXENERGY: "Energy",
-          IDXINDUST: "Industrials",
-          IDXHEALTH: "Healthcare",
-          IDXPROPERT: "Properties & Real Estate",
+        // Index sectors: map IDX sector code → TradingView sector names
+        const sectorMap: Record<string, string[]> = {
+          IDXFINANCE: ["Finance"],
+          IDXBASIC: ["Process Industries", "Non-Energy Minerals"],
+          IDXENERGY: ["Energy Minerals"],
+          IDXINDUST: ["Producer Manufacturing", "Industrial Services"],
+          IDXHEALTH: ["Health Services", "Health Technology"],
+          IDXPROPERT: ["Finance"], // TV has no property sector; properties sit under Finance
         };
-        const tvSector = sectorMap[sectorCode] || sectorName;
-        body = { sector: tvSector };
+        const tvSectors = sectorMap[sectorCode] || [sectorName];
+        body = { sectors: tvSectors };
       }
 
       const resp = await fetch("/api/scanner", {

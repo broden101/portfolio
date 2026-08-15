@@ -102,6 +102,9 @@ export default function IHSGDashboard() {
     IDXCYCLIC: ["AMRT", "BELI", "CMRY", "EMTK", "MSIN", "MAPI", "AKRA", "VKTR", "MDIY", "BUVA", "FILM", "MAPA", "MGLV", "SCMA", "CITA", "TSPC", "ALII", "BUKA", "MIDI", "BHAT", "HRTA", "INPP", "CNMA", "CLAY", "PNLF", "EPMT", "BOGA", "ERAA", "ACES", "FORE", "NATO", "TGKA", "SINI", "MNCN", "BPII", "JTPE", "MPMX", "GJTL", "HEXA", "GOLF", "LPPF", "IMAS", "OMRE", "JSPT", "DAAZ", "MMIX", "VISI", "PNIN", "MDLA", "MDIA", "MINA", "BLTZ", "RALS", "DAYA", "MAPB", "BHIT", "IATA", "DEPO", "PSKT", "BMTR", "OASA", "CSAP", "FORU", "SPTO", "SONA", "ERAL", "FUTR", "IPTV", "RAAM", "PMJS", "MKTR", "WOOD", "POLI", "MLPL", "HERO", "BLUE", "CARS", "ARTA", "LTLS", "FAST", "DMMX", "LUCY", "BUAH", "LIVE", "DOOH", "BOLA", "FOLK", "LFLO", "KING", "RANC", "KONI", "ASLC", "KDTN", "SOSS", "PJAA", "RODA", "KSIX", "VERN", "SHID", "ENAK", "SOTS", "NETV", "SMGA", "MPPA", "IBOS", "PANR", "IRRA", "PZZA", "LABS", "PEVE", "VIVA", "UNSP", "FITT", "UNTD", "BABY", "GRPM", "PMUI", "GDYR", "ESTA", "GLVA", "KMDS", "ZATA", "GPRA", "PNSE", "BAYU", "UFOE", "MUTU", "DPUM", "DART", "EAST", "SCNP", "HYGN", "TYRE", "TIRA", "BMSR", "PADA", "DYAN", "KOBX", "MICE", "PDES", "CRSN", "IOTF", "NAIK", "HAJJ", "HRME", "BAPA", "DEWI", "SMLE", "SDPC", "MEJA", "DOSS", "AGAR", "INTA", "MDRN", "PEHA", "PTSP", "MRAT", "TAMA", "ECII", "PTMP", "CAKK", "DFAM", "RBMS", "MPIX", "MANG", "KBLV", "SLIS", "LAND", "LMPI", "NTBK", "YELO", "BAUT", "KOPI", "INTD", "MARI", "ABBA", "FOOD", "ICON", "MERI", "TMPO", "SNLK", "OLIV", "NANO", "KIOS", "AIMS", "PGLI", "OPMS", "KOIN", "HDIT", "LUCK", "CSMI", "IDEA", "KICI", "BMBL", "PLAN", "HADE"],
     IDXNONCYC: ["PANI", "ICBP", "HMSP", "UNVR", "INDF", "MYOR", "GGRM", "FAPA", "ADES", "MLBI", "STTP", "ULTJ", "GOOD", "YUPI", "POLU", "CLEO", "SIMP", "DMND", "UNIC", "EURO", "VICI", "PSGO", "ROTI", "WIIM", "KEJU", "FISH", "CBUT", "BEEF", "KINO", "DLTA", "UCID", "CEKA", "SKLT", "TCID", "CAMP", "COCO", "AISA", "STRK", "SKBM", "BELL", "TRIS", "ZONE", "MAXI", "WINE", "CRAB", "SRSN", "GUNA", "SURI", "BEER", "BOBA", "ITIC", "ENZO", "NAYZ", "WAPO", "DSFI", "MBTO", "NASI", "ISEA", "BATA", "IKAN", "TAYS", "RICY", "PCAR", "SOUL"],
     IDXTRANS: ["TCPI", "GIAA", "JSMR", "ELPI", "RMKE", "CMNP", "TMAS", "GMFI", "BULL", "MBSS", "SHIP", "SMDR", "CASS", "BIRD", "HATM", "BESS", "CBRE", "SOCI", "WINS", "PORT", "ASSA", "HUMI", "IPCC", "GTSI", "IPCM", "TPMA", "PSSI", "PSAT", "BLOG", "BBRM", "BSML", "BLTA", "CMPP", "TAMU", "MITI", "NELY", "HAIS", "RIGS", "BOAT", "GTRA", "MPXL", "SAFE", "KLAS", "PURA", "SDMU", "TRUK", "SAPX", "HELI", "PTIS", "PPGL", "WEHA", "LAJU", "TAXI", "KARW", "CANI", "JAYA", "LRNA", "TNCA", "KJEN", "ARKA"],
+    // TradingView has no property sector (property stocks sit under Finance),
+    // so IDXPROPERT uses an explicit property basket.
+    IDXPROPERT: ["BSDE", "CTRA", "SMRA", "PWON", "LPKR", "ASRI", "DILD", "MTLA", "MKPI", "BIPP", "ELTY", "TARA", "RDTX", "BAPI", "BCIP", "DART", "GWSA", "JRPT", "LAND", "MDLN", "NIRO", "PPRO", "PUDP", "RBMS", "REAL", "RODA", "SATU", "SMDM", "TAMI", "CSIS", "EMDE", "GRPM", "GPRA", "HOME", "INDO", "LAMI", "MTFN", "MTSM", "PAMG", "DMAS", "BSBK", "URBN"],
   };
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -739,7 +742,7 @@ export default function IHSGDashboard() {
                 const bg = perf == null ? "rgba(184, 170, 150, 0.05)" : perf >= 0 ? `rgba(34, 197, 94, ${0.08 + intensity * 0.25})` : `rgba(239, 68, 68, ${0.08 + intensity * 0.25})`;
                 const borderColor = perf == null ? "rgba(44, 38, 30, 0.5)" : perf >= 0 ? `rgba(34, 197, 94, ${0.15 + intensity * 0.3})` : `rgba(239, 68, 68, ${0.15 + intensity * 0.3})`;
                 return (
-                  <div key={s.code} className="p-4 border transition-all hover:scale-[1.03] cursor-pointer" style={{ backgroundColor: bg, borderColor }} onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: s.type, tickers: BASKET_TICKERS[s.code] })}>
+                  <div key={s.code} className="p-4 border transition-all hover:scale-[1.03] cursor-pointer" style={{ backgroundColor: bg, borderColor }} onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: BASKET_TICKERS[s.code] ? "basket" : s.type, tickers: BASKET_TICKERS[s.code] })}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-[#F4EFE6] text-xs font-medium">{s.name}</span>
                       <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
@@ -771,7 +774,7 @@ export default function IHSGDashboard() {
                 </thead>
                 <tbody className="font-mono">
                   {sectors.map((s) => (
-                    <tr key={s.code} className="border-b border-[#2C261E]/30 cursor-pointer hover:bg-[#2C261E]/40 transition-colors" onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: s.type, tickers: BASKET_TICKERS[s.code] })}>
+                    <tr key={s.code} className="border-b border-[#2C261E]/30 cursor-pointer hover:bg-[#2C261E]/40 transition-colors" onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: BASKET_TICKERS[s.code] ? "basket" : s.type, tickers: BASKET_TICKERS[s.code] })}>
                       <td className="py-2 text-[#F4EFE6] font-sans flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
                         {s.name}
