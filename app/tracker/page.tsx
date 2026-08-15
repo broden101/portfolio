@@ -29,19 +29,74 @@ export default function TrackerPage() {
   const [updatedAt, setUpdatedAt] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [lastLiveAt, setLastLiveAt] = useState<string>("");
+
+  function mergeLive(json: any, currentData: Recommendation[]) {
+    const liveMap = json?.live || {};
+    setLastLiveAt(new Date().toLocaleTimeString("id-ID"));
+    setData((prev) =>
+      prev.map((item) => {
+        const liveObj = liveMap[item.ticker];
+        if (!liveObj || typeof liveObj.price !== "number") return item;
+        const newLast = liveObj.price;
+        let newUpside = item.upside_pct;
+        let newDownside = item.downside_pct;
+        const tpNum = parseFloat(item.target_price);
+        if (!isNaN(tpNum) && newLast > 0) {
+          newUpside = parseFloat(((tpNum / newLast - 1) * 100).toFixed(2));
+        }
+        const slNum = parseFloat(item.stop_loss);
+        if (!isNaN(slNum) && newLast > 0) {
+          newDownside = parseFloat(((slNum / newLast - 1) * 100).toFixed(2));
+        }
+        return {
+          ...item,
+          last_price: newLast,
+          upside_pct: newUpside,
+          downside_pct: newDownside,
+        };
+      })
+    );
+  }
 
   useEffect(() => {
-    fetch("/data/tracker/latest.json")
-      .then((res) => res.json())
-      .then((json) => {
-        setData(json.data || []);
+    let isMounted = true;
+
+    async function loadData() {
+      try {
+        const res = await fetch("/data/tracker/latest.json");
+        const json = await res.json();
+        if (!isMounted) return;
+        const initialData = json.data || [];
+        setData(initialData);
         setUpdatedAt(json.updated_at || "");
         setLoading(false);
-      })
-      .catch((err) => {
+        pollLive();
+      } catch (err) {
         console.error("Failed to load tracker data:", err);
-        setLoading(false);
-      });
+        if (isMounted) setLoading(false);
+      }
+    }
+
+    async function pollLive() {
+      try {
+        const res = await fetch("/api/tracker-live");
+        if (!res.ok) return;
+        const json = await res.json();
+        if (!isMounted) return;
+        mergeLive(json, data);
+      } catch (e) {
+        console.error("Failed to update live prices:", e);
+      }
+    }
+
+    loadData();
+    const interval = setInterval(pollLive, 30000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
   // Frekuensi kemunculan (ticker, tanggal) — emiten yang sering direkomendasikan

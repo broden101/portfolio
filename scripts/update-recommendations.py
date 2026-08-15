@@ -64,9 +64,10 @@ def main():
         tp1 = fmt_price(rec.get("tp1"))
         tp2 = fmt_price(rec.get("tp2"))
         sl = fmt_price(rec.get("sl"))
-        last = fmt_price(rec.get("lastPrice"))
-        if last is None:
-            last = fmt_price((live.get(ticker) or {}).get("price"))
+        # Harga live selalu menang. lastPrice dari tracker bisa stale karena tracker
+        # hanya berubah saat update rekomendasi harian.
+        live_price = fmt_price((live.get(ticker) or {}).get("price"))
+        last = live_price if live_price is not None else fmt_price(rec.get("lastPrice"))
 
         upside = None
         if last and tp1:
