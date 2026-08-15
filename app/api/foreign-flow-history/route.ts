@@ -11,7 +11,7 @@ export async function GET() {
     const raw = readFileSync(filePath, "utf-8");
     const data = JSON.parse(raw);
     return NextResponse.json(data, {
-      headers: { "Cache-Control": "public, max-age=3600" },
+      headers: { "Cache-Control": "no-store" },
     });
   } catch {
     return NextResponse.json({ lastUpdated: null, days: [] }, { status: 200 });
