@@ -41,8 +41,9 @@ export async function GET() {
     const data = await r.json();
     const rows = (data.data ?? []).map((row: { s: string; d: (string | number | null)[] }) => {
       let perfDay = row.d[1] != null ? Number(row.d[1]) : null;
-      // Sanitize TradingView scanner data glitches (IDX auto rejection limit = max 35%)
-      if (perfDay !== null && (perfDay > 35 || perfDay < -35)) {
+      // Sanitize TradingView scanner data glitches
+      // IDX Auto Rejection (ARA) limits: >200 = 25%, >5000 = 20%
+      if (perfDay !== null && (perfDay > 25 || perfDay < -25)) {
         perfDay = null;
       }
       return {
