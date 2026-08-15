@@ -53,8 +53,22 @@ const MONTH_NAMES = [
 
 const BURSA_DAYS: Record<number, number> = { 7: 19, 8: 22, 9: 22, 10: 21, 11: 20 }; // index 0=Jan
 
+function getJakartaToday() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Jakarta",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const y = Number(parts.find((p) => p.type === "year")?.value);
+  const m = Number(parts.find((p) => p.type === "month")?.value) - 1;
+  const d = Number(parts.find((p) => p.type === "day")?.value);
+  return { y, m, d, str: `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}` };
+}
+
 export default function CalendarWidget() {
-  const [view, setView] = useState({ y: 2026, m: 7 }); // Aug 2026 default
+  const jakartaToday = useMemo(() => getJakartaToday(), []);
+  const [view, setView] = useState({ y: jakartaToday.y, m: jakartaToday.m });
 
   const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -73,7 +87,7 @@ export default function CalendarWidget() {
     });
   };
 
-  const todayStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const todayStr = jakartaToday.str;
 
   const daysInMonth = useMemo(
     () => new Date(view.y, view.m + 1, 0).getDate(),
