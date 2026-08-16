@@ -22,14 +22,14 @@ import requests
 KOMPAS_100 = [
     "AADI", "ABMM", "ACES", "ADMR", "ADRO", "AGII", "AKRA", "AMMN", "AMRT", "ANTM",
     "ARCI", "ARTO", "ASII", "ASSA", "BBCA", "BBNI", "BBRI", "BBTN", "BBYB",
-    "BFIN", "BJBR", "BJTM", "BKSL", "BMRI", "BMTR", "BREN", "BRIS", "BRMS",
-    "BRPT", "BSDE", "BSSR", "BTPS", "BUKA", "BULL", "BUMI", "BUVA", "CBDK", "CMRY",
+    "BFIN", "BIPI", "BJBR", "BJTM", "BKSL", "BMRI", "BMTR", "BNBR", "BREN", "BRMS",
+    "BRPT", "BSDE", "BSSR", "BTPS", "BUKA", "BULL", "BUMI", "BUVA", "CBDK", "CMRY", "COIN",
     "CPIN", "CTRA", "CUAN", "DEWA", "DMAS", "DSNG", "DSSA", "EKAD", "ELSA", "EMTK",
-    "ENRG", "ERAA", "ESSA", "EXCL", "FILM", "GOTO", "HEAL", "HMSP", "HRTA",
+    "EMAS", "ENRG", "ERAA", "ESSA", "EXCL", "FILM", "GOTO", "GGRM", "HEAL", "HMSP", "HRTA",
     "HRUM", "ICBP", "IMPC", "INCO", "INDF", "INDY", "INET", "INKP", "INTP",
-    "ISAT", "ITMG", "IPCC", "JPFA", "JSMR", "KIJA", "KLBF", "KPIG", "LPPF", "MAPA", "MAPI",
-    "MBMA", "MDKA", "MEDC", "MIKA", "MPMX", "MTEL", "MYOR", "NCKL", "PANI",
-    "PGAS", "PGEO", "PNLF", "PSAB", "PTBA", "PTRO", "PWON", "RAJA", "RATU",
+    "ISAT", "ITMG", "IPCC", "JPFA", "JSMR", "KIJA", "KLBF", "KPIG", "LPPF", "LSIP", "MAPA", "MAPI",
+    "MBMA", "MDKA", "MEDC", "MIKA", "MINA", "MPMX", "MTEL", "MYOR", "NCKL", "PANI",
+    "PGAS", "PGEO", "PNLF", "PSAB", "PTBA", "PTRO", "PWON", "RAJA", "RATU", "RMKE",
     "SCMA", "SGER", "SIDO", "SMGR", "SMIL", "SMRA", "SSIA", "TAPG", "TCPI",
     "TINS", "TLKM", "TOBA", "TOWR", "TPIA", "TSPC", "UNTR", "UNVR", "WIFI", "WIRG",
 ]
@@ -42,7 +42,7 @@ COMPANY_PROFILES_URL = f"{PANENDIVIDEN_BASE}/company_profiles/company_profiles.c
 # Tradersaham API
 TRADERSAHAM_API = "https://apiv2.tradersaham.com"
 REFRESH_TOKEN_FILE = os.path.expanduser("~/.tradersaham_refresh_token")
-API_KEY_FILE = ""
+API_KEY_FILE = os.path.expanduser("~/.tradersaham_api_key")
 
 
 def load_api_key():
