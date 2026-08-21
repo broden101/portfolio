@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-20T10:02:14.068991",
+  "lastUpdated": "2026-08-21T10:03:59.466542",
   "source": "panendividen + tradersaham",
   "index": "IDX Kompas 100",
   "totalStocks": 124,
@@ -295,10 +295,10 @@
           "type": "final"
         }
       ],
-      "price": 25000.0,
+      "price": 25275.0,
       "latestFYDPS": 1730.0,
       "latestFYDate": "2026-04-28",
-      "dividendYield": 6.92,
+      "dividendYield": 6.84,
       "rank": 1
     },
     {
@@ -494,7 +494,7 @@
           "type": "final"
         }
       ],
-      "price": 20150.0,
+      "price": 20175.0,
       "latestFYDPS": 800.0,
       "latestFYDate": "2026-07-02",
       "dividendYield": 3.97,
@@ -826,10 +826,10 @@
           "type": "final"
         }
       ],
-      "price": 23800.0,
+      "price": 23825.0,
       "latestFYDPS": 1663.0,
       "latestFYDate": "2026-04-27",
-      "dividendYield": 6.99,
+      "dividendYield": 6.98,
       "rank": 3
     },
     {
@@ -1011,10 +1011,10 @@
           "type": "final"
         }
       ],
-      "price": 5525.0,
+      "price": 5675.0,
       "latestFYDPS": 468.0,
       "latestFYDate": "2026-06-04",
-      "dividendYield": 8.47,
+      "dividendYield": 8.25,
       "rank": 4
     },
     {
@@ -1217,10 +1217,10 @@
           "type": "final"
         }
       ],
-      "price": 4440.0,
+      "price": 4480.0,
       "latestFYDPS": 836.13,
       "latestFYDate": "2026-06-25",
-      "dividendYield": 18.83,
+      "dividendYield": 18.66,
       "rank": 5
     },
     {
@@ -1570,10 +1570,10 @@
           "type": "final"
         }
       ],
-      "price": 4750.0,
+      "price": 4810.0,
       "latestFYDPS": 390.0,
       "latestFYDate": "2026-05-05",
-      "dividendYield": 8.21,
+      "dividendYield": 8.11,
       "rank": 6
     },
     {
@@ -1797,10 +1797,10 @@
           "type": "final"
         }
       ],
-      "price": 2370.0,
+      "price": 2390.0,
       "latestFYDPS": 114.51,
       "latestFYDate": "2026-06-23",
-      "dividendYield": 4.83,
+      "dividendYield": 4.79,
       "rank": 7
     },
     {
@@ -1989,10 +1989,10 @@
           "type": "final"
         }
       ],
-      "price": 1535.0,
+      "price": 1560.0,
       "latestFYDPS": 28.33,
       "latestFYDate": "2026-05-21",
-      "dividendYield": 1.85,
+      "dividendYield": 1.82,
       "rank": 8
     },
     {
@@ -2209,10 +2209,10 @@
           "type": "final"
         }
       ],
-      "price": 7300.0,
+      "price": 7375.0,
       "latestFYDPS": 290.0,
       "latestFYDate": "2026-07-07",
-      "dividendYield": 3.97,
+      "dividendYield": 3.93,
       "rank": 9
     },
     {
@@ -2338,10 +2338,10 @@
           "type": "final"
         }
       ],
-      "price": 1620.0,
+      "price": 1640.0,
       "latestFYDPS": 250.0,
       "latestFYDate": "2026-04-24",
-      "dividendYield": 15.43,
+      "dividendYield": 15.24,
       "rank": 10
     },
     {
@@ -2614,10 +2614,10 @@
           "type": "final"
         }
       ],
-      "price": 2550.0,
+      "price": 2570.0,
       "latestFYDPS": 263.15,
       "latestFYDate": "2026-04-28",
-      "dividendYield": 10.32,
+      "dividendYield": 10.24,
       "rank": 11
     },
     {
@@ -2820,10 +2820,10 @@
           "type": "final"
         }
       ],
-      "price": 1780.0,
+      "price": 1785.0,
       "latestFYDPS": 181.0,
       "latestFYDate": "2026-07-06",
-      "dividendYield": 10.17,
+      "dividendYield": 10.14,
       "rank": 12
     },
     {
@@ -3187,10 +3187,10 @@
           "type": "final"
         }
       ],
-      "price": 1795.0,
+      "price": 1815.0,
       "latestFYDPS": 201.0,
       "latestFYDate": "2026-06-15",
-      "dividendYield": 11.2,
+      "dividendYield": 11.07,
       "rank": 13
     },
     {
@@ -3414,10 +3414,10 @@
           "type": "final"
         }
       ],
-      "price": 4160.0,
+      "price": 4200.0,
       "latestFYDPS": 476.96,
       "latestFYDate": "2026-05-11",
-      "dividendYield": 11.47,
+      "dividendYield": 11.36,
       "rank": 14
     },
     {
@@ -3564,10 +3564,10 @@
           "type": "final"
         }
       ],
-      "price": 7675.0,
+      "price": 7650.0,
       "latestFYDPS": 265.0,
       "latestFYDate": "2026-07-07",
-      "dividendYield": 3.45,
+      "dividendYield": 3.46,
       "rank": 15
     },
     {
@@ -3798,10 +3798,10 @@
           "type": "final"
         }
       ],
-      "price": 3120.0,
+      "price": 3210.0,
       "latestFYDPS": 346.0,
       "latestFYDate": "2026-04-21",
-      "dividendYield": 11.09,
+      "dividendYield": 10.78,
       "rank": 16
     },
     {
@@ -4032,10 +4032,10 @@
           "type": "final"
         }
       ],
-      "price": 2610.0,
+      "price": 2620.0,
       "latestFYDPS": 222.08,
       "latestFYDate": "2026-06-18",
-      "dividendYield": 8.51,
+      "dividendYield": 8.48,
       "rank": 17
     },
     {
@@ -4231,10 +4231,10 @@
           "type": "final"
         }
       ],
-      "price": 3560.0,
+      "price": 3650.0,
       "latestFYDPS": 349.41,
       "latestFYDate": "2026-03-25",
-      "dividendYield": 9.81,
+      "dividendYield": 9.57,
       "rank": 18
     },
     {
@@ -4444,10 +4444,10 @@
           "type": "final"
         }
       ],
-      "price": 1515.0,
+      "price": 1530.0,
       "latestFYDPS": 125.61,
       "latestFYDate": "2026-06-05",
-      "dividendYield": 8.29,
+      "dividendYield": 8.21,
       "rank": 19
     },
     {
@@ -4797,7 +4797,7 @@
           "type": "final"
         }
       ],
-      "price": 6350.0,
+      "price": 6425.0,
       "latestFYDPS": 20.0,
       "latestFYDate": "2026-06-17",
       "dividendYield": 0.31,
@@ -4919,10 +4919,10 @@
           "type": "final"
         }
       ],
-      "price": 1010.0,
+      "price": 1015.0,
       "latestFYDPS": 170.0,
       "latestFYDate": "2026-06-09",
-      "dividendYield": 16.83,
+      "dividendYield": 16.75,
       "rank": 21
     },
     {
@@ -5258,10 +5258,10 @@
           "type": "final"
         }
       ],
-      "price": 745.0,
+      "price": 750.0,
       "latestFYDPS": 56.3,
       "latestFYDate": "2026-05-29",
-      "dividendYield": 7.56,
+      "dividendYield": 7.51,
       "rank": 22
     },
     {
@@ -5492,10 +5492,10 @@
           "type": "final"
         }
       ],
-      "price": 2700.0,
+      "price": 2710.0,
       "latestFYDPS": 150.0,
       "latestFYDate": "2026-06-17",
-      "dividendYield": 5.56,
+      "dividendYield": 5.54,
       "rank": 23
     },
     {
@@ -5635,10 +5635,10 @@
           "type": "final"
         }
       ],
-      "price": 785.0,
+      "price": 790.0,
       "latestFYDPS": 85.54,
       "latestFYDate": "2026-05-08",
-      "dividendYield": 10.9,
+      "dividendYield": 10.83,
       "rank": 24
     },
     {
@@ -5792,10 +5792,10 @@
           "type": "final"
         }
       ],
-      "price": 2780.0,
+      "price": 2790.0,
       "latestFYDPS": 156.23,
       "latestFYDate": "2026-06-03",
-      "dividendYield": 5.62,
+      "dividendYield": 5.6,
       "rank": 25
     },
     {
@@ -5886,10 +5886,10 @@
           "type": "final"
         }
       ],
-      "price": 2710.0,
+      "price": 2720.0,
       "latestFYDPS": 97.0,
       "latestFYDate": "2026-05-11",
-      "dividendYield": 3.58,
+      "dividendYield": 3.57,
       "rank": 26
     },
     {
@@ -6057,10 +6057,10 @@
           "type": "final"
         }
       ],
-      "price": 5300.0,
+      "price": 5225.0,
       "latestFYDPS": 77.64,
       "latestFYDate": "2026-06-11",
-      "dividendYield": 1.46,
+      "dividendYield": 1.49,
       "rank": 27
     },
     {
@@ -6228,10 +6228,10 @@
           "type": "final"
         }
       ],
-      "price": 2970.0,
+      "price": 3020.0,
       "latestFYDPS": 180.0,
       "latestFYDate": "2026-06-03",
-      "dividendYield": 6.06,
+      "dividendYield": 5.96,
       "rank": 28
     },
     {
@@ -6521,7 +6521,7 @@
           "type": "final"
         }
       ],
-      "price": 2690.0,
+      "price": 2670.0,
       "latestFYDPS": 10.25,
       "latestFYDate": "2026-06-03",
       "dividendYield": 0.38,
@@ -6562,10 +6562,10 @@
           "type": "interim"
         }
       ],
-      "price": 9750.0,
+      "price": 9850.0,
       "latestFYDPS": 999.7,
       "latestFYDate": "2026-06-05",
-      "dividendYield": 10.25,
+      "dividendYield": 10.15,
       "rank": 31
     },
     {
@@ -6719,10 +6719,10 @@
           "type": "final"
         }
       ],
-      "price": 2740.0,
+      "price": 2760.0,
       "latestFYDPS": 111.0,
       "latestFYDate": "2026-05-18",
-      "dividendYield": 4.05,
+      "dividendYield": 4.02,
       "rank": 32
     },
     {
@@ -6841,10 +6841,10 @@
           "type": "final"
         }
       ],
-      "price": 2840.0,
+      "price": 2830.0,
       "latestFYDPS": 159.0,
       "latestFYDate": "2025-12-02",
-      "dividendYield": 5.6,
+      "dividendYield": 5.62,
       "rank": 33
     },
     {
@@ -7005,10 +7005,10 @@
           "type": "final"
         }
       ],
-      "price": 1425.0,
+      "price": 1470.0,
       "latestFYDPS": 83.0,
       "latestFYDate": "2026-07-06",
-      "dividendYield": 5.82,
+      "dividendYield": 5.65,
       "rank": 34
     },
     {
@@ -7204,10 +7204,10 @@
           "type": "final"
         }
       ],
-      "price": 4070.0,
+      "price": 4000.0,
       "latestFYDPS": 88.19,
       "latestFYDate": "2026-06-24",
-      "dividendYield": 2.17,
+      "dividendYield": 2.2,
       "rank": 35
     },
     {
@@ -7522,10 +7522,10 @@
           "type": "final"
         }
       ],
-      "price": 1400.0,
+      "price": 1390.0,
       "latestFYDPS": 50.0,
       "latestFYDate": "2026-08-03",
-      "dividendYield": 3.57,
+      "dividendYield": 3.6,
       "rank": 36
     },
     {
@@ -7672,10 +7672,10 @@
           "type": "final"
         }
       ],
-      "price": 2280.0,
+      "price": 2220.0,
       "latestFYDPS": 140.0,
       "latestFYDate": "2026-05-11",
-      "dividendYield": 6.14,
+      "dividendYield": 6.31,
       "rank": 37
     },
     {
@@ -7794,7 +7794,7 @@
           "type": "final"
         }
       ],
-      "price": 8700.0,
+      "price": 8675.0,
       "latestFYDPS": 75.0,
       "latestFYDate": "2026-07-02",
       "dividendYield": 0.86,
@@ -8094,10 +8094,10 @@
           "type": "final"
         }
       ],
-      "price": 835.0,
+      "price": 840.0,
       "latestFYDPS": 73.73,
       "latestFYDate": "2026-05-21",
-      "dividendYield": 8.83,
+      "dividendYield": 8.78,
       "rank": 40
     },
     {
@@ -8167,10 +8167,10 @@
           "type": "final"
         }
       ],
-      "price": 4670.0,
+      "price": 4660.0,
       "latestFYDPS": 200.0,
       "latestFYDate": "2026-04-20",
-      "dividendYield": 4.28,
+      "dividendYield": 4.29,
       "rank": 41
     },
     {
@@ -8268,10 +8268,10 @@
           "type": "final"
         }
       ],
-      "price": 1860.0,
+      "price": 1975.0,
       "latestFYDPS": 60.0,
       "latestFYDate": "2026-08-12",
-      "dividendYield": 3.23,
+      "dividendYield": 3.04,
       "rank": 42
     },
     {
@@ -8404,10 +8404,10 @@
           "type": "final"
         }
       ],
-      "price": 1205.0,
+      "price": 1215.0,
       "latestFYDPS": 53.57,
       "latestFYDate": "2025-04-15",
-      "dividendYield": 4.45,
+      "dividendYield": 4.41,
       "rank": 43
     },
     {
@@ -8519,10 +8519,10 @@
           "type": "final"
         }
       ],
-      "price": 1170.0,
+      "price": 1165.0,
       "latestFYDPS": 112.85,
       "latestFYDate": "2026-06-22",
-      "dividendYield": 9.65,
+      "dividendYield": 9.69,
       "rank": 44
     },
     {
@@ -8774,10 +8774,10 @@
           "type": "final"
         }
       ],
-      "price": 910.0,
+      "price": 875.0,
       "latestFYDPS": 70.0,
       "latestFYDate": "2026-06-03",
-      "dividendYield": 7.69,
+      "dividendYield": 8.0,
       "rank": 45
     },
     {
@@ -8980,10 +8980,10 @@
           "type": "final"
         }
       ],
-      "price": 1660.0,
+      "price": 1685.0,
       "latestFYDPS": 60.0,
       "latestFYDate": "2026-06-15",
-      "dividendYield": 3.61,
+      "dividendYield": 3.56,
       "rank": 46
     },
     {
@@ -9067,10 +9067,10 @@
           "type": "final"
         }
       ],
-      "price": 990.0,
+      "price": 995.0,
       "latestFYDPS": 85.7,
       "latestFYDate": "2026-04-27",
-      "dividendYield": 8.66,
+      "dividendYield": 8.61,
       "rank": 47
     },
     {
@@ -9353,10 +9353,10 @@
           "type": "final"
         }
       ],
-      "price": 890.0,
+      "price": 905.0,
       "latestFYDPS": 75.1,
       "latestFYDate": "2022-12-14",
-      "dividendYield": 8.44,
+      "dividendYield": 8.3,
       "rank": 49
     },
     {
@@ -9461,10 +9461,10 @@
           "type": "final"
         }
       ],
-      "price": 1755.0,
+      "price": 1810.0,
       "latestFYDPS": 43.0,
       "latestFYDate": "2026-06-19",
-      "dividendYield": 2.45,
+      "dividendYield": 2.38,
       "rank": 50
     },
     {
@@ -9639,10 +9639,10 @@
           "type": "final"
         }
       ],
-      "price": 348.0,
+      "price": 354.0,
       "latestFYDPS": 37.0,
       "latestFYDate": "2026-04-20",
-      "dividendYield": 10.63,
+      "dividendYield": 10.45,
       "rank": 51
     },
     {
@@ -10068,10 +10068,10 @@
           "type": "final"
         }
       ],
-      "price": 185.0,
+      "price": 190.0,
       "latestFYDPS": 14.31,
       "latestFYDate": "2012-06-20",
-      "dividendYield": 7.74,
+      "dividendYield": 7.53,
       "rank": 54
     },
     {
@@ -10218,10 +10218,10 @@
           "type": "final"
         }
       ],
-      "price": 165.0,
+      "price": 169.0,
       "latestFYDPS": 16.5,
       "latestFYDate": "2026-06-25",
-      "dividendYield": 10.0,
+      "dividendYield": 9.76,
       "rank": 55
     },
     {
@@ -10410,10 +10410,10 @@
           "type": "final"
         }
       ],
-      "price": 1410.0,
+      "price": 1420.0,
       "latestFYDPS": 28.45,
       "latestFYDate": "2025-11-11",
-      "dividendYield": 2.02,
+      "dividendYield": 2.0,
       "rank": 56
     },
     {
@@ -10581,10 +10581,10 @@
           "type": "final"
         }
       ],
-      "price": 1370.0,
+      "price": 1400.0,
       "latestFYDPS": 41.5,
       "latestFYDate": "2026-06-15",
-      "dividendYield": 3.03,
+      "dividendYield": 2.96,
       "rank": 57
     },
     {
@@ -10745,10 +10745,10 @@
           "type": "final"
         }
       ],
-      "price": 426.0,
+      "price": 428.0,
       "latestFYDPS": 13.76,
       "latestFYDate": "2026-06-03",
-      "dividendYield": 3.23,
+      "dividendYield": 3.21,
       "rank": 58
     },
     {
@@ -10902,10 +10902,10 @@
           "type": "final"
         }
       ],
-      "price": 620.0,
+      "price": 630.0,
       "latestFYDPS": 36.0,
       "latestFYDate": "2026-07-07",
-      "dividendYield": 5.81,
+      "dividendYield": 5.71,
       "rank": 59
     },
     {
@@ -11202,10 +11202,10 @@
           "type": "final"
         }
       ],
-      "price": 1385.0,
+      "price": 1470.0,
       "latestFYDPS": 47.0,
       "latestFYDate": "2026-06-19",
-      "dividendYield": 3.39,
+      "dividendYield": 3.2,
       "rank": 61
     },
     {
@@ -11485,10 +11485,10 @@
           "type": "final"
         }
       ],
-      "price": 208.0,
+      "price": 216.0,
       "latestFYDPS": 21.0,
       "latestFYDate": "2026-06-04",
-      "dividendYield": 10.1,
+      "dividendYield": 9.72,
       "rank": 62
     },
     {
@@ -11663,10 +11663,10 @@
           "type": "final"
         }
       ],
-      "price": 530.0,
+      "price": 545.0,
       "latestFYDPS": 10.0,
       "latestFYDate": "2026-06-04",
-      "dividendYield": 1.89,
+      "dividendYield": 1.83,
       "rank": 63
     },
     {
@@ -11785,10 +11785,10 @@
           "type": "final"
         }
       ],
-      "price": 1745.0,
+      "price": 1760.0,
       "latestFYDPS": 5.0,
       "latestFYDate": "2026-06-30",
-      "dividendYield": 0.29,
+      "dividendYield": 0.28,
       "rank": 64
     },
     {
@@ -11843,10 +11843,10 @@
           "type": "final"
         }
       ],
-      "price": 1065.0,
+      "price": 1070.0,
       "latestFYDPS": 49.44,
       "latestFYDate": "2026-05-04",
-      "dividendYield": 4.64,
+      "dividendYield": 4.62,
       "rank": 65
     },
     {
@@ -11958,10 +11958,10 @@
           "type": "final"
         }
       ],
-      "price": 472.0,
+      "price": 470.0,
       "latestFYDPS": 25.0,
       "latestFYDate": "2026-07-08",
-      "dividendYield": 5.3,
+      "dividendYield": 5.32,
       "rank": 66
     },
     {
@@ -12143,10 +12143,10 @@
           "type": "final"
         }
       ],
-      "price": 330.0,
+      "price": 332.0,
       "latestFYDPS": 5.0,
       "latestFYDate": "2026-06-23",
-      "dividendYield": 1.52,
+      "dividendYield": 1.51,
       "rank": 67
     },
     {
@@ -12244,10 +12244,10 @@
           "type": "final"
         }
       ],
-      "price": 655.0,
+      "price": 660.0,
       "latestFYDPS": 50.0,
       "latestFYDate": "2026-06-26",
-      "dividendYield": 7.63,
+      "dividendYield": 7.58,
       "rank": 68
     },
     {
@@ -12359,10 +12359,10 @@
           "type": "final"
         }
       ],
-      "price": 115.0,
+      "price": 117.0,
       "latestFYDPS": 5.0,
       "latestFYDate": "2018-07-05",
-      "dividendYield": 4.35,
+      "dividendYield": 4.27,
       "rank": 69
     },
     {
@@ -12551,10 +12551,10 @@
           "type": "final"
         }
       ],
-      "price": 1980.0,
+      "price": 2040.0,
       "latestFYDPS": 9.91,
       "latestFYDate": "2026-05-26",
-      "dividendYield": 0.5,
+      "dividendYield": 0.49,
       "rank": 70
     },
     {
@@ -12645,10 +12645,10 @@
           "type": "final"
         }
       ],
-      "price": 2350.0,
+      "price": 2300.0,
       "latestFYDPS": 40.0,
       "latestFYDate": "2026-06-12",
-      "dividendYield": 1.7,
+      "dividendYield": 1.74,
       "rank": 71
     },
     {
@@ -12703,10 +12703,10 @@
           "type": "final"
         }
       ],
-      "price": 945.0,
+      "price": 955.0,
       "latestFYDPS": 42.64,
       "latestFYDate": "2026-07-09",
-      "dividendYield": 4.51,
+      "dividendYield": 4.46,
       "rank": 72
     },
     {
@@ -12835,10 +12835,10 @@
           "type": "final"
         }
       ],
-      "price": 620.0,
+      "price": 625.0,
       "latestFYDPS": 105.0,
       "latestFYDate": "2026-06-12",
-      "dividendYield": 16.94,
+      "dividendYield": 16.8,
       "rank": 74
     },
     {
@@ -12901,10 +12901,10 @@
           "type": "final"
         }
       ],
-      "price": 438.0,
+      "price": 440.0,
       "latestFYDPS": 25.65,
       "latestFYDate": "2026-07-07",
-      "dividendYield": 5.86,
+      "dividendYield": 5.83,
       "rank": 75
     },
     {
@@ -12943,10 +12943,10 @@
           "type": "final"
         }
       ],
-      "price": 1650.0,
+      "price": 1675.0,
       "latestFYDPS": 50.62,
       "latestFYDate": "2026-04-28",
-      "dividendYield": 3.07,
+      "dividendYield": 3.02,
       "rank": 76
     },
     {
@@ -13121,10 +13121,10 @@
           "type": "final"
         }
       ],
-      "price": 310.0,
+      "price": 308.0,
       "latestFYDPS": 9.0,
       "latestFYDate": "2026-06-05",
-      "dividendYield": 2.9,
+      "dividendYield": 2.92,
       "rank": 77
     },
     {
@@ -13163,10 +13163,10 @@
           "type": "final"
         }
       ],
-      "price": 4300.0,
+      "price": 4480.0,
       "latestFYDPS": 45.0,
       "latestFYDate": "2026-05-20",
-      "dividendYield": 1.05,
+      "dividendYield": 1.0,
       "rank": 78
     },
     {
@@ -13285,10 +13285,10 @@
           "type": "final"
         }
       ],
-      "price": 264.0,
+      "price": 270.0,
       "latestFYDPS": 13.0,
       "latestFYDate": "2026-06-23",
-      "dividendYield": 4.92,
+      "dividendYield": 4.81,
       "rank": 79
     },
     {
@@ -13379,10 +13379,10 @@
           "type": "final"
         }
       ],
-      "price": 645.0,
+      "price": 650.0,
       "latestFYDPS": 5.0,
       "latestFYDate": "2017-06-12",
-      "dividendYield": 0.78,
+      "dividendYield": 0.77,
       "rank": 80
     },
     {
@@ -13522,7 +13522,7 @@
           "type": "final"
         }
       ],
-      "price": 1505.0,
+      "price": 1515.0,
       "latestFYDPS": 10.0,
       "latestFYDate": "2026-07-03",
       "dividendYield": 0.66,
@@ -13616,10 +13616,10 @@
           "type": "final"
         }
       ],
-      "price": 515.0,
+      "price": 590.0,
       "latestFYDPS": 18.53,
       "latestFYDate": "2026-04-27",
-      "dividendYield": 3.6,
+      "dividendYield": 3.14,
       "rank": 82
     },
     {
@@ -13696,10 +13696,10 @@
           "type": "final"
         }
       ],
-      "price": 492.0,
+      "price": 510.0,
       "latestFYDPS": 9.0,
       "latestFYDate": "2025-05-16",
-      "dividendYield": 1.83,
+      "dividendYield": 1.76,
       "rank": 83
     },
     {
@@ -13783,10 +13783,10 @@
           "type": "final"
         }
       ],
-      "price": 685.0,
+      "price": 690.0,
       "latestFYDPS": 13.5,
       "latestFYDate": "2026-05-05",
-      "dividendYield": 1.97,
+      "dividendYield": 1.96,
       "rank": 84
     },
     {
@@ -13863,7 +13863,7 @@
           "type": "final"
         }
       ],
-      "price": 2890.0,
+      "price": 2860.0,
       "latestFYDPS": 11.42,
       "latestFYDate": "2026-06-23",
       "dividendYield": 0.4,
@@ -13943,10 +13943,10 @@
           "type": "final"
         }
       ],
-      "price": 2640.0,
+      "price": 2530.0,
       "latestFYDPS": 6.5,
       "latestFYDate": "2026-07-07",
-      "dividendYield": 0.25,
+      "dividendYield": 0.26,
       "rank": 86
     },
     {
@@ -14001,10 +14001,10 @@
           "type": "final"
         }
       ],
-      "price": 432.0,
+      "price": 426.0,
       "latestFYDPS": 30.0,
       "latestFYDate": "2026-06-04",
-      "dividendYield": 6.94,
+      "dividendYield": 7.04,
       "rank": 87
     },
     {
@@ -14123,10 +14123,10 @@
           "type": "final"
         }
       ],
-      "price": 830.0,
+      "price": 855.0,
       "latestFYDPS": 13.0,
       "latestFYDate": "2026-07-02",
-      "dividendYield": 1.57,
+      "dividendYield": 1.52,
       "rank": 88
     },
     {
@@ -14217,10 +14217,10 @@
           "type": "final"
         }
       ],
-      "price": 1355.0,
+      "price": 1395.0,
       "latestFYDPS": 4.5,
       "latestFYDate": "2024-05-31",
-      "dividendYield": 0.33,
+      "dividendYield": 0.32,
       "rank": 89
     },
     {
@@ -14258,10 +14258,10 @@
           "type": "interim"
         }
       ],
-      "price": 1410.0,
+      "price": 1365.0,
       "latestFYDPS": 40.82,
       "latestFYDate": "2026-05-20",
-      "dividendYield": 2.9,
+      "dividendYield": 2.99,
       "rank": 90
     },
     {
@@ -14338,10 +14338,10 @@
           "type": "final"
         }
       ],
-      "price": 117.0,
+      "price": 119.0,
       "latestFYDPS": 2.0,
       "latestFYDate": "2019-05-24",
-      "dividendYield": 1.71,
+      "dividendYield": 1.68,
       "rank": 91
     },
     {
@@ -14380,10 +14380,10 @@
           "type": "final"
         }
       ],
-      "price": 795.0,
+      "price": 825.0,
       "latestFYDPS": 25.0,
       "latestFYDate": "2024-07-09",
-      "dividendYield": 3.14,
+      "dividendYield": 3.03,
       "rank": 92
     },
     {
@@ -14430,10 +14430,10 @@
           "type": "final"
         }
       ],
-      "price": 240.0,
+      "price": 238.0,
       "latestFYDPS": 10.0,
       "latestFYDate": "2022-07-11",
-      "dividendYield": 4.17,
+      "dividendYield": 4.2,
       "rank": 93
     },
     {
@@ -14510,7 +14510,7 @@
           "type": "final"
         }
       ],
-      "price": 1865.0,
+      "price": 1885.0,
       "latestFYDPS": 1.63,
       "latestFYDate": "2026-07-06",
       "dividendYield": 0.09,
@@ -14568,10 +14568,10 @@
           "type": "final"
         }
       ],
-      "price": 645.0,
+      "price": 675.0,
       "latestFYDPS": 4.0,
       "latestFYDate": "2026-07-03",
-      "dividendYield": 0.62,
+      "dividendYield": 0.59,
       "rank": 95
     },
     {
@@ -14618,7 +14618,7 @@
           "type": "final"
         }
       ],
-      "price": 3880.0,
+      "price": 3910.0,
       "latestFYDPS": 5.0,
       "latestFYDate": "2026-06-15",
       "dividendYield": 0.13,
@@ -14676,7 +14676,7 @@
           "type": "final"
         }
       ],
-      "price": 3490.0,
+      "price": 3460.0,
       "latestFYDPS": 4.09,
       "latestFYDate": "2026-07-03",
       "dividendYield": 0.12,
@@ -14710,7 +14710,7 @@
           "type": "final"
         }
       ],
-      "price": 2960.0,
+      "price": 2920.0,
       "latestFYDPS": 12.29,
       "latestFYDate": "2026-07-02",
       "dividendYield": 0.42,
@@ -14760,7 +14760,7 @@
           "type": "final"
         }
       ],
-      "price": 6075.0,
+      "price": 6100.0,
       "latestFYDPS": 5.0,
       "latestFYDate": "2026-06-15",
       "dividendYield": 0.08,
@@ -14840,10 +14840,10 @@
           "type": "final"
         }
       ],
-      "price": 168.0,
+      "price": 214.0,
       "latestFYDPS": 2.03,
       "latestFYDate": "2026-06-17",
-      "dividendYield": 1.21,
+      "dividendYield": 0.95,
       "rank": 100
     },
     {
@@ -14913,10 +14913,10 @@
           "type": "final"
         }
       ],
-      "price": 65.0,
+      "price": 67.0,
       "latestFYDPS": 0.6,
       "latestFYDate": "2016-05-16",
-      "dividendYield": 0.92,
+      "dividendYield": 0.9,
       "rank": 101
     },
     {
@@ -14955,10 +14955,10 @@
           "type": "final"
         }
       ],
-      "price": 380.0,
+      "price": 398.0,
       "latestFYDPS": 3.69,
       "latestFYDate": "2025-06-30",
-      "dividendYield": 0.97,
+      "dividendYield": 0.93,
       "rank": 102
     },
     {
@@ -15005,10 +15005,10 @@
           "type": "final"
         }
       ],
-      "price": 2120.0,
+      "price": 2090.0,
       "latestFYDPS": 2.0,
       "latestFYDate": "2026-07-09",
-      "dividendYield": 0.09,
+      "dividendYield": 0.1,
       "rank": 103
     },
     {
@@ -15039,7 +15039,7 @@
           "type": "final"
         }
       ],
-      "price": 830.0,
+      "price": 840.0,
       "latestFYDPS": 2.93,
       "latestFYDate": "2025-04-30",
       "dividendYield": 0.35,
@@ -15097,7 +15097,7 @@
           "type": "final"
         }
       ],
-      "price": 252.0,
+      "price": 256.0,
       "latestFYDPS": 0.21,
       "latestFYDate": "2021-04-12",
       "dividendYield": 0.08,
@@ -15131,7 +15131,7 @@
           "type": "final"
         }
       ],
-      "price": 1310.0,
+      "price": 1305.0,
       "latestFYDPS": 2.66,
       "latestFYDate": "2004-12-02",
       "dividendYield": 0.2,
@@ -15165,7 +15165,7 @@
           "type": "final"
         }
       ],
-      "price": 456.0,
+      "price": 458.0,
       "latestFYDPS": 1.5,
       "latestFYDate": "2026-07-08",
       "dividendYield": 0.33,
@@ -15199,10 +15199,10 @@
           "type": "final"
         }
       ],
-      "price": 152.0,
+      "price": 157.0,
       "latestFYDPS": 1.0,
       "latestFYDate": "2015-01-14",
-      "dividendYield": 0.66,
+      "dividendYield": 0.64,
       "rank": 108
     },
     {
@@ -15233,10 +15233,10 @@
           "type": "final"
         }
       ],
-      "price": 77.0,
+      "price": 79.0,
       "latestFYDPS": 0.24,
       "latestFYDate": "2015-09-29",
-      "dividendYield": 0.32,
+      "dividendYield": 0.31,
       "rank": 109
     },
     {
@@ -15267,7 +15267,7 @@
           "type": "final"
         }
       ],
-      "price": 306.0,
+      "price": 308.0,
       "latestFYDPS": 0.08,
       "latestFYDate": "2025-06-23",
       "dividendYield": 0.03,
@@ -15286,7 +15286,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 4440.0,
+      "price": 4430.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15305,7 +15305,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 1090.0,
+      "price": 1075.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15324,7 +15324,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 102.0,
+      "price": 106.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15343,7 +15343,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 680.0,
+      "price": 685.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15362,7 +15362,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 114.0,
+      "price": 113.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15381,7 +15381,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 464.0,
+      "price": 456.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15400,7 +15400,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 735.0,
+      "price": 785.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15419,7 +15419,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 775.0,
+      "price": 1000.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15438,7 +15438,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 1015.0,
+      "price": 1020.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15457,7 +15457,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 7975.0,
+      "price": 7800.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15495,7 +15495,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 525.0,
+      "price": 575.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15514,7 +15514,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 272.0,
+      "price": 294.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
@@ -15533,7 +15533,7 @@
       "avgDividendPerYear": 0,
       "fiscalYears": [],
       "allDividends": [],
-      "price": 68.0,
+      "price": 77.0,
       "latestFYDPS": 0,
       "latestFYDate": null,
       "dividendYield": null,
