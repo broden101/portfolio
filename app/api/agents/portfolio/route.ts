@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 function fmtWIB(d: Date): string {
   const wib = new Date(d.getTime() + 7 * 60 * 60 * 1000);
   const parts = wib.toISOString().split("T");
