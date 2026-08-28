@@ -45,7 +45,6 @@ export interface AgentState {
 
 export interface PortfolioState {
   bertot: AgentState;
-  dondon: AgentState;
   ragaCC: AgentState;
   lastRun: string | null;
 }
@@ -65,16 +64,6 @@ function createInitial(): PortfolioState {
       name: "Bertot",
       avatar: "🤖",
       strategy: "BSJP (Beli Sore Jual Pagi)",
-      capital: INITIAL_CAPITAL,
-      cash: INITIAL_CAPITAL,
-      holdings: [],
-      trades: [],
-      evolutionGeneration: 0,
-    },
-    dondon: {
-      name: "Dondon",
-      avatar: "🔄",
-      strategy: "Reversal (RSI < 35 + MACD ↑)",
       capital: INITIAL_CAPITAL,
       cash: INITIAL_CAPITAL,
       holdings: [],
@@ -102,7 +91,7 @@ export function loadPortfolio(): PortfolioState {
   if (!raw) return createInitial();
   try {
     const parsed = JSON.parse(raw) as PortfolioState;
-    if (!parsed.bertot || !parsed.dondon || !parsed.ragaCC) return createInitial();
+    if (!parsed.bertot || !parsed.ragaCC) return createInitial();
     return parsed;
   } catch {
     return createInitial();
@@ -144,13 +133,6 @@ export function bertotFilter(stock: StockRow): boolean {
   const closeNearHigh = high > 0 && ((high - close) / high) * 100 <= 3;
   const volRatio = avgVol > 0 ? vol / avgVol : 0;
   return closeNearHigh && volRatio >= 1.2 && close >= vwap && rsi >= 35 && rsi <= 70;
-}
-
-export function dondonFilter(stock: StockRow): boolean {
-  const rsi = Number(stock.rsi);
-  const macd = Number(stock.macd);
-  const signal = Number(stock.macd_signal);
-  return rsi < 35 && (macd - signal) > 0;
 }
 
 export function ragaCCFilter(stock: StockRow): boolean {

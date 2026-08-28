@@ -22,7 +22,7 @@ const IDX100 = [
   "TCPI","TINS","TLKM","TOBA","TOWR","TPIA","UNTR","UNVR","WIFI","WIRG",
 ];
 
-type TabAgent = "all" | "bertot" | "dondon" | "ragacc" | "antekasing";
+type TabAgent = "all" | "bertot" | "ragacc" | "antekasing";
 
 // ─── Map server agent to AgentState ────────────────────────────────
 function serverToAgent(srv: any, stockData: Record<string, number | string>[]): AgentState {
@@ -182,9 +182,8 @@ function TradeLog({
               <td className="py-2 px-2">
                 <span className={
                   t.agent === "bertot" ? "text-amber-400" :
-                  t.agent === "dondon" ? "text-blue-400" :
                   t.agent === "antekasing" ? "text-purple-400" : "text-emerald-400"
-                }>{t.agent === "bertot" ? "Bertot" : t.agent === "dondon" ? "Dondon" : t.agent === "antekasing" ? "AntekAsing" : "ragaCC"}</span>
+                }>{t.agent === "bertot" ? "Bertot" : t.agent === "antekasing" ? "AntekAsing" : "ragaCC"}</span>
               </td>
               <td className="py-2 px-2 font-mono text-[#F4EFE6]">{t.ticker}</td>
               <td className="py-2 px-2 text-center">

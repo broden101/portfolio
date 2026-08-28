@@ -3,7 +3,6 @@ import { prisma } from "@/lib/db";
 import {
   executeAgent,
   bertotFilter,
-  dondonFilter,
   ragaCCFilter,
   antekAsingFilter,
   konglomerasiFilter,
@@ -180,7 +179,6 @@ export async function POST(req: NextRequest) {
       label: string;
     }> = [
       { id: "bertot",    filter: bertotFilter,                                    label: "BSJP" },
-      { id: "dondon",    filter: dondonFilter,                                    label: "Reversal" },
       { id: "ragacc",    filter: ragaCCFilter,                                    label: "Uptrend+VWAP" },
       { id: "antekasing",filter: antekAsingFilter(foreignAccum),                  label: "AntekAsing" },
       { id: "konglomerasi", filter: konglomerasiFilter(KONGLO_SET),               label: "Konglomerasi" },

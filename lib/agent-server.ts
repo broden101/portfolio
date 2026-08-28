@@ -27,12 +27,6 @@ export function bertotFilter(stock: StockRow): boolean {
   return closeNearHigh && volRatio >= 1.2 && stock.close >= stock.vwap && stock.rsi >= 35 && stock.rsi <= 70;
 }
 
-/** Reversal — oversold + MACD golden cross */
-export function dondonFilter(stock: StockRow): boolean {
-  if (stock.close <= HARGA_MIN) return false;
-  return stock.rsi < 35 && (stock.macd - stock.macd_signal) > 0;
-}
-
 /** Uptrend + VWAP — trending bullish */
 export function ragaCCFilter(stock: StockRow): boolean {
   if (stock.close <= HARGA_MIN) return false;

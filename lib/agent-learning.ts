@@ -7,7 +7,7 @@ import type { AgentState, AgentTrade, AgentHolding } from "./agent-portfolio";
 
 export interface JournalEntry {
   id: string;                    // unique id
-  agentId: string;               // bertot | dondon | ragaCC
+  agentId: string;               // bertot | ragaCC
   ticker: string;
   entryDate: string;
   exitDate: string;
@@ -365,7 +365,6 @@ export function generateSummaryReport(
 ): string {
   const agentNames: Record<string, string> = {
     bertot: "Bertot",
-    dondon: "Dondon",
     ragaCC: "ragaCC",
   };
   const name = agentNames[perf.agentId] || perf.agentId;

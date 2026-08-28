@@ -9,7 +9,6 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   const agents = [
     { id: "bertot", name: "Bertot", strategy: "bsjp", avatar: "🤖" },
-    { id: "dondon", name: "Dondon", strategy: "reversal", avatar: "🔄" },
     { id: "ragacc", name: "ragaCC", strategy: "uptrend_vwap", avatar: "📈" },
   ];
 
