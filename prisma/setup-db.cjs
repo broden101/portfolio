@@ -51,7 +51,6 @@ async function run() {
 
     // Seed agents
     const agents = [
-      { id: 'bertot', name: 'Bertot', strategy: 'bsjp', avatar: '🤖' },
       { id: 'ragacc', name: 'ragaCC', strategy: 'uptrend_vwap', avatar: '📈' },
     ];
     for (const a of agents) {

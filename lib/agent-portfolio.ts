@@ -44,7 +44,6 @@ export interface AgentState {
 }
 
 export interface PortfolioState {
-  bertot: AgentState;
   ragaCC: AgentState;
   lastRun: string | null;
 }
@@ -60,16 +59,6 @@ const TP_PCT = 0.04;                   // +4%
 // ─── Initial state ────────────────────────────────────────────────
 function createInitial(): PortfolioState {
   return {
-    bertot: {
-      name: "Bertot",
-      avatar: "🤖",
-      strategy: "BSJP (Beli Sore Jual Pagi)",
-      capital: INITIAL_CAPITAL,
-      cash: INITIAL_CAPITAL,
-      holdings: [],
-      trades: [],
-      evolutionGeneration: 0,
-    },
     ragaCC: {
       name: "ragaCC",
       avatar: "📈",
@@ -91,7 +80,7 @@ export function loadPortfolio(): PortfolioState {
   if (!raw) return createInitial();
   try {
     const parsed = JSON.parse(raw) as PortfolioState;
-    if (!parsed.bertot || !parsed.ragaCC) return createInitial();
+    if (!parsed.ragaCC) return createInitial();
     return parsed;
   } catch {
     return createInitial();
@@ -122,18 +111,6 @@ export { formatIDR };
 
 // ─── Strategy filters ─────────────────────────────────────────────
 type StockRow = Record<string, number | string>;
-
-export function bertotFilter(stock: StockRow): boolean {
-  const close = Number(stock.close);
-  const high = Number(stock.high);
-  const vol = Number(stock.volume);
-  const avgVol = Number(stock.avg_vol_10d);
-  const vwap = Number(stock.vwap);
-  const rsi = Number(stock.rsi);
-  const closeNearHigh = high > 0 && ((high - close) / high) * 100 <= 3;
-  const volRatio = avgVol > 0 ? vol / avgVol : 0;
-  return closeNearHigh && volRatio >= 1.2 && close >= vwap && rsi >= 35 && rsi <= 70;
-}
 
 export function ragaCCFilter(stock: StockRow): boolean {
   const close = Number(stock.close);

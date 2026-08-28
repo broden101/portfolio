@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import {
   executeAgent,
-  bertotFilter,
   ragaCCFilter,
   antekAsingFilter,
   konglomerasiFilter,
@@ -178,7 +177,6 @@ export async function POST(req: NextRequest) {
       filter: (s: StockRow) => boolean;
       label: string;
     }> = [
-      { id: "bertot",    filter: bertotFilter,                                    label: "BSJP" },
       { id: "ragacc",    filter: ragaCCFilter,                                    label: "Uptrend+VWAP" },
       { id: "antekasing",filter: antekAsingFilter(foreignAccum),                  label: "AntekAsing" },
       { id: "konglomerasi", filter: konglomerasiFilter(KONGLO_SET),               label: "Konglomerasi" },

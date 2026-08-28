@@ -19,14 +19,6 @@ export interface StockRow {
 
 // ─── Strategy filters ──────────────────────────────────────────────
 
-/** BSJP — Beli Sore Jual Pagi: momentum kuat jelang tutup */
-export function bertotFilter(stock: StockRow): boolean {
-  if (stock.close <= HARGA_MIN) return false;
-  const closeNearHigh = stock.high > 0 && ((stock.high - stock.close) / stock.high) * 100 <= 3;
-  const volRatio = stock.avg_vol_10d > 0 ? stock.volume / stock.avg_vol_10d : 0;
-  return closeNearHigh && volRatio >= 1.2 && stock.close >= stock.vwap && stock.rsi >= 35 && stock.rsi <= 70;
-}
-
 /** Uptrend + VWAP — trending bullish */
 export function ragaCCFilter(stock: StockRow): boolean {
   if (stock.close <= HARGA_MIN) return false;
