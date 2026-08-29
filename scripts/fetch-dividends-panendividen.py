@@ -33,7 +33,7 @@ KOMPAS_100 = [
     "SCMA", "SGER", "SIDO", "SMGR", "SMIL", "SMRA", "SSIA", "TAPG", "TCPI",
     "TINS", "TLKM", "TOBA", "TOWR", "TPIA", "TSPC", "UNTR", "UNVR", "WIFI", "WIRG",
 ]
-EXTRA_TICKERS = ["DLTA", "POWR", "DILD"]
+EXTRA_TICKERS = ["DLTA", "POWR", "DILD", "SIMP", "SRTG"]
 ALL_WATCHLIST = sorted(list(set(KOMPAS_100 + EXTRA_TICKERS)))
 
 PANENDIVIDEN_BASE = "https://raw.githubusercontent.com/mitbal/daguerreo-data/main/jkse"
