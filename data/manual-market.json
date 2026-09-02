@@ -14,7 +14,7 @@
     "date": "2026-09-01",
     "weekNet": 1799620,
     "mtdNet": 1799620,
-    "ytdNet": -71153775,
+    "ytdNet": -70435265,
     "dailyNetCorrect": 1799619858600,
     "topBuy": [
       {
@@ -504,7 +504,7 @@
         "close_price": 85
       }
     ],
-    "fetchedAt": "2026-09-01T11:02:36.102092+00:00"
+    "fetchedAt": "2026-09-02T11:00:04.307201+00:00"
   },
   "inflation": {
     "value": 2.88,
