@@ -1,10 +1,6 @@
 {
-  "lastUpdated": "2026-09-02T18:00:20",
+  "lastUpdated": "2026-09-03T18:00:07",
   "days": [
-    {
-      "date": "2026-03-12",
-      "dailyNet": 785323
-    },
     {
       "date": "2026-03-13",
       "dailyNet": -312861
@@ -705,6 +701,13 @@
       "sectorTotal": 0,
       "totalForeignBuy": 0,
       "totalForeignSell": 0
+    },
+    {
+      "date": "2026-09-03",
+      "dailyNet": 1141786,
+      "sectorTotal": 1141786269900,
+      "totalForeignBuy": 4594606025900,
+      "totalForeignSell": 3595320687200
     }
   ]
 }
