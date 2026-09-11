@@ -107,7 +107,11 @@
         // Format: "YYYY-MM-DD": [ { t: "us|id|pol", n: "Nama Agenda", w: "Jam WIB" } ]
         const EVENTS = {
             "2026-08-31": [{"t": "pol", "n": "Rebalancing: MSCI, FTSE, Kompas100 Minor", "w": "Market Close"}],
-            "2026-09-18": [{"t": "pol", "n": "Rebalancing: IDX30, LQ45, IDX100, IDXHIDIV20, SRI-KEHATI", "w": "Market Close"}],
+            "2026-09-18": [
+                {"t": "pol", "n": "Rebalancing: IDX30, LQ45, IDX100, IDXHIDIV20, SRI-KEHATI", "w": "Market Close"},
+                {"t": "pol", "n": "Rebalancing FTSE — arus dana pasif (efektif 21 Sep)", "w": "Market Close"},
+                {"t": "pol", "n": "BoJ — Suku Bunga", "w": "Rilis Data"}
+            ],
             "2026-12-18": [{"t": "pol", "n": "Rebalancing: MSCI, FTSE, GDX, COPX", "w": "Market Close"}],
             "2026-08-05": [{"t": "id", "n": "PDB Indo Q2", "w": "Rilis 5,29%"}],
             "2026-08-07": [{"t": "us", "n": "NFP US (Juli)", "w": "19:30"}],
@@ -118,10 +122,25 @@
             "2026-08-25": [{"t": "hol", "n": "LIBUR: Maulid Nabi", "w": "Bursa Tutup"}],
             "2026-08-27": [{"t": "us", "n": "GDP US Q2 Final", "w": "19:30"}],
             "2026-09-04": [{"t": "us", "n": "NFP US (Ags)", "w": "19:30"}],
+            "2026-09-10": [
+                {"t": "us", "n": "PPI US (Ags)", "w": "19:30"},
+                {"t": "pol", "n": "ECB — Suku Bunga", "w": "Malam"}
+            ],
             "2026-09-11": [{"t": "us", "n": "CPI US (Ags)", "w": "19:30"}],
-            "2026-09-12": [{"t": "us", "n": "PPI US (Ags)", "w": "19:30"}],
-            "2026-09-17": [{"t": "pol", "n": "FOMC — Suku Bunga", "w": "01:00 (18/9)"}],
+            "2026-09-15": [
+                {"t": "id", "n": "Neraca Dagang RI", "w": "Rilis Data"},
+                {"t": "us", "n": "Produksi Industri & Ritel China", "w": "Rilis Data"},
+                {"t": "pol", "n": "FOMC Dimulai (15–16 Sep)", "w": "Dini Hari"}
+            ],
+            "2026-09-16": [{"t": "us", "n": "Retail Sales US", "w": "19:30"}],
+            "2026-09-17": [
+                {"t": "pol", "n": "FOMC + Dot Plot — Suku Bunga", "w": "01:00"},
+                {"t": "pol", "n": "BoE — Suku Bunga", "w": "Malam"}
+            ],
+            "2026-09-22": [{"t": "pol", "n": "RDG BI (Hari 1)", "w": "Rilis Data"}],
             "2026-09-23": [{"t": "pol", "n": "RDG BI — Suku Bunga", "w": "14:00"}],
+            "2026-09-29": [{"t": "us", "n": "JOLTS US — Lowongan Kerja", "w": "21:00"}],
+            "2026-09-30": [{"t": "us", "n": "PCE + GDP US (Final Q2)", "w": "19:30"}],
             "2026-10-02": [{"t": "us", "n": "NFP US (Sep)", "w": "19:30"}],
             "2026-10-13": [{"t": "us", "n": "CPI US (Sep)", "w": "19:30"}],
             "2026-10-14": [{"t": "us", "n": "PPI US (Sep)", "w": "19:30"}],
