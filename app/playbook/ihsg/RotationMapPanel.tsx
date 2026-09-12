@@ -89,12 +89,90 @@ export function RotationMapPanel() {
   ];
 
   const handleCapture = useCallback(() => {
-    const el = document.getElementById("rotation-map-plot");
-    if (!el) return;
-    // fallback: sarankan screenshot manual (klien tanpa canvas utk SVG inline)
-    setHover(null);
-    // no-op capture; user pakai screenshot bawaan
-  }, []);
+    // Re-draw the plot onto an offscreen canvas (deterministic, no DOM capture),
+    // then trigger a PNG download.
+    const W = 1000, H = 600;
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = H;
+    const g = c.getContext("2d");
+    if (!g) return;
+    // background
+    g.fillStyle = "#0B0B0A";
+    g.fillRect(0, 0, W, H);
+    // axis lines
+    const mx = W / 2, my = H / 2;
+    g.strokeStyle = "#2C261E";
+    g.lineWidth = 1;
+    g.beginPath(); g.moveTo(0, my); g.lineTo(W, my); g.moveTo(mx, 0); g.lineTo(mx, H); g.stroke();
+    // axis captions
+    g.fillStyle = "rgba(184,170,150,0.55)";
+    g.font = "500 12px sans-serif";
+    g.textAlign = "center";
+    g.fillText("↑ RELATIVE MOMENTUM", mx, 22);
+    g.textAlign = "right";
+    g.fillText("RELATIVE STRENGTH →", W - 14, my - 10);
+    // quadrant labels
+    g.font = "600 13px sans-serif";
+    g.textAlign = "left";
+    g.fillStyle = "rgba(56,189,248,0.8)"; g.fillText("Improving", 14, 24);
+    g.textAlign = "right";
+    g.fillStyle = "rgba(52,211,153,0.8)"; g.fillText("Leading", W - 14, 24);
+    g.textAlign = "left";
+    g.fillStyle = "rgba(248,113,113,0.7)"; g.fillText("Lagging", 14, H - 14);
+    g.textAlign = "right";
+    g.fillStyle = "rgba(251,191,36,0.8)"; g.fillText("Weakening", W - 14, H - 14);
+    // center + IHSG label
+    g.fillStyle = "rgba(198,161,91,0.6)";
+    g.beginPath(); g.arc(mx, my, 5, 0, Math.PI * 2); g.fill();
+    g.textAlign = "center"; g.font = "500 11px sans-serif";
+    g.fillText("IHSG", mx, my + 22);
+    // pixel mapper (keep 50% ± 40%, like ns above)
+    const px = (v: number) => mx + (v / scale) * (W * 0.40);
+    const py = (v: number) => my - (v / scale) * (H * 0.40);
+    // tails
+    g.lineWidth = 2;
+    g.lineJoin = "round"; g.lineCap = "round";
+    for (const { pts } of series) {
+      const trail = pts.slice(Math.max(0, pts.length - tail));
+      if (trail.length < 2) continue;
+      const head = trail[trail.length - 1];
+      const q = quadInfo(head.rs, head.mom);
+      g.strokeStyle = q.dot;
+      g.globalAlpha = 0.5;
+      g.beginPath();
+      trail.forEach((p, i) => i === 0 ? g.moveTo(px(p.rs), py(p.mom)) : g.lineTo(px(p.rs), py(p.mom)));
+      g.stroke();
+    }
+    g.globalAlpha = 1;
+    // dots (head position only in capture — labels only in sectors mode for legibility)
+    const showLabel = mode === "sectors";
+    g.font = "600 10px mono";
+    for (const { it, pts } of series) {
+      const head = pts[pts.length - 1];
+      const q = quadInfo(head.rs, head.mom);
+      const x = px(head.rs), y = py(head.mom);
+      g.fillStyle = q.dot;
+      g.beginPath(); g.arc(x, y, 5, 0, Math.PI * 2); g.fill();
+      if (showLabel) {
+        g.globalAlpha = 0.9;
+        g.fillStyle = "#B8AA96";
+        g.textAlign = "center";
+        g.fillText(it.ticker, x, y + 18);
+        g.globalAlpha = 1;
+      }
+    }
+    // download
+    c.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `idx-rotation-${mode}-${interval}.png`;
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }, "image/png");
+  }, [series, scale, tail, mode, interval]);
 
   return (
     <div className="card-luxury p-8">
@@ -145,6 +223,12 @@ export function RotationMapPanel() {
               className="w-24 accent-[#C6A15B]" />
             <span className="text-[#B8AA96]/60 font-mono">{tail} period{tail > 1 ? "s" : ""}</span>
           </div>
+
+          {/* capture button */}
+          <button onClick={handleCapture}
+            className="px-3 py-1.5 uppercase tracking-wider bg-[#C6A15B]/15 text-[#C6A15B] border border-[#C6A15B]/40 hover:bg-[#C6A15B]/25 transition-all">
+            Capture
+          </button>
         </div>
       </div>
 
