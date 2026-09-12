@@ -29,12 +29,6 @@ import {
 } from "@/lib/market";
 
 type PerfTab = "Day" | "Week" | "1M" | "YTD";
-const TAB_COLUMNS: Record<PerfTab, (q: Quote) => number | null> = {
-  Day: (q) => q.change,
-  Week: (q) => q.perfWeek,
-  "1M": (q) => q.perf1M,
-  YTD: (q) => q.perfYTD,
-};
 
 /** Fetch foreign flow via Next.js API proxy (server-side, bypasses browser CORS/Cloudflare) */
 async function fetchForeignFlowClient(): Promise<ForeignFlowData | null> {
@@ -191,8 +185,47 @@ export default function IHSGDashboard() {
     }));
   }, [data]);
 
-  const getPerf = (q: Quote) => TAB_COLUMNS[activeTab](q);
-  const sortedSectors = useMemo(() => [...sectors].sort((a, b) => (getPerf(b) ?? -999) - (getPerf(a) ?? -999)), [sectors, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  // ── Rotation Map (RRG-style 2x2) ──
+  // X = Relative Strength = sektor vs IHSG atas periode aktif
+  // Y = Momentum = akselerasi RS (RS periode ini − RS periode lebih pendek)
+  const TAB_FIELD: Record<PerfTab, (q: Quote) => number | null> = {
+    Day: (q) => q.change,
+    Week: (q) => q.perfWeek,
+    "1M": (q) => q.perf1M,
+    YTD: (q) => q.perfYTD,
+  };
+  const TAB_PREV: Record<PerfTab, PerfTab | null> = {
+    Day: null,
+    Week: "Day",
+    "1M": "Week",
+    YTD: "1M",
+  };
+  const rotationMap = useMemo(() => {
+    const rsOf = (s: Quote, p: PerfTab | null) => {
+      if (!p) return null;
+      const sv = TAB_FIELD[p](s);
+      const iw = TAB_FIELD[p](ihsg);
+      if (sv == null || iw == null || !Number.isFinite(sv) || !Number.isFinite(iw)) return null;
+      return sv - iw;
+    };
+    const points = sectors.map((s) => {
+      const rs = rsOf(s, activeTab);
+      const rsPrev = rsOf(s, TAB_PREV[activeTab]);
+      const mom = rs == null ? null : (rsPrev == null ? rs : rs - rsPrev);
+      return { s, rs, mom };
+    }).filter((p) => p.rs != null && p.mom != null);
+    if (points.length === 0) return { points: [], maxAbs: 1 };
+    const maxAbs = Math.max(1e-9, ...points.map((p) => Math.max(Math.abs(p.rs!), Math.abs(p.mom!))));
+    return { points, maxAbs };
+  }, [sectors, ihsg, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const ROT_QUAD: Record<string, { label: string; desc: string; cls: string }> = {
+    "++": { label: "Leading", desc: "Unggul + akselerasi", cls: "text-emerald-400 border-emerald-400/40" },
+    "-+": { label: "Improving", desc: "Tertekuk tapi membaik", cls: "text-sky-400 border-sky-400/40" },
+    "--": { label: "Lagging", desc: "Lemah + makin turun", cls: "text-red-400/80 border-red-400/30" },
+    "+-": { label: "Weakening", desc: "Masih unggul, momentum turun", cls: "text-amber-400 border-amber-400/40" },
+  };
+  const quadKey = (rs: number, mom: number) => `${rs >= 0 ? "+" : "-"}${mom >= 0 ? "+" : "-"}`;
 
   // Rolling net flow from history
   // Dynamic key levels from IHSG price data
@@ -712,15 +745,15 @@ export default function IHSGDashboard() {
           <TopMoverPanel data={topMovers} live={live} />
         </div>
 
-        {/* SECTOR ROTATION HEATMAP */}
+        {/* SECTOR ROTATION MAP (RRG 2x2) */}
         <div className="card-luxury p-8">
-          <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+          <div className="flex items-center justify-between mb-2 flex-wrap gap-4">
             <div>
               <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
-                Sektor <span className="text-gold-gradient font-medium">Rotasi</span>
+                Rotasi <span className="text-gold-gradient font-medium">Sektor</span>
               </h2>
               <p className="text-[10px] text-[#B8AA96]/40 mt-1">
-                {live ? "Realtime dari TradingView" : "Offline — data terakhir/kosong"} · {sectors.filter((s) => s.type === "index").length} indeks sektor + {sectors.filter((s) => s.type === "basket").length} keranjang bellwether
+                {live ? "Realtime dari TradingView" : "Offline — data terakhir/kosong"} · Relative Rotation Graph · vs IHSG
               </p>
             </div>
             <div className="flex items-center gap-1">
@@ -732,67 +765,98 @@ export default function IHSGDashboard() {
               ))}
             </div>
           </div>
-          {sortedSectors.length === 0 ? (
+
+          {/* Legend quadrants */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
+            {(["++", "-+", "--", "+-"] as const).map((k) => {
+              const q = ROT_QUAD[k];
+              return (
+                <div key={k} className={`border px-2 py-1.5 text-[10px] ${q.cls} bg-[#0B0B0A]/40`}>
+                  <span className="font-medium tracking-wide uppercase">{q.label}</span>
+                  <span className="text-[#B8AA96]/50 ml-1">· {q.desc}</span>
+                </div>
+              );
+            })}
+          </div>
+
+          {rotationMap.points.length === 0 ? (
             <EmptyState title="Data sektor tidak tersedia" description="Rotasi sektor akan tampil saat data sektor berhasil dimuat." />
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 mb-6">
-              {sortedSectors.map((s) => {
-                const perf = getPerf(s);
-                const intensity = perf != null ? Math.min(Math.abs(perf) / 15, 1) : 0;
-                const bg = perf == null ? "rgba(184, 170, 150, 0.05)" : perf >= 0 ? `rgba(34, 197, 94, ${0.08 + intensity * 0.25})` : `rgba(239, 68, 68, ${0.08 + intensity * 0.25})`;
-                const borderColor = perf == null ? "rgba(44, 38, 30, 0.5)" : perf >= 0 ? `rgba(34, 197, 94, ${0.15 + intensity * 0.3})` : `rgba(239, 68, 68, ${0.15 + intensity * 0.3})`;
-                return (
-                  <div key={s.code} className="p-4 border transition-all hover:scale-[1.03] cursor-pointer" style={{ backgroundColor: bg, borderColor }} onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: BASKET_TICKERS[s.code] ? "basket" : s.type, tickers: BASKET_TICKERS[s.code] })}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[#F4EFE6] text-xs font-medium">{s.name}</span>
-                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
-                    </div>
-                    <div className={`font-heading text-lg font-medium ${perf == null ? "text-[#B8AA96]/50" : perf >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                      {perf == null ? "—" : `${perf >= 0 ? "+" : ""}${perf.toFixed(1)}%`}
-                    </div>
-                    <div className="text-[#B8AA96]/30 text-[9px] mt-0.5">
-                      Bobot: {s.weight}%{s.type === "basket" && s.components ? ` · ${s.components} stk` : ""}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          {sectors.length > 0 && (
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs">
-                <thead>
-                  <tr className="border-b border-[#2C261E]">
-                    <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Sektor</th>
-                    <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Day</th>
-                    <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Week</th>
-                    <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">1M</th>
-                    <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">YTD</th>
-                    <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">RSI</th>
-                    <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Wt</th>
-                  </tr>
-                </thead>
-                <tbody className="font-mono">
-                  {sectors.map((s) => (
-                    <tr key={s.code} className="border-b border-[#2C261E]/30 cursor-pointer hover:bg-[#2C261E]/40 transition-colors" onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: BASKET_TICKERS[s.code] ? "basket" : s.type, tickers: BASKET_TICKERS[s.code] })}>
-                      <td className="py-2 text-[#F4EFE6] font-sans flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
-                        {s.name}
-                        {s.type === "basket" && <span className="text-[8px] text-[#B8AA96]/40 uppercase">basket</span>}
-                        <span className="text-[#B8AA96]/30 text-[9px]">→</span>
-                      </td>
-                      <PerfCell v={s.change} />
-                      <PerfCell v={s.perfWeek} />
-                      <PerfCell v={s.perf1M} />
-                      <PerfCell v={s.perfYTD} />
-                      <td className={`py-2 text-right ${(s.rsi ?? 50) < 30 ? "text-yellow-400" : (s.rsi ?? 50) > 70 ? "text-yellow-400" : "text-[#B8AA96]/70"}`}>
-                        {s.rsi != null ? s.rsi.toFixed(0) : "—"}
-                      </td>
-                      <td className="py-2 text-right text-[#B8AA96]/60">{s.weight}%</td>
+            <div className="grid lg:grid-cols-3 gap-6">
+              {/* RRG PLOT */}
+              <div className="lg:col-span-2">
+                <div className="relative aspect-[4/3] border border-[#2C261E] bg-[#0B0B0A]/60 overflow-hidden select-none" style={{ minHeight: 320 }}>
+                  {/* quadrant labels */}
+                  <div className="absolute top-2 left-3 text-[9px] uppercase tracking-[0.2em] text-sky-400/70">Improving</div>
+                  <div className="absolute top-2 right-3 text-[9px] uppercase tracking-[0.2em] text-emerald-400/70">Leading</div>
+                  <div className="absolute bottom-2 left-3 text-[9px] uppercase tracking-[0.2em] text-red-400/60">Lagging</div>
+                  <div className="absolute bottom-2 right-3 text-[9px] uppercase tracking-[0.2em] text-amber-400/70">Weakening</div>
+
+                  {/* axis lines */}
+                  <div className="absolute left-0 right-0 top-1/2 h-px bg-[#2C261E]" />
+                  <div className="absolute top-0 bottom-0 left-1/2 w-px bg-[#2C261E]" />
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#C6A15B]/50" />
+
+                  {/* dots */}
+                  {rotationMap.points.map(({ s, rs, mom }) => {
+                    const x = 50 + (rs! / rotationMap.maxAbs) * 41; // 50% ± 41% (keep 9% edge)
+                    const y = 50 - (mom! / rotationMap.maxAbs) * 41;
+                    return (
+                      <button key={s.code}
+                        onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: BASKET_TICKERS[s.code] ? "basket" : s.type, tickers: BASKET_TICKERS[s.code] })}
+                        className="absolute -translate-x-1/2 -translate-y-1/2 group flex flex-col items-center"
+                        style={{ left: `${x}%`, top: `${y}%` }}
+                        title={`${s.name} — RS ${rs! >= 0 ? "+" : ""}${rs!.toFixed(2)} · Mom ${mom! >= 0 ? "+" : ""}${mom!.toFixed(2)}`}>
+                        <span className={`w-2.5 h-2.5 rounded-full border ${quadKey(rs!, mom!) === "++" ? "bg-emerald-400 border-emerald-300/60 shadow-[0_0_8px_rgba(52,211,153,0.6)]" : quadKey(rs!, mom!) === "-+" ? "bg-sky-400 border-sky-300/60 shadow-[0_0_8px_rgba(56,189,248,0.5)]" : quadKey(rs!, mom!) === "--" ? "bg-red-400/80 border-red-300/50" : "bg-amber-400 border-amber-300/60"}`}
+                          style={{ backgroundColor: s.color }} />
+                        <span className={`mt-0.5 text-[9px] font-mono leading-none whitespace-nowrap group-hover:text-[#F4EFE6] ${quadKey(rs!, mom!) === "++" ? "text-emerald-400/80" : quadKey(rs!, mom!) === "-+" ? "text-sky-400/80" : quadKey(rs!, mom!) === "--" ? "text-red-400/70" : "text-amber-400/80"}`}>
+                          {s.name}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="flex items-center justify-between mt-2 text-[9px] text-[#B8AA96]/40 tracking-wider uppercase">
+                  <span>← Relative Strength lemah</span>
+                  <span className="text-[#B8AA96]/60">Motion relatif vs IHSG · {activeTab}</span>
+                  <span>Relative Strength kuat →</span>
+                </div>
+              </div>
+
+              {/* RANKED TABLE */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-[#2C261E]">
+                      <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Sektor</th>
+                      <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">RS</th>
+                      <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Mom</th>
+                      <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Fase</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="font-mono">
+                    {[...rotationMap.points]
+                      .sort((a, b) => (b.rs ?? -999) - (a.rs ?? -999))
+                      .map(({ s, rs, mom }) => {
+                        const k = quadKey(rs!, mom!);
+                        const q = ROT_QUAD[k];
+                        return (
+                          <tr key={s.code} className="border-b border-[#2C261E]/30 cursor-pointer hover:bg-[#2C261E]/40 transition-colors"
+                            onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: BASKET_TICKERS[s.code] ? "basket" : s.type, tickers: BASKET_TICKERS[s.code] })}>
+                            <td className="py-2 text-[#F4EFE6] font-sans flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
+                              {s.name}
+                              {s.type === "basket" && <span className="text-[8px] text-[#B8AA96]/40 uppercase">basket</span>}
+                            </td>
+                            <td className={`py-2 text-right ${(rs ?? 0) >= 0 ? "text-emerald-400" : "text-red-400"}`}>{rs! >= 0 ? "+" : ""}{rs!.toFixed(2)}%</td>
+                            <td className={`py-2 text-right ${(mom ?? 0) >= 0 ? "text-emerald-400" : "text-red-400"}`}>{mom! >= 0 ? "+" : ""}{mom!.toFixed(2)}%</td>
+                            <td className={`py-2 text-right ${q.cls.split(" ")[0]}`}>{q.label}</td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </div>
