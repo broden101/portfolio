@@ -372,7 +372,13 @@ export function RotationMapPanel() {
                     const h = s.pts[s.pts.length - 1];
                     const isDim = filterQuad !== null && filterQuad !== qu.k;
                     const isHover = hover === s.it.ticker;
-                    // perf windows: 0=Day, 1=1W, 2=1M — throw of "Monthly" dari perf[index]
+                    // perf windows ekses vs IHSG (sama basis dgn RS) — 0=Day, 1=1W, 2=1M
+                    const excess = (wi: number): number | null => {
+                      const v = s.it.perf?.[wi];
+                      const b = bench?.[wi];
+                      if (v == null || b == null || !Number.isFinite(v) || !Number.isFinite(b)) return null;
+                      return v - b;
+                    };
                     const txt = (v: number | null | undefined, bold = false) =>
                       v == null || !Number.isFinite(v as number)
                         ? <span className="text-[#9ba3a6]/20">—</span>
@@ -396,9 +402,9 @@ export function RotationMapPanel() {
                           <span className={`font-sans font-medium text-[12px] ${isHover ? "text-[#edf1f2]" : "text-[#edf1f2]/90"}`}>{s.it.ticker}</span>
                           <span className="text-[#9ba3a6]/45 ml-2 font-sans">{s.it.name}</span>
                         </td>
-                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(s.it.perf[0])}</td>
-                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(s.it.perf[1])}</td>
-                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(s.it.perf[2])}</td>
+                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(excess(0))}</td>
+                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(excess(1))}</td>
+                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(excess(2))}</td>
                         <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(h.rs, true)}</td>
                         <td className="py-1.5 pr-1 pl-3 text-right whitespace-nowrap">{txt(h.mom, true)}</td>
                       </tr>
