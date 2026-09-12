@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 import { TopMoverPanel } from "./TopMoverPanel";
 import { CommodityPricesPanel } from "./CommodityPricesPanel";
 import { Idx100Panel } from "./Idx100Panel";
-import { IdxRotationPanel } from "./IdxRotationPanel";
 import Footer from "@/components/Footer";
 import SectorStocksPanel from "@/components/SectorStocksPanel";
 import CalendarWidget from "@/components/CalendarWidget";
@@ -901,8 +900,6 @@ export default function IHSGDashboard() {
             </div>
           )}
         </div>
-
-        <IdxRotationPanel />
 
       </div>
       <div className="mx-auto max-w-7xl px-6 pb-10 lg:px-12">
