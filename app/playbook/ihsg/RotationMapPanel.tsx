@@ -174,6 +174,23 @@ export function RotationMapPanel() {
     }, "image/png");
   }, [series, scale, tail, mode, interval]);
 
+  // kelompokkan item per kuadran (head position) untuk tabel kanan
+  const QUAD_ORDER: { k: string; label: string; cls: string }[] = [
+    { k: "++", label: "Leading", cls: "text-emerald-400" },
+    { k: "-+", label: "Improving", cls: "text-sky-400" },
+    { k: "--", label: "Lagging", cls: "text-red-400/80" },
+    { k: "+-", label: "Weakening", cls: "text-amber-400" },
+  ];
+  const quadBuckets = useMemo(() => {
+    const map: Record<string, typeof series> = { "++": [], "-+": [], "--": [], "+-": [] };
+    for (const s of series) {
+      const h = s.pts[s.pts.length - 1];
+      const k = (h.rs >= 0 ? "+" : "-") + (h.mom >= 0 ? "+" : "-");
+      if (map[k]) map[k].push(s);
+    }
+    return map;
+  }, [series]);
+
   return (
     <div className="card-luxury p-8">
       {/* header + toolbar */}
@@ -257,7 +274,9 @@ export function RotationMapPanel() {
       ) : series.length === 0 ? (
         <EmptyState title="Tidak ada data" description="Belum ada data performa." />
       ) : (
-        <div id="rotation-map-plot">
+        <div className="flex flex-col lg:flex-row gap-4">
+          {/* plot kiri */}
+          <div id="rotation-map-plot" className="flex-1 min-w-0">
           {/* chart */}
           <div className="relative aspect-[16/9] border border-[#2C261E] bg-[#0B0B0A]/70 overflow-hidden select-none" style={{ minHeight: 420 }}>
             {/* axis labels */}
@@ -324,6 +343,42 @@ export function RotationMapPanel() {
                 </div>
               );
             })()}
+          </div>
+          {/* close plot flex-1 */}
+          </div>
+
+          {/* sidebar kanan — daftar per kuadran */}
+          <div className="w-full lg:w-72 shrink-0 lg:border-l lg:border-[#2C261E] lg:pl-5 flex flex-col gap-3">
+            {QUAD_ORDER.map((qu) => {
+              const list = quadBuckets[qu.k];
+              if (list.length === 0) return null;
+              return (
+                <div key={qu.k}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className={`font-heading text-[11px] uppercase tracking-wider ${qu.cls}`}>{qu.label}</span>
+                    <span className="text-[9px] text-[#B8AA96]/40 font-mono">{list.length}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+                    {list
+                      .slice()
+                      .sort((a, b) => { const ha = a.pts[a.pts.length - 1], hb = b.pts[b.pts.length - 1]; return hb.rs - ha.rs; })
+                      .map((s) => {
+                        const h = s.pts[s.pts.length - 1];
+                        return (
+                          <button key={s.it.ticker}
+                            onMouseEnter={() => setHover(s.it.ticker)}
+                            onMouseLeave={() => setHover(null)}
+                            onClick={() => setFilterQuad(filterQuad === qu.k ? null : qu.k)}
+                            className="text-[10px] font-mono text-[#B8AA96]/70 hover:text-[#F4EFE6] hover:underline transition-colors">
+                            {s.it.ticker}
+                            <span className="text-[#B8AA96]/40"> {h.rs >= 0 ? "+" : ""}{h.rs.toFixed(1)}</span>
+                          </button>
+                        );
+                      })}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
