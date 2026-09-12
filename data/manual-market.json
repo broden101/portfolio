@@ -514,14 +514,16 @@
     "source": "tradingeconomics.com"
   },
   "apbn": {
-    "pendapatan": 1459.4,
+    "pendapatan": 1734.0,
     "pendapatanTarget": 3153.6,
-    "belanja": 1656.0,
+    "belanja": 1969.6,
     "belanjaTarget": 3842.7,
-    "deficit": 196.5,
+    "deficit": 235.6,
     "deficitTarget": 689.0,
     "unit": "T",
-    "note": "Semester I"
+    "note": "s.d. Juli 2026",
+    "lastUpdated": "2026-09-12",
+    "source": "Kemenkeu (Menkeu Purbaya, 10 Sep 2026); belanja Rp1.969,6 T, defisit Rp235,6 T (0,91% PDB); pendapatan dihitung belanja - defisit"
   },
   "gdp": {
     "growth": 5.29,
