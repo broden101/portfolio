@@ -54,17 +54,17 @@ export function Idx100Panel() {
   if (loading)
     return (
       <div className="card-luxury p-6">
-        <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">
+        <h3 className="text-xs tracking-[0.2em] uppercase text-[#3f9e74] mb-4 font-medium">
           Performa IDX 100
         </h3>
-        <div className="text-[#B8AA96]/30 text-sm text-center py-8">Memuat data...</div>
+        <div className="text-[#9ba3a6]/30 text-sm text-center py-8">Memuat data...</div>
       </div>
     );
 
   if (!stocks || stocks.length === 0 || !sum)
     return (
       <div className="card-luxury p-6">
-        <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">
+        <h3 className="text-xs tracking-[0.2em] uppercase text-[#3f9e74] mb-4 font-medium">
           Performa IDX 100
         </h3>
         <EmptyState
@@ -86,18 +86,18 @@ export function Idx100Panel() {
     <div className="mb-4 last:mb-0">
       {/* Summary card */}
       <div className="grid grid-cols-3 gap-2 mb-2">
-        <div className="border border-[#2C261E] p-2 text-center">
-          <div className="text-[#B8AA96]/40 text-[8px] tracking-[0.15em] uppercase">{label}</div>
+        <div className="border border-[#242929] p-2 text-center">
+          <div className="text-[#9ba3a6]/40 text-[8px] tracking-[0.15em] uppercase">{label}</div>
           <div className={`text-xs font-mono font-medium ${data.avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
             {data.avg >= 0 ? "+" : ""}{data.avg.toFixed(2)}%
           </div>
         </div>
-        <div className="border border-[#2C261E] p-2 text-center">
-          <div className="text-[#B8AA96]/40 text-[8px] tracking-[0.15em] uppercase">Naik</div>
+        <div className="border border-[#242929] p-2 text-center">
+          <div className="text-[#9ba3a6]/40 text-[8px] tracking-[0.15em] uppercase">Naik</div>
           <div className="text-xs font-mono text-emerald-400">{data.up}</div>
         </div>
-        <div className="border border-[#2C261E] p-2 text-center">
-          <div className="text-[#B8AA96]/40 text-[8px] tracking-[0.15em] uppercase">Turun</div>
+        <div className="border border-[#242929] p-2 text-center">
+          <div className="text-[#9ba3a6]/40 text-[8px] tracking-[0.15em] uppercase">Turun</div>
           <div className="text-xs font-mono text-red-400">{data.down}</div>
         </div>
       </div>
@@ -105,19 +105,19 @@ export function Idx100Panel() {
       {/* Top / Bottom rows */}
       <div className="flex gap-4">
         <div className="flex-1">
-          <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Gainers</div>
+          <div className="text-[#9ba3a6]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Gainers</div>
           {data.top.map((s) => (
             <div key={s.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
-              <span className="text-[#F4EFE6]">{s.ticker}</span>
+              <span className="text-[#edf1f2]">{s.ticker}</span>
               <span className="text-emerald-400">{fmtPct(s[key])}</span>
             </div>
           ))}
         </div>
         <div className="flex-1">
-          <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Losers</div>
+          <div className="text-[#9ba3a6]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Losers</div>
           {data.bot.map((s) => (
             <div key={s.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
-              <span className="text-[#F4EFE6]">{s.ticker}</span>
+              <span className="text-[#edf1f2]">{s.ticker}</span>
               <span className="text-red-400">{fmtPct(s[key])}</span>
             </div>
           ))}
@@ -126,21 +126,21 @@ export function Idx100Panel() {
 
       <button
         onClick={() => setShowFull(!showFull)}
-        className="mt-2 w-full flex items-center justify-center gap-1 text-[9px] tracking-[0.12em] uppercase text-[#C6A15B]/60 hover:text-[#C6A15B] transition-colors py-1"
+        className="mt-2 w-full flex items-center justify-center gap-1 text-[9px] tracking-[0.12em] uppercase text-[#3f9e74]/60 hover:text-[#3f9e74] transition-colors py-1"
       >
         <span>{showFull ? "▲" : "▼"}</span>
         {showFull ? "Sembunyikan Semua" : "Lihat Semua"}
       </button>
 
       {showFull && (
-        <div className="mt-2 border border-[#2C261E] p-2 max-h-[200px] overflow-y-auto">
-          <div className="flex justify-between text-[8px] tracking-wide text-[#B8AA96]/30 uppercase mb-1 px-1">
+        <div className="mt-2 border border-[#242929] p-2 max-h-[200px] overflow-y-auto">
+          <div className="flex justify-between text-[8px] tracking-wide text-[#9ba3a6]/30 uppercase mb-1 px-1">
             <span>Saham</span>
             <span>{label}</span>
           </div>
           {[...data.top, ...data.bot].map((s) => (
-            <div key={s.ticker} className="flex justify-between py-1 px-1 border-t border-[#2C261E]/40 text-[10px] font-mono">
-              <span className="text-[#B8AA96]/50">{s.ticker}</span>
+            <div key={s.ticker} className="flex justify-between py-1 px-1 border-t border-[#242929]/40 text-[10px] font-mono">
+              <span className="text-[#9ba3a6]/50">{s.ticker}</span>
               <span className={`${(s[key] ?? 0) >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fmtPct(s[key])}</span>
             </div>
           ))}
@@ -151,13 +151,13 @@ export function Idx100Panel() {
 
   return (
     <div className="card-luxury p-6">
-      <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">
+      <h3 className="text-xs tracking-[0.2em] uppercase text-[#3f9e74] mb-4 font-medium">
         Performa IDX 100
       </h3>
 
       {/* Day */}
-      <details open className="group border-b border-[#2C261E]/30 pb-3 mb-3">
-        <summary className="flex items-center justify-between cursor-pointer text-[11px] text-[#B8AA96]/70 hover:text-[#B8AA96] py-1.5">
+      <details open className="group border-b border-[#242929]/30 pb-3 mb-3">
+        <summary className="flex items-center justify-between cursor-pointer text-[11px] text-[#9ba3a6]/70 hover:text-[#9ba3a6] py-1.5">
           <span>1 Hari</span>
           <div className="flex items-center gap-2">
             <span className={`text-[10px] font-mono ${sum.day.avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
@@ -170,19 +170,19 @@ export function Idx100Panel() {
         </summary>
         <div className="flex gap-4 mt-2 mb-2">
           <div className="flex-1">
-            <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Gainers</div>
+            <div className="text-[#9ba3a6]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Gainers</div>
             {sum.day.top.map((st) => (
               <div key={st.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
-                <span className="text-[#F4EFE6]">{st.ticker}</span>
+                <span className="text-[#edf1f2]">{st.ticker}</span>
                 <span className="text-emerald-400">{fmtPct(st.perfDay)}</span>
               </div>
             ))}
           </div>
           <div className="flex-1">
-            <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Losers</div>
+            <div className="text-[#9ba3a6]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Losers</div>
             {sum.day.bot.map((st) => (
               <div key={st.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
-                <span className="text-[#F4EFE6]">{st.ticker}</span>
+                <span className="text-[#edf1f2]">{st.ticker}</span>
                 <span className="text-red-400">{fmtPct(st.perfDay)}</span>
               </div>
             ))}
@@ -197,7 +197,7 @@ export function Idx100Panel() {
           { label: "1 Bulan", data: sum.month, key: "perf1M" as const, show: showFullMonth, set: setShowFullMonth },
         ].map((s) => (
           <details key={s.label} className="group">
-            <summary className="flex items-center justify-between cursor-pointer text-[11px] text-[#B8AA96]/70 hover:text-[#B8AA96] py-1.5">
+            <summary className="flex items-center justify-between cursor-pointer text-[11px] text-[#9ba3a6]/70 hover:text-[#9ba3a6] py-1.5">
               <span>{s.label}</span>
               <div className="flex items-center gap-2">
                 <span className={`text-[10px] font-mono ${s.data.avg >= 0 ? "text-emerald-400" : "text-red-400"}`}>
@@ -210,19 +210,19 @@ export function Idx100Panel() {
             </summary>
             <div className="flex gap-4 mt-2 mb-2">
               <div className="flex-1">
-                <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Gainers</div>
+                <div className="text-[#9ba3a6]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Gainers</div>
                 {s.data.top.map((st) => (
                   <div key={st.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
-                    <span className="text-[#F4EFE6]">{st.ticker}</span>
+                    <span className="text-[#edf1f2]">{st.ticker}</span>
                     <span className="text-emerald-400">{fmtPct(st[s.key])}</span>
                   </div>
                 ))}
               </div>
               <div className="flex-1">
-                <div className="text-[#B8AA96]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Losers</div>
+                <div className="text-[#9ba3a6]/30 text-[8px] tracking-[0.15em] uppercase mb-1">Top Losers</div>
                 {s.data.bot.map((st) => (
                   <div key={st.ticker} className="flex justify-between text-[10px] font-mono py-0.5">
-                    <span className="text-[#F4EFE6]">{st.ticker}</span>
+                    <span className="text-[#edf1f2]">{st.ticker}</span>
                     <span className="text-red-400">{fmtPct(st[s.key])}</span>
                   </div>
                 ))}

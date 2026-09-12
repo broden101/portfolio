@@ -53,15 +53,15 @@ const articles: Article[] = [
 
 export default function ArticlesPage() {
   return (
-    <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+    <div className="min-h-screen bg-[#0a0b0b] pt-24 pb-20">
       <Navbar />
       <div className="max-w-5xl mx-auto px-6 lg:px-12">
         <div className="mb-10">
           <div className="flex items-center gap-4 mb-3">
-            <div className="w-10 h-px bg-[#C6A15B]/30" />
-            <span className="text-[#C6A15B] text-sm font-medium">Catatan riset</span>
+            <div className="w-10 h-px bg-[#3f9e74]/30" />
+            <span className="text-[#3f9e74] text-sm font-medium">Catatan riset</span>
           </div>
-          <h1 className="font-heading text-4xl text-[#F4EFE6] font-light">
+          <h1 className="font-heading text-4xl text-[#edf1f2] font-light">
             Arsip tulisan saham dan market
           </h1>
         </div>
@@ -70,14 +70,14 @@ export default function ArticlesPage() {
           {articles.map((a) => (
             <Link key={a.slug} href={`/articles/${a.slug}`} className="block card-luxury p-8 group cursor-pointer">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-[#C6A15B] text-xs tracking-wider">{a.date}</span>
-                <span className="w-1 h-1 rounded-full bg-[#2C261E]" />
-                <span className="text-[#B8AA96]/50 text-xs tracking-wider uppercase">{a.tag}</span>
+                <span className="text-[#3f9e74] text-xs tracking-wider">{a.date}</span>
+                <span className="w-1 h-1 rounded-full bg-[#242929]" />
+                <span className="text-[#9ba3a6]/50 text-xs tracking-wider uppercase">{a.tag}</span>
               </div>
-              <h2 className="font-heading text-2xl text-[#F4EFE6] mb-3 font-medium group-hover:text-[#C6A15B] transition-colors">{a.title}</h2>
-              <p className="text-[#B8AA96] text-sm leading-relaxed font-light">{a.excerpt}</p>
-              <div className="mt-4 pt-4 border-t border-[#2C261E]">
-                <span className="text-[#C6A15B]/60 text-sm group-hover:text-[#C6A15B] transition-colors">Baca →</span>
+              <h2 className="font-heading text-2xl text-[#edf1f2] mb-3 font-medium group-hover:text-[#3f9e74] transition-colors">{a.title}</h2>
+              <p className="text-[#9ba3a6] text-sm leading-relaxed font-light">{a.excerpt}</p>
+              <div className="mt-4 pt-4 border-t border-[#242929]">
+                <span className="text-[#3f9e74]/60 text-sm group-hover:text-[#3f9e74] transition-colors">Baca →</span>
               </div>
             </Link>
           ))}

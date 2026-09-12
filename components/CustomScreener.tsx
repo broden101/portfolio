@@ -286,15 +286,15 @@ export default function CustomScreener() {
     <div className="space-y-6">
       {/* Universe selector + Run */}
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-[#B8AA96]/60 text-xs tracking-wider uppercase">Universe:</span>
+        <span className="text-[#9ba3a6]/60 text-xs tracking-wider uppercase">Universe:</span>
         {(["IDX100", "ALL"] as const).map((u) => (
           <button
             key={u}
             onClick={() => setUniverse(u)}
             className={`px-4 py-1.5 text-xs font-medium transition-all ${
               universe === u
-                ? "bg-[#C6A15B]/15 text-[#C6A15B] border border-[#C6A15B]/30"
-                : "border border-[#2C261E] text-[#B8AA96]/50 hover:text-[#B8AA96]"
+                ? "bg-[#3f9e74]/15 text-[#3f9e74] border border-[#3f9e74]/30"
+                : "border border-[#242929] text-[#9ba3a6]/50 hover:text-[#9ba3a6]"
             }`}
           >
             {u}
@@ -302,14 +302,14 @@ export default function CustomScreener() {
         ))}
         <button
           onClick={() => setShowRef(!showRef)}
-          className="px-4 py-1.5 text-xs font-medium border border-[#2C261E] text-[#B8AA96]/50 hover:text-[#C6A15B] hover:border-[#C6A15B] transition-all"
+          className="px-4 py-1.5 text-xs font-medium border border-[#242929] text-[#9ba3a6]/50 hover:text-[#3f9e74] hover:border-[#3f9e74] transition-all"
         >
           {showRef ? "Tutup Ref" : "📖 Field Reference"}
         </button>
         <button
           onClick={runScreener}
           disabled={loading}
-          className="ml-auto px-6 py-2.5 bg-[#C6A15B]/10 border border-[#C6A15B]/40 text-[#C6A15B] text-xs tracking-[0.15em] uppercase font-medium hover:bg-[#C6A15B]/20 transition-all disabled:opacity-40"
+          className="ml-auto px-6 py-2.5 bg-[#3f9e74]/10 border border-[#3f9e74]/40 text-[#3f9e74] text-xs tracking-[0.15em] uppercase font-medium hover:bg-[#3f9e74]/20 transition-all disabled:opacity-40"
         >
           {loading ? "Scanning..." : "Run Script"}
         </button>
@@ -318,21 +318,21 @@ export default function CustomScreener() {
       {/* Field Reference */}
       {showRef && (
         <div className="card-luxury p-5">
-          <h3 className="text-sm text-[#C6A15B] mb-4 font-medium">Field Reference</h3>
+          <h3 className="text-sm text-[#3f9e74] mb-4 font-medium">Field Reference</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-xs">
             {FIELD_DOCS.map((f) => (
-              <div key={f.field} className="flex items-start gap-2 p-2 bg-[#0B0B0A] border border-[#2C261E]">
+              <div key={f.field} className="flex items-start gap-2 p-2 bg-[#0a0b0b] border border-[#242929]">
                 <code className="text-emerald-400 font-mono shrink-0">{f.field}</code>
                 <div>
-                  <div className="text-[#B8AA96]/70">{f.label}</div>
-                  <code className="text-[#B8AA96]/40 text-[10px]">{f.example}</code>
+                  <div className="text-[#9ba3a6]/70">{f.label}</div>
+                  <code className="text-[#9ba3a6]/40 text-[10px]">{f.example}</code>
                 </div>
               </div>
             ))}
           </div>
-          <div className="mt-4 p-3 bg-[#0B0B0A] border border-[#2C261E] text-xs">
-            <div className="text-[#C6A15B] mb-2 font-medium">Operator:</div>
-            <div className="text-[#B8AA96]/70 space-y-1">
+          <div className="mt-4 p-3 bg-[#0a0b0b] border border-[#242929] text-xs">
+            <div className="text-[#3f9e74] mb-2 font-medium">Operator:</div>
+            <div className="text-[#9ba3a6]/70 space-y-1">
               <div><code className="text-emerald-400">and</code> — semua kondisi harus benar</div>
               <div><code className="text-emerald-400">or</code> — salah satu kondisi benar</div>
               <div><code className="text-emerald-400">{">"} {">="} {"<"} {"<="} {"=="} {"!="}</code> — operator perbandingan</div>
@@ -345,13 +345,13 @@ export default function CustomScreener() {
       {/* Script input */}
       <div className="card-luxury p-5">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm text-[#C6A15B] font-medium">Script Editor</h3>
+          <h3 className="text-sm text-[#3f9e74] font-medium">Script Editor</h3>
           <div className="flex gap-2">
             {SCRIPT_EXAMPLES.map((ex) => (
               <button
                 key={ex.name}
                 onClick={() => setScript(ex.script)}
-                className="px-2 py-1 text-[10px] bg-[#C6A15B]/10 text-[#C6A15B] border border-[#C6A15B]/20 hover:bg-[#C6A15B]/20 transition-all"
+                className="px-2 py-1 text-[10px] bg-[#3f9e74]/10 text-[#3f9e74] border border-[#3f9e74]/20 hover:bg-[#3f9e74]/20 transition-all"
                 title={ex.script}
               >
                 {ex.name}
@@ -364,16 +364,16 @@ export default function CustomScreener() {
           onChange={(e) => setScript(e.target.value)}
           placeholder={`Contoh:\nclose > sma20 and sma20 > sma50\nand volume > avg_vol_10d * 2\nand rsi < 70`}
           rows={5}
-          className="w-full bg-[#0B0B0A] border border-[#2C261E] p-4 text-sm text-[#F4EFE6] font-mono placeholder-[#B8AA96]/30 focus:border-[#C6A15B] outline-none resize-y transition-colors"
+          className="w-full bg-[#0a0b0b] border border-[#242929] p-4 text-sm text-[#edf1f2] font-mono placeholder-[#9ba3a6]/30 focus:border-[#3f9e74] outline-none resize-y transition-colors"
           spellCheck={false}
         />
         <div className="flex items-center justify-between mt-2">
-          <div className="text-[10px] text-[#B8AA96]/40">
-            Pisahkan kondisi dengan <code className="text-[#C6A15B]/60">and</code> / <code className="text-[#C6A15B]/60">or</code>
+          <div className="text-[10px] text-[#9ba3a6]/40">
+            Pisahkan kondisi dengan <code className="text-[#3f9e74]/60">and</code> / <code className="text-[#3f9e74]/60">or</code>
           </div>
           <button
             onClick={() => setScript("")}
-            className="text-[10px] text-[#B8AA96]/40 hover:text-red-400 transition-colors"
+            className="text-[10px] text-[#9ba3a6]/40 hover:text-red-400 transition-colors"
           >
             Clear
           </button>
@@ -391,34 +391,34 @@ export default function CustomScreener() {
       {results.length > 0 && (
         <div className="card-luxury p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
-              Hasil Script <span className="text-[#B8AA96]/50 font-light">({results.length})</span>
+            <h2 className="font-heading text-xl text-[#edf1f2] font-medium">
+              Hasil Script <span className="text-[#9ba3a6]/50 font-light">({results.length})</span>
             </h2>
-            {lastRun && <span className="text-xs text-[#B8AA96]/30">{lastRun}</span>}
+            {lastRun && <span className="text-xs text-[#9ba3a6]/30">{lastRun}</span>}
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
-                <tr className="border-b border-[#2C261E]">
-                  <th className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium">#</th>
-                  <th className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium">Stock</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">Harga</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">Chg%</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">RSI</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">Volume</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">MCap</th>
+                <tr className="border-b border-[#242929]">
+                  <th className="text-left py-3 px-2 text-[#9ba3a6]/50 font-medium">#</th>
+                  <th className="text-left py-3 px-2 text-[#9ba3a6]/50 font-medium">Stock</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">Harga</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">Chg%</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">RSI</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">Volume</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">MCap</th>
                 </tr>
               </thead>
               <tbody>
                 {results.map((row, i) => (
-                  <tr key={row.ticker} className="border-b border-[#2C261E]/50 hover:bg-[#C6A15B]/5 transition-colors">
-                    <td className="py-3 px-2 text-[#B8AA96]/30">{i + 1}</td>
+                  <tr key={row.ticker} className="border-b border-[#242929]/50 hover:bg-[#3f9e74]/5 transition-colors">
+                    <td className="py-3 px-2 text-[#9ba3a6]/30">{i + 1}</td>
                     <td className="py-3 px-2">
-                      <span className="font-mono font-semibold text-[#F4EFE6]">{row.ticker}</span>
-                      <div className="text-[10px] text-[#B8AA96]/40 mt-0.5 max-w-[180px] truncate">{row.desc}</div>
+                      <span className="font-mono font-semibold text-[#edf1f2]">{row.ticker}</span>
+                      <div className="text-[10px] text-[#9ba3a6]/40 mt-0.5 max-w-[180px] truncate">{row.desc}</div>
                     </td>
-                    <td className="py-3 px-2 text-right font-mono text-[#F4EFE6]">
+                    <td className="py-3 px-2 text-right font-mono text-[#edf1f2]">
                       {row.close.toLocaleString()}
                     </td>
                     <td className="py-3 px-2 text-right font-mono">
@@ -431,10 +431,10 @@ export default function CustomScreener() {
                         {row.rsi.toFixed(1)}
                       </span>
                     </td>
-                    <td className="py-3 px-2 text-right font-mono text-[#B8AA96]">
+                    <td className="py-3 px-2 text-right font-mono text-[#9ba3a6]">
                       {row.volume >= 1e9 ? `${(row.volume / 1e9).toFixed(1)}B` : row.volume >= 1e6 ? `${(row.volume / 1e6).toFixed(1)}M` : row.volume.toLocaleString()}
                     </td>
-                    <td className="py-3 px-2 text-right font-mono text-[#B8AA96]">
+                    <td className="py-3 px-2 text-right font-mono text-[#9ba3a6]">
                       {row.mcap >= 1e12 ? `${(row.mcap / 1e12).toFixed(1)}T` : row.mcap >= 1e9 ? `${(row.mcap / 1e9).toFixed(1)}B` : row.mcap.toLocaleString()}
                     </td>
                   </tr>
@@ -448,17 +448,17 @@ export default function CustomScreener() {
       {/* Empty state */}
       {!loading && results.length === 0 && !error && (
         <div className="card-luxury p-12 text-center">
-          <div className="text-[#B8AA96]/30 text-sm mb-3">Masukkan script dan klik "Run Script"</div>
-          <p className="text-[#B8AA96]/20 text-xs max-w-md mx-auto">
-            Tulis kriteria screening dalam format boolean expression. Contoh: <code className="text-[#C6A15B]/40">close &gt; sma20 and rsi &lt; 70</code>
+          <div className="text-[#9ba3a6]/30 text-sm mb-3">Masukkan script dan klik "Run Script"</div>
+          <p className="text-[#9ba3a6]/20 text-xs max-w-md mx-auto">
+            Tulis kriteria screening dalam format boolean expression. Contoh: <code className="text-[#3f9e74]/40">close &gt; sma20 and rsi &lt; 70</code>
           </p>
         </div>
       )}
 
       {/* Disclaimer */}
-      <div className="card-luxury p-5 border border-[#2C261E]/50">
-        <p className="text-[10px] text-[#B8AA96]/40 leading-relaxed">
-          ⚠️ <span className="text-[#C6A15B]/60">Disclaimer:</span> Custom Script Screener memfilter saham berdasarkan ekspresi boolean yang kamu tulis. Hasil bukan rekomendasi beli/jual. Selalu konfirmasi dengan analisis tambahan.
+      <div className="card-luxury p-5 border border-[#242929]/50">
+        <p className="text-[10px] text-[#9ba3a6]/40 leading-relaxed">
+          ⚠️ <span className="text-[#3f9e74]/60">Disclaimer:</span> Custom Script Screener memfilter saham berdasarkan ekspresi boolean yang kamu tulis. Hasil bukan rekomendasi beli/jual. Selalu konfirmasi dengan analisis tambahan.
         </p>
       </div>
     </div>

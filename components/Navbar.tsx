@@ -44,7 +44,7 @@ function DropdownLink({ link }: { link: NavLink }) {
     <div ref={ref} className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1 text-[#aaa295] text-[11px] tracking-[0.18em] uppercase font-medium hover:text-[#d6ad5a] transition-colors duration-300"
+        className="flex items-center gap-1 text-[#9ba3a6] text-[11px] tracking-[0.18em] uppercase font-medium hover:text-[#3f9e74] transition-colors duration-300"
       >
         {link.label}
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}>
@@ -53,13 +53,13 @@ function DropdownLink({ link }: { link: NavLink }) {
       </button>
       {open && (
         <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-52">
-          <div className="bg-[#050505] border border-[rgba(214,173,90,0.28)] shadow-xl shadow-black/50 py-2">
+          <div className="bg-[#0a0b0b] border border-[rgba(63,158,116,0.28)] shadow-xl shadow-black/50 py-2">
             {link.children?.map((child) => (
               <a
                 key={child.href}
                 href={child.href}
                 onClick={() => setOpen(false)}
-                className="block px-4 py-2.5 text-[#aaa295] text-[11px] tracking-[0.15em] uppercase font-medium hover:text-[#d6ad5a] hover:bg-[#d6ad5a]/5 transition-colors"
+                className="block px-4 py-2.5 text-[#9ba3a6] text-[11px] tracking-[0.15em] uppercase font-medium hover:text-[#3f9e74] hover:bg-[#3f9e74]/5 transition-colors"
               >
                 {child.label}
               </a>
@@ -82,15 +82,15 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#050505]/95 backdrop-blur-md border-b border-[rgba(214,173,90,0.28)]" : "bg-[#050505] border-b border-[rgba(214,173,90,0.28)]/50"}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#0a0b0b]/95 backdrop-blur-md border-b border-[rgba(63,158,116,0.28)]" : "bg-[#0a0b0b] border-b border-[rgba(63,158,116,0.28)]/50"}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <a href="/" className="flex items-center gap-3 shrink-0">
-            <div className="w-7 h-7 border border-[#d6ad5a]/50 flex items-center justify-center">
-              <span className="text-[#d6ad5a] font-heading text-xs font-semibold">R</span>
+            <div className="w-7 h-7 border border-[#3f9e74]/50 flex items-center justify-center">
+              <span className="text-[#3f9e74] font-heading text-xs font-semibold">R</span>
             </div>
-            <span className="font-heading text-sm tracking-[0.25em] text-[#f2eee6] uppercase font-semibold">
+            <span className="font-heading text-sm tracking-[0.25em] text-[#edf1f2] uppercase font-semibold">
               Raga Playbook
             </span>
           </a>
@@ -104,19 +104,19 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-[#aaa295] text-[11px] tracking-[0.18em] uppercase font-medium hover:text-[#d6ad5a] transition-colors duration-300"
+                  className="text-[#9ba3a6] text-[11px] tracking-[0.18em] uppercase font-medium hover:text-[#3f9e74] transition-colors duration-300"
                 >
                   {link.label}
                 </a>
               )
             )}
-            <button className="ml-2 text-[#aaa295]/60 transition hover:text-[#d6ad5a]" aria-label="search">
+            <button className="ml-2 text-[#9ba3a6]/60 transition hover:text-[#3f9e74]" aria-label="search">
               <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-[15px] w-[15px]"><circle cx="8" cy="8" r="5.5"/><path d="M12.5 12.5L16 16"/></svg>
             </button>
           </div>
 
           {/* Mobile hamburger */}
-          <button className="lg:hidden text-[#aaa295] hover:text-[#d6ad5a] p-1" onClick={() => setMenuOpen(!menuOpen)}>
+          <button className="lg:hidden text-[#9ba3a6] hover:text-[#3f9e74] p-1" onClick={() => setMenuOpen(!menuOpen)}>
             <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5">
               {menuOpen ? <path d="M6 6l10 10M6 16L16 6" /> : <path d="M4 7h14M4 15h14" />}
             </svg>
@@ -126,22 +126,22 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="lg:hidden bg-[#050505] border-b border-[rgba(214,173,90,0.28)]">
+        <div className="lg:hidden bg-[#0a0b0b] border-b border-[rgba(63,158,116,0.28)]">
           <div className="px-6 py-5 flex flex-col gap-1">
             {navLinks.map((link) =>
               link.children ? (
                 <div key={link.label}>
-                  <div className="text-[#d6ad5a] text-[11px] tracking-[0.18em] uppercase font-semibold py-2 mt-2">{link.label}</div>
+                  <div className="text-[#3f9e74] text-[11px] tracking-[0.18em] uppercase font-semibold py-2 mt-2">{link.label}</div>
                   <div className="pl-4 flex flex-col gap-1">
                     {link.children.map((child) => (
-                      <a key={child.href} href={child.href} onClick={() => setMenuOpen(false)} className="text-[#aaa295] text-xs tracking-[0.15em] uppercase font-medium hover:text-[#d6ad5a] py-2 transition-colors">
+                      <a key={child.href} href={child.href} onClick={() => setMenuOpen(false)} className="text-[#9ba3a6] text-xs tracking-[0.15em] uppercase font-medium hover:text-[#3f9e74] py-2 transition-colors">
                         {child.label}
                       </a>
                     ))}
                   </div>
                 </div>
               ) : (
-                <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)} className="text-[#aaa295] text-xs tracking-[0.18em] uppercase font-medium hover:text-[#d6ad5a] py-2 transition-colors">
+                <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)} className="text-[#9ba3a6] text-xs tracking-[0.18em] uppercase font-medium hover:text-[#3f9e74] py-2 transition-colors">
                   {link.label}
                 </a>
               )

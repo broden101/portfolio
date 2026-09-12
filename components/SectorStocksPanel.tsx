@@ -110,7 +110,7 @@ export default function SectorStocksPanel({ sectorCode, sectorName, sectorColor,
     }} onClick={onClose}>
       <div style={{
         width: "100%", maxWidth: 480, height: "100%",
-        background: "#101010", borderLeft: `2px solid ${sectorColor}`,
+        background: "#121414", borderLeft: `2px solid ${sectorColor}`,
         display: "flex", flexDirection: "column", overflow: "hidden",
       }} onClick={(e) => e.stopPropagation()}>
         {/* Header */}

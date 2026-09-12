@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-heading",
   display: "swap",
 });
@@ -13,6 +13,13 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-body",
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -33,7 +40,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang="id" className={`${spaceGrotesk.variable} ${inter.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   );

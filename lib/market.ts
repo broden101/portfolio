@@ -104,7 +104,7 @@ export interface MarketData {
 
 /* ── Static structural data ── */
 export const SECTOR_META: Record<string, { weight: number; color: string }> = {
-  IDXFINANCE: { weight: 38.5, color: "#C6A15B" },
+  IDXFINANCE: { weight: 38.5, color: "#3f9e74" },
   IDXBASIC: { weight: 15.0, color: "#D97706" },
   IDXENERGY: { weight: 13.0, color: "#F97316" },
   IDXINFRA: { weight: 12.0, color: "#3B82F6" },
@@ -157,7 +157,7 @@ export function fmtNum(v: number | null | undefined, digits = 0): string {
 }
 
 export function recommendLabel(rec: number | null | undefined): { label: string; color: string } {
-  if (rec == null || !Number.isFinite(rec)) return { label: "N/A", color: "text-[#B8AA96]/50" };
+  if (rec == null || !Number.isFinite(rec)) return { label: "N/A", color: "text-[#9ba3a6]/50" };
   if (rec <= -0.5) return { label: "Sell Kuat", color: "text-red-400" };
   if (rec < -0.1) return { label: "Sell", color: "text-red-400" };
   if (rec < 0.1) return { label: "Netral", color: "text-yellow-400" };
@@ -166,10 +166,10 @@ export function recommendLabel(rec: number | null | undefined): { label: string;
 }
 
 export function rsiLabel(rsi: number | null | undefined): { label: string; color: string } {
-  if (rsi == null || !Number.isFinite(rsi)) return { label: "N/A", color: "text-[#B8AA96]/50" };
+  if (rsi == null || !Number.isFinite(rsi)) return { label: "N/A", color: "text-[#9ba3a6]/50" };
   if (rsi < 30) return { label: `Jenuh Jual (${rsi.toFixed(1)})`, color: "text-yellow-400" };
   if (rsi > 70) return { label: `Jenuh Beli (${rsi.toFixed(1)})`, color: "text-yellow-400" };
-  return { label: rsi.toFixed(1), color: "text-[#B8AA96]" };
+  return { label: rsi.toFixed(1), color: "text-[#9ba3a6]" };
 }
 
 export function fmtMiliar(n: number): string {

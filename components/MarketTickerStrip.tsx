@@ -51,13 +51,13 @@ function TickerCard({ item }: { item: TickerItem }) {
   const isDown = item.change != null && item.change < 0;
 
   return (
-    <div className="min-w-[112px] border border-[rgba(214,173,90,0.22)] bg-[#0a0a0a] px-3 py-2.5 shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:min-w-[130px] sm:px-4 sm:py-3">
-      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#d6ad5a]">{item.name}</div>
-      <div className="mt-1 font-mono text-[17px] font-semibold leading-tight text-[#f2eee6]">{item.value}</div>
+    <div className="min-w-[112px] border border-[rgba(63,158,116,0.22)] bg-[#0a0a0a] px-3 py-2.5 shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:min-w-[130px] sm:px-4 sm:py-3">
+      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#3f9e74]">{item.name}</div>
+      <div className="mt-1 font-mono text-[17px] font-semibold leading-tight text-[#edf1f2]">{item.value}</div>
       {item.change == null ? (
-        <div className="mt-1 text-[10px] text-[#aaa295]/50">—</div>
+        <div className="mt-1 text-[10px] text-[#9ba3a6]/50">—</div>
       ) : (
-        <div className={`mt-1 flex items-center gap-1 font-mono text-[11px] font-semibold ${isUp ? "text-emerald-400" : isDown ? "text-red-400" : "text-[#aaa295]/60"}`}>
+        <div className={`mt-1 flex items-center gap-1 font-mono text-[11px] font-semibold ${isUp ? "text-emerald-400" : isDown ? "text-red-400" : "text-[#9ba3a6]/60"}`}>
           {isUp && <span>▲</span>}
           {isDown && <span>▼</span>}
           <span>{fmtPct(item.change)}</span>
@@ -123,11 +123,11 @@ export default function MarketTickerStrip() {
   }, [stocks]);
 
   return (
-    <section className="border-y border-[rgba(214,173,90,0.28)] bg-[#070707] text-[#f2eee6]">
+    <section className="border-y border-[rgba(63,158,116,0.28)] bg-[#070707] text-[#edf1f2]">
       <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-12">
-        <div className="mb-3 grid items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-[#aaa295]/50 md:grid-cols-3">
+        <div className="mb-3 grid items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-[#9ba3a6]/50 md:grid-cols-3">
           <div>Terakhir diperbarui: {updatedAt ? formatTime(updatedAt) : "Memuat data pasar…"}</div>
-          <div className="text-center text-[13px] font-semibold tracking-[0.22em] text-[#d6ad5a]">LQ 45</div>
+          <div className="text-center text-[13px] font-semibold tracking-[0.22em] text-[#3f9e74]">LQ 45</div>
           <div className="text-left md:text-right">Data pasar live dari TradingView</div>
         </div>
 

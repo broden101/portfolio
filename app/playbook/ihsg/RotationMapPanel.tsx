@@ -99,11 +99,11 @@ export function RotationMapPanel() {
     const g = c.getContext("2d");
     if (!g) return;
     // background
-    g.fillStyle = "#0B0B0A";
+    g.fillStyle = "#0a0b0b";
     g.fillRect(0, 0, W, H);
     // axis lines
     const mx = W / 2, my = H / 2;
-    g.strokeStyle = "#2C261E";
+    g.strokeStyle = "#242929";
     g.lineWidth = 1;
     g.beginPath(); g.moveTo(0, my); g.lineTo(W, my); g.moveTo(mx, 0); g.lineTo(mx, H); g.stroke();
     // axis captions
@@ -157,7 +157,7 @@ export function RotationMapPanel() {
       g.beginPath(); g.arc(x, y, 5, 0, Math.PI * 2); g.fill();
       if (showLabel) {
         g.globalAlpha = 0.9;
-        g.fillStyle = "#B8AA96";
+        g.fillStyle = "#9ba3a6";
         g.textAlign = "center";
         g.fillText(it.ticker, x, y + 18);
         g.globalAlpha = 1;
@@ -197,10 +197,10 @@ export function RotationMapPanel() {
       {/* header + toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
         <div>
-          <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
+          <h2 className="font-heading text-xl text-[#edf1f2] font-medium">
             IDX <span className="text-gold-gradient font-medium">Rotation</span>
           </h2>
-          <p className="text-[10px] text-[#B8AA96]/40 mt-1">
+          <p className="text-[10px] text-[#9ba3a6]/40 mt-1">
             Where money is rotating — relative strength (x) vs momentum (y). Benchmark = IHSG di crosshair.
           </p>
         </div>
@@ -209,12 +209,12 @@ export function RotationMapPanel() {
         <div className="flex flex-wrap items-center gap-4 text-[10px]">
           {/* mode toggle */}
           <div className="flex items-center gap-2">
-            <span className="text-[#B8AA96]/40 uppercase tracking-wider">Mode</span>
-            <div className="flex border border-[#2C261E]">
+            <span className="text-[#9ba3a6]/40 uppercase tracking-wider">Mode</span>
+            <div className="flex border border-[#242929]">
               {(["sectors", "stocks"] as Mode[]).map((m) => (
                 <button key={m} onClick={() => setMode(m)}
                   className={`px-3 py-1.5 uppercase tracking-wider transition-all ${
-                    mode === m ? "bg-[#C6A15B]/20 text-[#C6A15B]" : "text-[#B8AA96]/50 hover:text-[#B8AA96]"
+                    mode === m ? "bg-[#3f9e74]/20 text-[#3f9e74]" : "text-[#9ba3a6]/50 hover:text-[#9ba3a6]"
                   }`}>{m === "sectors" ? "Sectors" : "Stocks"}</button>
               ))}
             </div>
@@ -222,12 +222,12 @@ export function RotationMapPanel() {
 
           {/* interval toggle */}
           <div className="flex items-center gap-2">
-            <span className="text-[#B8AA96]/40 uppercase tracking-wider">Interval</span>
-            <div className="flex border border-[#2C261E]">
+            <span className="text-[#9ba3a6]/40 uppercase tracking-wider">Interval</span>
+            <div className="flex border border-[#242929]">
               {(["daily", "weekly"] as Interval[]).map((iv) => (
                 <button key={iv} onClick={() => setInterval(iv)}
                   className={`px-3 py-1.5 uppercase tracking-wider transition-all ${
-                    interval === iv ? "bg-[#C6A15B]/20 text-[#C6A15B]" : "text-[#B8AA96]/50 hover:text-[#B8AA96]"
+                    interval === iv ? "bg-[#3f9e74]/20 text-[#3f9e74]" : "text-[#9ba3a6]/50 hover:text-[#9ba3a6]"
                   }`}>{iv === "daily" ? "Daily" : "Weekly"}</button>
               ))}
             </div>
@@ -235,16 +235,16 @@ export function RotationMapPanel() {
 
           {/* tail slider */}
           <div className="flex items-center gap-2">
-            <span className="text-[#B8AA96]/40 uppercase tracking-wider">Tail</span>
+            <span className="text-[#9ba3a6]/40 uppercase tracking-wider">Tail</span>
             <input type="range" min={1} max={maxTail} value={tail}
               onChange={(e) => setTail(Number(e.target.value))}
-              className="w-24 accent-[#C6A15B]" />
-            <span className="text-[#B8AA96]/60 font-mono">{tail} period{tail > 1 ? "s" : ""}</span>
+              className="w-24 accent-[#3f9e74]" />
+            <span className="text-[#9ba3a6]/60 font-mono">{tail} period{tail > 1 ? "s" : ""}</span>
           </div>
 
           {/* capture button */}
           <button onClick={handleCapture}
-            className="px-3 py-1.5 uppercase tracking-wider bg-[#C6A15B]/15 text-[#C6A15B] border border-[#C6A15B]/40 hover:bg-[#C6A15B]/25 transition-all">
+            className="px-3 py-1.5 uppercase tracking-wider bg-[#3f9e74]/15 text-[#3f9e74] border border-[#3f9e74]/40 hover:bg-[#3f9e74]/25 transition-all">
             Capture
           </button>
         </div>
@@ -252,18 +252,18 @@ export function RotationMapPanel() {
 
       {/* legend / filter kuadran */}
       <div className="flex flex-wrap items-center gap-2 mb-3 text-[10px]">
-        <span className="text-[#B8AA96]/40 uppercase tracking-wider mr-1">Filter</span>
+        <span className="text-[#9ba3a6]/40 uppercase tracking-wider mr-1">Filter</span>
         <button onClick={() => setFilterQuad(null)}
           className={`px-2.5 py-1 border rounded-sm uppercase tracking-wider transition-all ${
-            filterQuad === null ? "bg-[#C6A15B]/15 border-[#C6A15B]/50 text-[#C6A15B]" : "border-[#2C261E] text-[#B8AA96]/50 hover:text-[#B8AA96]"
+            filterQuad === null ? "bg-[#3f9e74]/15 border-[#3f9e74]/50 text-[#3f9e74]" : "border-[#242929] text-[#9ba3a6]/50 hover:text-[#9ba3a6]"
           }`}>Semua</button>
         {QUAD_GUIDE.map((q) => (
           <button key={q.k} onClick={() => setFilterQuad(filterQuad === q.k ? null : q.k)}
             className={`px-2.5 py-1 border rounded-sm transition-all ${
-              filterQuad === q.k ? q.activeCls : "border-[#2C261E] hover:border-[#B8AA96]/30"
+              filterQuad === q.k ? q.activeCls : "border-[#242929] hover:border-[#9ba3a6]/30"
             }`}>
             <span className={q.cls}>{q.label}</span>
-            <span className="text-[#B8AA96]/40 ml-1">· {q.desc}</span>
+            <span className="text-[#9ba3a6]/40 ml-1">· {q.desc}</span>
           </button>
         ))}
       </div>
@@ -271,7 +271,7 @@ export function RotationMapPanel() {
       {err ? (
         <EmptyState title="Gagal memuat" description="Tidak dapat mengambil data TradingView EOD. Coba lagi." />
       ) : !data ? (
-        <div className="py-10 text-center text-[#B8AA96]/40 text-xs">Memuat data…</div>
+        <div className="py-10 text-center text-[#9ba3a6]/40 text-xs">Memuat data…</div>
       ) : series.length === 0 ? (
         <EmptyState title="Tidak ada data" description="Belum ada data performa." />
       ) : (
@@ -279,20 +279,20 @@ export function RotationMapPanel() {
           {/* plot kiri */}
           <div id="rotation-map-plot" className="flex-1 min-w-0">
           {/* chart */}
-          <div className="relative aspect-[16/9] border border-[#2C261E] bg-[#0B0B0A]/70 overflow-hidden select-none" style={{ minHeight: 420 }}>
+          <div className="relative aspect-[16/9] border border-[#242929] bg-[#0a0b0b]/70 overflow-hidden select-none" style={{ minHeight: 420 }}>
             {/* axis labels */}
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-[0.2em] text-[#B8AA96]/40">↑ Relative Momentum</div>
-            <div className="absolute top-1/2 right-2 -translate-y-1/2 text-[9px] uppercase tracking-[0.2em] text-[#B8AA96]/40">Relative Strength →</div>
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-[0.2em] text-[#9ba3a6]/40">↑ Relative Momentum</div>
+            <div className="absolute top-1/2 right-2 -translate-y-1/2 text-[9px] uppercase tracking-[0.2em] text-[#9ba3a6]/40">Relative Strength →</div>
             {/* quadrant labels */}
             <div className="absolute top-2 left-3 text-[9px] uppercase tracking-[0.2em] text-sky-400/60">Improving</div>
             <div className="absolute top-2 right-3 text-[9px] uppercase tracking-[0.2em] text-emerald-400/60">Leading</div>
             <div className="absolute bottom-2 left-3 text-[9px] uppercase tracking-[0.2em] text-red-400/50">Lagging</div>
             <div className="absolute bottom-2 right-3 text-[9px] uppercase tracking-[0.2em] text-amber-400/60">Weakening</div>
             {/* crosshair */}
-            <div className="absolute left-0 right-0 top-1/2 h-px bg-[#2C261E]" />
-            <div className="absolute top-0 bottom-0 left-1/2 w-px bg-[#2C261E]" />
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#C6A15B]/60" />
-            <div className="absolute left-1/2 top-[calc(50%+6px)] -translate-x-1/2 text-[8px] uppercase tracking-wider text-[#B8AA96]/40 font-mono">IHSG</div>
+            <div className="absolute left-0 right-0 top-1/2 h-px bg-[#242929]" />
+            <div className="absolute top-0 bottom-0 left-1/2 w-px bg-[#242929]" />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#3f9e74]/60" />
+            <div className="absolute left-1/2 top-[calc(50%+6px)] -translate-x-1/2 text-[8px] uppercase tracking-wider text-[#9ba3a6]/40 font-mono">IHSG</div>
 
             {/* tails SVG (under dots) */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -322,7 +322,7 @@ export function RotationMapPanel() {
                   title={`${it.ticker} — RS ${head.rs >= 0 ? "+" : ""}${head.rs.toFixed(2)} · Mom ${head.mom >= 0 ? "+" : ""}${head.mom.toFixed(2)}`}>
                   <span className={`block w-2 h-2 rounded-full border ${isHover ? "scale-150 transition-transform" : ""}`}
                     style={{ backgroundColor: q.dot, borderColor: q.bd }} />
-                  <span className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[8px] font-mono whitespace-nowrap ${isHover ? q.cls : "text-[#B8AA96]/60"}`}>
+                  <span className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[8px] font-mono whitespace-nowrap ${isHover ? q.cls : "text-[#9ba3a6]/60"}`}>
                     {it.ticker}
                   </span>
                 </button>
@@ -336,11 +336,11 @@ export function RotationMapPanel() {
               const head = hit.pts[hit.pts.length - 1];
               const q = quadInfo(head.rs, head.mom);
               return (
-                <div className="absolute pointer-events-none z-30 bg-[#16130E]/95 border border-[#2C261E] px-3 py-2 text-[10px] font-mono" style={{ left: "50%", top: 8, transform: "translateX(-50%)" }}>
-                  <div className={`font-sans font-medium ${q.cls}`}>{hit.it.ticker} <span className="text-[#B8AA96]/40">· {hit.it.name}</span></div>
-                  <div className="text-[#B8AA96]/60">RS <span className="text-[#F4EFE6]">{head.rs >= 0 ? "+" : ""}{head.rs.toFixed(2)}%</span></div>
-                  <div className="text-[#B8AA96]/60">Momentum <span className="text-[#F4EFE6]">{head.mom >= 0 ? "+" : ""}{head.mom.toFixed(2)}%</span></div>
-                  <div className="text-[#B8AA96]/60">Fase <span className={q.cls}>{q.label}</span></div>
+                <div className="absolute pointer-events-none z-30 bg-[#16130E]/95 border border-[#242929] px-3 py-2 text-[10px] font-mono" style={{ left: "50%", top: 8, transform: "translateX(-50%)" }}>
+                  <div className={`font-sans font-medium ${q.cls}`}>{hit.it.ticker} <span className="text-[#9ba3a6]/40">· {hit.it.name}</span></div>
+                  <div className="text-[#9ba3a6]/60">RS <span className="text-[#edf1f2]">{head.rs >= 0 ? "+" : ""}{head.rs.toFixed(2)}%</span></div>
+                  <div className="text-[#9ba3a6]/60">Momentum <span className="text-[#edf1f2]">{head.mom >= 0 ? "+" : ""}{head.mom.toFixed(2)}%</span></div>
+                  <div className="text-[#9ba3a6]/60">Fase <span className={q.cls}>{q.label}</span></div>
                 </div>
               );
             })()}
@@ -352,7 +352,7 @@ export function RotationMapPanel() {
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[480px] border-collapse text-[11px] font-mono">
               <thead>
-                <tr className="text-[9px] uppercase tracking-wider text-[#B8AA96]/40 border-b border-[#2C261E]">
+                <tr className="text-[9px] uppercase tracking-wider text-[#9ba3a6]/40 border-b border-[#242929]">
                   <th className="text-left font-normal py-1.5 pl-1 pr-4 w-[38%]">Sektor</th>
                   <th className="text-right font-normal py-1.5 px-4">RS</th>
                   <th className="text-right font-normal py-1.5 px-4">Mom</th>
@@ -371,9 +371,9 @@ export function RotationMapPanel() {
                     const isHover = hover === s.it.ticker;
                     const txt = (v: number, bold = false) =>
                       !Number.isFinite(v)
-                        ? <span className="text-[#B8AA96]/20">—</span>
+                        ? <span className="text-[#9ba3a6]/20">—</span>
                         : (
-                          <span className={`${bold && isHover ? "text-[#F4EFE6]" : ""} ${v >= 0 ? "text-emerald-400/90" : "text-red-400/80"}`}>
+                          <span className={`${bold && isHover ? "text-[#edf1f2]" : ""} ${v >= 0 ? "text-emerald-400/90" : "text-red-400/80"}`}>
                             {v >= 0 ? "+" : ""}{v.toFixed(2)}%
                           </span>
                         );
@@ -382,12 +382,12 @@ export function RotationMapPanel() {
                         onMouseEnter={() => setHover(s.it.ticker)}
                         onMouseLeave={() => setHover(null)}
                         onClick={() => setFilterQuad(filterQuad === qu.k ? null : qu.k)}
-                        className={`border-b border-[#2C261E]/60 cursor-pointer transition-colors ${
-                          isDim ? "opacity-30" : "hover:bg-[#1A1A17]"
+                        className={`border-b border-[#242929]/60 cursor-pointer transition-colors ${
+                          isDim ? "opacity-30" : "hover:bg-[#121414]"
                         }`}>
                         <td className="py-1.5 pl-1 pr-4 whitespace-nowrap">
-                          <span className={`font-sans font-medium text-[12px] ${isHover ? "text-[#F4EFE6]" : "text-[#F4EFE6]/90"}`}>{s.it.ticker}</span>
-                          <span className="text-[#B8AA96]/45 ml-2 font-sans">{s.it.name}</span>
+                          <span className={`font-sans font-medium text-[12px] ${isHover ? "text-[#edf1f2]" : "text-[#edf1f2]/90"}`}>{s.it.ticker}</span>
+                          <span className="text-[#9ba3a6]/45 ml-2 font-sans">{s.it.name}</span>
                         </td>
                         <td className="py-1.5 px-4 text-right whitespace-nowrap">{txt(h.rs, true)}</td>
                         <td className="py-1.5 px-4 text-right whitespace-nowrap">{txt(h.mom, true)}</td>

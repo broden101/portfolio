@@ -319,32 +319,32 @@ export default function IHSGDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+    <div className="min-h-screen bg-[#0a0b0b] pt-24 pb-20">
       <Navbar />
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
           <div>
             <div className="flex items-center gap-4 mb-3">
-              <div className="w-10 h-px bg-[#C6A15B]/30" />
-              <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Dashboard IHSG</span>
+              <div className="w-10 h-px bg-[#3f9e74]/30" />
+              <span className="text-[#3f9e74] text-xs tracking-[0.3em] uppercase font-medium">Dashboard IHSG</span>
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light mb-2">
+            <h1 className="font-heading text-4xl md:text-5xl text-[#edf1f2] font-light mb-2">
               Dashboard <span className="text-gold-gradient font-medium">IHSG</span>
             </h1>
-            <p className="text-[#B8AA96]/50 text-xs tracking-wider uppercase">
+            <p className="text-[#9ba3a6]/50 text-xs tracking-wider uppercase">
               Makro · Aliran Dana Asing · Rotasi Sektor · Indeks Global
             </p>
           </div>
           <div className="text-right">
             <div className="flex items-center justify-end gap-2 mb-1">
-              <span className={`w-2 h-2 rounded-full ${live ? "bg-emerald-400 animate-pulse" : "bg-[#B8AA96]/30"}`} />
-              <span className="text-[10px] tracking-[0.15em] uppercase text-[#B8AA96]/50">
+              <span className={`w-2 h-2 rounded-full ${live ? "bg-emerald-400 animate-pulse" : "bg-[#9ba3a6]/30"}`} />
+              <span className="text-[10px] tracking-[0.15em] uppercase text-[#9ba3a6]/50">
                 {loading ? "Menghubungkan" : live ? (marketOpen ? "Live · Pasar Buka" : "Live · Pasar Tutup") : "Offline"}
               </span>
             </div>
-            <div className="text-[#B8AA96]/30 text-[10px] tracking-[0.15em] uppercase mb-1">Terakhir Diperbarui</div>
-            <div className="text-[#B8AA96]/60 text-sm font-mono">{lastUpdated ? fmtTime(lastUpdated) : "—"}</div>
+            <div className="text-[#9ba3a6]/30 text-[10px] tracking-[0.15em] uppercase mb-1">Terakhir Diperbarui</div>
+            <div className="text-[#9ba3a6]/60 text-sm font-mono">{lastUpdated ? fmtTime(lastUpdated) : "—"}</div>
           </div>
         </div>
 
@@ -357,22 +357,22 @@ export default function IHSGDashboard() {
               return (
               <div key={m.label} className="card-luxury p-4">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase">{m.label}</span>
+                  <span className="text-[#9ba3a6]/50 text-[10px] tracking-[0.15em] uppercase">{m.label}</span>
                   <span className={`text-[10px] font-mono ${m.up ? "text-emerald-400" : "text-red-400"}`}>{m.change}</span>
                 </div>
                 {hasDetail ? (
                   <div className="space-y-0.5 mt-1">
                     {(m as any).detail.lines.map((l: { label: string; value: string; up: boolean }, i: number) => (
                       <div key={i} className="flex justify-between items-center">
-                        <span className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em]">{l.label}</span>
+                        <span className="text-[#9ba3a6]/40 text-[9px] tracking-[0.1em]">{l.label}</span>
                         <span className={`text-[11px] font-mono ${l.up ? "text-emerald-400/80" : "text-red-400/80"}`}>{l.value}</span>
                       </div>
                     ))}
                   </div>
                 ) : (
-                <div className="font-heading text-xl text-[#F4EFE6] font-medium">{m.value}</div>
+                <div className="font-heading text-xl text-[#edf1f2] font-medium">{m.value}</div>
                 )}
-                <div className="text-[#B8AA96]/30 text-[9px] mt-0.5">{m.note}</div>
+                <div className="text-[#9ba3a6]/30 text-[9px] mt-0.5">{m.note}</div>
               </div>
               );
             })}
@@ -388,17 +388,17 @@ export default function IHSGDashboard() {
         <div className="grid lg:grid-cols-3 gap-8 mb-8">
             {/* INDEKS GLOBAL */}
             <div className="card-luxury p-6">
-              <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">Indeks Global</h2>
+              <h2 className="text-xs tracking-[0.2em] uppercase text-[#3f9e74] mb-5 font-medium">Indeks Global</h2>
               {(() => {
                 const m = data?.macro ?? {};
                 const q = (k: string) => m[k] ?? null;
                 const row = (label: string, quote: {close?: number|null, change?: number|null}|null, fmt: (n:number)=>string = n=>`${n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})}`) => {
-                  if (!quote || quote.close == null) return <div key={label} className="flex justify-between py-1.5 border-b border-[#2C261E]/30"><span className="text-[#B8AA96]/50 text-[11px]">{label}</span><span className="text-[#B8AA96]/30 text-[11px]">—</span></div>;
+                  if (!quote || quote.close == null) return <div key={label} className="flex justify-between py-1.5 border-b border-[#242929]/30"><span className="text-[#9ba3a6]/50 text-[11px]">{label}</span><span className="text-[#9ba3a6]/30 text-[11px]">—</span></div>;
                   const up = (quote.change ?? 0) >= 0;
-                  return <div key={label} className="flex justify-between py-1.5 border-b border-[#2C261E]/30">
-                    <span className="text-[#B8AA96]/70 text-[11px]">{label}</span>
+                  return <div key={label} className="flex justify-between py-1.5 border-b border-[#242929]/30">
+                    <span className="text-[#9ba3a6]/70 text-[11px]">{label}</span>
                     <span className="text-[11px] font-mono">
-                      <span className="text-[#F4EFE6]">{fmt(quote.close)}</span>
+                      <span className="text-[#edf1f2]">{fmt(quote.close)}</span>
                       <span className={`ml-1.5 ${up ? "text-emerald-400" : "text-red-400"}`}>{up ? "▲" : "▼"} {(quote.change ?? 0) >= 0 ? "+" : ""}{(quote.change ?? 0).toFixed(2)}%</span>
                     </span>
                   </div>;
@@ -406,10 +406,10 @@ export default function IHSGDashboard() {
                 const usFmt = (n:number) => n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1});
                 const asiaFmt = (n:number) => n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1});
                 return <>
-                  <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-1">US</div>
+                  <div className="text-[#9ba3a6]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-1">US</div>
                   {["SPX","IXIC","DJI","DXY","VIX"].map(k => row(k === "SPX" ? "S&P 500" : k === "IXIC" ? "Nasdaq" : k === "DJI" ? "Dow Jones" : k, q(k), k === "DXY" ? n=>n.toFixed(2) : k === "VIX" ? n=>n.toFixed(2) : usFmt))}
                   {(() => { const e = q("AMEX_EIDO") ?? data?.eido; return row("EIDO", e, n=>n.toFixed(2)); })()}
-                  <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">ASIA</div>
+                  <div className="text-[#9ba3a6]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">ASIA</div>
                   {[
                     ["NI225","Nikkei 225"],
                     ["HSI","Hang Seng"],
@@ -417,7 +417,7 @@ export default function IHSGDashboard() {
                     ["STI","STI"],
                     ["NIFTY","NIFTY 50"],
                   ].map(([k,label]) => row(label, q(k), asiaFmt))}
-                  <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">CRYPTO</div>
+                  <div className="text-[#9ba3a6]/30 text-[9px] tracking-[0.15em] uppercase mb-2 mt-4">CRYPTO</div>
                   {row("BTC", q("BTC"), n=>`$${n.toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:0})}`)}
                 </>;
               })()}
@@ -428,17 +428,17 @@ export default function IHSGDashboard() {
 
             {/* KEY LEVELS */}
             <div className="card-luxury p-6">
-              <h2 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-5 font-medium">Level Kunci IHSG</h2>
-              <div className="text-center py-4 mb-5 border border-[#2C261E] bg-[#0B0B0A]">
-                <div className="text-[#B8AA96]/40 text-[10px] tracking-[0.15em] uppercase mb-1">IHSG Live</div>
+              <h2 className="text-xs tracking-[0.2em] uppercase text-[#3f9e74] mb-5 font-medium">Level Kunci IHSG</h2>
+              <div className="text-center py-4 mb-5 border border-[#242929] bg-[#0a0b0b]">
+                <div className="text-[#9ba3a6]/40 text-[10px] tracking-[0.15em] uppercase mb-1">IHSG Live</div>
                 <div className={`font-heading text-3xl font-medium ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtNum(ihsgClose)}</div>
                 <div className={`text-xs font-mono mt-1 ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>
                   {ihsgUp ? "▲" : "▼"} {fmtPct(ihsg.change)} {ihsg.changeAbs != null && `(${ihsgUp ? "+" : ""}${ihsg.changeAbs.toFixed(0)})`}
                 </div>
                 {/* Candle Terakhir */}
                 {ihsg.open != null && ihsg.high != null && ihsg.low != null && (
-                  <div className="mt-4 pt-3 border-t border-[#2C261E]/50">
-                    <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Candle Terakhir</div>
+                  <div className="mt-4 pt-3 border-t border-[#242929]/50">
+                    <div className="text-[#9ba3a6]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Candle Terakhir</div>
                     <div className="flex items-center justify-center gap-4">
                       {/* Visual candle */}
                       <div className="flex flex-col items-center" style={{ height: 60 }}>
@@ -453,8 +453,8 @@ export default function IHSGDashboard() {
                           ["C", ihsgClose],
                         ].map(([l, v]) => (
                           <div key={l as string} className="flex items-center gap-2">
-                            <span className="text-[#B8AA96]/40 text-[10px] w-3">{l}</span>
-                            <span className="text-[#B8AA96] text-[11px] font-mono">{fmtNum(v as number)}</span>
+                            <span className="text-[#9ba3a6]/40 text-[10px] w-3">{l}</span>
+                            <span className="text-[#9ba3a6] text-[11px] font-mono">{fmtNum(v as number)}</span>
                           </div>
                         ))}
                       </div>
@@ -465,16 +465,16 @@ export default function IHSGDashboard() {
               {/* FEAR & GREED INDEX */}
               <div className={`mt-4 mb-5 p-4 border ${fearGreed.border}`}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[#B8AA96]/50 text-[9px] tracking-[0.15em] uppercase">Fear & Greed Index</span>
+                  <span className="text-[#9ba3a6]/50 text-[9px] tracking-[0.15em] uppercase">Fear & Greed Index</span>
                   <span className={`text-[10px] font-mono ${fearGreed.color}`}>IDX</span>
                 </div>
                 <FearGreedGauge score={fearGreed.score} label={fearGreed.label} color={fearGreed.color} />
                 {/* Components */}
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[10px]">
-                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">Momentum 1M</span><span className={`font-mono ${fearGreed.m1m >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fearGreed.m1m >= 0 ? "+" : ""}{fearGreed.m1m.toFixed(1)}%</span></div>
-                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">VIX</span><span className="font-mono text-[#B8AA96]">{fearGreed.vix != null ? fearGreed.vix.toFixed(1) : "—"}</span></div>
-                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">Net Asing 7D</span><span className={`font-mono ${fearGreed.net7d >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fmtMiliar(Math.round(fearGreed.net7d / 1e3))}</span></div>
-                  <div className="flex justify-between"><span className="text-[#B8AA96]/40">IHSG Hari Ini</span><span className={`font-mono ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtPct(ihsg.change)}</span></div>
+                  <div className="flex justify-between"><span className="text-[#9ba3a6]/40">Momentum 1M</span><span className={`font-mono ${fearGreed.m1m >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fearGreed.m1m >= 0 ? "+" : ""}{fearGreed.m1m.toFixed(1)}%</span></div>
+                  <div className="flex justify-between"><span className="text-[#9ba3a6]/40">VIX</span><span className="font-mono text-[#9ba3a6]">{fearGreed.vix != null ? fearGreed.vix.toFixed(1) : "—"}</span></div>
+                  <div className="flex justify-between"><span className="text-[#9ba3a6]/40">Net Asing 7D</span><span className={`font-mono ${fearGreed.net7d >= 0 ? "text-emerald-400" : "text-red-400"}`}>{fmtMiliar(Math.round(fearGreed.net7d / 1e3))}</span></div>
+                  <div className="flex justify-between"><span className="text-[#9ba3a6]/40">IHSG Hari Ini</span><span className={`font-mono ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtPct(ihsg.change)}</span></div>
                 </div>
               </div>
               <div className="space-y-1.5">
@@ -482,21 +482,21 @@ export default function IHSGDashboard() {
                   <LevelRow key={`r-${i}`} label={`R${keyLevels.resistance.length - i}`} value={r.value} tone="resistance" price={ihsgClose} sub={r.label} />
                 ))}
                 <div className="flex items-center gap-3 py-1">
-                  <span className="text-[#C6A15B] text-[10px] tracking-wider uppercase w-16">SEKARANG</span>
-                  <div className="flex-1 h-0.5 bg-[#C6A15B]/40" />
+                  <span className="text-[#3f9e74] text-[10px] tracking-wider uppercase w-16">SEKARANG</span>
+                  <div className="flex-1 h-0.5 bg-[#3f9e74]/40" />
                   <span className={`text-xs font-mono font-medium ${ihsgUp ? "text-emerald-400" : "text-red-400"}`}>{fmtNum(ihsgClose)}</span>
                 </div>
                 {keyLevels.support.map((s, i) => (
                   <LevelRow key={`s-${i}`} label={`S${i + 1}`} value={s.value} tone="support" price={ihsgClose} sub={s.label} />
                 ))}
-                <div className="mt-2 pt-2 border-t border-[#2C261E]" />
+                <div className="mt-2 pt-2 border-t border-[#242929]" />
                 {ihsg.sma20 != null && <LevelRow label="MA20" value={ihsg.sma20} tone="ma-cyan" price={ihsgClose} />}
                 {ihsg.sma50 != null && <LevelRow label="MA50" value={ihsg.sma50} tone="ma-blue" price={ihsgClose} />}
               </div>
               {/* Gap Levels */}
               {keyLevels.gaps.length > 0 && (
-                <div className="mt-3 pt-3 border-t border-[#2C261E]">
-                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Gap & Level Psikologis</div>
+                <div className="mt-3 pt-3 border-t border-[#242929]">
+                  <div className="text-[#9ba3a6]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Gap & Level Psikologis</div>
                   <div className="flex flex-wrap gap-1.5">
                     {keyLevels.gaps.map((g) => {
                       const above = g > ihsgClose;
@@ -514,13 +514,13 @@ export default function IHSGDashboard() {
                 </div>
               )}
               {/* Volume Transaksi */}
-              <div className="mt-4 pt-4 border-t border-[#2C261E]/30">
-                <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-3">Volume Transaksi IHSG</div>
+              <div className="mt-4 pt-4 border-t border-[#242929]/30">
+                <div className="text-[#9ba3a6]/40 text-[9px] tracking-[0.1em] uppercase mb-3">Volume Transaksi IHSG</div>
                 {ihsg.volume != null ? (
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase">Hari Ini</div>
-                      <div className="font-heading text-lg font-medium text-[#F4EFE6] mt-0.5">
+                      <div className="text-[#9ba3a6]/30 text-[9px] tracking-[0.15em] uppercase">Hari Ini</div>
+                      <div className="font-heading text-lg font-medium text-[#edf1f2] mt-0.5">
                         Rp {(ihsg.volume / 1e12).toFixed(2).replace(".", ",")}T
                       </div>
                     </div>
@@ -533,12 +533,12 @@ export default function IHSGDashboard() {
                             const dateStr = new Date(d.date).toLocaleDateString("id-ID", { day: "2-digit", month: "short" });
                             return (
                               <div key={i} className="flex-1 flex flex-col items-center justify-end" title={`${dateStr}: Rp ${(d.value / 1e12).toFixed(2)}T`}>
-                                <div className="w-full bg-[#C6A15B]/40 rounded-t-sm" style={{ height: `${Math.max(h, 4)}%` }} />
+                                <div className="w-full bg-[#3f9e74]/40 rounded-t-sm" style={{ height: `${Math.max(h, 4)}%` }} />
                               </div>
                             );
                           })}
                         </div>
-                        <div className="flex justify-between text-[#B8AA96]/30 text-[7px] mt-1">
+                        <div className="flex justify-between text-[#9ba3a6]/30 text-[7px] mt-1">
                           <span>{new Date(txnHistory[6]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
                           <span>{new Date(txnHistory[0]?.date ?? "").toLocaleDateString("id-ID", { day: "2-digit", month: "short" })}</span>
                         </div>
@@ -546,14 +546,14 @@ export default function IHSGDashboard() {
                     )}
                   </div>
                 ) : (
-                  <div className="text-[#B8AA96]/30 text-sm">—</div>
+                  <div className="text-[#9ba3a6]/30 text-sm">—</div>
                 )}
 
                 {/* Toggle History */}
                 {txnHistory.length > 0 && (
                   <button
                     onClick={() => setShowVolumeHistory((v) => !v)}
-                    className="mt-3 w-full flex items-center justify-center gap-1.5 text-[10px] tracking-[0.12em] uppercase text-[#C6A15B]/60 hover:text-[#C6A15B] transition-colors py-1"
+                    className="mt-3 w-full flex items-center justify-center gap-1.5 text-[10px] tracking-[0.12em] uppercase text-[#3f9e74]/60 hover:text-[#3f9e74] transition-colors py-1"
                   >
                     <span>{showVolumeHistory ? "▲" : "▼"}</span>
                     {showVolumeHistory ? "Sembunyikan" : "Lihat History"}
@@ -561,7 +561,7 @@ export default function IHSGDashboard() {
                 )}
                 {showVolumeHistory && txnHistory.length > 0 && (
                   <div className="mt-2 max-h-[280px] overflow-y-auto">
-                    <div className="flex justify-between text-[9px] tracking-wide text-[#B8AA96]/30 uppercase mb-1 px-1">
+                    <div className="flex justify-between text-[9px] tracking-wide text-[#9ba3a6]/30 uppercase mb-1 px-1">
                       <span>Tanggal</span>
                       <span>Volume</span>
                       <span>Δ</span>
@@ -572,11 +572,11 @@ export default function IHSGDashboard() {
                       const delta = prev != null ? ((d.value - prev) / prev) * 100 : null;
                       const up = delta != null && delta >= 0;
                       return (
-                        <div key={d.date} className="flex justify-between items-center py-1.5 px-1 border-t border-[#2C261E]/40">
-                          <span className="text-[#B8AA96]/50 text-[11px] font-mono">
+                        <div key={d.date} className="flex justify-between items-center py-1.5 px-1 border-t border-[#242929]/40">
+                          <span className="text-[#9ba3a6]/50 text-[11px] font-mono">
                             {new Date(d.date).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" })}
                           </span>
-                          <span className="text-[#F4EFE6] text-[11px] font-mono">
+                          <span className="text-[#edf1f2] text-[11px] font-mono">
                             Rp {vol.toFixed(2).replace(".", ",")}T
                           </span>
                           {delta != null ? (
@@ -584,7 +584,7 @@ export default function IHSGDashboard() {
                               {up ? "+" : ""}{delta.toFixed(1)}%
                             </span>
                           ) : (
-                            <span className="text-[#B8AA96]/20 text-[10px]">—</span>
+                            <span className="text-[#9ba3a6]/20 text-[10px]">—</span>
                           )}
                         </div>
                       );
@@ -598,8 +598,8 @@ export default function IHSGDashboard() {
         {/* ═══ MARKET OVERVIEW: Net Flow + Composition + Top Movers ═══ */}
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-10 h-px bg-[#C6A15B]/30" />
-            <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
+            <div className="w-10 h-px bg-[#3f9e74]/30" />
+            <h2 className="font-heading text-xl text-[#edf1f2] font-medium">
               Market <span className="text-gold-gradient font-medium">Overview</span>
             </h2>
             <span className="text-[9px] text-emerald-400/50 uppercase tracking-wider border border-emerald-500/20 px-1.5 py-0.5">Auto</span>
@@ -609,25 +609,25 @@ export default function IHSGDashboard() {
           <div className="grid lg:grid-cols-2 gap-6 mb-6">
             {/* Net Flow 7d / 14d / 30d */}
             <div className="card-luxury p-6">
-              <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Net Flow Asing Kumulatif</h3>
+              <h3 className="text-xs tracking-[0.2em] uppercase text-[#3f9e74] mb-4 font-medium">Net Flow Asing Kumulatif</h3>
               <div className="grid grid-cols-3 gap-3">
                 {[
                   { label: "Hari Ini", value: cumulativeFlow.todayNet ?? (ff?.weekNet ?? null), unit: "M", div: 1e3 },
                   { label: "MTD", value: cumulativeFlow.mtd, unit: "M", div: 1e3 },
                   { label: "YTD", value: cumulativeFlow.ytd, unit: "T", div: 1e6 },
                 ].map((r) => (
-                  <div key={r.label} className="border border-[#2C261E] p-3 text-center">
-                    <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
-                    <div className={`text-sm font-mono font-medium ${r.value == null ? "text-[#B8AA96]/30" : r.value >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                  <div key={r.label} className="border border-[#242929] p-3 text-center">
+                    <div className="text-[#9ba3a6]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
+                    <div className={`text-sm font-mono font-medium ${r.value == null ? "text-[#9ba3a6]/30" : r.value >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                       {r.value != null ? `${r.value >= 0 ? "" : "-"}Rp ${Math.abs(r.value / (r.label !== "Hari Ini" && Math.abs(r.value) >= 10000 ? 1e6 : r.div)).toFixed(2).replace(".", ",")}${r.label !== "Hari Ini" && Math.abs(r.value) >= 10000 ? "T" : r.unit}` : "—"}
                     </div>
-                    {r.label === "MTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{new Date().toLocaleDateString("id-ID", { month: "long" })}</div>}
-                    {r.label === "YTD" && <div className="text-[#B8AA96]/30 text-[8px] mt-0.5">{new Date().getFullYear()}</div>}
+                    {r.label === "MTD" && <div className="text-[#9ba3a6]/30 text-[8px] mt-0.5">{new Date().toLocaleDateString("id-ID", { month: "long" })}</div>}
+                    {r.label === "YTD" && <div className="text-[#9ba3a6]/30 text-[8px] mt-0.5">{new Date().getFullYear()}</div>}
                   </div>
                 ))}
               </div>
               {flowHistory.length > 0 && (
-                <div className="mt-4 pt-3 border-t border-[#2C261E]">
+                <div className="mt-4 pt-3 border-t border-[#242929]">
                   {/* Rolling cumulative: 7d / 14d / 30d */}
                   <div className="grid grid-cols-3 gap-3 mb-3">
                     {[
@@ -635,8 +635,8 @@ export default function IHSGDashboard() {
                       { label: "14 Hari", value: rollingNetFlow.net14d.total, div: 1e3, unit: "M" },
                       { label: "30 Hari", value: rollingNetFlow.net30d.total, div: 1e3, unit: "M" },
                     ].map((r) => (
-                      <div key={r.label} className="border border-[#2C261E] p-3 text-center">
-                        <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
+                      <div key={r.label} className="border border-[#242929] p-3 text-center">
+                        <div className="text-[#9ba3a6]/40 text-[9px] tracking-[0.15em] uppercase mb-1">{r.label}</div>
                         <div className={`text-sm font-mono font-medium ${r.value >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                           {r.value >= 0 ? "+" : "-"}Rp {(Math.abs(r.value) >= 10000 ? Math.abs(r.value / 1e6) : Math.abs(r.value / r.div)).toFixed(Math.abs(r.value) >= 10000 ? 2 : 1).replace(".", ",")}
                           {Math.abs(r.value) >= 10000 ? "T" : r.unit}
@@ -645,12 +645,12 @@ export default function IHSGDashboard() {
                     ))}
                   </div>
                   {/* Historis Harian */}
-                  <div className="text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Historis Harian (Miliar Rp)</div>
+                  <div className="text-[#9ba3a6]/40 text-[9px] tracking-[0.1em] uppercase mb-2">Historis Harian (Miliar Rp)</div>
                   <div className="max-h-64 overflow-y-auto mb-3">
-                    <table className="w-full text-[10px] text-[#B8AA96]/70">
+                    <table className="w-full text-[10px] text-[#9ba3a6]/70">
                       <tbody>
                         {flowHistory.slice(-(showAllHistory ? 15 : 6)).reverse().map((d, i) => (
-                          <tr key={i} className="border-b border-[#2C261E]/30">
+                          <tr key={i} className="border-b border-[#242929]/30">
                             <td className="py-1">{new Date(d.date + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</td>
                             <td className={`py-1 text-right ${d.dailyNet >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                               {d.dailyNet >= 0 ? "+" : ""}{(d.dailyNet / 1e3).toFixed(2).replace(".", ",")} M
@@ -664,7 +664,7 @@ export default function IHSGDashboard() {
                     <div className="text-center pb-1">
                       <button
                         onClick={() => setShowAllHistory((prev) => !prev)}
-                        className="text-[9px] uppercase tracking-[0.1em] text-[#C6A15B]/60 hover:text-[#C6A15B] transition-colors"
+                        className="text-[9px] uppercase tracking-[0.1em] text-[#3f9e74]/60 hover:text-[#3f9e74] transition-colors"
                       >
                         {showAllHistory ? "Tampilkan Sedikit" : "Tampilkan Lainnya"}
                       </button>
@@ -744,7 +744,7 @@ function LevelRow({ label, value, tone, price, sub }: { label: string; value: nu
     <div className="flex items-center gap-3">
       <span className={`${tones.text} text-[10px] tracking-wider uppercase w-16`}>{label}</span>
       <div className={`flex-1 h-px ${tones.bar}`} />
-      {sub && <span className="text-[9px] text-[#B8AA96]/40 font-mono truncate max-w-[80px]">{sub}</span>}
+      {sub && <span className="text-[9px] text-[#9ba3a6]/40 font-mono truncate max-w-[80px]">{sub}</span>}
       <span className={`${tones.dot} text-xs font-mono`}>{fmtNum(value)}</span>
       {pct != null && (
         <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${above ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"}`}>
@@ -756,7 +756,7 @@ function LevelRow({ label, value, tone, price, sub }: { label: string; value: nu
 }
 
 function PerfCell({ v }: { v: number | null | undefined }) {
-  if (v == null || !Number.isFinite(v)) return <td className="py-2 text-right text-[#B8AA96]/30">—</td>;
+  if (v == null || !Number.isFinite(v)) return <td className="py-2 text-right text-[#9ba3a6]/30">—</td>;
   return <td className={`py-2 text-right ${v >= 0 ? "text-emerald-400" : "text-red-400"}`}>{v >= 0 ? "+" : ""}{v.toFixed(2)}%</td>;
 }
 
@@ -817,27 +817,27 @@ function FearGreedGauge({ score, label, color }: { score: number; label: string;
           <path key={idx} d={makeArcPath(s.start, s.end)} fill={s.fill} opacity={0.9} />
         ))}
 
-        <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`} fill="none" stroke="#2C261E" strokeWidth={1} />
-        <path d={`M ${cx - innerR} ${cy} A ${innerR} ${innerR} 0 0 1 ${cx + innerR} ${cy}`} fill="none" stroke="#2C261E" strokeWidth={1} />
+        <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`} fill="none" stroke="#242929" strokeWidth={1} />
+        <path d={`M ${cx - innerR} ${cy} A ${innerR} ${innerR} 0 0 1 ${cx + innerR} ${cy}`} fill="none" stroke="#242929" strokeWidth={1} />
 
-        <text x={22} y={108} fill="#B8AA96" opacity={0.5} fontSize="8" fontFamily="monospace" textAnchor="middle">0</text>
-        <text x={100} y={16} fill="#B8AA96" opacity={0.5} fontSize="8" fontFamily="monospace" textAnchor="middle">50</text>
-        <text x={178} y={108} fill="#B8AA96" opacity={0.5} fontSize="8" fontFamily="monospace" textAnchor="middle">100</text>
+        <text x={22} y={108} fill="#9ba3a6" opacity={0.5} fontSize="8" fontFamily="monospace" textAnchor="middle">0</text>
+        <text x={100} y={16} fill="#9ba3a6" opacity={0.5} fontSize="8" fontFamily="monospace" textAnchor="middle">50</text>
+        <text x={178} y={108} fill="#9ba3a6" opacity={0.5} fontSize="8" fontFamily="monospace" textAnchor="middle">100</text>
 
-        <line x1={cx} y1={cy} x2={needleTip.x} y2={needleTip.y} stroke="#F4EFE6" strokeWidth={2.5} strokeLinecap="round" />
-        <circle cx={cx} cy={cy} r={5} fill="#F4EFE6" />
-        <circle cx={cx} cy={cy} r={2.5} fill="#0B0B0A" />
+        <line x1={cx} y1={cy} x2={needleTip.x} y2={needleTip.y} stroke="#edf1f2" strokeWidth={2.5} strokeLinecap="round" />
+        <circle cx={cx} cy={cy} r={5} fill="#edf1f2" />
+        <circle cx={cx} cy={cy} r={2.5} fill="#0a0b0b" />
 
         <g transform={`translate(${badgePos.x}, ${badgePos.y})`}>
-          <circle r={10} fill="#0B0B0A" stroke="#F4EFE6" strokeWidth={1.5} />
-          <text x={0} y={3} fill="#F4EFE6" fontSize="8.5" fontWeight="bold" fontFamily="monospace" textAnchor="middle">
+          <circle r={10} fill="#0a0b0b" stroke="#edf1f2" strokeWidth={1.5} />
+          <text x={0} y={3} fill="#edf1f2" fontSize="8.5" fontWeight="bold" fontFamily="monospace" textAnchor="middle">
             {score}
           </text>
         </g>
       </svg>
 
       <div className="mt-1 text-center">
-        <span className="text-[#B8AA96]/50 text-[10px] uppercase tracking-wider">Now: </span>
+        <span className="text-[#9ba3a6]/50 text-[10px] uppercase tracking-wider">Now: </span>
         <span className={`font-heading text-lg font-bold ${color}`}>{label}</span>
       </div>
     </div>

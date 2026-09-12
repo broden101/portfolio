@@ -158,13 +158,13 @@ export default function BsjpScreener() {
     <div className="space-y-8">
       {/* Run button */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="text-xs text-[#B8AA96]/40">
+        <div className="text-xs text-[#9ba3a6]/40">
           Close near high · Volume spike 1.2x · Above VWAP · RSI 35-70
         </div>
         <button
           onClick={runScreener}
           disabled={loading}
-          className="ml-auto px-6 py-2.5 bg-[#C6A15B]/10 border border-[#C6A15B]/40 text-[#C6A15B] text-xs tracking-[0.15em] uppercase font-medium hover:bg-[#C6A15B]/20 transition-all disabled:opacity-40"
+          className="ml-auto px-6 py-2.5 bg-[#3f9e74]/10 border border-[#3f9e74]/40 text-[#3f9e74] text-xs tracking-[0.15em] uppercase font-medium hover:bg-[#3f9e74]/20 transition-all disabled:opacity-40"
         >
           {loading ? "Scanning..." : "Run BSJP"}
         </button>
@@ -181,14 +181,14 @@ export default function BsjpScreener() {
       {results.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: "Total", value: counts.total, color: "text-[#F4EFE6]" },
+            { label: "Total", value: counts.total, color: "text-[#edf1f2]" },
             { label: "Aman", value: counts.aman, color: "text-emerald-400" },
             { label: "Waspada", value: counts.waspada, color: "text-amber-400" },
             { label: "Hati-hati", value: counts.hati2, color: "text-red-400" },
           ].map((s) => (
             <div key={s.label} className="card-luxury p-5 text-center">
               <div className={`font-heading text-3xl font-medium ${s.color}`}>{s.value}</div>
-              <div className="text-[#B8AA96]/40 text-xs tracking-[0.2em] uppercase mt-1">{s.label}</div>
+              <div className="text-[#9ba3a6]/40 text-xs tracking-[0.2em] uppercase mt-1">{s.label}</div>
             </div>
           ))}
         </div>
@@ -198,38 +198,38 @@ export default function BsjpScreener() {
       {results.length > 0 && (
         <div className="card-luxury p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
-              BSJP Signal <span className="text-[#B8AA96]/50 font-light">({results.length})</span>
+            <h2 className="font-heading text-xl text-[#edf1f2] font-medium">
+              BSJP Signal <span className="text-[#9ba3a6]/50 font-light">({results.length})</span>
             </h2>
-            {lastRun && <span className="text-xs text-[#B8AA96]/30">Last scan: {lastRun}</span>}
+            {lastRun && <span className="text-xs text-[#9ba3a6]/30">Last scan: {lastRun}</span>}
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
-                <tr className="border-b border-[#2C261E]">
-                  <th className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium">#</th>
-                  <th className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium">Stock</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">Harga</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">Chg%</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">Vol/Avg</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">RSI</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">VWAP</th>
-                  <th className="text-center py-3 px-2 text-[#B8AA96]/50 font-medium">Score</th>
-                  <th className="text-center py-3 px-2 text-[#B8AA96]/50 font-medium">Risk</th>
+                <tr className="border-b border-[#242929]">
+                  <th className="text-left py-3 px-2 text-[#9ba3a6]/50 font-medium">#</th>
+                  <th className="text-left py-3 px-2 text-[#9ba3a6]/50 font-medium">Stock</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">Harga</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">Chg%</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">Vol/Avg</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">RSI</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">VWAP</th>
+                  <th className="text-center py-3 px-2 text-[#9ba3a6]/50 font-medium">Score</th>
+                  <th className="text-center py-3 px-2 text-[#9ba3a6]/50 font-medium">Risk</th>
                 </tr>
               </thead>
               <tbody>
                 {results.map((row, i) => {
                   const rc = RISK_CONFIG[row.risk];
                   return (
-                    <tr key={row.ticker} className="border-b border-[#2C261E]/50 hover:bg-[#C6A15B]/5 transition-colors">
-                      <td className="py-3 px-2 text-[#B8AA96]/30">{i + 1}</td>
+                    <tr key={row.ticker} className="border-b border-[#242929]/50 hover:bg-[#3f9e74]/5 transition-colors">
+                      <td className="py-3 px-2 text-[#9ba3a6]/30">{i + 1}</td>
                       <td className="py-3 px-2">
-                        <span className="font-mono font-semibold text-[#F4EFE6]">{row.ticker}</span>
-                        <div className="text-[10px] text-[#B8AA96]/40 mt-0.5 max-w-[180px] truncate">{row.desc}</div>
+                        <span className="font-mono font-semibold text-[#edf1f2]">{row.ticker}</span>
+                        <div className="text-[10px] text-[#9ba3a6]/40 mt-0.5 max-w-[180px] truncate">{row.desc}</div>
                       </td>
-                      <td className="py-3 px-2 text-right font-mono text-[#F4EFE6]">
+                      <td className="py-3 px-2 text-right font-mono text-[#edf1f2]">
                         {row.price.toLocaleString()}
                       </td>
                       <td className="py-3 px-2 text-right font-mono">
@@ -238,7 +238,7 @@ export default function BsjpScreener() {
                         </span>
                       </td>
                       <td className="py-3 px-2 text-right font-mono">
-                        <span className={row.volRatio >= 2 ? "text-emerald-400" : row.volRatio >= 1.5 ? "text-amber-400" : "text-[#B8AA96]"}>
+                        <span className={row.volRatio >= 2 ? "text-emerald-400" : row.volRatio >= 1.5 ? "text-amber-400" : "text-[#9ba3a6]"}>
                           {row.volRatio.toFixed(1)}x
                         </span>
                       </td>
@@ -253,7 +253,7 @@ export default function BsjpScreener() {
                         </span>
                       </td>
                       <td className="py-3 px-2 text-center">
-                        <span className={`font-heading text-lg font-medium ${row.score >= 70 ? "text-emerald-400" : row.score >= 50 ? "text-amber-400" : "text-[#B8AA96]"}`}>
+                        <span className={`font-heading text-lg font-medium ${row.score >= 70 ? "text-emerald-400" : row.score >= 50 ? "text-amber-400" : "text-[#9ba3a6]"}`}>
                           {row.score}
                         </span>
                       </td>
@@ -274,17 +274,17 @@ export default function BsjpScreener() {
       {/* Empty state */}
       {!loading && results.length === 0 && !error && (
         <div className="card-luxury p-12 text-center">
-          <div className="text-[#B8AA96]/30 text-sm mb-3">Belum ada hasil</div>
-          <p className="text-[#B8AA96]/20 text-xs max-w-md mx-auto">
+          <div className="text-[#9ba3a6]/30 text-sm mb-3">Belum ada hasil</div>
+          <p className="text-[#9ba3a6]/20 text-xs max-w-md mx-auto">
             Klik "Run BSJP" untuk scan IDX100 saham dengan sinyal beli sore jual pagi
           </p>
         </div>
       )}
 
       {/* Disclaimer */}
-      <div className="card-luxury p-5 border border-[#2C261E]/50">
-        <p className="text-[10px] text-[#B8AA96]/40 leading-relaxed">
-          ⚠️ <span className="text-[#C6A15B]/60">Disclaimer:</span> BSJP (Beli Sore Jual Pagi) adalah sinyal teknikal berbasis close near high, volume spike, dan posisi vs VWAP. Bukan rekomendasi final. Selalu konfirmasi dengan analisis fundamental dan kondisi pasar.
+      <div className="card-luxury p-5 border border-[#242929]/50">
+        <p className="text-[10px] text-[#9ba3a6]/40 leading-relaxed">
+          ⚠️ <span className="text-[#3f9e74]/60">Disclaimer:</span> BSJP (Beli Sore Jual Pagi) adalah sinyal teknikal berbasis close near high, volume spike, dan posisi vs VWAP. Bukan rekomendasi final. Selalu konfirmasi dengan analisis fundamental dan kondisi pasar.
         </p>
       </div>
     </div>

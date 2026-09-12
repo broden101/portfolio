@@ -87,19 +87,19 @@ const tools = [
 
 export default function ValuationLabPage() {
   return (
-    <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+    <div className="min-h-screen bg-[#0a0b0b] pt-24 pb-20">
       <Navbar />
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="mb-14">
           <div className="flex items-center gap-4 mb-3">
-            <div className="w-10 h-px bg-[#C6A15B]/30" />
-            <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Valuation Lab</span>
+            <div className="w-10 h-px bg-[#3f9e74]/30" />
+            <span className="text-[#3f9e74] text-xs tracking-[0.3em] uppercase font-medium">Valuation Lab</span>
           </div>
-          <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light mb-3">
+          <h1 className="font-heading text-4xl md:text-5xl text-[#edf1f2] font-light mb-3">
             Valuation <span className="text-gold-gradient font-medium">Frameworks</span>
           </h1>
-          <p className="text-[#B8AA96]/60 text-sm font-light max-w-xl">
+          <p className="text-[#9ba3a6]/60 text-sm font-light max-w-xl">
             Interactive valuation tools for Indonesian capital markets. Analyze, compare, and estimate fair value.
           </p>
         </div>
@@ -111,28 +111,28 @@ export default function ValuationLabPage() {
               key={tool.title}
               href={tool.href}
               className={`card-luxury p-8 group block transition-all duration-300 ${
-                tool.ready ? "hover:border-[#C6A15B]/40 cursor-pointer" : "opacity-50 cursor-default pointer-events-none"
+                tool.ready ? "hover:border-[#3f9e74]/40 cursor-pointer" : "opacity-50 cursor-default pointer-events-none"
               }`}
             >
               <div className="flex items-start justify-between mb-5">
-                <div className={`transition-colors duration-300 ${tool.ready ? "text-[#C6A15B]/40 group-hover:text-[#C6A15B]" : "text-[#B8AA96]/20"}`}>
+                <div className={`transition-colors duration-300 ${tool.ready ? "text-[#3f9e74]/40 group-hover:text-[#3f9e74]" : "text-[#9ba3a6]/20"}`}>
                   {tool.icon}
                 </div>
                 {!tool.ready && (
-                  <span className="text-[9px] tracking-[0.2em] uppercase text-[#B8AA96]/30 border border-[#2C261E] px-2 py-1">
+                  <span className="text-[9px] tracking-[0.2em] uppercase text-[#9ba3a6]/30 border border-[#242929] px-2 py-1">
                     Soon
                   </span>
                 )}
               </div>
 
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-2 font-medium">{tool.title}</h3>
-              <p className="text-[#B8AA96]/60 text-xs leading-relaxed font-light mb-5">{tool.desc}</p>
+              <h3 className="font-heading text-lg text-[#edf1f2] mb-2 font-medium">{tool.title}</h3>
+              <p className="text-[#9ba3a6]/60 text-xs leading-relaxed font-light mb-5">{tool.desc}</p>
 
               <div className="flex flex-wrap gap-1.5">
                 {tool.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-1 border border-[#2C261E] text-[#B8AA96]/40 text-[9px] tracking-[0.1em] uppercase"
+                    className="px-2 py-1 border border-[#242929] text-[#9ba3a6]/40 text-[9px] tracking-[0.1em] uppercase"
                   >
                     {tag}
                   </span>

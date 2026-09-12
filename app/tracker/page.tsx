@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Disclaimer, EmptyState } from "@/components/DataState";
 
-const gold = "#d6ad5a";
+const gold = "#3f9e74";
 
 interface Recommendation {
   ticker: string;
@@ -137,7 +137,7 @@ export default function TrackerPage() {
   }, [data, search, freqMap]);
 
   return (
-    <div className="min-h-screen bg-[#0B0B0A] text-[#F4EFE6] font-sans flex flex-col pt-24 pb-20">
+    <div className="min-h-screen bg-[#0a0b0b] text-[#edf1f2] font-sans flex flex-col pt-24 pb-20">
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-6 lg:px-12">
@@ -145,29 +145,29 @@ export default function TrackerPage() {
         <div className="mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <div className="flex items-center gap-4 mb-3">
-              <div className="w-10 h-px bg-[#C6A15B]/30" />
-              <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">
+              <div className="w-10 h-px bg-[#3f9e74]/30" />
+              <span className="text-[#3f9e74] text-xs tracking-[0.3em] uppercase font-medium">
                 Live Tracker
               </span>
             </div>
-            <h1 className="font-heading text-3xl sm:text-4xl text-[#F4EFE6] font-light">
+            <h1 className="font-heading text-3xl sm:text-4xl text-[#edf1f2] font-light">
               Rekomendasi Saham Terbaru
             </h1>
-            <p className="text-sm text-[#B8AA96]/70 mt-1">
+            <p className="text-sm text-[#9ba3a6]/70 mt-1">
               Rekomendasi analis sekuritas — entry, TP, SL, harga live, &amp; potensi upside.
             </p>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="text-xs text-[#B8AA96]/60 text-right">
+            <div className="text-xs text-[#9ba3a6]/60 text-right">
               <div>Pembaruan Terakhir:</div>
-              <div className="font-mono text-[#F4EFE6]">
+              <div className="font-mono text-[#edf1f2]">
                 {updatedAt ? new Date(updatedAt).toLocaleString("id-ID") : "—"}
               </div>
             </div>
             <button
               onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-[#1A1A18] hover:bg-[#2C261E] text-xs font-medium text-[#F4EFE6] rounded border border-[#2C261E] transition-colors"
+              className="px-4 py-2 bg-[#1A1A18] hover:bg-[#242929] text-xs font-medium text-[#edf1f2] rounded border border-[#242929] transition-colors"
             >
               Refresh
             </button>
@@ -175,19 +175,19 @@ export default function TrackerPage() {
         </div>
 
         {/* Search */}
-        <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between bg-[#161614] p-4 rounded border border-[#2C261E]">
+        <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between bg-[#161614] p-4 rounded border border-[#242929]">
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <input
               type="text"
               placeholder="Cari emiten, broker..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-[#0B0B0A] border border-[#2C261E] rounded px-3 py-2 text-sm text-[#F4EFE6] placeholder-[#B8AA96]/40 focus:outline-none focus:border-[#C6A15B] w-full sm:w-80 font-mono"
+              className="bg-[#0a0b0b] border border-[#242929] rounded px-3 py-2 text-sm text-[#edf1f2] placeholder-[#9ba3a6]/40 focus:outline-none focus:border-[#3f9e74] w-full sm:w-80 font-mono"
             />
           </div>
 
           <div className="flex items-center gap-2 w-full sm:w-auto">
-            <span className="text-xs text-[#B8AA96]/70 font-mono">
+            <span className="text-xs text-[#9ba3a6]/70 font-mono">
               {filtered.length} rekomendasi
             </span>
           </div>
@@ -195,18 +195,18 @@ export default function TrackerPage() {
 
         {/* Table / Content */}
         {loading ? (
-          <div className="text-center py-20 text-[#B8AA96]/70 font-mono text-sm">Memuat data rekomendasi...</div>
+          <div className="text-center py-20 text-[#9ba3a6]/70 font-mono text-sm">Memuat data rekomendasi...</div>
         ) : filtered.length === 0 ? (
           <EmptyState
             title="Tidak ada rekomendasi yang sesuai filter"
             description="Coba ubah kata kunci pencarian."
           />
         ) : (
-          <div className="bg-[#161614] rounded border border-[#2C261E] overflow-hidden shadow-xl">
+          <div className="bg-[#161614] rounded border border-[#242929] overflow-hidden shadow-xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-[#2C261E] bg-[#1A1A18] text-[11px] font-semibold text-[#B8AA96] uppercase tracking-wider">
+                  <tr className="border-b border-[#242929] bg-[#1A1A18] text-[11px] font-semibold text-[#9ba3a6] uppercase tracking-wider">
                     <th className="py-3 px-4">Tanggal</th>
                     <th className="py-3 px-4">Emiten</th>
                     <th className="py-3 px-4">Broker / Sumber</th>
@@ -219,18 +219,18 @@ export default function TrackerPage() {
                     <th className="py-3 px-4 text-right">Downside</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#2C261E]/40 text-xs">
+                <tbody className="divide-y divide-[#242929]/40 text-xs">
                   {filtered.map((item, idx) => (
                     <tr key={idx} className="hover:bg-[#1A1A18]/50 transition-colors">
-                      <td className="py-3 px-4 font-mono text-[#B8AA96] whitespace-nowrap">
+                      <td className="py-3 px-4 font-mono text-[#9ba3a6] whitespace-nowrap">
                         {item.date ? new Date(item.date).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" }) : "—"}
                       </td>
-                      <td className="py-3 px-4 font-bold text-[#F4EFE6]">
-                        <span className="font-mono bg-[#1A1A18] px-2 py-1 rounded text-[#C6A15B] border border-[#2C261E]">
+                      <td className="py-3 px-4 font-bold text-[#edf1f2]">
+                        <span className="font-mono bg-[#1A1A18] px-2 py-1 rounded text-[#3f9e74] border border-[#242929]">
                           {item.ticker}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-[#F4EFE6] font-medium">
+                      <td className="py-3 px-4 text-[#edf1f2] font-medium">
                         {item.broker}
                       </td>
                       <td className="py-3 px-4">
@@ -246,16 +246,16 @@ export default function TrackerPage() {
                           {item.action}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-right font-mono text-[#B8AA96]">
+                      <td className="py-3 px-4 text-right font-mono text-[#9ba3a6]">
                         {item.entry}
                       </td>
-                      <td className="py-3 px-4 text-right font-mono font-semibold text-[#C6A15B]">
+                      <td className="py-3 px-4 text-right font-mono font-semibold text-[#3f9e74]">
                         {item.target_price}
                       </td>
                       <td className="py-3 px-4 text-right font-mono text-red-400">
                         {item.stop_loss}
                       </td>
-                      <td className="py-3 px-4 text-right font-mono text-[#F4EFE6]">
+                      <td className="py-3 px-4 text-right font-mono text-[#edf1f2]">
                         {item.last_price ? item.last_price.toLocaleString("id-ID") : "—"}
                       </td>
                       <td className="py-3 px-4 text-right font-mono">
@@ -268,7 +268,7 @@ export default function TrackerPage() {
                             {item.upside_pct > 0 ? `+${item.upside_pct}%` : `${item.upside_pct}%`}
                           </span>
                         ) : (
-                          <span className="text-[#B8AA96]/40">—</span>
+                          <span className="text-[#9ba3a6]/40">—</span>
                         )}
                       </td>
                       <td className="py-3 px-4 text-right font-mono">
@@ -281,7 +281,7 @@ export default function TrackerPage() {
                             {item.downside_pct > 0 ? `+${item.downside_pct}%` : `${item.downside_pct}%`}
                           </span>
                         ) : (
-                          <span className="text-[#B8AA96]/40">—</span>
+                          <span className="text-[#9ba3a6]/40">—</span>
                         )}
                       </td>
                     </tr>

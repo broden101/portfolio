@@ -4,15 +4,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        gold: {
-          50: "#fefce8", 100: "#fef9c3", 200: "#fef08a", 300: "#fde047",
-          400: "#facc15", 500: "#c9a84c", 600: "#b8922d", 700: "#a37e2c",
-          800: "#8a6914", 900: "#6b5210"
-        }
+        pine: {
+          50: "#effbf5", 100: "#d9f5e6", 200: "#b6ebd0", 300: "#85dab2",
+          400: "#4dbf8f", 500: "#2f9d70", 600: "#3f9e74", 700: "#2f7d5c",
+          800: "#173f2e", 900: "#0f2b1f"
+        },
+        lime: "#d0ff00",
       },
       fontFamily: {
-        serif: ["Georgia", "Times New Roman", "serif"],
-        sans: ["system-ui", "-apple-system", "sans-serif"]
+        heading: ["var(--font-heading)", "Space Grotesk", "sans-serif"],
+        body: ["var(--font-body)", "Inter", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "ui-monospace", "monospace"],
       }
     }
   },

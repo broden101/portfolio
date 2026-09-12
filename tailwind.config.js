@@ -8,8 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        heading: ["var(--font-heading)", "Cormorant Garamond", "serif"],
+        heading: ["var(--font-heading)", "Space Grotesk", "sans-serif"],
         body: ["var(--font-body)", "Inter", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "ui-monospace", "monospace"],
       },
     },
   },

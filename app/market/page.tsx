@@ -38,16 +38,16 @@ export default function MarketPage() {
   }, []);
 
   if (loading) return (
-    <div className="min-h-screen bg-[#050505] text-[#F4EFE6] font-['Inter']">
+    <div className="min-h-screen bg-[#0a0b0b] text-[#edf1f2] font-['Inter']">
       <Navbar />
-      <div className="pt-24 flex justify-center"><div className="text-[#B8AA96]/60 text-xs animate-pulse">Loading market data...</div></div>
+      <div className="pt-24 flex justify-center"><div className="text-[#9ba3a6]/60 text-xs animate-pulse">Loading market data...</div></div>
     </div>
   );
 
   if (!data) return (
-    <div className="min-h-screen bg-[#050505] text-[#F4EFE6] font-['Inter']">
+    <div className="min-h-screen bg-[#0a0b0b] text-[#edf1f2] font-['Inter']">
       <Navbar />
-      <div className="pt-24 text-center text-[#B8AA96]/60 text-xs">No market data available</div>
+      <div className="pt-24 text-center text-[#9ba3a6]/60 text-xs">No market data available</div>
     </div>
   );
 
@@ -81,10 +81,10 @@ export default function MarketPage() {
 
   const fmtNum = (n: number) => n.toLocaleString("id-ID");
   const fmtPct = (n: number) => `${n >= 0 ? "+" : ""}${n.toFixed(2)}%`;
-  const priceClass = (n: number) => n > 0 ? "text-emerald-400" : n < 0 ? "text-red-400" : "text-[#B8AA96]";
+  const priceClass = (n: number) => n > 0 ? "text-emerald-400" : n < 0 ? "text-red-400" : "text-[#9ba3a6]";
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F4EFE6] font-['Inter']">
+    <div className="min-h-screen bg-[#0a0b0b] text-[#edf1f2] font-['Inter']">
       <Navbar />
 
       {/* Header Stats */}
@@ -92,35 +92,35 @@ export default function MarketPage() {
         <div className="bg-[#0A0A0A] border border-[#1A1A1A] p-4 mb-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <h1 className="text-[#C6A15B] text-sm font-bold tracking-[0.15em] uppercase">Orderflow Market</h1>
-              <span className="text-[10px] text-[#B8AA96]/40 bg-[#141210] border border-[#2C261E] px-2 py-0.5 rounded font-mono">{data.date}</span>
+              <h1 className="text-[#3f9e74] text-sm font-bold tracking-[0.15em] uppercase">Orderflow Market</h1>
+              <span className="text-[10px] text-[#9ba3a6]/40 bg-[#141210] border border-[#242929] px-2 py-0.5 rounded font-mono">{data.date}</span>
             </div>
-            <a href="/tradebook" className="text-[10px] text-[#C6A15B] hover:text-[#d6ad5a] border border-[#C6A15B]/30 px-3 py-1 rounded transition-colors">Full Orderbook →</a>
+            <a href="/tradebook" className="text-[10px] text-[#3f9e74] hover:text-[#3f9e74] border border-[#3f9e74]/30 px-3 py-1 rounded transition-colors">Full Orderbook →</a>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-6 gap-3 text-[11px] font-mono">
-            <div className="bg-[#141210] border border-[#2C261E] rounded p-2">
-              <div className="text-[#B8AA96]/40 text-[9px] uppercase tracking-wider mb-0.5">Tickers</div>
+            <div className="bg-[#141210] border border-[#242929] rounded p-2">
+              <div className="text-[#9ba3a6]/40 text-[9px] uppercase tracking-wider mb-0.5">Tickers</div>
               <div className="text-white font-bold">{data.okCount}</div>
             </div>
-            <div className="bg-[#141210] border border-[#2C261E] rounded p-2">
-              <div className="text-[#B8AA96]/40 text-[9px] uppercase tracking-wider mb-0.5">Order Rows</div>
+            <div className="bg-[#141210] border border-[#242929] rounded p-2">
+              <div className="text-[#9ba3a6]/40 text-[9px] uppercase tracking-wider mb-0.5">Order Rows</div>
               <div className="text-white font-bold">{fmtNum(totalOrder)}</div>
             </div>
-            <div className="bg-[#141210] border border-[#2C261E] rounded p-2">
-              <div className="text-[#B8AA96]/40 text-[9px] uppercase tracking-wider mb-0.5">Done Rows</div>
+            <div className="bg-[#141210] border border-[#242929] rounded p-2">
+              <div className="text-[#9ba3a6]/40 text-[9px] uppercase tracking-wider mb-0.5">Done Rows</div>
               <div className="text-white font-bold">{fmtNum(totalDone)}</div>
             </div>
-            <div className="bg-[#141210] border border-[#2C261E] rounded p-2">
-              <div className="text-[#B8AA96]/40 text-[9px] uppercase tracking-wider mb-0.5">Advances</div>
+            <div className="bg-[#141210] border border-[#242929] rounded p-2">
+              <div className="text-[#9ba3a6]/40 text-[9px] uppercase tracking-wider mb-0.5">Advances</div>
               <div className="text-emerald-400 font-bold">{advances}</div>
             </div>
-            <div className="bg-[#141210] border border-[#2C261E] rounded p-2">
-              <div className="text-[#B8AA96]/40 text-[9px] uppercase tracking-wider mb-0.5">Decliners</div>
+            <div className="bg-[#141210] border border-[#242929] rounded p-2">
+              <div className="text-[#9ba3a6]/40 text-[9px] uppercase tracking-wider mb-0.5">Decliners</div>
               <div className="text-red-400 font-bold">{decliners}</div>
             </div>
-            <div className="bg-[#141210] border border-[#2C261E] rounded p-2">
-              <div className="text-[#B8AA96]/40 text-[9px] uppercase tracking-wider mb-0.5">Size</div>
-              <div className="text-[#C6A15B] font-bold">212 MB</div>
+            <div className="bg-[#141210] border border-[#242929] rounded p-2">
+              <div className="text-[#9ba3a6]/40 text-[9px] uppercase tracking-wider mb-0.5">Size</div>
+              <div className="text-[#3f9e74] font-bold">212 MB</div>
             </div>
           </div>
         </div>
@@ -132,7 +132,7 @@ export default function MarketPage() {
             placeholder="Cari ticker..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#141210] border border-[#2C261E] rounded px-3 py-1.5 text-xs text-[#F4EFE6] placeholder-[#B8AA96]/30 focus:outline-none focus:border-[#C6A15B]/50 font-mono"
+            className="w-full bg-[#141210] border border-[#242929] rounded px-3 py-1.5 text-xs text-[#edf1f2] placeholder-[#9ba3a6]/30 focus:outline-none focus:border-[#3f9e74]/50 font-mono"
           />
         </div>
 
@@ -154,23 +154,23 @@ export default function MarketPage() {
             <tbody>
               {filtered.map((s) => (
                 <tr key={s.ticker} className="border-b border-[#1A1A1A]/50 hover:bg-[#141210]/50 transition-colors">
-                  <td className="px-3 py-1.5 text-[#C6A15B] font-bold whitespace-nowrap">{s.ticker}</td>
+                  <td className="px-3 py-1.5 text-[#3f9e74] font-bold whitespace-nowrap">{s.ticker}</td>
                   <td className="px-3 py-1.5 text-white text-right whitespace-nowrap">{s.close != null ? fmtNum(s.close) : "—"}</td>
                   <td className={`px-3 py-1.5 text-right font-bold whitespace-nowrap ${priceClass(s.change)}`}>{fmtPct(s.change)}</td>
-                  <td className="px-3 py-1.5 text-[#B8AA96]/60 text-right whitespace-nowrap">{s.open != null ? fmtNum(s.open) : "—"}</td>
-                  <td className="px-3 py-1.5 text-[#B8AA96]/60 text-right whitespace-nowrap">{s.high != null ? fmtNum(s.high) : "—"}</td>
-                  <td className="px-3 py-1.5 text-[#B8AA96]/60 text-right whitespace-nowrap">{s.low != null ? fmtNum(s.low) : "—"}</td>
-                  <td className="px-3 py-1.5 text-[#B8AA96] text-right whitespace-nowrap">{fmtNum(s.orderRows)}</td>
-                  <td className="px-3 py-1.5 text-[#B8AA96] text-right whitespace-nowrap">{fmtNum(s.doneRows)}</td>
+                  <td className="px-3 py-1.5 text-[#9ba3a6]/60 text-right whitespace-nowrap">{s.open != null ? fmtNum(s.open) : "—"}</td>
+                  <td className="px-3 py-1.5 text-[#9ba3a6]/60 text-right whitespace-nowrap">{s.high != null ? fmtNum(s.high) : "—"}</td>
+                  <td className="px-3 py-1.5 text-[#9ba3a6]/60 text-right whitespace-nowrap">{s.low != null ? fmtNum(s.low) : "—"}</td>
+                  <td className="px-3 py-1.5 text-[#9ba3a6] text-right whitespace-nowrap">{fmtNum(s.orderRows)}</td>
+                  <td className="px-3 py-1.5 text-[#9ba3a6] text-right whitespace-nowrap">{fmtNum(s.doneRows)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           {filtered.length === 0 && (
-            <div className="text-center py-8 text-[#B8AA96]/40 text-xs">No matching tickers</div>
+            <div className="text-center py-8 text-[#9ba3a6]/40 text-xs">No matching tickers</div>
           )}
         </div>
-        <div className="text-[9px] text-[#B8AA96]/30 text-center py-3">
+        <div className="text-[9px] text-[#9ba3a6]/30 text-center py-3">
           {filtered.length} of {data.totalTickers} tickers • Data: Bandarmolony • Updated daily via cron
         </div>
       </div>
@@ -182,7 +182,7 @@ function Th({ children, onClick }: { children: React.ReactNode; onClick: () => v
   return (
     <th
       onClick={onClick}
-      className="px-3 py-1.5 text-[9px] text-[#B8AA96]/40 uppercase font-bold tracking-wider text-right cursor-pointer hover:text-[#C6A15B]/60 select-none whitespace-nowrap"
+      className="px-3 py-1.5 text-[9px] text-[#9ba3a6]/40 uppercase font-bold tracking-wider text-right cursor-pointer hover:text-[#3f9e74]/60 select-none whitespace-nowrap"
     >
       {children}
     </th>

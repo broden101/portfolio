@@ -36,7 +36,7 @@ function CalendarDay({ day, events }: { day: number; events: DividendEvent[] }) 
   const [open, setOpen] = useState(false);
   if (!events.length) {
     return (
-      <div className="h-10 flex items-center justify-center text-xs text-[#B8AA96]/30">
+      <div className="h-10 flex items-center justify-center text-xs text-[#9ba3a6]/30">
         {day}
       </div>
     );
@@ -47,7 +47,7 @@ function CalendarDay({ day, events }: { day: number; events: DividendEvent[] }) 
         onClick={() => setOpen(!open)}
         className={`h-10 w-full flex items-center justify-center text-xs font-medium rounded transition-all ${
           events.some((e) => e.type === "EX_DATE")
-            ? "bg-[#C6A15B]/20 text-[#C6A15B] border border-[#C6A15B]/30"
+            ? "bg-[#3f9e74]/20 text-[#3f9e74] border border-[#3f9e74]/30"
             : events.some((e) => e.type === "CUM_DATE")
               ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
               : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
@@ -55,7 +55,7 @@ function CalendarDay({ day, events }: { day: number; events: DividendEvent[] }) 
       >
         {day}
         {events.length > 1 && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#C6A15B] text-[#0B0B0A] text-[9px] font-bold rounded-full flex items-center justify-center">
+          <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#3f9e74] text-[#0a0b0b] text-[9px] font-bold rounded-full flex items-center justify-center">
             {events.length}
           </span>
         )}
@@ -67,9 +67,9 @@ function CalendarDay({ day, events }: { day: number; events: DividendEvent[] }) 
             return (
               <div key={i} className={`flex items-center gap-2 px-2 py-1.5 rounded text-xs ${c.bg} ${c.text}`}>
                 <span className="font-mono font-semibold">{ev.ticker}</span>
-                <span className="text-[#B8AA96]/50">•</span>
+                <span className="text-[#9ba3a6]/50">•</span>
                 <span>{ev.type.replace("_", " ")}</span>
-                {ev.divType && <span className="px-1 py-0.5 rounded text-[9px] bg-[#C6A15B]/10 text-[#C6A15B] border border-[#C6A15B]/20">{ev.divType}</span>}
+                {ev.divType && <span className="px-1 py-0.5 rounded text-[9px] bg-[#3f9e74]/10 text-[#3f9e74] border border-[#3f9e74]/20">{ev.divType}</span>}
                 <span className="ml-auto font-mono">Rp{ev.dps.toLocaleString()}</span>
               </div>
             );
@@ -101,13 +101,13 @@ function DividendCalendar({ stocks }: { stocks: DividendStock[] }) {
     <div className="card-luxury p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="font-heading text-xl text-[#F4EFE6] font-medium">Dividend Calendar</h3>
-          <p className="text-xs text-[#B8AA96]/50 mt-1">Based on latest dividend history from panendividen.com</p>
+          <h3 className="font-heading text-xl text-[#edf1f2] font-medium">Dividend Calendar</h3>
+          <p className="text-xs text-[#9ba3a6]/50 mt-1">Based on latest dividend history from panendividen.com</p>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => { if (month === 0) { setMonth(11); setYear(y => y - 1); } else setMonth(m => m - 1); }} className="w-8 h-8 flex items-center justify-center border border-[#2C261E] text-[#B8AA96] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all">‹</button>
-          <span className="text-sm text-[#F4EFE6] font-medium min-w-[140px] text-center">{MONTHS[month]} {year}</span>
-          <button onClick={() => { if (month === 11) { setMonth(0); setYear(y => y + 1); } else setMonth(m => m + 1); }} className="w-8 h-8 flex items-center justify-center border border-[#2C261E] text-[#B8AA96] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all">›</button>
+          <button onClick={() => { if (month === 0) { setMonth(11); setYear(y => y - 1); } else setMonth(m => m - 1); }} className="w-8 h-8 flex items-center justify-center border border-[#242929] text-[#9ba3a6] hover:border-[#3f9e74] hover:text-[#3f9e74] transition-all">‹</button>
+          <span className="text-sm text-[#edf1f2] font-medium min-w-[140px] text-center">{MONTHS[month]} {year}</span>
+          <button onClick={() => { if (month === 11) { setMonth(0); setYear(y => y + 1); } else setMonth(m => m + 1); }} className="w-8 h-8 flex items-center justify-center border border-[#242929] text-[#9ba3a6] hover:border-[#3f9e74] hover:text-[#3f9e74] transition-all">›</button>
         </div>
       </div>
 
@@ -115,14 +115,14 @@ function DividendCalendar({ stocks }: { stocks: DividendStock[] }) {
         {Object.entries(EVENT_COLORS).map(([type, c]) => (
           <div key={type} className="flex items-center gap-1.5">
             <div className={`w-2.5 h-2.5 rounded-sm ${c.bg} border ${c.border}`} />
-            <span className="text-[#B8AA96]/60">{type.replace("_", " ")}</span>
+            <span className="text-[#9ba3a6]/60">{type.replace("_", " ")}</span>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-7 gap-1 mb-1">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
-          <div key={d} className="text-center text-[10px] text-[#B8AA96]/40 uppercase tracking-wider py-1">{d}</div>
+          <div key={d} className="text-center text-[10px] text-[#9ba3a6]/40 uppercase tracking-wider py-1">{d}</div>
         ))}
       </div>
 
@@ -135,21 +135,21 @@ function DividendCalendar({ stocks }: { stocks: DividendStock[] }) {
       </div>
 
       {events.length > 0 && (
-        <div className="mt-6 pt-4 border-t border-[#2C261E]">
-          <h4 className="text-xs text-[#C6A15B] tracking-[0.2em] uppercase mb-3 font-medium">Events this month ({events.length})</h4>
+        <div className="mt-6 pt-4 border-t border-[#242929]">
+          <h4 className="text-xs text-[#3f9e74] tracking-[0.2em] uppercase mb-3 font-medium">Events this month ({events.length})</h4>
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {events.map((ev, i) => {
               const c = EVENT_COLORS[ev.type];
               return (
                 <div key={i} className={`flex items-center justify-between px-3 py-2 rounded ${c.bg}`}>
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-sm font-semibold text-[#F4EFE6]">{ev.ticker}</span>
+                    <span className="font-mono text-sm font-semibold text-[#edf1f2]">{ev.ticker}</span>
                     <span className={`text-xs px-2 py-0.5 rounded ${c.text} ${c.bg} border ${c.border}`}>{ev.type.replace("_", " ")}</span>
-                    {ev.divType && <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#C6A15B]/10 text-[#C6A15B] border border-[#C6A15B]/20">{ev.divType}</span>}
+                    {ev.divType && <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#3f9e74]/10 text-[#3f9e74] border border-[#3f9e74]/20">{ev.divType}</span>}
                   </div>
                   <div className="flex items-center gap-4 text-xs">
-                    <span className="text-[#B8AA96]">{ev.date}</span>
-                    <span className="text-[#F4EFE6] font-mono">Rp{ev.dps.toLocaleString()}</span>
+                    <span className="text-[#9ba3a6]">{ev.date}</span>
+                    <span className="text-[#edf1f2] font-mono">Rp{ev.dps.toLocaleString()}</span>
                   </div>
                 </div>
               );
@@ -194,8 +194,8 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
   };
 
   const SortIcon = ({ col }: { col: keyof DividendStock }) => {
-    if (sortBy !== col) return <span className="text-[#B8AA96]/20 ml-1">↕</span>;
-    return <span className="text-[#C6A15B] ml-1">{sortDir === "asc" ? "↑" : "↓"}</span>;
+    if (sortBy !== col) return <span className="text-[#9ba3a6]/20 ml-1">↕</span>;
+    return <span className="text-[#3f9e74] ml-1">{sortDir === "asc" ? "↑" : "↓"}</span>;
   };
 
   const formatTime = (iso: string) => {
@@ -211,15 +211,15 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
     <div className="card-luxury p-6">
       <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
         <div>
-          <h3 className="font-heading text-xl text-[#F4EFE6] font-medium">Kompas 100 Dividend Stocks</h3>
-          <p className="text-xs text-[#B8AA96]/50 mt-1">
+          <h3 className="font-heading text-xl text-[#edf1f2] font-medium">Kompas 100 Dividend Stocks</h3>
+          <p className="text-xs text-[#9ba3a6]/50 mt-1">
             Live prices from TradingView • Auto-refresh every 60s
             {lastUpdated && <span className="ml-2 text-emerald-400/70">● {formatTime(lastUpdated)}</span>}
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <input type="text" placeholder="Search ticker/name..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-48 bg-[#0B0B0A] border border-[#2C261E] px-3 py-2 text-xs text-[#F4EFE6] placeholder-[#B8AA96]/30" />
-          <select value={sectorFilter} onChange={(e) => setSectorFilter(e.target.value)} className="bg-[#0B0B0A] border border-[#2C261E] px-3 py-2 text-xs text-[#F4EFE6] appearance-none cursor-pointer">
+          <input type="text" placeholder="Search ticker/name..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-48 bg-[#0a0b0b] border border-[#242929] px-3 py-2 text-xs text-[#edf1f2] placeholder-[#9ba3a6]/30" />
+          <select value={sectorFilter} onChange={(e) => setSectorFilter(e.target.value)} className="bg-[#0a0b0b] border border-[#242929] px-3 py-2 text-xs text-[#edf1f2] appearance-none cursor-pointer">
             <option value="ALL">All Sectors</option>
             {sectors.map((s) => (<option key={s} value={s}>{s}</option>))}
           </select>
@@ -228,7 +228,7 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
             className={`px-3 py-2 text-xs border transition-all ${
               hidiv20Only
                 ? "bg-blue-500/20 border-blue-500/40 text-blue-400"
-                : "bg-transparent border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B] hover:text-[#C6A15B]"
+                : "bg-transparent border-[#242929] text-[#9ba3a6]/50 hover:border-[#3f9e74] hover:text-[#3f9e74]"
             }`}
           >
             IDX HIDIV20
@@ -238,7 +238,7 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
             className={`px-3 py-2 text-xs border transition-all ${
               shariahOnly
                 ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400"
-                : "bg-transparent border-[#2C261E] text-[#B8AA96]/50 hover:border-[#C6A15B] hover:text-[#C6A15B]"
+                : "bg-transparent border-[#242929] text-[#9ba3a6]/50 hover:border-[#3f9e74] hover:text-[#3f9e74]"
             }`}
           >
             ☪ Syariah
@@ -248,14 +248,14 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {[
-          { label: "Stocks", value: filtered.length, color: "text-[#F4EFE6]" },
-          { label: "Avg History", value: `${(filtered.reduce((a, s) => a + s.yearsOfHistory, 0) / filtered.length || 0).toFixed(0)} yrs`, color: "text-[#C6A15B]" },
+          { label: "Stocks", value: filtered.length, color: "text-[#edf1f2]" },
+          { label: "Avg History", value: `${(filtered.reduce((a, s) => a + s.yearsOfHistory, 0) / filtered.length || 0).toFixed(0)} yrs`, color: "text-[#3f9e74]" },
           { label: "Top Yield", value: `${Math.max(...filtered.map((s) => s.dividendYield || 0)).toFixed(1)}%`, color: "text-emerald-400" },
           { label: "Sectors", value: sectors.length, color: "text-blue-400" },
         ].map((s) => (
-          <div key={s.label} className="bg-[#0B0B0A] border border-[#2C261E] p-4 text-center">
+          <div key={s.label} className="bg-[#0a0b0b] border border-[#242929] p-4 text-center">
             <div className={`font-heading text-2xl font-medium ${s.color}`}>{s.value}</div>
-            <div className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mt-1">{s.label}</div>
+            <div className="text-[#9ba3a6]/40 text-[10px] tracking-[0.2em] uppercase mt-1">{s.label}</div>
           </div>
         ))}
       </div>
@@ -263,8 +263,8 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr className="border-b border-[#2C261E]">
-              <th className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium">#</th>
+            <tr className="border-b border-[#242929]">
+              <th className="text-left py-3 px-2 text-[#9ba3a6]/50 font-medium">#</th>
               {([
                 ["ticker", "Stock"],
                 ["price", "Price"],
@@ -274,7 +274,7 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
                 ["yearsOfHistory", "Years"],
                 ["latestDividend", "Latest Ex-Date"],
               ] as [keyof DividendStock, string][]).map(([key, label]) => (
-                <th key={key} className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium cursor-pointer hover:text-[#C6A15B] transition-colors select-none whitespace-nowrap" onClick={() => handleSort(key)}>
+                <th key={key} className="text-left py-3 px-2 text-[#9ba3a6]/50 font-medium cursor-pointer hover:text-[#3f9e74] transition-colors select-none whitespace-nowrap" onClick={() => handleSort(key)}>
                   {label}<SortIcon col={key} />
                 </th>
               ))}
@@ -288,12 +288,12 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
               const isDown = change != null && change < 0;
 
               return (
-                <tr key={stock.ticker} className="border-b border-[#2C261E]/50 hover:bg-[#C6A15B]/5 transition-colors group cursor-pointer" onClick={() => setExpandedStock(expandedStock === stock.ticker ? null : stock.ticker)}>
-                  <td className="py-3 px-2 text-[#B8AA96]/30">{i + 1}</td>
+                <tr key={stock.ticker} className="border-b border-[#242929]/50 hover:bg-[#3f9e74]/5 transition-colors group cursor-pointer" onClick={() => setExpandedStock(expandedStock === stock.ticker ? null : stock.ticker)}>
+                  <td className="py-3 px-2 text-[#9ba3a6]/30">{i + 1}</td>
                   <td className="py-3 px-2">
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono font-semibold text-[#F4EFE6] group-hover:text-[#C6A15B] transition-colors">{stock.ticker}</span>
+                        <span className="font-mono font-semibold text-[#edf1f2] group-hover:text-[#3f9e74] transition-colors">{stock.ticker}</span>
                         {stock.shariah !== false && (
                           <span className="text-[9px] px-1 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">☪</span>
                         )}
@@ -301,41 +301,41 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
                           <span className="text-[9px] px-1 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">HD</span>
                         )}
                       </div>
-                      <div className="text-[10px] text-[#B8AA96]/40 mt-0.5 max-w-[180px] truncate">{stock.companyName}</div>
+                      <div className="text-[10px] text-[#9ba3a6]/40 mt-0.5 max-w-[180px] truncate">{stock.companyName}</div>
                     </div>
                   </td>
                   <td className="py-3 px-2">
-                    <div className="font-mono text-[#F4EFE6]">
+                    <div className="font-mono text-[#edf1f2]">
                       {displayPrice ? `Rp${displayPrice.toLocaleString()}` : '—'}
                     </div>
                     {change != null && (
-                      <div className={`text-[10px] font-mono ${isUp ? "text-emerald-400" : isDown ? "text-red-400" : "text-[#B8AA96]/40"}`}>
+                      <div className={`text-[10px] font-mono ${isUp ? "text-emerald-400" : isDown ? "text-red-400" : "text-[#9ba3a6]/40"}`}>
                         {isUp ? "▲" : "▼"} {change >= 0 ? "+" : ""}{change.toFixed(2)}%
                       </div>
                     )}
                   </td>
-                  <td className="py-3 px-2 text-[#B8AA96]">{stock.sector}</td>
-                  <td className="py-3 px-2 font-mono text-[#F4EFE6]">Rp{Number(stock.latestFYDPS ?? stock.latestFinalDPS ?? 0).toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
+                  <td className="py-3 px-2 text-[#9ba3a6]">{stock.sector}</td>
+                  <td className="py-3 px-2 font-mono text-[#edf1f2]">Rp{Number(stock.latestFYDPS ?? stock.latestFinalDPS ?? 0).toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
                   <td className="py-3 px-2">
                     <span className={`font-mono font-semibold ${
                       (stock.dividendYield ?? stock.finalYield ?? 0) >= 8 ? 'text-emerald-400' :
-                      (stock.dividendYield ?? stock.finalYield ?? 0) >= 4 ? 'text-[#C6A15B]' :
-                      'text-[#B8AA96]'
+                      (stock.dividendYield ?? stock.finalYield ?? 0) >= 4 ? 'text-[#3f9e74]' :
+                      'text-[#9ba3a6]'
                     }`}>{(stock.dividendYield ?? stock.finalYield ?? 0).toFixed(2)}%</span>
                   </td>
                   <td className="py-3 px-2">
-                    <span className={`font-mono ${stock.yearsOfHistory >= 15 ? "text-[#C6A15B]" : stock.yearsOfHistory >= 10 ? "text-emerald-400" : "text-[#B8AA96]"}`}>
+                    <span className={`font-mono ${stock.yearsOfHistory >= 15 ? "text-[#3f9e74]" : stock.yearsOfHistory >= 10 ? "text-emerald-400" : "text-[#9ba3a6]"}`}>
                       {stock.yearsOfHistory}
                     </span>
                   </td>
                   <td className="py-3 px-2">
                     {stock.latestDividend?.date ? (
                       <div>
-                        <div className="font-mono text-[#B8AA96]/70">{stock.latestDividend.date}</div>
+                        <div className="font-mono text-[#9ba3a6]/70">{stock.latestDividend.date}</div>
                         <div className="text-[10px] text-emerald-400 font-mono">Rp{stock.latestDividend.amount.toLocaleString()}</div>
                       </div>
                     ) : (
-                      <span className="text-[#B8AA96]/30">—</span>
+                      <span className="text-[#9ba3a6]/30">—</span>
                     )}
                   </td>
                 </tr>
@@ -350,35 +350,35 @@ function StockPicker({ stocks, lastUpdated }: { stocks: DividendStock[]; lastUpd
         const stock = stocks.find(s => s.ticker === expandedStock);
         if (!stock) return null;
         return (
-          <div className="mt-6 pt-4 border-t border-[#2C261E]">
-            <h4 className="text-sm text-[#F4EFE6] font-medium mb-3">
-              <span className="font-mono text-[#C6A15B]">{stock.ticker}</span>
-              <span className="text-[#B8AA96]/60 ml-2">— {stock.companyName}</span>
+          <div className="mt-6 pt-4 border-t border-[#242929]">
+            <h4 className="text-sm text-[#edf1f2] font-medium mb-3">
+              <span className="font-mono text-[#3f9e74]">{stock.ticker}</span>
+              <span className="text-[#9ba3a6]/60 ml-2">— {stock.companyName}</span>
             </h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-              <div className="bg-[#0B0B0A] border border-[#2C261E] p-3">
-                <div className="text-[10px] text-[#B8AA96]/40 uppercase tracking-wider">Sector</div>
-                <div className="text-xs text-[#F4EFE6] mt-1">{stock.sector}</div>
+              <div className="bg-[#0a0b0b] border border-[#242929] p-3">
+                <div className="text-[10px] text-[#9ba3a6]/40 uppercase tracking-wider">Sector</div>
+                <div className="text-xs text-[#edf1f2] mt-1">{stock.sector}</div>
               </div>
-              <div className="bg-[#0B0B0A] border border-[#2C261E] p-3">
-                <div className="text-[10px] text-[#B8AA96]/40 uppercase tracking-wider">Industry</div>
-                <div className="text-xs text-[#F4EFE6] mt-1">{stock.industry}</div>
+              <div className="bg-[#0a0b0b] border border-[#242929] p-3">
+                <div className="text-[10px] text-[#9ba3a6]/40 uppercase tracking-wider">Industry</div>
+                <div className="text-xs text-[#edf1f2] mt-1">{stock.industry}</div>
               </div>
-              <div className="bg-[#0B0B0A] border border-[#2C261E] p-3">
-                <div className="text-[10px] text-[#B8AA96]/40 uppercase tracking-wider">Total Dividends</div>
-                <div className="text-xs text-[#C6A15B] font-mono mt-1">Rp {stock.totalDividends.toLocaleString()}</div>
+              <div className="bg-[#0a0b0b] border border-[#242929] p-3">
+                <div className="text-[10px] text-[#9ba3a6]/40 uppercase tracking-wider">Total Dividends</div>
+                <div className="text-xs text-[#3f9e74] font-mono mt-1">Rp {stock.totalDividends.toLocaleString()}</div>
               </div>
-              <div className="bg-[#0B0B0A] border border-[#2C261E] p-3">
-                <div className="text-[10px] text-[#B8AA96]/40 uppercase tracking-wider">Avg/Year</div>
+              <div className="bg-[#0a0b0b] border border-[#242929] p-3">
+                <div className="text-[10px] text-[#9ba3a6]/40 uppercase tracking-wider">Avg/Year</div>
                 <div className="text-xs text-emerald-400 font-mono mt-1">Rp {stock.avgDividendPerYear.toLocaleString()}</div>
               </div>
             </div>
             {stock.fiscalYears?.length > 0 && (
-              <div className="bg-[#0B0B0A] border border-[#2C261E] p-3">
-                <div className="text-[10px] text-[#B8AA96]/40 uppercase tracking-wider mb-2">Fiscal Years with Dividends</div>
+              <div className="bg-[#0a0b0b] border border-[#242929] p-3">
+                <div className="text-[10px] text-[#9ba3a6]/40 uppercase tracking-wider mb-2">Fiscal Years with Dividends</div>
                 <div className="flex flex-wrap gap-2">
                   {stock.fiscalYears.map(fy => (
-                    <span key={fy} className="px-2 py-1 text-[10px] font-mono bg-[#C6A15B]/10 text-[#C6A15B] border border-[#C6A15B]/20">{fy}</span>
+                    <span key={fy} className="px-2 py-1 text-[10px] font-mono bg-[#3f9e74]/10 text-[#3f9e74] border border-[#3f9e74]/20">{fy}</span>
                   ))}
                 </div>
               </div>
@@ -426,29 +426,29 @@ export default function DividendPage() {
   }, [refreshPrices]);
 
   return (
-    <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+    <div className="min-h-screen bg-[#0a0b0b] pt-24 pb-20">
       <Navbar />
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="mb-10">
           <div className="flex items-center gap-4 mb-3">
-            <div className="w-10 h-px bg-[#C6A15B]/30" />
-            <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">IDX Kompas 100</span>
+            <div className="w-10 h-px bg-[#3f9e74]/30" />
+            <span className="text-[#3f9e74] text-xs tracking-[0.3em] uppercase font-medium">IDX Kompas 100</span>
           </div>
-          <h1 className="font-heading text-4xl text-[#F4EFE6] font-light">
+          <h1 className="font-heading text-4xl text-[#edf1f2] font-light">
             Dividend <span className="text-gold-gradient font-medium">Tracker</span>
           </h1>
-          <p className="text-[#B8AA96]/60 text-sm mt-2 max-w-xl">
+          <p className="text-[#9ba3a6]/60 text-sm mt-2 max-w-xl">
             Dividend history for Kompas 100 stocks, sourced from panendividen.com. Track ex-dates, compare total payouts, and identify consistent dividend payers. Prices update live from TradingView.
           </p>
         </div>
 
         {loading ? (
           <div className="card-luxury p-12 text-center">
-            <div className="text-[#B8AA96]/40 text-sm">Loading dividend data...</div>
+            <div className="text-[#9ba3a6]/40 text-sm">Loading dividend data...</div>
           </div>
         ) : stocks.length === 0 ? (
           <div className="card-luxury p-12 text-center">
-            <div className="text-[#B8AA96]/40 text-sm">No dividend data available.</div>
+            <div className="text-[#9ba3a6]/40 text-sm">No dividend data available.</div>
           </div>
         ) : (
           <>

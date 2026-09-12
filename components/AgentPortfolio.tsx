@@ -74,7 +74,7 @@ function AgentCard({
   return (
     <div
       className={`card-luxury p-6 cursor-pointer transition-all ${
-        active ? "border-[#C6A15B]/60" : "border-[#2C261E] hover:border-[#C6A15B]/30"
+        active ? "border-[#3f9e74]/60" : "border-[#242929] hover:border-[#3f9e74]/30"
       }`}
       onClick={onSelect}
     >
@@ -82,10 +82,10 @@ function AgentCard({
         <div className="flex items-center gap-3">
           <span className="text-2xl">{agent.avatar}</span>
           <div>
-            <div className="text-[#F4EFE6] font-heading font-medium">{agent.name}</div>
-            <div className="text-[10px] text-[#B8AA96]/50">
+            <div className="text-[#edf1f2] font-heading font-medium">{agent.name}</div>
+            <div className="text-[10px] text-[#9ba3a6]/50">
               {agent.strategy}
-              {gen > 0 && <span className="ml-1 text-[#C6A15B]/60">v{gen}</span>}
+              {gen > 0 && <span className="ml-1 text-[#3f9e74]/60">v{gen}</span>}
             </div>
           </div>
         </div>
@@ -98,19 +98,19 @@ function AgentCard({
 
       <div className="grid grid-cols-2 gap-3 text-xs">
         <div>
-          <div className="text-[#B8AA96]/40">Portofolio</div>
-          <div className="text-[#F4EFE6] font-mono mt-0.5">{formatIDR(v.totalValue)}</div>
+          <div className="text-[#9ba3a6]/40">Portofolio</div>
+          <div className="text-[#edf1f2] font-mono mt-0.5">{formatIDR(v.totalValue)}</div>
         </div>
         <div>
-          <div className="text-[#B8AA96]/40">Modal</div>
-          <div className="text-[#F4EFE6] font-mono mt-0.5">{formatIDR(agent.capital)}</div>
+          <div className="text-[#9ba3a6]/40">Modal</div>
+          <div className="text-[#edf1f2] font-mono mt-0.5">{formatIDR(agent.capital)}</div>
         </div>
         <div>
-          <div className="text-[#B8AA96]/40">Kas</div>
-          <div className="text-[#F4EFE6] font-mono mt-0.5">{formatIDR(agent.cash)}</div>
+          <div className="text-[#9ba3a6]/40">Kas</div>
+          <div className="text-[#edf1f2] font-mono mt-0.5">{formatIDR(agent.cash)}</div>
         </div>
         <div>
-          <div className="text-[#B8AA96]/40">Posisi</div>
+          <div className="text-[#9ba3a6]/40">Posisi</div>
           <div className="font-mono mt-0.5">
             <span className={v.unrealizedPnl >= 0 ? "text-emerald-400" : "text-red-400"}>
               {openPositions}/{4} | {v.unrealizedPnl >= 0 ? "+" : ""}{formatIDR(v.unrealizedPnl)}
@@ -122,10 +122,10 @@ function AgentCard({
       {holdings.length > 0 && (
         <div className="mt-4 space-y-1.5">
           {holdings.map((h) => (
-            <div key={h.ticker} className="flex items-center justify-between px-3 py-2 bg-[#0B0B0A] border border-[#2C261E]/50 text-xs">
+            <div key={h.ticker} className="flex items-center justify-between px-3 py-2 bg-[#0a0b0b] border border-[#242929]/50 text-xs">
               <div className="flex items-center gap-2">
-                <span className="font-mono font-semibold text-[#F4EFE6]">{h.ticker}</span>
-                <span className="text-[#B8AA96]/40">{h.lots} lot</span>
+                <span className="font-mono font-semibold text-[#edf1f2]">{h.ticker}</span>
+                <span className="text-[#9ba3a6]/40">{h.lots} lot</span>
               </div>
               <div className="text-right">
                 <div className="font-mono">
@@ -133,14 +133,14 @@ function AgentCard({
                     {(h.pnlPct ?? 0) >= 0 ? "+" : ""}{((h.pnlPct ?? 0) * 100).toFixed(1)}%
                   </span>
                 </div>
-                <div className="text-[10px] text-[#B8AA96]/40">{(h.currentPrice ?? 0).toLocaleString("id-ID")}</div>
+                <div className="text-[10px] text-[#9ba3a6]/40">{(h.currentPrice ?? 0).toLocaleString("id-ID")}</div>
               </div>
             </div>
           ))}
         </div>
       )}
 
-      <div className="mt-3 text-[10px] text-[#B8AA96]/30">{totalTrades} transaksi</div>
+      <div className="mt-3 text-[10px] text-[#9ba3a6]/30">{totalTrades} transaksi</div>
     </div>
   );
 }
@@ -157,34 +157,34 @@ function TradeLog({
   const filtered = agentFilter === "all" ? trades : trades.filter((t) => t.agent === agentFilter);
 
   if (filtered.length === 0) {
-    return <div className="text-center text-[#B8AA96]/30 py-8 text-xs">Belum ada transaksi</div>;
+    return <div className="text-center text-[#9ba3a6]/30 py-8 text-xs">Belum ada transaksi</div>;
   }
 
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-xs">
         <thead>
-          <tr className="border-b border-[#2C261E]">
-            <th className="text-left py-2 px-2 text-[#B8AA96]/50 font-medium">Tgl</th>
-            <th className="text-left py-2 px-2 text-[#B8AA96]/50 font-medium">Agent</th>
-            <th className="text-left py-2 px-2 text-[#B8AA96]/50 font-medium">Ticker</th>
-            <th className="text-center py-2 px-2 text-[#B8AA96]/50 font-medium">Type</th>
-            <th className="text-right py-2 px-2 text-[#B8AA96]/50 font-medium">Price</th>
-            <th className="text-right py-2 px-2 text-[#B8AA96]/50 font-medium">Lot</th>
-            <th className="text-right py-2 px-2 text-[#B8AA96]/50 font-medium">P&L</th>
-            <th className="text-left py-2 px-2 text-[#B8AA96]/50 font-medium">Alasan</th>
+          <tr className="border-b border-[#242929]">
+            <th className="text-left py-2 px-2 text-[#9ba3a6]/50 font-medium">Tgl</th>
+            <th className="text-left py-2 px-2 text-[#9ba3a6]/50 font-medium">Agent</th>
+            <th className="text-left py-2 px-2 text-[#9ba3a6]/50 font-medium">Ticker</th>
+            <th className="text-center py-2 px-2 text-[#9ba3a6]/50 font-medium">Type</th>
+            <th className="text-right py-2 px-2 text-[#9ba3a6]/50 font-medium">Price</th>
+            <th className="text-right py-2 px-2 text-[#9ba3a6]/50 font-medium">Lot</th>
+            <th className="text-right py-2 px-2 text-[#9ba3a6]/50 font-medium">P&L</th>
+            <th className="text-left py-2 px-2 text-[#9ba3a6]/50 font-medium">Alasan</th>
           </tr>
         </thead>
         <tbody>
           {filtered.map((t, i) => (
-            <tr key={i} className="border-b border-[#2C261E]/30 hover:bg-[#C6A15B]/5">
-              <td className="py-2 px-2 text-[#B8AA96]/50 whitespace-nowrap">{t.date}</td>
+            <tr key={i} className="border-b border-[#242929]/30 hover:bg-[#3f9e74]/5">
+              <td className="py-2 px-2 text-[#9ba3a6]/50 whitespace-nowrap">{t.date}</td>
               <td className="py-2 px-2">
                 <span className={
                   t.agent === "antekasing" ? "text-purple-400" : "text-emerald-400"
                 }>{t.agent === "antekasing" ? "AntekAsing" : "ragaCC"}</span>
               </td>
-              <td className="py-2 px-2 font-mono text-[#F4EFE6]">{t.ticker}</td>
+              <td className="py-2 px-2 font-mono text-[#edf1f2]">{t.ticker}</td>
               <td className="py-2 px-2 text-center">
                 <span className={`px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase ${
                   t.type === "BUY"
@@ -192,16 +192,16 @@ function TradeLog({
                     : "text-red-400 bg-red-500/10"
                 }`}>{t.type}</span>
               </td>
-              <td className="py-2 px-2 text-right font-mono text-[#F4EFE6]">{(t.price ?? 0).toLocaleString("id-ID")}</td>
-              <td className="py-2 px-2 text-right font-mono text-[#B8AA96]">{t.lots}</td>
+              <td className="py-2 px-2 text-right font-mono text-[#edf1f2]">{(t.price ?? 0).toLocaleString("id-ID")}</td>
+              <td className="py-2 px-2 text-right font-mono text-[#9ba3a6]">{t.lots}</td>
               <td className="py-2 px-2 text-right font-mono">
                 {t.pnl != null ? (
                   <span className={t.pnl >= 0 ? "text-emerald-400" : "text-red-400"}>
                     {t.pnl >= 0 ? "+" : ""}{formatIDR(t.pnl)}
                   </span>
-                ) : <span className="text-[#2C261E]">—</span>}
+                ) : <span className="text-[#242929]">—</span>}
               </td>
-              <td className="py-2 px-2 text-[#B8AA96]/60">{t.reason}</td>
+              <td className="py-2 px-2 text-[#9ba3a6]/60">{t.reason}</td>
             </tr>
           ))}
         </tbody>
@@ -335,7 +335,7 @@ export default function AgentPortfolio() {
   if (loading) {
     return (
       <div className="card-luxury p-12 text-center">
-        <div className="text-[#B8AA96]/30 text-sm">Memuat data agent...</div>
+        <div className="text-[#9ba3a6]/30 text-sm">Memuat data agent...</div>
       </div>
     );
   }
@@ -345,8 +345,8 @@ export default function AgentPortfolio() {
       {/* Header controls */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-4">
-          <h2 className="text-sm text-[#C6A15B] font-medium">🤖 Agent Portfolio</h2>
-          <div className="text-xs text-[#B8AA96]/40">
+          <h2 className="text-sm text-[#3f9e74] font-medium">🤖 Agent Portfolio</h2>
+          <div className="text-xs text-[#9ba3a6]/40">
             {totalTrades} transaksi | {totalCapital.toLocaleString("id-ID")} modal
           </div>
         </div>
@@ -356,7 +356,7 @@ export default function AgentPortfolio() {
             className={`px-4 py-2 text-[10px] tracking-wider uppercase font-medium border transition-all ${
               autoTrade
                 ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-400"
-                : "border-[#2C261E] text-[#B8AA96]/50 hover:text-[#B8AA96]"
+                : "border-[#242929] text-[#9ba3a6]/50 hover:text-[#9ba3a6]"
             }`}
           >
             {autoTrade ? `⏱ ${formatCountdown(countdown)}` : "⏸ Auto"}
@@ -366,8 +366,8 @@ export default function AgentPortfolio() {
             disabled={scanning}
             className={`px-6 py-2.5 border text-xs tracking-[0.15em] uppercase font-medium transition-all disabled:opacity-40 ${
               scanning
-                ? "bg-[#C6A15B]/20 border-[#C6A15B]/60 text-[#C6A15B] cursor-not-allowed"
-                : "bg-[#C6A15B]/10 border-[#C6A15B]/40 text-[#C6A15B] hover:bg-[#C6A15B]/20"
+                ? "bg-[#3f9e74]/20 border-[#3f9e74]/60 text-[#3f9e74] cursor-not-allowed"
+                : "bg-[#3f9e74]/10 border-[#3f9e74]/40 text-[#3f9e74] hover:bg-[#3f9e74]/20"
             }`}
           >
             {scanning ? "Scanning..." : "Scan & Trade"}
@@ -377,7 +377,7 @@ export default function AgentPortfolio() {
 
       {/* Last action */}
       {lastAction && (
-        <div className="text-xs text-[#B8AA96]/40 px-1">{lastAction}</div>
+        <div className="text-xs text-[#9ba3a6]/40 px-1">{lastAction}</div>
       )}
 
       {/* Summary cards */}
@@ -386,19 +386,19 @@ export default function AgentPortfolio() {
           <div className={`font-heading text-3xl font-medium ${totalReturnPct >= 0 ? "text-emerald-400" : "text-red-400"}`}>
             {totalReturnPct >= 0 ? "+" : ""}{totalReturnPct.toFixed(1)}%
           </div>
-          <div className="text-[#B8AA96]/40 text-xs tracking-[0.2em] uppercase mt-1">Total Return</div>
+          <div className="text-[#9ba3a6]/40 text-xs tracking-[0.2em] uppercase mt-1">Total Return</div>
         </div>
         <div className="card-luxury p-5 text-center">
-          <div className="font-heading text-3xl font-medium text-[#F4EFE6]">{formatIDR(totalPorto)}</div>
-          <div className="text-[#B8AA96]/40 text-xs tracking-[0.2em] uppercase mt-1">Portofolio</div>
+          <div className="font-heading text-3xl font-medium text-[#edf1f2]">{formatIDR(totalPorto)}</div>
+          <div className="text-[#9ba3a6]/40 text-xs tracking-[0.2em] uppercase mt-1">Portofolio</div>
         </div>
         <div className="card-luxury p-5 text-center">
-          <div className="font-heading text-3xl font-medium text-[#F4EFE6]">{totalTrades}</div>
-          <div className="text-[#B8AA96]/40 text-xs tracking-[0.2em] uppercase mt-1">Transaksi</div>
+          <div className="font-heading text-3xl font-medium text-[#edf1f2]">{totalTrades}</div>
+          <div className="text-[#9ba3a6]/40 text-xs tracking-[0.2em] uppercase mt-1">Transaksi</div>
         </div>
         <div className="card-luxury p-5 text-center">
-          <div className="font-heading text-3xl font-medium text-[#F4EFE6]">{formatIDR(totalCapital)}</div>
-          <div className="text-[#B8AA96]/40 text-xs tracking-[0.2em] uppercase mt-1">Modal</div>
+          <div className="font-heading text-3xl font-medium text-[#edf1f2]">{formatIDR(totalCapital)}</div>
+          <div className="text-[#9ba3a6]/40 text-xs tracking-[0.2em] uppercase mt-1">Modal</div>
         </div>
       </div>
 
@@ -421,18 +421,18 @@ export default function AgentPortfolio() {
       {/* Trade log */}
       <div className="card-luxury p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-heading text-lg text-[#F4EFE6] font-medium">
-            Log Transaksi <span className="text-[#B8AA96]/50 font-light">({allTrades.length})</span>
+          <h3 className="font-heading text-lg text-[#edf1f2] font-medium">
+            Log Transaksi <span className="text-[#9ba3a6]/50 font-light">({allTrades.length})</span>
           </h3>
         </div>
         <TradeLog trades={allTrades as any} agentFilter={activeAgent} />
       </div>
 
       {/* Rules card */}
-      <div className="card-luxury p-5 border border-[#2C261E]/50">
-        <h4 className="text-xs text-[#C6A15B] font-medium mb-2">📋 Aturan Trading</h4>
-        <div className="grid md:grid-cols-4 gap-3 text-[10px] text-[#B8AA96]/60 leading-relaxed">
-          <div><span className="text-[#C6A15B]/80 font-medium">Umum:</span> Modal @Rp100jt · Max 4 posisi · 1 ticker/agent</div>
+      <div className="card-luxury p-5 border border-[#242929]/50">
+        <h4 className="text-xs text-[#3f9e74] font-medium mb-2">📋 Aturan Trading</h4>
+        <div className="grid md:grid-cols-4 gap-3 text-[10px] text-[#9ba3a6]/60 leading-relaxed">
+          <div><span className="text-[#3f9e74]/80 font-medium">Umum:</span> Modal @Rp100jt · Max 4 posisi · 1 ticker/agent</div>
           <div><span className="text-emerald-400 font-medium">TP:</span> +4% (3-5%) · Eksekusi otomatis</div>
           <div><span className="text-red-400 font-medium">CL:</span> -3% · Eksekusi otomatis</div>
           <div><span className="text-blue-400 font-medium">Server:</span> Scan tiap 30 menit via cron · State di Supabase DB · Tetap jalan walau browser ditutup</div>

@@ -14,7 +14,7 @@ const tools = [
       </svg>
     ),
     href: "/screener",
-    accent: "#C6A15B",
+    accent: "#3f9e74",
   },
   {
     title: "Lab Valuasi",
@@ -27,7 +27,7 @@ const tools = [
       </svg>
     ),
     href: "/calculator",
-    accent: "#C6A15B",
+    accent: "#3f9e74",
   },
   {
     title: "Tradebook",
@@ -40,7 +40,7 @@ const tools = [
       </svg>
     ),
     href: "/tradebook",
-    accent: "#C6A15B",
+    accent: "#3f9e74",
   },
   {
     title: "Kalender Dividen",
@@ -55,7 +55,7 @@ const tools = [
       </svg>
     ),
     href: "/dividend",
-    accent: "#C6A15B",
+    accent: "#3f9e74",
   },
 ];
 
@@ -92,29 +92,29 @@ export default function Hero() {
           {/* ── LEFT: copywriting ── */}
           <div>
             <div className="mb-6">
-              <span className="text-[#C6A15B] text-sm font-medium">
+              <span className="text-[#3f9e74] text-sm font-medium">
                 Catatan pasar pribadi · IDX · valuasi · arus asing
               </span>
             </div>
 
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl text-[#F4EFE6] mb-6 leading-[1.05] font-light tracking-tight">
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl text-[#edf1f2] mb-6 leading-[1.05] font-light tracking-tight">
               Raga Playbook
             </h1>
 
-            <p className="text-[#B8AA96] text-base md:text-lg font-light leading-relaxed max-w-lg mb-10">
+            <p className="text-[#9ba3a6] text-base md:text-lg font-light leading-relaxed max-w-lg mb-10">
               Tempat gue bongkar saham Indonesia: mana yang murah beneran, mana yang cuma murah di headline, dan level mana yang layak ditunggu.
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
               <a
                 href="/articles"
-                className="px-6 py-3 bg-[#C6A15B] text-[#0B0B0A] text-sm font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#C6A15B]"
+                className="px-6 py-3 bg-[#3f9e74] text-[#0a0b0b] text-sm font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#3f9e74]"
               >
                 Baca Riset
               </a>
               <a
                 href="/screener"
-                className="px-6 py-3 bg-transparent text-[#F4EFE6] text-sm font-semibold border border-[#8A6F3D] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-all duration-300"
+                className="px-6 py-3 bg-transparent text-[#edf1f2] text-sm font-semibold border border-[#8A6F3D] hover:border-[#3f9e74] hover:text-[#3f9e74] transition-all duration-300"
               >
                 Buka Tools
               </a>
@@ -125,36 +125,36 @@ export default function Hero() {
           <div className="flex flex-col items-center lg:items-end">
             <div className="relative w-full max-w-md">
               {/* stacked shadow cards (depth effect) */}
-              <div className="absolute -top-2 -right-2 w-full h-full border border-[#2C261E]/40" />
-              <div className="absolute -top-1 -right-1 w-full h-full border border-[#2C261E]/60" />
+              <div className="absolute -top-2 -right-2 w-full h-full border border-[#242929]/40" />
+              <div className="absolute -top-1 -right-1 w-full h-full border border-[#242929]/60" />
 
               {/* main card */}
               <div
                 key={active}
-                className="relative bg-[#0E0E0C] border border-[#2C261E] p-8 md:p-10"
+                className="relative bg-[#0E0E0C] border border-[#242929] p-8 md:p-10"
               >
                 {/* icon + label row */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 border border-[#C6A15B]/30 flex items-center justify-center text-[#C6A15B]">
+                    <div className="w-10 h-10 border border-[#3f9e74]/30 flex items-center justify-center text-[#3f9e74]">
                       {tools[active].icon}
                     </div>
-                    <span className="text-[#B8AA96]/50 text-xs">
+                    <span className="text-[#9ba3a6]/50 text-xs">
                       Modul {active + 1} / {tools.length}
                     </span>
                   </div>
                   <a
                     href={tools[active].href}
-                    className="text-[#C6A15B] text-xs font-medium hover:text-[#D4B76A] transition-colors"
+                    className="text-[#3f9e74] text-xs font-medium hover:text-[#D4B76A] transition-colors"
                   >
                     Buka →
                   </a>
                 </div>
 
-                <h3 className="font-heading text-2xl md:text-3xl text-[#F4EFE6] mb-3 font-medium">
+                <h3 className="font-heading text-2xl md:text-3xl text-[#edf1f2] mb-3 font-medium">
                   {tools[active].title}
                 </h3>
-                <p className="text-[#B8AA96] text-sm leading-relaxed font-light mb-6">
+                <p className="text-[#9ba3a6] text-sm leading-relaxed font-light mb-6">
                   {tools[active].desc}
                 </p>
 
@@ -163,7 +163,7 @@ export default function Hero() {
                   {tools[active].tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 border border-[#2C261E] text-[#B8AA96]/70 text-[10px] tracking-[0.15em] uppercase font-medium hover:border-[#C6A15B]/40 hover:text-[#C6A15B] transition-colors cursor-default"
+                      className="px-3 py-1.5 border border-[#242929] text-[#9ba3a6]/70 text-[10px] tracking-[0.15em] uppercase font-medium hover:border-[#3f9e74]/40 hover:text-[#3f9e74] transition-colors cursor-default"
                     >
                       {tag}
                     </span>
@@ -171,9 +171,9 @@ export default function Hero() {
                 </div>
 
                 {/* progress bar */}
-                <div className="w-full h-px bg-[#2C261E]">
+                <div className="w-full h-px bg-[#242929]">
                   <div
-                    className="h-full bg-[#C6A15B]/60 transition-all duration-100 ease-linear"
+                    className="h-full bg-[#3f9e74]/60 transition-all duration-100 ease-linear"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -186,8 +186,8 @@ export default function Hero() {
                       onClick={() => selectTool(i)}
                       className={`w-2 h-2 rounded-full transition-all duration-300 ${
                         i === active
-                          ? "bg-[#C6A15B] scale-110"
-                          : "bg-[#2C261E] hover:bg-[#C6A15B]/40"
+                          ? "bg-[#3f9e74] scale-110"
+                          : "bg-[#242929] hover:bg-[#3f9e74]/40"
                       }`}
                     />
                   ))}
@@ -200,8 +200,8 @@ export default function Hero() {
 
       {/* scroll hint */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <span className="text-xs text-[#B8AA96]">Geser</span>
-        <div className="w-px h-8 bg-gradient-to-b from-[#B8AA96] to-transparent" />
+        <span className="text-xs text-[#9ba3a6]">Geser</span>
+        <div className="w-px h-8 bg-gradient-to-b from-[#9ba3a6] to-transparent" />
       </div>
     </section>
   );

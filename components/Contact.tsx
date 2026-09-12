@@ -14,21 +14,21 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-32 bg-[#0B0B0A]">
+    <section id="contact" className="relative py-32 bg-[#0a0b0b]">
       <div className="gold-line w-full" />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <div>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-px bg-[#C6A15B]/30" />
-              <span className="text-[#C6A15B] text-sm font-medium">Kontak</span>
+              <div className="w-16 h-px bg-[#3f9e74]/30" />
+              <span className="text-[#3f9e74] text-sm font-medium">Kontak</span>
             </div>
 
-            <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-8 font-light">
+            <h2 className="font-heading text-4xl md:text-5xl text-[#edf1f2] mb-8 font-light">
               Ngobrol market atau <span className="text-gold-gradient font-medium">riset</span>
             </h2>
 
-            <p className="text-[#B8AA96] text-base leading-relaxed font-light mb-12">
+            <p className="text-[#9ba3a6] text-base leading-relaxed font-light mb-12">
               Punya emiten yang perlu dibedah, butuh second opinion valuasi, atau mau diskusi portofolio? Kirim pesan singkat. Jangan kirim pitch deck 80 slide dulu.
             </p>
 
@@ -39,10 +39,10 @@ export default function Contact() {
                 { label: "Lokasi", value: "Surabaya, Indonesia" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
-                  <div className="w-px h-5 bg-[#C6A15B]/20 mt-0.5" />
+                  <div className="w-px h-5 bg-[#3f9e74]/20 mt-0.5" />
                   <div>
-                    <div className="text-[#B8AA96]/50 text-xs tracking-[0.2em] uppercase mb-1">{item.label}</div>
-                    <div className="text-[#F4EFE6] text-sm">{item.value}</div>
+                    <div className="text-[#9ba3a6]/50 text-xs tracking-[0.2em] uppercase mb-1">{item.label}</div>
+                    <div className="text-[#edf1f2] text-sm">{item.value}</div>
                   </div>
                 </div>
               ))}
@@ -51,7 +51,7 @@ export default function Contact() {
                 <a
                   href="/cv-raga-playbook.pdf"
                   download
-                  className="inline-flex items-center gap-3 px-6 py-3 bg-[#C6A15B] text-[#0B0B0A] text-sm font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#C6A15B]"
+                  className="inline-flex items-center gap-3 px-6 py-3 bg-[#3f9e74] text-[#0a0b0b] text-sm font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#3f9e74]"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
                   Unduh CV
@@ -68,33 +68,33 @@ export default function Contact() {
                 { key: "phone", label: "Nomor HP", type: "tel", placeholder: "+62" },
               ].map((field) => (
                 <div key={field.key}>
-                  <label className="block text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-2">{field.label}</label>
+                  <label className="block text-[#9ba3a6]/60 text-xs tracking-[0.15em] uppercase mb-2">{field.label}</label>
                   <input
                     type={field.type}
                     placeholder={field.placeholder}
                     value={(form as any)[field.key]}
                     onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                    className="w-full bg-[#0B0B0A] border border-[#2C261E] px-4 py-3.5 text-[#F4EFE6] text-sm placeholder-[#B8AA96]/30 transition-all duration-300"
+                    className="w-full bg-[#0a0b0b] border border-[#242929] px-4 py-3.5 text-[#edf1f2] text-sm placeholder-[#9ba3a6]/30 transition-all duration-300"
                     required
                   />
                 </div>
               ))}
 
               <div>
-                <label className="block text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase mb-2">Pesan</label>
+                <label className="block text-[#9ba3a6]/60 text-xs tracking-[0.15em] uppercase mb-2">Pesan</label>
                 <textarea
                   placeholder="Tulis ticker, masalah, atau konteks singkat..."
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   rows={4}
-                  className="w-full bg-[#0B0B0A] border border-[#2C261E] px-4 py-3.5 text-[#F4EFE6] text-sm placeholder-[#B8AA96]/30 resize-none transition-all duration-300"
+                  className="w-full bg-[#0a0b0b] border border-[#242929] px-4 py-3.5 text-[#edf1f2] text-sm placeholder-[#9ba3a6]/30 resize-none transition-all duration-300"
                   required
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-4 bg-[#C6A15B] text-[#0B0B0A] text-sm font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#C6A15B]"
+                className="w-full py-4 bg-[#3f9e74] text-[#0a0b0b] text-sm font-semibold hover:bg-[#D4B76A] transition-all duration-300 border border-[#3f9e74]"
               >
                 {sent ? "✓ Pesan Terkirim" : "Kirim Pesan"}
               </button>

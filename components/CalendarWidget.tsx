@@ -155,17 +155,17 @@ export default function CalendarWidget() {
         <div className="flex items-center justify-between mb-3">
           <button
             onClick={() => shiftMonth(-1)}
-            className="w-7 h-7 rounded-md border border-[#2C261E] text-[#F4EFE6] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-colors flex items-center justify-center text-sm"
+            className="w-7 h-7 rounded-md border border-[#242929] text-[#edf1f2] hover:border-[#3f9e74] hover:text-[#3f9e74] transition-colors flex items-center justify-center text-sm"
             title="Bulan Sebelumnya"
           >
             ‹
           </button>
-          <h2 className="text-sm font-semibold tracking-wider text-[#F4EFE6] uppercase">
+          <h2 className="text-sm font-semibold tracking-wider text-[#edf1f2] uppercase">
             {MONTH_NAMES[view.m]} {view.y}
           </h2>
           <button
             onClick={() => shiftMonth(1)}
-            className="w-7 h-7 rounded-md border border-[#2C261E] text-[#F4EFE6] hover:border-[#C6A15B] hover:text-[#C6A15B] transition-colors flex items-center justify-center text-sm"
+            className="w-7 h-7 rounded-md border border-[#242929] text-[#edf1f2] hover:border-[#3f9e74] hover:text-[#3f9e74] transition-colors flex items-center justify-center text-sm"
             title="Bulan Berikutnya"
           >
             ›
@@ -198,7 +198,7 @@ export default function CalendarWidget() {
                     ? "border-[#FFD700] bg-[#0E0C09] shadow-[inset_0_0_8px_rgba(255,215,0,0.15)]"
                     : isOff
                     ? "border-red-500/20"
-                    : "border-[#2C261E] bg-[#0E0C09]"
+                    : "border-[#242929] bg-[#0E0C09]"
                 }`}
                 style={
                   isOff
@@ -242,7 +242,7 @@ export default function CalendarWidget() {
       </div>
 
       {/* Footer & Legend */}
-      <div className="mt-3 pt-2.5 border-t border-[#2C261E] space-y-2">
+      <div className="mt-3 pt-2.5 border-t border-[#242929] space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-1.5 text-[9px] text-[#8A7F6D]">
           <div className="flex items-center gap-2">
             <span className="flex items-center gap-1">
@@ -262,7 +262,7 @@ export default function CalendarWidget() {
             href="/calendar.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#C6A15B] hover:underline text-[9px]"
+            className="text-[#3f9e74] hover:underline text-[9px]"
           >
             Full Calendar ↗
           </a>

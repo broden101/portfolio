@@ -25,26 +25,26 @@ const competencies = [
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-32 bg-[#0B0B0A]">
+    <section id="services" className="relative py-32 bg-[#0a0b0b]">
       <div className="gold-line w-full" />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-px bg-[#C6A15B]/30" />
-          <span className="text-[#C6A15B] text-sm font-medium">Yang dikerjakan</span>
+          <div className="w-16 h-px bg-[#3f9e74]/30" />
+          <span className="text-[#3f9e74] text-sm font-medium">Yang dikerjakan</span>
         </div>
 
-        <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-16 max-w-xl font-light">
+        <h2 className="font-heading text-4xl md:text-5xl text-[#edf1f2] mb-16 max-w-xl font-light">
           Dari data mentah ke <span className="text-gold-gradient font-medium">keputusan</span>
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8">
           {competencies.map((s, i) => (
             <div key={i} className="card-luxury p-10 group cursor-default">
-              <div className="text-[#C6A15B]/20 group-hover:text-[#C6A15B] transition-colors duration-300 mb-6">
+              <div className="text-[#3f9e74]/20 group-hover:text-[#3f9e74] transition-colors duration-300 mb-6">
                 {s.icon}
               </div>
-              <h3 className="font-heading text-xl text-[#F4EFE6] mb-3 font-medium">{s.title}</h3>
-              <p className="text-[#B8AA96] text-sm leading-relaxed font-light">{s.desc}</p>
+              <h3 className="font-heading text-xl text-[#edf1f2] mb-3 font-medium">{s.title}</h3>
+              <p className="text-[#9ba3a6] text-sm leading-relaxed font-light">{s.desc}</p>
             </div>
           ))}
         </div>

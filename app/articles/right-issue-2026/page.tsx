@@ -123,7 +123,7 @@ function StatusBadge({ status }: { status: string }) {
   return (
     <span
       className={`inline-block px-3 py-1 text-xs tracking-wider uppercase border rounded-full ${
-        styles[status] || "bg-[#1a1a1a] text-[#B8AA96] border-[#2C261E]"
+        styles[status] || "bg-[#1a1a1a] text-[#9ba3a6] border-[#242929]"
       }`}
     >
       {status}
@@ -133,13 +133,13 @@ function StatusBadge({ status }: { status: string }) {
 
 export default function ArticlePage() {
   return (
-    <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+    <div className="min-h-screen bg-[#0a0b0b] pt-24 pb-20">
       <Navbar />
       <article className="max-w-3xl mx-auto px-6 lg:px-12">
         {/* Back link */}
         <Link
           href="/articles"
-          className="inline-flex items-center gap-2 text-[#B8AA96]/50 text-xs tracking-wider uppercase hover:text-[#C6A15B] transition-colors mb-10"
+          className="inline-flex items-center gap-2 text-[#9ba3a6]/50 text-xs tracking-wider uppercase hover:text-[#3f9e74] transition-colors mb-10"
         >
           ← Kembali ke Arsip Riset
         </Link>
@@ -147,21 +147,21 @@ export default function ArticlePage() {
         {/* Header */}
         <header className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-[#C6A15B] text-xs tracking-wider">
+            <span className="text-[#3f9e74] text-xs tracking-wider">
               May 2026
             </span>
-            <span className="w-1 h-1 rounded-full bg-[#2C261E]" />
-            <span className="text-[#B8AA96]/50 text-xs tracking-wider uppercase">
+            <span className="w-1 h-1 rounded-full bg-[#242929]" />
+            <span className="text-[#9ba3a6]/50 text-xs tracking-wider uppercase">
               Corporate Action / Rights Issue
             </span>
           </div>
 
-          <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] leading-tight font-light mb-6">
+          <h1 className="font-heading text-4xl md:text-5xl text-[#edf1f2] leading-tight font-light mb-6">
             Rights Issue Schedule 2026: 9 Issuers with Tens of
             Trillions in Total Funds
           </h1>
 
-          <p className="text-[#B8AA96] text-lg leading-relaxed font-light">
+          <p className="text-[#9ba3a6] text-lg leading-relaxed font-light">
             From Rp5.94T (MPPA) down to Rp113M (PADI) — some have already
             received an effective date, while others are still awaiting the
             issuer. Here is the complete list of rights issues you need to
@@ -172,14 +172,14 @@ export default function ArticlePage() {
         <div className="gold-line w-full mb-12" />
 
         {/* Content */}
-        <div className="space-y-10 text-[#B8AA96] text-base leading-relaxed font-light">
+        <div className="space-y-10 text-[#9ba3a6] text-base leading-relaxed font-light">
           {/* Overview */}
           <div>
-            <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4 mb-4">
+            <h2 className="font-heading text-2xl text-[#edf1f2] font-medium pt-4 mb-4">
               Overview
             </h2>
             <p>
-              At least <strong className="text-[#F4EFE6]">9 issuers</strong>{" "}
+              At least <strong className="text-[#edf1f2]">9 issuers</strong>{" "}
               are currently in the process of a rights issue in 2026 — with
               total targeted funds reaching tens of trillions of rupiah. Five
               of them already have an effective schedule (Up Coming), while
@@ -195,7 +195,7 @@ export default function ArticlePage() {
 
           {/* Upcoming */}
           <div>
-            <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4 mb-6">
+            <h2 className="font-heading text-2xl text-[#edf1f2] font-medium pt-4 mb-6">
               📅 Already Have an Effective Schedule
             </h2>
 
@@ -209,10 +209,10 @@ export default function ArticlePage() {
                   >
                     <div className="flex items-start justify-between gap-4 mb-3">
                       <div>
-                        <span className="text-[#C6A15B] font-bold text-lg tracking-wide">
+                        <span className="text-[#3f9e74] font-bold text-lg tracking-wide">
                           {item.ticker}
                         </span>
-                        <span className="text-[#B8AA96]/50 text-xs ml-3">
+                        <span className="text-[#9ba3a6]/50 text-xs ml-3">
                           Effective: {item.effective}
                         </span>
                       </div>
@@ -220,31 +220,31 @@ export default function ArticlePage() {
                     </div>
                     <div className="grid grid-cols-3 gap-4 mb-3 text-sm">
                       <div>
-                        <span className="text-[#B8AA96]/40 text-xs uppercase tracking-wider block mb-1">
+                        <span className="text-[#9ba3a6]/40 text-xs uppercase tracking-wider block mb-1">
                           Funds
                         </span>
-                        <span className="text-[#F4EFE6] font-medium">
+                        <span className="text-[#edf1f2] font-medium">
                           {item.dana}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[#B8AA96]/40 text-xs uppercase tracking-wider block mb-1">
+                        <span className="text-[#9ba3a6]/40 text-xs uppercase tracking-wider block mb-1">
                           Ratio
                         </span>
-                        <span className="text-[#F4EFE6] font-medium">
+                        <span className="text-[#edf1f2] font-medium">
                           {item.rasio}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[#B8AA96]/40 text-xs uppercase tracking-wider block mb-1">
+                        <span className="text-[#9ba3a6]/40 text-xs uppercase tracking-wider block mb-1">
                           Exercise Price
                         </span>
-                        <span className="text-[#F4EFE6] font-medium">
+                        <span className="text-[#edf1f2] font-medium">
                           {item.harga}
                         </span>
                       </div>
                     </div>
-                    <p className="text-xs text-[#B8AA96]/60 mt-2">
+                    <p className="text-xs text-[#9ba3a6]/60 mt-2">
                       {item.note}
                     </p>
                   </div>
@@ -254,7 +254,7 @@ export default function ArticlePage() {
 
           {/* Pending OJK */}
           <div>
-            <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4 mb-6">
+            <h2 className="font-heading text-2xl text-[#edf1f2] font-medium pt-4 mb-6">
               ⏳ Still Awaiting Issuer
             </h2>
 
@@ -268,7 +268,7 @@ export default function ArticlePage() {
                   >
                     <div className="flex items-start justify-between gap-4 mb-3">
                       <div>
-                        <span className="text-[#C6A15B] font-bold text-lg tracking-wide">
+                        <span className="text-[#3f9e74] font-bold text-lg tracking-wide">
                           {item.ticker}
                         </span>
                       </div>
@@ -276,31 +276,31 @@ export default function ArticlePage() {
                     </div>
                     <div className="grid grid-cols-3 gap-4 mb-3 text-sm">
                       <div>
-                        <span className="text-[#B8AA96]/40 text-xs uppercase tracking-wider block mb-1">
+                        <span className="text-[#9ba3a6]/40 text-xs uppercase tracking-wider block mb-1">
                           Funds
                         </span>
-                        <span className="text-[#F4EFE6] font-medium">
+                        <span className="text-[#edf1f2] font-medium">
                           {item.dana}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[#B8AA96]/40 text-xs uppercase tracking-wider block mb-1">
+                        <span className="text-[#9ba3a6]/40 text-xs uppercase tracking-wider block mb-1">
                           Ratio
                         </span>
-                        <span className="text-[#F4EFE6] font-medium">
+                        <span className="text-[#edf1f2] font-medium">
                           {item.rasio}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[#B8AA96]/40 text-xs uppercase tracking-wider block mb-1">
+                        <span className="text-[#9ba3a6]/40 text-xs uppercase tracking-wider block mb-1">
                           Exercise Price
                         </span>
-                        <span className="text-[#F4EFE6] font-medium">
+                        <span className="text-[#edf1f2] font-medium">
                           {item.harga}
                         </span>
                       </div>
                     </div>
-                    <p className="text-xs text-[#B8AA96]/60 mt-2">
+                    <p className="text-xs text-[#9ba3a6]/60 mt-2">
                       {item.note}
                     </p>
                   </div>
@@ -310,7 +310,7 @@ export default function ArticlePage() {
 
           {/* Waiting market */}
           <div>
-            <h2 className="font-heading text-2xl text-[#F4EFE6] font-medium pt-4 mb-6">
+            <h2 className="font-heading text-2xl text-[#edf1f2] font-medium pt-4 mb-6">
               🌊 Awaiting Market Stability
             </h2>
 
@@ -322,43 +322,43 @@ export default function ArticlePage() {
                   className="card-luxury p-6 border-l-2 border-sky-500/30"
                 >
                   <div className="flex items-start justify-between gap-4 mb-3">
-                    <span className="text-[#C6A15B] font-bold text-lg tracking-wide">
+                    <span className="text-[#3f9e74] font-bold text-lg tracking-wide">
                       {item.ticker}
                     </span>
                     <StatusBadge status={item.status} />
                   </div>
-                  <p className="text-sm text-[#B8AA96]/70">{item.note}</p>
+                  <p className="text-sm text-[#9ba3a6]/70">{item.note}</p>
                 </div>
               ))}
           </div>
 
           {/* What investor should know */}
-          <div className="card-luxury p-8 border-l-2 border-[#C6A15B]/40">
-            <h2 className="font-heading text-xl text-[#F4EFE6] font-medium mb-4">
+          <div className="card-luxury p-8 border-l-2 border-[#3f9e74]/40">
+            <h2 className="font-heading text-xl text-[#edf1f2] font-medium mb-4">
               What Should Investors Know?
             </h2>
             <div className="space-y-4 text-sm">
               <p>
-                <strong className="text-[#F4EFE6]">1. Rights issues aren't
+                <strong className="text-[#edf1f2]">1. Rights issues aren't
                 always negative.</strong>{" "}
                 Although potentially dilutive, a rights issue can be a signal
                 that the company needs funds for expansion or restructuring.
                 What matters is the intended use of the funds.
               </p>
               <p>
-                <strong className="text-[#F4EFE6]">2. Check the exercise price.</strong>{" "}
+                <strong className="text-[#edf1f2]">2. Check the exercise price.</strong>{" "}
                 If the exercise price is well below market price, the HMETD
                 can be sold. Don't miss the HMETD trading window — usually
                 only a few days.
               </p>
               <p>
-                <strong className="text-[#F4EFE6]">3. Monitor the OJK status.</strong>{" "}
+                <strong className="text-[#edf1f2]">3. Monitor the OJK status.</strong>{" "}
                 Issuers that are still "Postponed" mean there is no certainty
                 on when they will become effective. Don't enter new positions
                 just because of rights issue rumors.
               </p>
               <p>
-                <strong className="text-[#F4EFE6]">4. Calculate scenarios.</strong>{" "}
+                <strong className="text-[#edf1f2]">4. Calculate scenarios.</strong>{" "}
                 Use a rights issue calculator to compare scenarios of
                 participating vs. not participating — and determine the best
                 strategy for your portfolio.
@@ -367,22 +367,22 @@ export default function ArticlePage() {
           </div>
 
           {/* Calculator CTA */}
-          <div className="card-luxury p-6 text-center bg-[#C6A15B]/5 border border-[#C6A15B]/10">
-            <p className="text-[#F4EFE6] text-sm mb-3">
+          <div className="card-luxury p-6 text-center bg-[#3f9e74]/5 border border-[#3f9e74]/10">
+            <p className="text-[#edf1f2] text-sm mb-3">
               💡 Use our rights issue calculator to calculate scenarios of
               participating vs. not participating
             </p>
             <Link
               href="/calculator"
-              className="inline-block px-6 py-3 bg-[#C6A15B]/10 text-[#C6A15B] text-sm tracking-wider uppercase hover:bg-[#C6A15B]/20 transition-colors rounded"
+              className="inline-block px-6 py-3 bg-[#3f9e74]/10 text-[#3f9e74] text-sm tracking-wider uppercase hover:bg-[#3f9e74]/20 transition-colors rounded"
             >
               Open Calculator →
             </Link>
           </div>
 
           {/* Disclaimer */}
-          <div className="pt-6 border-t border-[#2C261E]">
-            <p className="text-xs text-[#B8AA96]/30">
+          <div className="pt-6 border-t border-[#242929]">
+            <p className="text-xs text-[#9ba3a6]/30">
               Disclaimer: This article is for informational purposes only and
               does not constitute investment advice. Data is sourced from
               various public sources and may change at any time. Investment

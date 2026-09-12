@@ -108,47 +108,47 @@ export default function PBVROEPage() {
   const fmtIDR = (n: number) => `Rp ${fmt(n, 0)}`;
 
   return (
-    <div className="min-h-screen bg-[#0B0B0A] pt-24 pb-20">
+    <div className="min-h-screen bg-[#0a0b0b] pt-24 pb-20">
       <Navbar />
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="mb-10">
           <div className="flex items-center gap-4 mb-3">
-            <div className="w-10 h-px bg-[#C6A15B]/30" />
-            <span className="text-[#C6A15B] text-xs tracking-[0.3em] uppercase font-medium">Valuation Lab</span>
+            <div className="w-10 h-px bg-[#3f9e74]/30" />
+            <span className="text-[#3f9e74] text-xs tracking-[0.3em] uppercase font-medium">Valuation Lab</span>
           </div>
-          <h1 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light mb-2">
+          <h1 className="font-heading text-4xl md:text-5xl text-[#edf1f2] font-light mb-2">
             PBV-ROE <span className="text-gold-gradient font-medium">Banking Valuation</span>
           </h1>
-          <p className="text-[#B8AA96]/60 text-sm font-light">
+          <p className="text-[#9ba3a6]/60 text-sm font-light">
             Fair value framework — big banks + selected banks. PBV = ROE / (COE − g).
           </p>
         </div>
 
         {/* Assumptions */}
         <div className="card-luxury p-6 mb-8">
-          <h3 className="text-xs tracking-[0.2em] uppercase text-[#C6A15B] mb-4 font-medium">Key Assumptions</h3>
+          <h3 className="text-xs tracking-[0.2em] uppercase text-[#3f9e74] mb-4 font-medium">Key Assumptions</h3>
           <div className="flex flex-wrap gap-6">
             <div>
-              <label className="block text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase mb-1.5">COE (%)</label>
+              <label className="block text-[#9ba3a6]/50 text-[10px] tracking-[0.15em] uppercase mb-1.5">COE (%)</label>
               <input
                 type="number"
                 value={coe}
                 onChange={(e) => setCoe(parseFloat(e.target.value) || 0)}
-                className="w-24 bg-[#0B0B0A] border border-[#2C261E] px-3 py-2 text-[#F4EFE6] text-sm font-mono"
+                className="w-24 bg-[#0a0b0b] border border-[#242929] px-3 py-2 text-[#edf1f2] text-sm font-mono"
               />
             </div>
             <div>
-              <label className="block text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase mb-1.5">Terminal Growth (%)</label>
+              <label className="block text-[#9ba3a6]/50 text-[10px] tracking-[0.15em] uppercase mb-1.5">Terminal Growth (%)</label>
               <input
                 type="number"
                 value={g}
                 onChange={(e) => setGrowth(parseFloat(e.target.value) || 0)}
-                className="w-24 bg-[#0B0B0A] border border-[#2C261E] px-3 py-2 text-[#F4EFE6] text-sm font-mono"
+                className="w-24 bg-[#0a0b0b] border border-[#242929] px-3 py-2 text-[#edf1f2] text-sm font-mono"
               />
             </div>
             <div className="flex items-end flex-col gap-1">
-              <span className="text-[#B8AA96]/30 text-[10px] tracking-[0.1em] uppercase">
+              <span className="text-[#9ba3a6]/30 text-[10px] tracking-[0.1em] uppercase">
                 Spread = {coe - g}% → Theoretical PBV = ROE / {coe - g}
               </span>
               {coe - g <= 0 && (
@@ -165,8 +165,8 @@ export default function PBVROEPage() {
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: bank.color }} />
                 <div>
-                  <div className="font-heading text-lg text-[#F4EFE6] font-medium">{bank.ticker}</div>
-                  <div className="text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase">{bank.name}</div>
+                  <div className="font-heading text-lg text-[#edf1f2] font-medium">{bank.ticker}</div>
+                  <div className="text-[#9ba3a6]/40 text-[10px] tracking-[0.1em] uppercase">{bank.name}</div>
                 </div>
               </div>
               <div className="space-y-3">
@@ -179,12 +179,12 @@ export default function PBVROEPage() {
                   { label: "NIM (%)", field: "nim" as const, val: bank.nim },
                 ].map((inp) => (
                   <div key={inp.field}>
-                    <label className="block text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase mb-1">{inp.label}</label>
+                    <label className="block text-[#9ba3a6]/40 text-[10px] tracking-[0.1em] uppercase mb-1">{inp.label}</label>
                     <input
                       type="number"
                       value={inp.val}
                       onChange={(e) => updateBank(i, inp.field, parseFloat(e.target.value) || 0)}
-                      className="w-full bg-[#0B0B0A] border border-[#2C261E] px-3 py-2 text-[#F4EFE6] text-sm font-mono"
+                      className="w-full bg-[#0a0b0b] border border-[#242929] px-3 py-2 text-[#edf1f2] text-sm font-mono"
                     />
                   </div>
                 ))}
@@ -195,18 +195,18 @@ export default function PBVROEPage() {
 
         {/* Results Table */}
         <div className="card-luxury p-8 mb-8">
-          <h2 className="font-heading text-xl text-[#F4EFE6] mb-6 font-medium">Hasil Valuasi</h2>
+          <h2 className="font-heading text-xl text-[#edf1f2] mb-6 font-medium">Hasil Valuasi</h2>
 
           {/* Summary Cards */}
           <div className="grid md:grid-cols-3 gap-4 mb-8">
             {results.map((r) => (
-              <div key={r.ticker} className="border border-[#2C261E] p-5 text-center">
+              <div key={r.ticker} className="border border-[#242929] p-5 text-center">
                 <div className="flex items-center justify-center gap-2 mb-3">
                   <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: r.color }} />
-                  <span className="font-heading text-base text-[#F4EFE6] font-medium">{r.ticker}</span>
+                  <span className="font-heading text-base text-[#edf1f2] font-medium">{r.ticker}</span>
                 </div>
-                <div className="text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase mb-1">Fair Value</div>
-                <div className="font-heading text-2xl text-[#C6A15B] font-medium mb-1">{fmtIDR(r.fairPrice)}</div>
+                <div className="text-[#9ba3a6]/50 text-[10px] tracking-[0.15em] uppercase mb-1">Fair Value</div>
+                <div className="font-heading text-2xl text-[#3f9e74] font-medium mb-1">{fmtIDR(r.fairPrice)}</div>
                 <div className={`text-xs font-mono ${r.upside >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                   {r.upside >= 0 ? "↑" : "↓"} {fmt(Math.abs(r.upside))}% {r.upside >= 0 ? "upside" : "downside"}
                 </div>
@@ -218,10 +218,10 @@ export default function PBVROEPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#2C261E]">
-                  <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-3 font-medium">Metric</th>
+                <tr className="border-b border-[#242929]">
+                  <th className="text-left text-[#9ba3a6]/50 text-[10px] tracking-[0.15em] uppercase py-3 font-medium">Metric</th>
                   {results.map((r) => (
-                    <th key={r.ticker} className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-3 font-medium">
+                    <th key={r.ticker} className="text-right text-[#9ba3a6]/50 text-[10px] tracking-[0.15em] uppercase py-3 font-medium">
                       <span className="inline-flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: r.color }} />
                         {r.ticker}
@@ -251,10 +251,10 @@ export default function PBVROEPage() {
                     </span>
                   ))},
                 ].map((row) => (
-                  <tr key={row.label} className="border-b border-[#2C261E]/50">
-                    <td className="py-3 text-[#B8AA96]/60 text-[11px] font-sans">{row.label}</td>
+                  <tr key={row.label} className="border-b border-[#242929]/50">
+                    <td className="py-3 text-[#9ba3a6]/60 text-[11px] font-sans">{row.label}</td>
                     {row.values.map((v, i) => (
-                      <td key={i} className="py-3 text-right text-[#F4EFE6]">{v}</td>
+                      <td key={i} className="py-3 text-right text-[#edf1f2]">{v}</td>
                     ))}
                   </tr>
                 ))}
@@ -265,8 +265,8 @@ export default function PBVROEPage() {
 
         {/* PBV vs ROE Visual Chart */}
         <div className="card-luxury p-8 mb-8">
-          <h2 className="font-heading text-xl text-[#F4EFE6] mb-2 font-medium">PBV vs ROE Scatter</h2>
-          <p className="text-[#B8AA96]/40 text-xs mb-6">Garis diagonal = theoretical fair value line (PBV = ROE / {coe - g}%). CASA dan NIM menjadi indikator kualitas funding dan margin bank.</p>
+          <h2 className="font-heading text-xl text-[#edf1f2] mb-2 font-medium">PBV vs ROE Scatter</h2>
+          <p className="text-[#9ba3a6]/40 text-xs mb-6">Garis diagonal = theoretical fair value line (PBV = ROE / {coe - g}%). CASA dan NIM menjadi indikator kualitas funding dan margin bank.</p>
 
           <div className="relative" style={{ height: 360 }}>
             {/* Y-axis labels */}
@@ -274,18 +274,18 @@ export default function PBVROEPage() {
               {[...Array(6)].map((_, i) => {
                 const val = maxPBV - (i * maxPBV) / 5;
                 return (
-                  <span key={i} className="text-[#B8AA96]/30 text-[9px] font-mono">{fmt(val, 1)}x</span>
+                  <span key={i} className="text-[#9ba3a6]/30 text-[9px] font-mono">{fmt(val, 1)}x</span>
                 );
               })}
             </div>
 
             {/* Chart area */}
-            <div className="absolute left-14 right-0 top-0 bottom-8 border-l border-b border-[#2C261E]">
+            <div className="absolute left-14 right-0 top-0 bottom-8 border-l border-b border-[#242929]">
               {/* Grid lines */}
               {[...Array(5)].map((_, i) => (
                 <div
                   key={i}
-                  className="absolute left-0 right-0 border-t border-[#2C261E]/30"
+                  className="absolute left-0 right-0 border-t border-[#242929]/30"
                   style={{ top: `${(i + 1) * 20}%` }}
                 />
               ))}
@@ -298,7 +298,7 @@ export default function PBVROEPage() {
                     y1="100%"
                     x2={`${(maxROE / maxPBV) * ((maxPBV / (coe - g)) * 100 / maxROE)}%`}
                     y2="0%"
-                    stroke="#C6A15B"
+                    stroke="#3f9e74"
                     strokeWidth="1"
                     strokeDasharray="6 4"
                     opacity="0.4"
@@ -309,7 +309,7 @@ export default function PBVROEPage() {
                     y1="100%"
                     x2={`${Math.min(100, (maxROE / maxROE) * 100)}%`}
                     y2={`${Math.max(0, 100 - ((maxROE / (coe - g)) / maxPBV) * 100)}%`}
-                    stroke="#C6A15B"
+                    stroke="#3f9e74"
                     strokeWidth="1"
                     strokeDasharray="6 4"
                     opacity="0.4"
@@ -339,7 +339,7 @@ export default function PBVROEPage() {
                       <span className="text-[10px] font-mono font-medium" style={{ color: r.color }}>
                         {r.ticker}
                       </span>
-                      <span className="text-[#B8AA96]/40 text-[9px] ml-1">
+                      <span className="text-[#9ba3a6]/40 text-[9px] ml-1">
                         PBV {fmt(r.pbv)}x / ROE {fmt(r.roe)}% / CASA {fmt(r.casa)}% / NIM {fmt(r.nim)}%
                       </span>
                     </div>
@@ -362,10 +362,10 @@ export default function PBVROEPage() {
             {/* X-axis labels */}
             <div className="absolute left-14 right-0 bottom-0 flex justify-between">
               {[0, 10, 20, 30].map((v) => (
-                <span key={v} className="text-[#B8AA96]/30 text-[9px] font-mono">{v}%</span>
+                <span key={v} className="text-[#9ba3a6]/30 text-[9px] font-mono">{v}%</span>
               ))}
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-[-20px] text-[#B8AA96]/30 text-[9px] tracking-[0.15em] uppercase">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-[-20px] text-[#9ba3a6]/30 text-[9px] tracking-[0.15em] uppercase">
               ROE
             </div>
           </div>
@@ -373,22 +373,22 @@ export default function PBVROEPage() {
 
                 {/* Sensitivity Analysis */}
         <div className="card-luxury p-8 mt-8 mb-8">
-          <h2 className="font-heading text-xl text-[#F4EFE6] mb-5 font-medium">Sensitivitas Asumsi</h2>
-          <p className="text-[#B8AA96]/50 text-xs mb-4">Tabel ini menunjukkan bagaimana perubahan COE dan growth memengaruhi Theo PBV.</p>
+          <h2 className="font-heading text-xl text-[#edf1f2] mb-5 font-medium">Sensitivitas Asumsi</h2>
+          <p className="text-[#9ba3a6]/50 text-xs mb-4">Tabel ini menunjukkan bagaimana perubahan COE dan growth memengaruhi Theo PBV.</p>
           <div className="overflow-x-auto">
             <table className="w-full text-sm font-mono">
               <thead>
-                <tr className="border-b border-[#2C261E]">
-                  <th className="py-2 pr-4 text-left text-[10px] tracking-[0.15em] uppercase text-[#B8AA96]/60">COE / Growth</th>
+                <tr className="border-b border-[#242929]">
+                  <th className="py-2 pr-4 text-left text-[10px] tracking-[0.15em] uppercase text-[#9ba3a6]/60">COE / Growth</th>
                   {[g - 1, g, g + 1].filter((v) => v >= 0).map((v) => (
-                    <th key={v} className="py-2 text-right text-[10px] tracking-[0.15em] uppercase text-[#B8AA96]/60">{v}%</th>
+                    <th key={v} className="py-2 text-right text-[10px] tracking-[0.15em] uppercase text-[#9ba3a6]/60">{v}%</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {[coe - 1, coe, coe + 1].filter((c) => c > 0).map((c) => (
-                  <tr key={c} className="border-b border-[#2C261E]/40">
-                    <td className="py-2 pr-4 text-[#B8AA96]/60">{c}%</td>
+                  <tr key={c} className="border-b border-[#242929]/40">
+                    <td className="py-2 pr-4 text-[#9ba3a6]/60">{c}%</td>
                     {[g - 1, g, g + 1].filter((v) => v >= 0).map((v) => (
                       <td key={v} className="py-2 text-right">{c - v > 0 ? `${fmt(20 / (c - v))}x` : '--'}</td>
                     ))}
@@ -402,8 +402,8 @@ export default function PBVROEPage() {
 
         {/* Conclusion */}
         <div className="card-luxury p-8">
-          <h2 className="font-heading text-xl text-[#F4EFE6] mb-4 font-medium">Kesimpulan</h2>
-          <div className="space-y-3 text-sm text-[#B8AA96] font-light leading-relaxed">
+          <h2 className="font-heading text-xl text-[#edf1f2] mb-4 font-medium">Kesimpulan</h2>
+          <div className="space-y-3 text-sm text-[#9ba3a6] font-light leading-relaxed">
             {results.map((r) => {
               const status =
                 r.premiumDiscount > 20
@@ -414,10 +414,10 @@ export default function PBVROEPage() {
                   ? "sekitar fair value"
                   : "undervalued";
               return (
-                <div key={r.ticker} className="flex items-start gap-3 border-b border-[#2C261E]/50 pb-3">
+                <div key={r.ticker} className="flex items-start gap-3 border-b border-[#242929]/50 pb-3">
                   <div className="w-2.5 h-2.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: r.color }} />
                   <div>
-                    <span className="text-[#F4EFE6] font-medium">{r.ticker}</span>{" "}
+                    <span className="text-[#edf1f2] font-medium">{r.ticker}</span>{" "}
                     <span className={r.premiumDiscount > 0 ? "text-red-400" : "text-emerald-400"}>
                       {r.premiumDiscount > 0 ? "+" : ""}{fmt(r.premiumDiscount)}% premium
                     </span>{" "}
@@ -432,7 +432,7 @@ export default function PBVROEPage() {
                 </div>
               );
             })}
-            <p className="text-[#B8AA96]/40 text-xs pt-2">
+            <p className="text-[#9ba3a6]/40 text-xs pt-2">
               * Model PBV = ROE / (COE − g). CASA dan NIM bersifat input manual berbasis publikasi bank terbaru; harga saham otomatis dari TradingView. Asumsi COE {coe}% dan growth {g}% bisa disesuaikan di atas.
             </p>
           </div>

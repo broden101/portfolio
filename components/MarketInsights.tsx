@@ -10,16 +10,16 @@ const insights = [
 
 export default function MarketInsights() {
   return (
-    <section id="market" className="relative py-32 bg-[#0B0B0A]">
+    <section id="market" className="relative py-32 bg-[#0a0b0b]">
       <div className="gold-line w-full" />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center justify-between mb-16 flex-wrap gap-4">
           <div>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-px bg-[#C6A15B]/30" />
-              <span className="text-[#C6A15B] text-sm font-medium">Catatan terbaru</span>
+              <div className="w-16 h-px bg-[#3f9e74]/30" />
+              <span className="text-[#3f9e74] text-sm font-medium">Catatan terbaru</span>
             </div>
-            <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] font-light">
+            <h2 className="font-heading text-4xl md:text-5xl text-[#edf1f2] font-light">
               Bukan headline doang, <span className="text-gold-gradient font-medium">angka ikut masuk</span>
             </h2>
           </div>
@@ -30,14 +30,14 @@ export default function MarketInsights() {
             const card = (
               <>
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="text-[#C6A15B] text-xs tracking-wider">{item.date}</span>
-                  <span className="w-1 h-1 rounded-full bg-[#2C261E]" />
-                  <span className="text-[#B8AA96]/50 text-xs tracking-wider uppercase">{item.tag}</span>
+                  <span className="text-[#3f9e74] text-xs tracking-wider">{item.date}</span>
+                  <span className="w-1 h-1 rounded-full bg-[#242929]" />
+                  <span className="text-[#9ba3a6]/50 text-xs tracking-wider uppercase">{item.tag}</span>
                 </div>
-                <h3 className="font-heading text-lg text-[#F4EFE6] mb-3 font-medium group-hover:text-[#C6A15B] transition-colors duration-300">{item.title}</h3>
-                <p className="text-[#B8AA96] text-sm leading-relaxed font-light flex-1">{item.excerpt}</p>
-                <div className="mt-6 pt-6 border-t border-[#2C261E]">
-                  <span className="text-[#C6A15B]/50 text-xs tracking-[0.2em] uppercase group-hover:text-[#C6A15B] transition-colors">
+                <h3 className="font-heading text-lg text-[#edf1f2] mb-3 font-medium group-hover:text-[#3f9e74] transition-colors duration-300">{item.title}</h3>
+                <p className="text-[#9ba3a6] text-sm leading-relaxed font-light flex-1">{item.excerpt}</p>
+                <div className="mt-6 pt-6 border-t border-[#242929]">
+                  <span className="text-[#3f9e74]/50 text-xs tracking-[0.2em] uppercase group-hover:text-[#3f9e74] transition-colors">
                     Baca →
                   </span>
                 </div>

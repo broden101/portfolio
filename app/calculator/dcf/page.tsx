@@ -486,7 +486,7 @@ export default function DCFPage() {
   const lastFetch = new Date().toLocaleString("id-ID", { hour12: false, timeZone: "Asia/Jakarta" });
 
   return (
-    <div className="min-h-screen bg-[#050505] pt-24 pb-20">
+    <div className="min-h-screen bg-[#0a0b0b] pt-24 pb-20">
       <Navbar />
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
@@ -619,7 +619,7 @@ export default function DCFPage() {
               {/* Left: Inputs */}
               <div className="lg:col-span-2 space-y-6">
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Data Perusahaan & Pasar</h3>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-5 font-medium">Data Perusahaan & Pasar</h3>
                   <div className="grid sm:grid-cols-3 gap-4">
                     <InputField label="Harga Saham" value={currentPrice} onChange={setCurrentPrice} prefix="Rp" />
                     <InputField label="Shares Outstanding" value={shares} onChange={setShares} suffix="Miliar" />
@@ -628,7 +628,7 @@ export default function DCFPage() {
                 </div>
 
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Revenue & Profitabilitas</h3>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-5 font-medium">Revenue & Profitabilitas</h3>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <InputField label="Base Revenue (FY Terakhir)" value={baseRevenue} onChange={setBaseRevenue} suffix="T" />
                     <InputField label="EBIT Margin" value={ebitMargin} onChange={setEbitMargin} suffix="%" />
@@ -640,7 +640,7 @@ export default function DCFPage() {
                 </div>
 
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Proyeksi Pertumbuhan Revenue</h3>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-5 font-medium">Proyeksi Pertumbuhan Revenue</h3>
                   <div className="grid grid-cols-5 gap-3">
                     <InputField label="Tahun 1" value={g1} onChange={setG1} suffix="%" />
                     <InputField label="Tahun 2" value={g2} onChange={setG2} suffix="%" />
@@ -651,30 +651,30 @@ export default function DCFPage() {
                 </div>
 
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Discount Rate & Terminal Value</h3>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-5 font-medium">Discount Rate & Terminal Value</h3>
                   <div className="grid sm:grid-cols-3 gap-4">
                     <InputField label="Terminal Growth Rate" value={terminalGrowth} onChange={setTerminalGrowth} suffix="%" />
                     <InputField label="Net Debt (neg = net cash)" value={netDebt} onChange={setNetDebt} suffix="T" />
                   </div>
-                  <p className="text-[#B8AA96]/30 text-[10px] mt-3">WACC spread: {fmtPct(wacc - terminalGrowth)}. Terminal growth harus &lt; WACC.</p>
+                  <p className="text-[#9ba3a6]/30 text-[10px] mt-3">WACC spread: {fmtPct(wacc - terminalGrowth)}. Terminal growth harus &lt; WACC.</p>
                 </div>
               </div>
 
               {/* Right: Results */}
               <div className="space-y-6">
                 <div className="card-luxury p-6 text-center">
-                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">{ticker === "CUSTOM" ? "Custom" : `IDX:${ticker}`}</p>
+                  <p className="text-[#9ba3a6]/40 text-[10px] tracking-[0.2em] uppercase mb-2">{ticker === "CUSTOM" ? "Custom" : `IDX:${ticker}`}</p>
                   <div className="text-4xl font-heading font-medium mb-1" style={{ color: verdictColor }}>
                     {fmtIDR(Math.round(dcf.fairValuePerShare))}
                   </div>
-                  <p className="text-[#B8AA96]/50 text-xs mb-4">Intrinsic Value / Share</p>
+                  <p className="text-[#9ba3a6]/50 text-xs mb-4">Intrinsic Value / Share</p>
                   <div className="flex justify-center gap-6 text-sm">
                     <div>
-                      <p className="text-[#B8AA96]/40 text-[10px] uppercase">Harga Saat Ini</p>
-                      <p className="text-[#F4EFE6] font-medium">{fmtIDR(currentPrice)}</p>
+                      <p className="text-[#9ba3a6]/40 text-[10px] uppercase">Harga Saat Ini</p>
+                      <p className="text-[#edf1f2] font-medium">{fmtIDR(currentPrice)}</p>
                     </div>
                     <div>
-                      <p className="text-[#B8AA96]/40 text-[10px] uppercase">Upside</p>
+                      <p className="text-[#9ba3a6]/40 text-[10px] uppercase">Upside</p>
                       <p className="font-medium" style={{ color: verdictColor }}>{fmtPct(dcf.upside)}</p>
                     </div>
                   </div>
@@ -684,15 +684,15 @@ export default function DCFPage() {
                 </div>
 
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-4 font-medium">Value Breakdown</h3>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-4 font-medium">Value Breakdown</h3>
                   <div className="space-y-3 text-sm">
                     <BreakdownRow label="PV of FCFF (Y1–Y5)" value={fmtT(dcf.sumPV)} />
                     <BreakdownRow label="Terminal Value" value={fmtT(dcf.terminalValue)} />
                     <BreakdownRow label="PV of Terminal" value={fmtT(dcf.pvTerminal)} />
-                    <div className="border-t border-[#2C261E] my-2" />
+                    <div className="border-t border-[#242929] my-2" />
                     <BreakdownRow label="Enterprise Value" value={fmtT(dcf.enterpriseValue)} highlight />
                     <BreakdownRow label="− Net Debt" value={fmtT(netDebt)} />
-                    <div className="border-t border-[#2C261E] my-2" />
+                    <div className="border-t border-[#242929] my-2" />
                     <BreakdownRow label="Equity Value" value={fmtT(dcf.equityValue)} highlight />
                     <BreakdownRow label="Terminal % of EV" value={fmtPct(dcf.tvPct)} />
                     <BreakdownRow label="Shares Outstanding" value={`${fmt(shares, 0)} Miliar`} />
@@ -700,8 +700,8 @@ export default function DCFPage() {
                 </div>
 
                 <div className="card-luxury p-5">
-                  <p className="text-[#B8AA96]/30 text-[10px] leading-relaxed">
-                    <strong className="text-[#B8AA96]/50">Metodologi:</strong> FCFF DCF digunakan untuk saham operasional non-keuangan. Model ini mengestimasi enterprise value dari proyeksi arus kas bebas, lalu menyesuaikan net debt untuk mendapatkan equity value.
+                  <p className="text-[#9ba3a6]/30 text-[10px] leading-relaxed">
+                    <strong className="text-[#9ba3a6]/50">Metodologi:</strong> FCFF DCF digunakan untuk saham operasional non-keuangan. Model ini mengestimasi enterprise value dari proyeksi arus kas bebas, lalu menyesuaikan net debt untuk mendapatkan equity value.
                   </p>
                   <SourceNote source="Stock Analysis financial statements + TradingView market quote." note={`Terakhir diperbarui: ${lastFetch} WIB`} className="mt-2" />
                   <Disclaimer className="mt-2" />
@@ -711,14 +711,14 @@ export default function DCFPage() {
 
             {/* FCFF Chart */}
             <div className="card-luxury p-8 mt-8">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">Proyeksi FCFF 5 Tahun</h3>
+              <h3 className="font-heading text-lg text-[#edf1f2] mb-6 font-medium">Proyeksi FCFF 5 Tahun</h3>
               <div className="flex items-end gap-4">
                 {dcf.years.map((y) => {
                   const heightPct = maxFCFF > 0 ? Math.min((Math.abs(y.fcff) / maxFCFF) * 100, 100) : 0;
                   const isNeg = y.fcff < 0;
                   return (
                     <div key={y.year} className="flex-1 flex flex-col items-center gap-2">
-                      <span className="text-[10px] text-[#B8AA96]/50">{fmtT(y.fcff)}</span>
+                      <span className="text-[10px] text-[#9ba3a6]/50">{fmtT(y.fcff)}</span>
                       <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
                         <div
                           className="w-full max-w-[80px] transition-all duration-500"
@@ -726,17 +726,17 @@ export default function DCFPage() {
                             height: `${Math.max(heightPct, 4)}%`,
                             background: isNeg
                               ? "linear-gradient(to top, #EF4444, #FCA5A5)"
-                              : "linear-gradient(to top, #C6A15B, #D4B76A)",
+                              : "linear-gradient(to top, #3f9e74, #D4B76A)",
                           }}
                         />
                       </div>
-                      <span className="text-[10px] text-[#B8AA96]/40">Y{y.year}</span>
-                      <span className="text-[9px] text-[#B8AA96]/25">{fmtPct(y.growth)} growth</span>
+                      <span className="text-[10px] text-[#9ba3a6]/40">Y{y.year}</span>
+                      <span className="text-[9px] text-[#9ba3a6]/25">{fmtPct(y.growth)} growth</span>
                     </div>
                   );
                 })}
                 <div className="flex-1 flex flex-col items-center gap-2">
-                  <span className="text-[10px] text-[#B8AA96]/50">{fmtT(dcf.pvTerminal)}</span>
+                  <span className="text-[10px] text-[#9ba3a6]/50">{fmtT(dcf.pvTerminal)}</span>
                   <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
                     <div
                       className="w-full max-w-[80px] transition-all duration-500 opacity-70"
@@ -746,25 +746,25 @@ export default function DCFPage() {
                       }}
                     />
                   </div>
-                  <span className="text-[10px] text-[#B8AA96]/40">TV</span>
-                  <span className="text-[9px] text-[#B8AA96]/25">terminal</span>
+                  <span className="text-[10px] text-[#9ba3a6]/40">TV</span>
+                  <span className="text-[9px] text-[#9ba3a6]/25">terminal</span>
                 </div>
               </div>
             </div>
 
             {/* Detailed Projections Table */}
             <div className="card-luxury p-8 mt-8 overflow-x-auto">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">Proyeksi Detail Per Tahun</h3>
+              <h3 className="font-heading text-lg text-[#edf1f2] mb-6 font-medium">Proyeksi Detail Per Tahun</h3>
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-[#2C261E]">
-                    <th className="text-left text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">Metric</th>
+                  <tr className="border-b border-[#242929]">
+                    <th className="text-left text-[#9ba3a6]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">Metric</th>
                     {dcf.years.map((y) => (
-                      <th key={y.year} className="text-right text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">Y{y.year}</th>
+                      <th key={y.year} className="text-right text-[#9ba3a6]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">Y{y.year}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="text-[#B8AA96]/70">
+                <tbody className="text-[#9ba3a6]/70">
                   <TableRow label="Revenue" values={dcf.years.map((y) => fmtT(y.revenue))} />
                   <TableRow label="Growth %" values={dcf.years.map((y) => fmtPct(y.growth))} />
                   <TableRow label="EBIT" values={dcf.years.map((y) => fmtT(y.ebit))} />
@@ -772,10 +772,10 @@ export default function DCFPage() {
                   <TableRow label="(+) D&A" values={dcf.years.map((y) => fmtT(y.da))} />
                   <TableRow label="(−) Capex" values={dcf.years.map((y) => fmtT(y.capex))} />
                   <TableRow label="(−) ΔWC" values={dcf.years.map((y) => fmtT(y.wc))} />
-                  <tr className="border-t border-[#2C261E]">
-                    <td className="py-2 pr-4 text-[#C6A15B] font-medium">FCFF</td>
+                  <tr className="border-t border-[#242929]">
+                    <td className="py-2 pr-4 text-[#3f9e74] font-medium">FCFF</td>
                     {dcf.years.map((y) => (
-                      <td key={y.year} className="text-right py-2 px-2 text-[#C6A15B] font-medium">{fmtT(y.fcff)}</td>
+                      <td key={y.year} className="text-right py-2 px-2 text-[#3f9e74] font-medium">{fmtT(y.fcff)}</td>
                     ))}
                   </tr>
                   <TableRow label="PV(FCFF)" values={dcf.years.map((y) => fmtT(y.pv))} />
@@ -785,14 +785,14 @@ export default function DCFPage() {
 
             {/* Sensitivity Matrix */}
             <div className="card-luxury p-8 mt-8 overflow-x-auto">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-2 font-medium">Sensitivity Analysis</h3>
-              <p className="text-[#B8AA96]/40 text-xs mb-6">Fair value per share (Rp) pada variasi WACC dan terminal growth</p>
+              <h3 className="font-heading text-lg text-[#edf1f2] mb-2 font-medium">Sensitivity Analysis</h3>
+              <p className="text-[#9ba3a6]/40 text-xs mb-6">Fair value per share (Rp) pada variasi WACC dan terminal growth</p>
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-[#2C261E]">
-                    <th className="text-left text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">WACC ↓ / TG →</th>
+                  <tr className="border-b border-[#242929]">
+                    <th className="text-left text-[#9ba3a6]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">WACC ↓ / TG →</th>
                     {sensitivity.tgRange.map((tg) => (
-                      <th key={tg} className="text-right text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">
+                      <th key={tg} className="text-right text-[#9ba3a6]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">
                         {fmtPct(tg)}
                       </th>
                     ))}
@@ -800,13 +800,13 @@ export default function DCFPage() {
                 </thead>
                 <tbody>
                   {sensitivity.matrix.map((row, wi) => (
-                    <tr key={wi} className="border-b border-[#2C261E]/50">
-                      <td className="py-2 pr-4 text-[#B8AA96]/60 font-medium text-xs">{fmtPct(sensitivity.waccRange[wi])}</td>
+                    <tr key={wi} className="border-b border-[#242929]/50">
+                      <td className="py-2 pr-4 text-[#9ba3a6]/60 font-medium text-xs">{fmtPct(sensitivity.waccRange[wi])}</td>
                       {row.map((fv, ti) => {
                         const isBase = sensitivity.waccRange[wi] === wacc && sensitivity.tgRange[ti] === terminalGrowth;
                         const color = fv > currentPrice * 1.1 ? "text-[#22C55E]" : fv < currentPrice * 0.9 ? "text-[#EF4444]" : "text-[#FACC15]";
                         return (
-                          <td key={ti} className={`text-right py-2 px-2 font-mono text-xs ${isBase ? "text-[#C6A15B] font-bold bg-[#C6A15B]/5" : color}`}>
+                          <td key={ti} className={`text-right py-2 px-2 font-mono text-xs ${isBase ? "text-[#3f9e74] font-bold bg-[#3f9e74]/5" : color}`}>
                             {fmt(Math.round(fv), 0)}
                           </td>
                         );
@@ -815,7 +815,7 @@ export default function DCFPage() {
                   ))}
                 </tbody>
               </table>
-              <p className="text-[#B8AA96]/25 text-[10px] mt-3">Sel highlight = base case WACC/TG. Hijau &gt; 10% upside, Merah &gt; 10% overvalued.</p>
+              <p className="text-[#9ba3a6]/25 text-[10px] mt-3">Sel highlight = base case WACC/TG. Hijau &gt; 10% upside, Merah &gt; 10% overvalued.</p>
             </div>
             </div>
           </>
@@ -829,7 +829,7 @@ export default function DCFPage() {
               {/* Left: Bank Inputs */}
               <div className="lg:col-span-2 space-y-6">
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Data Bank & Pasar</h3>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-5 font-medium">Data Bank & Pasar</h3>
                   <div className="grid sm:grid-cols-3 gap-4">
                     <InputField label="Harga Saham" value={currentPrice} onChange={setCurrentPrice} prefix="Rp" />
                     <InputField label="Shares Outstanding" value={bankShares} onChange={setBankShares} suffix="Miliar" />
@@ -838,7 +838,7 @@ export default function DCFPage() {
                 </div>
 
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Fundamental Bank</h3>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-5 font-medium">Fundamental Bank</h3>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <InputField label="Book Value / Share" value={bvPerShare} onChange={setBvPerShare} prefix="Rp" />
                     <InputField label="ROE" value={roe} onChange={setRoe} suffix="%" />
@@ -850,8 +850,8 @@ export default function DCFPage() {
                 </div>
 
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">Proyeksi Pertumbuhan (SGR-based)</h3>
-                  <p className="text-[#B8AA96]/40 text-[10px] mb-3">SGR = Retention × ROE = {fmtPct(bankResult.sgr)}. Growth fade dari SGR → {fmtPct(bankTG)} (terminal).</p>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-5 font-medium">Proyeksi Pertumbuhan (SGR-based)</h3>
+                  <p className="text-[#9ba3a6]/40 text-[10px] mb-3">SGR = Retention × ROE = {fmtPct(bankResult.sgr)}. Growth fade dari SGR → {fmtPct(bankTG)} (terminal).</p>
                   <div className="grid grid-cols-5 gap-3">
                     <InputField label="Tahun 1" value={bankG1} onChange={setBankG1} suffix="%" />
                     <InputField label="Tahun 2" value={bankG2} onChange={setBankG2} suffix="%" />
@@ -862,12 +862,12 @@ export default function DCFPage() {
                 </div>
 
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-5 font-medium">ROE & Floor Parameter</h3>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-5 font-medium">ROE & Floor Parameter</h3>
                   <div className="grid sm:grid-cols-3 gap-4">
                     <InputField label="ROE Floor" value={roeFloor} onChange={setRoeFloor} suffix="%" />
                     <InputField label="ROE Terminal" value={roeTerminal} onChange={setRoeTerminal} suffix="%" />
                   </div>
-                  <p className="text-[#B8AA96]/30 text-[10px] mt-3">ROE fade: {fmtPct(roe)} → {fmtPct(roeTerminal)} (clamped 12-20%). Ke: {fmtPct(ke)}.</p>
+                  <p className="text-[#9ba3a6]/30 text-[10px] mt-3">ROE fade: {fmtPct(roe)} → {fmtPct(roeTerminal)} (clamped 12-20%). Ke: {fmtPct(ke)}.</p>
                 </div>
               </div>
 
@@ -875,36 +875,36 @@ export default function DCFPage() {
               <div className="space-y-6">
                 {/* RIM Card */}
                 <div className="card-luxury p-6 text-center">
-                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">IDX:{ticker} — RIM Model</p>
-                  <div className="text-4xl font-heading font-medium mb-1 text-[#C6A15B]">
+                  <p className="text-[#9ba3a6]/40 text-[10px] tracking-[0.2em] uppercase mb-2">IDX:{ticker} — RIM Model</p>
+                  <div className="text-4xl font-heading font-medium mb-1 text-[#3f9e74]">
                     {fmtIDR(bankResult.rimValue)}
                   </div>
-                  <p className="text-[#B8AA96]/50 text-xs">Residual Income Model</p>
+                  <p className="text-[#9ba3a6]/50 text-xs">Residual Income Model</p>
                 </div>
 
                 {/* DDM Card */}
                 <div className="card-luxury p-6 text-center">
-                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">IDX:{ticker} — DDM Model</p>
+                  <p className="text-[#9ba3a6]/40 text-[10px] tracking-[0.2em] uppercase mb-2">IDX:{ticker} — DDM Model</p>
                   <div className="text-4xl font-heading font-medium mb-1 text-[#3B82F6]">
                     {fmtIDR(bankResult.ddmValue)}
                   </div>
-                  <p className="text-[#B8AA96]/50 text-xs">Dividend Discount Model</p>
+                  <p className="text-[#9ba3a6]/50 text-xs">Dividend Discount Model</p>
                 </div>
 
                 {/* Blended Verdict */}
                 <div className="card-luxury p-6 text-center">
-                  <p className="text-[#B8AA96]/40 text-[10px] tracking-[0.2em] uppercase mb-2">Blended Fair Value</p>
+                  <p className="text-[#9ba3a6]/40 text-[10px] tracking-[0.2em] uppercase mb-2">Blended Fair Value</p>
                   <div className="text-4xl font-heading font-medium mb-1" style={{ color: verdictColor }}>
                     {fmtIDR(bankResult.blended)}
                   </div>
-                  <p className="text-[#B8AA96]/50 text-xs mb-4">Intrinsic Value / Share</p>
+                  <p className="text-[#9ba3a6]/50 text-xs mb-4">Intrinsic Value / Share</p>
                   <div className="flex justify-center gap-6 text-sm">
                     <div>
-                      <p className="text-[#B8AA96]/40 text-[10px] uppercase">Harga</p>
-                      <p className="text-[#F4EFE6] font-medium">{fmtIDR(currentPrice)}</p>
+                      <p className="text-[#9ba3a6]/40 text-[10px] uppercase">Harga</p>
+                      <p className="text-[#edf1f2] font-medium">{fmtIDR(currentPrice)}</p>
                     </div>
                     <div>
-                      <p className="text-[#B8AA96]/40 text-[10px] uppercase">Upside</p>
+                      <p className="text-[#9ba3a6]/40 text-[10px] uppercase">Upside</p>
                       <p className="font-medium" style={{ color: verdictColor }}>{fmtPct(bankResult.upside)}</p>
                     </div>
                   </div>
@@ -915,7 +915,7 @@ export default function DCFPage() {
 
                 {/* P/B Comparison */}
                 <div className="card-luxury p-6">
-                  <h3 className="font-heading text-lg text-[#F4EFE6] mb-4 font-medium">P/B Sanity Check</h3>
+                  <h3 className="font-heading text-lg text-[#edf1f2] mb-4 font-medium">P/B Sanity Check</h3>
                   <div className="space-y-3 text-sm">
                     <BreakdownRow label="Market P/B" value={`${fmt(bankResult.marketPB)}x`} />
                     <BreakdownRow label="Justified P/B" value={`${fmt(bankResult.justifiedPB)}x`} highlight />
@@ -925,12 +925,12 @@ export default function DCFPage() {
                     <BreakdownRow label="ROE Spread" value={fmtPct(bankResult.roeSpread ?? (roe - ke))} />
                     <BreakdownRow label="Terminal Growth" value={fmtPct(bankTG)} />
                   </div>
-                  <p className="mt-3 text-[#B8AA96]/40 text-xs leading-5">If justified P/B is above market P/B, the market may be pricing lower future ROE, higher risk, or slower growth.</p>
+                  <p className="mt-3 text-[#9ba3a6]/40 text-xs leading-5">If justified P/B is above market P/B, the market may be pricing lower future ROE, higher risk, or slower growth.</p>
                 </div>
 
                 <div className="card-luxury p-5">
-                  <p className="text-[#B8AA96]/30 text-[10px] leading-relaxed">
-                    <strong className="text-[#B8AA96]/50">Metodologi Bank:</strong> Bank dinilai dengan model berbasis ekuitas karena deposito dan liabilitas keuangan merupakan bagian dari operasi. FCFF, WACC, capex, working capital, dan net debt bukan driver utama valuasi bank.
+                  <p className="text-[#9ba3a6]/30 text-[10px] leading-relaxed">
+                    <strong className="text-[#9ba3a6]/50">Metodologi Bank:</strong> Bank dinilai dengan model berbasis ekuitas karena deposito dan liabilitas keuangan merupakan bagian dari operasi. FCFF, WACC, capex, working capital, dan net debt bukan driver utama valuasi bank.
                   </p>
                   <SourceNote source="Stock Analysis financial statements + TradingView market quote." note={`Terakhir diperbarui: ${lastFetch} WIB`} className="mt-2" />
                   <Disclaimer className="mt-2" />
@@ -940,37 +940,37 @@ export default function DCFPage() {
 
             {/* BV Growth Chart */}
             <div className="card-luxury p-8 mt-8">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">Proyeksi Book Value 5 Tahun</h3>
+              <h3 className="font-heading text-lg text-[#edf1f2] mb-6 font-medium">Proyeksi Book Value 5 Tahun</h3>
               <div className="flex items-end gap-4">
                 {/* Year 0 */}
                 <div className="flex-1 flex flex-col items-center gap-2">
-                  <span className="text-[10px] text-[#B8AA96]/50">{fmtIDR(bvPerShare)}</span>
+                  <span className="text-[10px] text-[#9ba3a6]/50">{fmtIDR(bvPerShare)}</span>
                   <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
                     <div
                       className="w-full max-w-[80px] transition-all duration-500"
                       style={{
                         height: `${Math.max((bvPerShare / maxBV) * 100, 4)}%`,
-                        background: "linear-gradient(to top, #C6A15B, #D4B76A)",
+                        background: "linear-gradient(to top, #3f9e74, #D4B76A)",
                       }}
                     />
                   </div>
-                  <span className="text-[10px] text-[#B8AA96]/40">Y0</span>
-                  <span className="text-[9px] text-[#B8AA96]/25">BV saat ini</span>
+                  <span className="text-[10px] text-[#9ba3a6]/40">Y0</span>
+                  <span className="text-[9px] text-[#9ba3a6]/25">BV saat ini</span>
                 </div>
                 {bankResult.bvPath.map((bv, i) => (
                   <div key={i} className="flex-1 flex flex-col items-center gap-2">
-                    <span className="text-[10px] text-[#B8AA96]/50">{fmtIDR(bv)}</span>
+                    <span className="text-[10px] text-[#9ba3a6]/50">{fmtIDR(bv)}</span>
                     <div className="w-full flex justify-center overflow-hidden" style={{ height: "140px", alignItems: "flex-end" }}>
                       <div
                         className="w-full max-w-[80px] transition-all duration-500"
                         style={{
                           height: `${Math.max((bv / maxBV) * 100, 4)}%`,
-                          background: "linear-gradient(to top, #C6A15B, #D4B76A)",
+                          background: "linear-gradient(to top, #3f9e74, #D4B76A)",
                         }}
                       />
                     </div>
-                    <span className="text-[10px] text-[#B8AA96]/40">Y{i + 1}</span>
-                    <span className="text-[9px] text-[#B8AA96]/25">ROE {fmtPct(bankResult.roePath[i])}</span>
+                    <span className="text-[10px] text-[#9ba3a6]/40">Y{i + 1}</span>
+                    <span className="text-[9px] text-[#9ba3a6]/25">ROE {fmtPct(bankResult.roePath[i])}</span>
                   </div>
                 ))}
               </div>
@@ -978,17 +978,17 @@ export default function DCFPage() {
 
             {/* Growth Path Table */}
             <div className="card-luxury p-8 mt-8 overflow-x-auto">
-              <h3 className="font-heading text-lg text-[#F4EFE6] mb-6 font-medium">Tabel Jalur Pertumbuhan (RIM & DDM)</h3>
+              <h3 className="font-heading text-lg text-[#edf1f2] mb-6 font-medium">Tabel Jalur Pertumbuhan (RIM & DDM)</h3>
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-[#2C261E]">
-                    <th className="text-left text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">Metrik</th>
+                  <tr className="border-b border-[#242929]">
+                    <th className="text-left text-[#9ba3a6]/40 text-[10px] tracking-[0.1em] uppercase py-2 pr-4">Metrik</th>
                     {["Y1", "Y2", "Y3", "Y4", "Y5"].map((y) => (
-                      <th key={y} className="text-right text-[#B8AA96]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">{y}</th>
+                      <th key={y} className="text-right text-[#9ba3a6]/40 text-[10px] tracking-[0.1em] uppercase py-2 px-2">{y}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="text-[#B8AA96]/70">
+                <tbody className="text-[#9ba3a6]/70">
                   <TableRow label="Growth Rate" values={bankResult.growthRates.map(fmtPct)} />
                   <TableRow label="ROE (%)" values={bankResult.roePath.map(fmtPct)} />
                   <TableRow label="BV (Rp)" values={bankResult.bvPath.map(fmtIDR)} />
@@ -1006,41 +1006,41 @@ export default function DCFPage() {
           <div className="card-luxury p-8">
             <div className={`transition-opacity ${autofill.status === "loading" ? "opacity-60" : "opacity-100"}`}>
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-[#C6A15B] text-xs tracking-[0.2em] uppercase">
+                <span className="text-[#3f9e74] text-xs tracking-[0.2em] uppercase">
                   {commodityNav.valuationMethod ? "📊 SOTP · TARGET PRICE" : "⛏️ COMMODITY · NAV"}
                 </span>
-                <span className="text-[#B8AA96]/40 text-xs">{commodityNav.commodityType}</span>
+                <span className="text-[#9ba3a6]/40 text-xs">{commodityNav.commodityType}</span>
               </div>
               {/* Reserve / SOTP Summary */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div>
-                  <div className="text-[#B8AA96]/40 text-xs uppercase">{commodityNav.valuationMethod ? "Method" : "Mine Life"}</div>
-                  <div className="text-[#F4EFE6] text-lg font-heading">{commodityNav.valuationMethod ? "SOTP" : `${commodityNav.mineLifeYears} tahun`}</div>
+                  <div className="text-[#9ba3a6]/40 text-xs uppercase">{commodityNav.valuationMethod ? "Method" : "Mine Life"}</div>
+                  <div className="text-[#edf1f2] text-lg font-heading">{commodityNav.valuationMethod ? "SOTP" : `${commodityNav.mineLifeYears} tahun`}</div>
                 </div>
                 <div>
-                  <div className="text-[#B8AA96]/40 text-xs uppercase">{commodityNav.valuationMethod ? "Valuation" : "Reserve"}</div>
-                  <div className="text-[#F4EFE6] text-sm">{commodityNav.reserveSummary}</div>
+                  <div className="text-[#9ba3a6]/40 text-xs uppercase">{commodityNav.valuationMethod ? "Valuation" : "Reserve"}</div>
+                  <div className="text-[#edf1f2] text-sm">{commodityNav.reserveSummary}</div>
                 </div>
                 <div>
-                  <div className="text-[#B8AA96]/40 text-xs uppercase">Cash Cost</div>
-                  <div className="text-[#F4EFE6] text-sm">{commodityNav.cashCost}</div>
+                  <div className="text-[#9ba3a6]/40 text-xs uppercase">Cash Cost</div>
+                  <div className="text-[#edf1f2] text-sm">{commodityNav.cashCost}</div>
                 </div>
                 <div>
-                  <div className="text-[#B8AA96]/40 text-xs uppercase">{commodityNav.valuationMethod ? "Forecast" : "Production"}</div>
-                  <div className="text-[#F4EFE6] text-sm">{commodityNav.annualProduction}</div>
+                  <div className="text-[#9ba3a6]/40 text-xs uppercase">{commodityNav.valuationMethod ? "Forecast" : "Production"}</div>
+                  <div className="text-[#edf1f2] text-sm">{commodityNav.annualProduction}</div>
                 </div>
               </div>
               {/* NAV / SOTP Scenarios */}
               <div className="space-y-3 mb-8">
-                <p className="text-[#B8AA96]/60 text-xs tracking-[0.15em] uppercase">{commodityNav.valuationMethod ? "SOTP Scenarios" : "NAV Scenarios"}</p>
+                <p className="text-[#9ba3a6]/60 text-xs tracking-[0.15em] uppercase">{commodityNav.valuationMethod ? "SOTP Scenarios" : "NAV Scenarios"}</p>
                 {commodityNav.scenarios.map((s: any, i: number) => (
-                  <div key={i} className="flex items-center justify-between p-4 border border-[#2C261E] bg-[#0B0B0A]/50">
+                  <div key={i} className="flex items-center justify-between p-4 border border-[#242929] bg-[#0a0b0b]/50">
                     <div>
-                      <div className="text-[#B8AA96] text-sm">{s.label}</div>
-                      <div className="text-[#B8AA96]/40 text-xs">{s.priceAssumption}</div>
+                      <div className="text-[#9ba3a6] text-sm">{s.label}</div>
+                      <div className="text-[#9ba3a6]/40 text-xs">{s.priceAssumption}</div>
                     </div>
                     <div className="text-right">
-                      <div className="text-[#F4EFE6] text-lg font-heading">{fmtIDR(s.fairValuePerShare)}</div>
+                      <div className="text-[#edf1f2] text-lg font-heading">{fmtIDR(s.fairValuePerShare)}</div>
                       <div className={`text-sm ${s.upside >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                         {s.upside >= 0 ? "+" : ""}{s.upside}%
                       </div>
@@ -1049,9 +1049,9 @@ export default function DCFPage() {
                 ))}
               </div>
               {/* Source */}
-              <div className="text-[#B8AA96]/30 text-xs">
-                {commodityNav.valuationMethod ? "Valuasi" : "Data cadangan"} per {commodityNav.asOf} · <a href={commodityNav.sourceUrl} target="_blank" rel="noopener" className="underline hover:text-[#C6A15B]/60">{commodityNav.valuationMethod ? "Research Report" : "Annual Report"}</a>
-                <div className="mt-3 text-[#B8AA96]/25 text-[10px]">Terakhir diperbarui: {lastFetch} WIB</div>
+              <div className="text-[#9ba3a6]/30 text-xs">
+                {commodityNav.valuationMethod ? "Valuasi" : "Data cadangan"} per {commodityNav.asOf} · <a href={commodityNav.sourceUrl} target="_blank" rel="noopener" className="underline hover:text-[#3f9e74]/60">{commodityNav.valuationMethod ? "Research Report" : "Annual Report"}</a>
+                <div className="mt-3 text-[#9ba3a6]/25 text-[10px]">Terakhir diperbarui: {lastFetch} WIB</div>
               </div>
             </div>
           </div>
@@ -1066,12 +1066,12 @@ export default function DCFPage() {
 
 function LoadingBanner({ ticker: tk }: { ticker: string }) {
   return (
-    <div className="flex items-center gap-3 p-3 mb-6 border border-[#C6A15B]/20 bg-[#C6A15B]/5 text-xs">
-      <span className="inline-block w-3 h-3 border border-[#C6A15B] border-t-transparent rounded-full animate-spin" />
-      <span className="text-[#B8AA96]">
-        Mengambil data <strong className="text-[#C6A15B]">{tk}</strong> dari Stock Analysis &amp; TradingView…
+    <div className="flex items-center gap-3 p-3 mb-6 border border-[#3f9e74]/20 bg-[#3f9e74]/5 text-xs">
+      <span className="inline-block w-3 h-3 border border-[#3f9e74] border-t-transparent rounded-full animate-spin" />
+      <span className="text-[#9ba3a6]">
+        Mengambil data <strong className="text-[#3f9e74]">{tk}</strong> dari Stock Analysis &amp; TradingView…
       </span>
-      <span className="ml-auto text-[#B8AA96]/40 uppercase tracking-wider">menampilkan preset sementara</span>
+      <span className="ml-auto text-[#9ba3a6]/40 uppercase tracking-wider">menampilkan preset sementara</span>
     </div>
   );
 }

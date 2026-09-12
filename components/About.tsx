@@ -2,47 +2,47 @@
 
 export default function About() {
   return (
-    <section id="about" className="relative py-32 bg-[#0B0B0A]">
+    <section id="about" className="relative py-32 bg-[#0a0b0b]">
       <div className="gold-line w-full" />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-20">
         <div className="flex items-center gap-4 mb-16">
-          <div className="w-16 h-px bg-[#C6A15B]/30" />
-          <span className="text-[#C6A15B] text-sm font-medium">Tentang Raga</span>
+          <div className="w-16 h-px bg-[#3f9e74]/30" />
+          <span className="text-[#3f9e74] text-sm font-medium">Tentang Raga</span>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <div className="relative">
-            <div className="aspect-[3/4] bg-[#141210] border border-[#2C261E] overflow-hidden">
+            <div className="aspect-[3/4] bg-[#141210] border border-[#242929] overflow-hidden">
               <img
                 src="/profile.jpg"
                 alt="Polikarpus Raga"
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-3 -right-3 w-full h-full border border-[#2C261E]/50 -z-10" />
+            <div className="absolute -bottom-3 -right-3 w-full h-full border border-[#242929]/50 -z-10" />
           </div>
 
           <div className="flex flex-col justify-center">
-            <h2 className="font-heading text-4xl md:text-5xl text-[#F4EFE6] mb-8 leading-tight font-light">
+            <h2 className="font-heading text-4xl md:text-5xl text-[#edf1f2] mb-8 leading-tight font-light">
               Bukan sekadar<br />
               <span className="text-gold-gradient font-medium">portfolio template</span>
             </h2>
 
-            <div className="space-y-5 text-[#B8AA96] text-base leading-relaxed font-light">
+            <div className="space-y-5 text-[#9ba3a6] text-base leading-relaxed font-light">
               <p>Gue Raga. Sehari-hari ketemu market, nasabah, flow asing, berita emiten, dan pertanyaan klasik: ini saham murah, jebakan, atau memang belum dilirik?</p>
               <p>Raga Playbook gue pakai sebagai meja kerja publik: catatan riset, valuasi, dashboard IHSG, screener, dividen, sampai kesalahan baca market yang perlu diingat lagi.</p>
               <p>Bahasanya dibuat langsung, karena market juga langsung. Kalau tesis lemah, harus kelihatan. Kalau angka nggak nyambung, jangan dipaksa jadi narasi.</p>
             </div>
 
-            <div className="grid grid-cols-3 gap-8 mt-14 pt-10 border-t border-[#2C261E]">
+            <div className="grid grid-cols-3 gap-8 mt-14 pt-10 border-t border-[#242929]">
               {[
                 { number: "IDX", label: "Fokus utama" },
                 { number: "Live", label: "IHSG & flow" },
                 { number: "Rp", label: "Valuasi dulu" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div className="font-heading text-3xl md:text-4xl text-[#C6A15B] mb-2 font-medium">{stat.number}</div>
-                  <div className="text-[#B8AA96]/60 text-xs tracking-wider uppercase">{stat.label}</div>
+                  <div className="font-heading text-3xl md:text-4xl text-[#3f9e74] mb-2 font-medium">{stat.number}</div>
+                  <div className="text-[#9ba3a6]/60 text-xs tracking-wider uppercase">{stat.label}</div>
                 </div>
               ))}
             </div>

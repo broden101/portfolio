@@ -175,8 +175,8 @@ export default function ReversalScreener() {
             onClick={() => { setVersion(v); setResults([]); }}
             className={`px-5 py-2 text-xs tracking-[0.15em] uppercase font-medium transition-all ${
               version === v
-                ? "bg-[#C6A15B]/15 text-[#C6A15B] border border-[#C6A15B]/30"
-                : "border border-[#2C261E] text-[#B8AA96]/50 hover:text-[#B8AA96]"
+                ? "bg-[#3f9e74]/15 text-[#3f9e74] border border-[#3f9e74]/30"
+                : "border border-[#242929] text-[#9ba3a6]/50 hover:text-[#9ba3a6]"
             }`}
           >
             {v === "basic" ? "Basic" : v === "strict" ? "Strict" : "Reversal"}
@@ -185,7 +185,7 @@ export default function ReversalScreener() {
         <button
           onClick={runScreener}
           disabled={loading}
-          className="ml-auto px-6 py-2.5 bg-[#C6A15B]/10 border border-[#C6A15B]/40 text-[#C6A15B] text-xs tracking-[0.15em] uppercase font-medium hover:bg-[#C6A15B]/20 transition-all disabled:opacity-40"
+          className="ml-auto px-6 py-2.5 bg-[#3f9e74]/10 border border-[#3f9e74]/40 text-[#3f9e74] text-xs tracking-[0.15em] uppercase font-medium hover:bg-[#3f9e74]/20 transition-all disabled:opacity-40"
         >
           {loading ? "Scanning..." : "Run Screener"}
         </button>
@@ -193,8 +193,8 @@ export default function ReversalScreener() {
 
       {/* Criteria description */}
       <div className="card-luxury p-5">
-        <p className="text-xs text-[#B8AA96]/60 leading-relaxed">
-          <span className="text-[#C6A15B] font-medium">Criteria ({version}):</span>{" "}
+        <p className="text-xs text-[#9ba3a6]/60 leading-relaxed">
+          <span className="text-[#3f9e74] font-medium">Criteria ({version}):</span>{" "}
           {VERSION_DESC[version]}
         </p>
       </div>
@@ -210,14 +210,14 @@ export default function ReversalScreener() {
       {results.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: "Total", value: counts.total, color: "text-[#F4EFE6]" },
+            { label: "Total", value: counts.total, color: "text-[#edf1f2]" },
             { label: "Watch", value: counts.watch, color: "text-blue-400" },
             { label: "Early Rebound", value: counts.early, color: "text-amber-400" },
             { label: "Confirmed", value: counts.confirmed, color: "text-emerald-400" },
           ].map((s) => (
             <div key={s.label} className="card-luxury p-5 text-center">
               <div className={`font-heading text-3xl font-medium ${s.color}`}>{s.value}</div>
-              <div className="text-[#B8AA96]/40 text-xs tracking-[0.2em] uppercase mt-1">{s.label}</div>
+              <div className="text-[#9ba3a6]/40 text-xs tracking-[0.2em] uppercase mt-1">{s.label}</div>
             </div>
           ))}
         </div>
@@ -227,47 +227,47 @@ export default function ReversalScreener() {
       {results.length > 0 && (
         <div className="card-luxury p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
-              Reversal Watchlist <span className="text-[#B8AA96]/50 font-light">({results.length})</span>
+            <h2 className="font-heading text-xl text-[#edf1f2] font-medium">
+              Reversal Watchlist <span className="text-[#9ba3a6]/50 font-light">({results.length})</span>
             </h2>
-            {lastRun && <span className="text-xs text-[#B8AA96]/30">Last scan: {lastRun}</span>}
+            {lastRun && <span className="text-xs text-[#9ba3a6]/30">Last scan: {lastRun}</span>}
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
-                <tr className="border-b border-[#2C261E]">
-                  <th className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium">#</th>
-                  <th className="text-left py-3 px-2 text-[#B8AA96]/50 font-medium">Stock</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">Price</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">RSI 14</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">Vol vs Avg</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">MACD Hist</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">Change</th>
-                  <th className="text-right py-3 px-2 text-[#B8AA96]/50 font-medium">SMA20</th>
-                  <th className="text-center py-3 px-2 text-[#B8AA96]/50 font-medium">Status</th>
+                <tr className="border-b border-[#242929]">
+                  <th className="text-left py-3 px-2 text-[#9ba3a6]/50 font-medium">#</th>
+                  <th className="text-left py-3 px-2 text-[#9ba3a6]/50 font-medium">Stock</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">Price</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">RSI 14</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">Vol vs Avg</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">MACD Hist</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">Change</th>
+                  <th className="text-right py-3 px-2 text-[#9ba3a6]/50 font-medium">SMA20</th>
+                  <th className="text-center py-3 px-2 text-[#9ba3a6]/50 font-medium">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {results.map((row, i) => {
                   const sc = STATUS_CONFIG[row.status];
                   return (
-                    <tr key={row.ticker} className="border-b border-[#2C261E]/50 hover:bg-[#C6A15B]/5 transition-colors">
-                      <td className="py-3 px-2 text-[#B8AA96]/30">{i + 1}</td>
+                    <tr key={row.ticker} className="border-b border-[#242929]/50 hover:bg-[#3f9e74]/5 transition-colors">
+                      <td className="py-3 px-2 text-[#9ba3a6]/30">{i + 1}</td>
                       <td className="py-3 px-2">
-                        <span className="font-mono font-semibold text-[#F4EFE6]">{row.ticker}</span>
-                        <div className="text-[10px] text-[#B8AA96]/40 mt-0.5 max-w-[180px] truncate">{row.desc}</div>
+                        <span className="font-mono font-semibold text-[#edf1f2]">{row.ticker}</span>
+                        <div className="text-[10px] text-[#9ba3a6]/40 mt-0.5 max-w-[180px] truncate">{row.desc}</div>
                       </td>
-                      <td className="py-3 px-2 text-right font-mono text-[#F4EFE6]">
+                      <td className="py-3 px-2 text-right font-mono text-[#edf1f2]">
                         {row.price.toLocaleString()}
                       </td>
                       <td className="py-3 px-2 text-right font-mono">
-                        <span className={row.rsi < 25 ? "text-red-400" : row.rsi < 30 ? "text-amber-400" : "text-[#F4EFE6]"}>
+                        <span className={row.rsi < 25 ? "text-red-400" : row.rsi < 30 ? "text-amber-400" : "text-[#edf1f2]"}>
                           {row.rsi.toFixed(1)}
                         </span>
                       </td>
                       <td className="py-3 px-2 text-right font-mono">
-                        <span className={row.volVsAvg < -50 ? "text-emerald-400" : row.volVsAvg < -30 ? "text-amber-400" : "text-[#B8AA96]"}>
+                        <span className={row.volVsAvg < -50 ? "text-emerald-400" : row.volVsAvg < -30 ? "text-amber-400" : "text-[#9ba3a6]"}>
                           {row.volVsAvg.toFixed(0)}%
                         </span>
                       </td>
@@ -281,7 +281,7 @@ export default function ReversalScreener() {
                           {row.change > 0 ? "+" : ""}{row.change.toFixed(2)}%
                         </span>
                       </td>
-                      <td className="py-3 px-2 text-right font-mono text-[#B8AA96]/60">
+                      <td className="py-3 px-2 text-right font-mono text-[#9ba3a6]/60">
                         {row.sma20.toLocaleString()}
                       </td>
                       <td className="py-3 px-2 text-center">
@@ -301,17 +301,17 @@ export default function ReversalScreener() {
       {/* Empty state */}
       {!loading && results.length === 0 && !error && (
         <div className="card-luxury p-12 text-center">
-          <div className="text-[#B8AA96]/30 text-sm mb-3">No results yet</div>
-          <p className="text-[#B8AA96]/20 text-xs max-w-md mx-auto">
+          <div className="text-[#9ba3a6]/30 text-sm mb-3">No results yet</div>
+          <p className="text-[#9ba3a6]/20 text-xs max-w-md mx-auto">
             Click Run Screener to scan IDX100 stocks for potential reversal setups
           </p>
         </div>
       )}
 
       {/* Disclaimer */}
-      <div className="card-luxury p-5 border border-[#2C261E]/50">
-        <p className="text-[10px] text-[#B8AA96]/40 leading-relaxed">
-          ⚠️ <span className="text-[#C6A15B]/60">Disclaimer:</span> Oversold tidak selalu berarti harga akan langsung naik. Saham bisa tetap turun meskipun RSI sudah rendah. Gunakan konfirmasi tambahan seperti support, volume beli, MACD, dan price action. Screener ini adalah alat pantau, bukan sinyal beli.
+      <div className="card-luxury p-5 border border-[#242929]/50">
+        <p className="text-[10px] text-[#9ba3a6]/40 leading-relaxed">
+          ⚠️ <span className="text-[#3f9e74]/60">Disclaimer:</span> Oversold tidak selalu berarti harga akan langsung naik. Saham bisa tetap turun meskipun RSI sudah rendah. Gunakan konfirmasi tambahan seperti support, volume beli, MACD, dan price action. Screener ini adalah alat pantau, bukan sinyal beli.
         </p>
       </div>
     </div>
