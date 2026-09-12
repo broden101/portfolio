@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { TopMoverPanel } from "./TopMoverPanel";
 import { CommodityPricesPanel } from "./CommodityPricesPanel";
 import { Idx100Panel } from "./Idx100Panel";
+import { IdxRotationPanel } from "./IdxRotationPanel";
 import Footer from "@/components/Footer";
 import SectorStocksPanel from "@/components/SectorStocksPanel";
 import CalendarWidget from "@/components/CalendarWidget";
@@ -212,10 +213,19 @@ export default function IHSGDashboard() {
       const rs = rsOf(s, activeTab);
       const rsPrev = rsOf(s, TAB_PREV[activeTab]);
       const mom = rs == null ? null : (rsPrev == null ? rs : rs - rsPrev);
-      return { s, rs, mom };
+      // tail: posisi di periode lebih pendek (arah pergerakan rotasi)
+      const prevTab = TAB_PREV[activeTab];
+      let prev: { rs: number; mom: number } | null = null;
+      if (prevTab) {
+        const rsp = rsOf(s, prevTab);
+        const rspPrev = rsOf(s, TAB_PREV[prevTab]);
+        const mprev = rsp == null ? null : (rspPrev == null ? rsp : rsp - rspPrev);
+        if (rsp != null && mprev != null) prev = { rs: rsp, mom: mprev };
+      }
+      return { s, rs, mom, prev };
     }).filter((p) => p.rs != null && p.mom != null);
     if (points.length === 0) return { points: [], maxAbs: 1 };
-    const maxAbs = Math.max(1e-9, ...points.map((p) => Math.max(Math.abs(p.rs!), Math.abs(p.mom!))));
+    const maxAbs = Math.max(1e-9, ...points.map((p) => Math.max(Math.abs(p.rs!), Math.abs(p.mom!), p.prev ? Math.abs(p.prev.rs) : 0, p.prev ? Math.abs(p.prev.mom) : 0)));
     return { points, maxAbs };
   }, [sectors, ihsg, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -797,6 +807,37 @@ export default function IHSGDashboard() {
                   <div className="absolute top-0 bottom-0 left-1/2 w-px bg-[#2C261E]" />
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#C6A15B]/50" />
 
+                  {/* tail arrows (arah pergerakan rotasi antar periode) */}
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <defs>
+                      <marker id="rotTailArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(184,170,150,0.35)" />
+                      </marker>
+                    </defs>
+                    {rotationMap.points.map(({ s, rs, mom, prev }) => {
+                      if (!prev) return null;
+                      const cx = 50 + (rs! / rotationMap.maxAbs) * 41;
+                      const cy = 50 - (mom! / rotationMap.maxAbs) * 41;
+                      const px = 50 + (prev.rs / rotationMap.maxAbs) * 41;
+                      const py = 50 - (prev.mom / rotationMap.maxAbs) * 41;
+                      const dx = cx - px;
+                      const dy = cy - py;
+                      const len = Math.hypot(dx, dy);
+                      // sama titik? skip (pendekkan garis minimal biar tetep keliatan)
+                      if (len < 2) return null;
+                      // potong tail di ujung supaya tidak menabrak dot (mundur 6% basis koordinat, tidak terdistorsi aspek)
+                      const sx = cx - (dx / len) * 5;
+                      const sy = cy - (dy / len) * 5;
+                      // perpanjang ekor di titik asal biar keliatan mulai dari mana
+                      const ex = px + (dx / len) * 4;
+                      const ey = py + (dy / len) * 4;
+                      return (
+                        <line key={s.code} x1={ex} y1={ey} x2={sx} y2={sy}
+                          stroke="rgba(184,170,150,0.35)" strokeWidth="0.45" strokeDasharray="1.4 1.1" markerEnd="url(#rotTailArrow)" />
+                      );
+                    })}
+                  </svg>
+
                   {/* dots */}
                   {rotationMap.points.map(({ s, rs, mom }) => {
                     const x = 50 + (rs! / rotationMap.maxAbs) * 41; // 50% ± 41% (keep 9% edge)
@@ -861,6 +902,7 @@ export default function IHSGDashboard() {
           )}
         </div>
 
+        <IdxRotationPanel />
 
       </div>
       <div className="mx-auto max-w-7xl px-6 pb-10 lg:px-12">
