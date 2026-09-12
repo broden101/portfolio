@@ -348,15 +348,18 @@ export function RotationMapPanel() {
           {/* close plot flex-1 */}
           </div>
 
-          {/* tabel detail — Sektor | RS | MOM | Fase (persis referensi screener) */}
+          {/* tabel detail — Fase | Sektor | Day | Week | Monthly | RS | Mom */}
           <div className="mt-4 overflow-x-auto">
-            <table className="w-full min-w-[480px] border-collapse text-[11px] font-mono">
+            <table className="w-full min-w-[560px] border-collapse text-[11px] font-mono">
               <thead>
                 <tr className="text-[9px] uppercase tracking-wider text-[#9ba3a6]/40 border-b border-[#242929]">
-                  <th className="text-left font-normal py-1.5 pl-1 pr-4 w-[38%]">Sektor</th>
-                  <th className="text-right font-normal py-1.5 px-4">RS</th>
-                  <th className="text-right font-normal py-1.5 px-4">Mom</th>
-                  <th className="text-right font-normal py-1.5 pr-1 pl-4">Fase</th>
+                  <th className="text-left font-normal py-1.5 pl-1 pr-4 w-[12%]">Fase</th>
+                  <th className="text-left font-normal py-1.5 pr-4 w-[30%]">Sektor</th>
+                  <th className="text-right font-normal py-1.5 px-3">Day</th>
+                  <th className="text-right font-normal py-1.5 px-3">Week</th>
+                  <th className="text-right font-normal py-1.5 px-3">Monthly</th>
+                  <th className="text-right font-normal py-1.5 px-3">RS</th>
+                  <th className="text-right font-normal py-1.5 pr-1 pl-3">Mom</th>
                 </tr>
               </thead>
               <tbody>
@@ -369,12 +372,13 @@ export function RotationMapPanel() {
                     const h = s.pts[s.pts.length - 1];
                     const isDim = filterQuad !== null && filterQuad !== qu.k;
                     const isHover = hover === s.it.ticker;
-                    const txt = (v: number, bold = false) =>
-                      !Number.isFinite(v)
+                    // perf windows: 0=Day, 1=1W, 2=1M — throw of "Monthly" dari perf[index]
+                    const txt = (v: number | null | undefined, bold = false) =>
+                      v == null || !Number.isFinite(v as number)
                         ? <span className="text-[#9ba3a6]/20">—</span>
                         : (
-                          <span className={`${bold && isHover ? "text-[#edf1f2]" : ""} ${v >= 0 ? "text-emerald-400/90" : "text-red-400/80"}`}>
-                            {v >= 0 ? "+" : ""}{v.toFixed(2)}%
+                          <span className={`${bold && isHover ? "text-[#edf1f2]" : ""} ${(v as number) >= 0 ? "text-emerald-400/90" : "text-red-400/80"}`}>
+                            {(v as number) >= 0 ? "+" : ""}{(v as number).toFixed((v as number) >= 0 && (v as number) < 10 ? 1 : 0)}%
                           </span>
                         );
                     return (
@@ -386,14 +390,17 @@ export function RotationMapPanel() {
                           isDim ? "opacity-30" : "hover:bg-[#121414]"
                         }`}>
                         <td className="py-1.5 pl-1 pr-4 whitespace-nowrap">
+                          <span className={`uppercase text-[9px] tracking-wider ${qu.cls}`}>● {qu.label}</span>
+                        </td>
+                        <td className="py-1.5 pr-4 whitespace-nowrap">
                           <span className={`font-sans font-medium text-[12px] ${isHover ? "text-[#edf1f2]" : "text-[#edf1f2]/90"}`}>{s.it.ticker}</span>
                           <span className="text-[#9ba3a6]/45 ml-2 font-sans">{s.it.name}</span>
                         </td>
-                        <td className="py-1.5 px-4 text-right whitespace-nowrap">{txt(h.rs, true)}</td>
-                        <td className="py-1.5 px-4 text-right whitespace-nowrap">{txt(h.mom, true)}</td>
-                        <td className="py-1.5 pr-1 pl-4 text-right whitespace-nowrap">
-                          <span className={`uppercase text-[9px] tracking-wider ${qu.cls}`}>● {qu.label}</span>
-                        </td>
+                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(s.it.perf[0])}</td>
+                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(s.it.perf[1])}</td>
+                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(s.it.perf[2])}</td>
+                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(h.rs, true)}</td>
+                        <td className="py-1.5 pr-1 pl-3 text-right whitespace-nowrap">{txt(h.mom, true)}</td>
                       </tr>
                     );
                   });
