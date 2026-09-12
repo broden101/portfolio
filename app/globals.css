@@ -13,9 +13,9 @@
   --accent-dark: #2f7d5c;
   --accent-bright: #35b5a5;
   --border: rgba(63, 158, 116, 0.28);
-  --font-heading: var(--font-heading), 'Space Grotesk', sans-serif;
-  --font-body: var(--font-body), 'Inter', sans-serif;
-  --font-mono: var(--font-mono), 'JetBrains Mono', ui-monospace, monospace;
+  --font-heading: var(--space-grotesk), 'Space Grotesk', sans-serif;
+  --font-body: var(--inter-body), 'Inter', sans-serif;
+  --font-mono: var(--jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
