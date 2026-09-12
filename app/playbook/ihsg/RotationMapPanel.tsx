@@ -19,6 +19,7 @@ const INTERVAL_WINDOWS: Record<Interval, number[]> = {
   daily: [0, 1, 2, 3],   // Day, 1W, 1M, 3M
   weekly: [1, 2, 3, 4],  // 1W, 1M, 3M, 6M
 };
+const WINDOW_LABEL: Record<number, string> = { 0: "Day", 1: "1W", 2: "1M", 3: "3M", 4: "6M" };
 
 function quadInfo(rs: number, mom: number) {
   if (rs >= 0 && mom >= 0) return { label: "Leading", cls: "text-emerald-400", dot: "rgba(52,211,153,0.9)", bd: "rgba(52,211,153,0.6)" };
@@ -347,38 +348,65 @@ export function RotationMapPanel() {
           {/* close plot flex-1 */}
           </div>
 
-          {/* sidebar kanan — daftar per kuadran */}
-          <div className="w-full lg:w-72 shrink-0 lg:border-l lg:border-[#2C261E] lg:pl-5 flex flex-col gap-3">
-            {QUAD_ORDER.map((qu) => {
-              const list = quadBuckets[qu.k];
-              if (list.length === 0) return null;
-              return (
-                <div key={qu.k}>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className={`font-heading text-[11px] uppercase tracking-wider ${qu.cls}`}>{qu.label}</span>
-                    <span className="text-[9px] text-[#B8AA96]/40 font-mono">{list.length}</span>
-                  </div>
-                  <div className="flex flex-wrap gap-x-3 gap-y-0.5">
-                    {list
-                      .slice()
-                      .sort((a, b) => { const ha = a.pts[a.pts.length - 1], hb = b.pts[b.pts.length - 1]; return hb.rs - ha.rs; })
-                      .map((s) => {
-                        const h = s.pts[s.pts.length - 1];
-                        return (
-                          <button key={s.it.ticker}
-                            onMouseEnter={() => setHover(s.it.ticker)}
-                            onMouseLeave={() => setHover(null)}
-                            onClick={() => setFilterQuad(filterQuad === qu.k ? null : qu.k)}
-                            className="text-[10px] font-mono text-[#B8AA96]/70 hover:text-[#F4EFE6] hover:underline transition-colors">
-                            {s.it.ticker}
-                            <span className="text-[#B8AA96]/40"> {h.rs >= 0 ? "+" : ""}{h.rs.toFixed(1)}</span>
-                          </button>
+          {/* tabel detail — semua kuadran, full-width */}
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full min-w-[640px] border-collapse text-[11px] font-mono">
+              <thead>
+                <tr className="text-[9px] uppercase tracking-wider text-[#B8AA96]/40 border-b border-[#2C261E]">
+                  <th className="text-left font-normal py-1.5 pl-1 pr-3">Kuadran</th>
+                  <th className="text-left font-normal py-1.5 pr-3 w-1/3">Sektor</th>
+                  <th className="text-right font-normal py-1.5 px-3">RS</th>
+                  <th className="text-right font-normal py-1.5 px-3">Mom</th>
+                  {winIdx.map((wi) => (
+                    <th key={wi} className="text-right font-normal py-1.5 px-3">{WINDOW_LABEL[wi]}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {QUAD_ORDER.flatMap((qu) => {
+                  const list = quadBuckets[qu.k]
+                    .slice()
+                    .sort((a, b) => { const ha = a.pts[a.pts.length - 1], hb = b.pts[b.pts.length - 1]; return hb.rs - ha.rs; });
+                  if (list.length === 0) return null;
+                  return list.map((s) => {
+                    const h = s.pts[s.pts.length - 1];
+                    const isDim = filterQuad !== null && filterQuad !== qu.k;
+                    const isHover = hover === s.it.ticker;
+                    const txt = (v: number | null | undefined, bold = false) =>
+                      v == null || !Number.isFinite(v as number)
+                        ? <span className="text-[#B8AA96]/20">—</span>
+                        : (
+                          <span className={`${bold && isHover ? "text-[#F4EFE6]" : ""} ${(v as number) >= 0 ? "text-emerald-400/90" : "text-red-400/80"}`}>
+                            {(v as number) >= 0 ? "+" : ""}{(v as number).toFixed((v as number) >= 0 && (v as number) < 10 ? 1 : 0)}
+                          </span>
                         );
-                      })}
-                  </div>
-                </div>
-              );
-            })}
+                    return (
+                      <tr key={s.it.ticker}
+                        onMouseEnter={() => setHover(s.it.ticker)}
+                        onMouseLeave={() => setHover(null)}
+                        onClick={() => setFilterQuad(filterQuad === qu.k ? null : qu.k)}
+                        className={`border-b border-[#2C261E]/60 cursor-pointer transition-colors ${
+                          isDim ? "opacity-30" : "hover:bg-[#1A1A17]"
+                        }`}>
+                        <td className="py-1.5 pl-1 pr-3">
+                          <span className={`inline-block w-1.5 h-1.5 rounded-full mr-2 align-middle ${isHover ? "scale-125" : ""}`} style={{ backgroundColor: quadInfo(h.rs, h.mom).bd }} />
+                          <span className={`uppercase text-[9px] ${qu.cls}`}>{qu.label}</span>
+                        </td>
+                        <td className="py-1.5 pr-3">
+                          <span className={`font-sans font-medium text-[12px] ${isHover ? "text-[#F4EFE6]" : "text-[#F4EFE6]/90"}`}>{s.it.ticker}</span>
+                          <span className="text-[#B8AA96]/45 ml-2">{s.it.name}</span>
+                        </td>
+                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(h.rs, true)}</td>
+                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(h.mom, true)}</td>
+                        {winIdx.map((wi) => (
+                          <td key={wi} className="py-1.5 px-3 text-right whitespace-nowrap">{txt(s.it.perf[wi])}</td>
+                        ))}
+                      </tr>
+                    );
+                  });
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
       )}
