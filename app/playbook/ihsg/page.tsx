@@ -25,11 +25,8 @@ import {
   fmtTriliun,
   isMarketOpen,
   IHSG_FALLBACK,
-  SECTOR_META,
   FALLBACK_MANUAL,
 } from "@/lib/market";
-
-type PerfTab = "Day" | "Week" | "1M" | "YTD";
 
 /** Fetch foreign flow via Next.js API proxy (server-side, bypasses browser CORS/Cloudflare) */
 async function fetchForeignFlowClient(): Promise<ForeignFlowData | null> {
@@ -81,7 +78,6 @@ export default function IHSGDashboard() {
   const [data, setData] = useState<MarketData | null>(null);
   const [foreignFlow, setForeignFlow] = useState<ForeignFlowData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<PerfTab>("Day");
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [live, setLive] = useState(false);
   const [flowHistory, setFlowHistory] = useState<{ date: string; dailyNet: number; totalForeignBuy: number; totalForeignSell: number }[]>([]);
@@ -89,18 +85,6 @@ export default function IHSGDashboard() {
   const [selectedSector, setSelectedSector] = useState<{ code: string; name: string; color: string; type?: string; tickers?: string[] } | null>(null);
   const [showAllHistory, setShowAllHistory] = useState(false);
   const [commodityData, setCommodityData] = useState<{ symbol: string; name: string; price: number; change: number | null; unit: string }[] | null>(null);
-
-  const BASKET_TICKERS: Record<string, string[]> = {
-    IDXAGRI: ["AALI", "TAPG", "LSIP", "SGRO", "PALM", "TBLA", "BWPT", "BISI", "JAWA", "SSMS", "ANJT", "PNGO", "TLDN", "UDNG", "MSJA", "STAA", "BRAM", "ALDO", "FPNI", "GZCO", "PDPP", "TALF", "ADMG", "IPOL", "GULA", "MOLI", "SMKL", "YPAS", "AMMS", "IGAR", "APLI", "MYTX", "AKPI", "PTPS", "ESTI", "INOV", "ACRO", "NPGF", "ERTX", "ANDI", "PSDN", "AYLS", "INCI", "OBMD", "SBMA", "CHEM", "OILS", "PICO", "FLMC"],
-    IDXTECHNO: ["DCII", "ASII", "GOTO", "MLPT", "WIFI", "CYBR", "MTDL", "MSTI", "ASGR", "IRSX", "PTSN", "ATIC", "NFCX", "CHIP", "AXIO", "IKBI", "PGJO", "AREA", "AWAN", "ELIT", "VTNY", "TFAS", "JATI", "WGSH", "TRON", "LPLI", "CASH", "TOSK", "UVCR", "EPAC", "GPSO", "LPIN", "ZYRX", "DIVA", "MCAS", "RCCC", "RUNS", "DIGI", "INDX"],
-    IDXINFRA: ["BREN", "MORA", "TLKM", "DNET", "CDIA", "ISAT", "EXCL", "MTEL", "PGEO", "RAJA", "POWR", "INET", "LINK", "KEEN", "DATA", "CENT", "GHON", "HGII", "INPS", "CGAS", "LAPD", "MSKY", "JAST", "MPOW"],
-    IDXCYCLIC: ["AMRT", "BELI", "CMRY", "EMTK", "MSIN", "MAPI", "AKRA", "VKTR", "MDIY", "BUVA", "FILM", "MAPA", "MGLV", "SCMA", "CITA", "TSPC", "ALII", "BUKA", "MIDI", "BHAT", "HRTA", "INPP", "CNMA", "CLAY", "PNLF", "EPMT", "BOGA", "ERAA", "ACES", "FORE", "NATO", "TGKA", "SINI", "MNCN", "BPII", "JTPE", "MPMX", "GJTL", "HEXA", "GOLF", "LPPF", "IMAS", "OMRE", "JSPT", "DAAZ", "MMIX", "VISI", "PNIN", "MDLA", "MDIA", "MINA", "BLTZ", "RALS", "DAYA", "MAPB", "BHIT", "IATA", "DEPO", "PSKT", "BMTR", "OASA", "CSAP", "FORU", "SPTO", "SONA", "ERAL", "FUTR", "IPTV", "RAAM", "PMJS", "MKTR", "WOOD", "POLI", "MLPL", "HERO", "BLUE", "CARS", "ARTA", "LTLS", "FAST", "DMMX", "LUCY", "BUAH", "LIVE", "DOOH", "BOLA", "FOLK", "LFLO", "KING", "RANC", "KONI", "ASLC", "KDTN", "SOSS", "PJAA", "RODA", "KSIX", "VERN", "SHID", "ENAK", "SOTS", "NETV", "SMGA", "MPPA", "IBOS", "PANR", "IRRA", "PZZA", "LABS", "PEVE", "VIVA", "UNSP", "FITT", "UNTD", "BABY", "GRPM", "PMUI", "GDYR", "ESTA", "GLVA", "KMDS", "ZATA", "GPRA", "PNSE", "BAYU", "UFOE", "MUTU", "DPUM", "DART", "EAST", "SCNP", "HYGN", "TYRE", "TIRA", "BMSR", "PADA", "DYAN", "KOBX", "MICE", "PDES", "CRSN", "IOTF", "NAIK", "HAJJ", "HRME", "BAPA", "DEWI", "SMLE", "SDPC", "MEJA", "DOSS", "AGAR", "INTA", "MDRN", "PEHA", "PTSP", "MRAT", "TAMA", "ECII", "PTMP", "CAKK", "DFAM", "RBMS", "MPIX", "MANG", "KBLV", "SLIS", "LAND", "LMPI", "NTBK", "YELO", "BAUT", "KOPI", "INTD", "MARI", "ABBA", "FOOD", "ICON", "MERI", "TMPO", "SNLK", "OLIV", "NANO", "KIOS", "AIMS", "PGLI", "OPMS", "KOIN", "HDIT", "LUCK", "CSMI", "IDEA", "KICI", "BMBL", "PLAN", "HADE"],
-    IDXNONCYC: ["PANI", "ICBP", "HMSP", "UNVR", "INDF", "MYOR", "GGRM", "FAPA", "ADES", "MLBI", "STTP", "ULTJ", "GOOD", "YUPI", "POLU", "CLEO", "SIMP", "DMND", "UNIC", "EURO", "VICI", "PSGO", "ROTI", "WIIM", "KEJU", "FISH", "CBUT", "BEEF", "KINO", "DLTA", "UCID", "CEKA", "SKLT", "TCID", "CAMP", "COCO", "AISA", "STRK", "SKBM", "BELL", "TRIS", "ZONE", "MAXI", "WINE", "CRAB", "SRSN", "GUNA", "SURI", "BEER", "BOBA", "ITIC", "ENZO", "NAYZ", "WAPO", "DSFI", "MBTO", "NASI", "ISEA", "BATA", "IKAN", "TAYS", "RICY", "PCAR", "SOUL"],
-    IDXTRANS: ["TCPI", "GIAA", "JSMR", "ELPI", "RMKE", "CMNP", "TMAS", "GMFI", "BULL", "MBSS", "SHIP", "SMDR", "CASS", "BIRD", "HATM", "BESS", "CBRE", "SOCI", "WINS", "PORT", "ASSA", "HUMI", "IPCC", "GTSI", "IPCM", "TPMA", "PSSI", "PSAT", "BLOG", "BBRM", "BSML", "BLTA", "CMPP", "TAMU", "MITI", "NELY", "HAIS", "RIGS", "BOAT", "GTRA", "MPXL", "SAFE", "KLAS", "PURA", "SDMU", "TRUK", "SAPX", "HELI", "PTIS", "PPGL", "WEHA", "LAJU", "TAXI", "KARW", "CANI", "JAYA", "LRNA", "TNCA", "KJEN", "ARKA"],
-    // TradingView has no property sector (property stocks sit under Finance),
-    // so IDXPROPERT uses an explicit property basket.
-    IDXPROPERT: ["BSDE", "CTRA", "SMRA", "PWON", "LPKR", "ASRI", "DILD", "MTLA", "MKPI", "BIPP", "ELTY", "TARA", "RDTX", "BAPI", "BCIP", "DART", "GWSA", "JRPT", "LAND", "MDLN", "NIRO", "PPRO", "PUDP", "RBMS", "REAL", "RODA", "SATU", "SMDM", "TAMI", "CSIS", "EMDE", "GRPM", "GPRA", "HOME", "INDO", "LAMI", "MTFN", "MTSM", "PAMG", "DMAS", "BSBK", "URBN"],
-  };
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -177,65 +161,6 @@ export default function IHSGDashboard() {
       { label: "GDP", value: `${(manual.gdp?.growth ?? 5.6).toFixed(1)}%`, change: manual.gdp?.note ?? "yoy", up: true, note: manual.gdp?.quarter ?? "Q1-2026" },
     ];
   }, [data, ihsg, ihsgUp, manual]);
-
-  const sectors = useMemo(() => {
-    return (data?.sectors ?? []).map((s) => ({
-      ...s,
-      weight: SECTOR_META[s.code]?.weight ?? 0,
-      color: SECTOR_META[s.code]?.color ?? "#B8AA96",
-    }));
-  }, [data]);
-
-  // ── Rotation Map (RRG-style 2x2) ──
-  // X = Relative Strength = sektor vs IHSG atas periode aktif
-  // Y = Momentum = akselerasi RS (RS periode ini − RS periode lebih pendek)
-  const TAB_FIELD: Record<PerfTab, (q: Quote) => number | null> = {
-    Day: (q) => q.change,
-    Week: (q) => q.perfWeek,
-    "1M": (q) => q.perf1M,
-    YTD: (q) => q.perfYTD,
-  };
-  const TAB_PREV: Record<PerfTab, PerfTab | null> = {
-    Day: null,
-    Week: "Day",
-    "1M": "Week",
-    YTD: "1M",
-  };
-  const rotationMap = useMemo(() => {
-    const rsOf = (s: Quote, p: PerfTab | null) => {
-      if (!p) return null;
-      const sv = TAB_FIELD[p](s);
-      const iw = TAB_FIELD[p](ihsg);
-      if (sv == null || iw == null || !Number.isFinite(sv) || !Number.isFinite(iw)) return null;
-      return sv - iw;
-    };
-    const points = sectors.map((s) => {
-      const rs = rsOf(s, activeTab);
-      const rsPrev = rsOf(s, TAB_PREV[activeTab]);
-      const mom = rs == null ? null : (rsPrev == null ? rs : rs - rsPrev);
-      // tail: posisi di periode lebih pendek (arah pergerakan rotasi)
-      const prevTab = TAB_PREV[activeTab];
-      let prev: { rs: number; mom: number } | null = null;
-      if (prevTab) {
-        const rsp = rsOf(s, prevTab);
-        const rspPrev = rsOf(s, TAB_PREV[prevTab]);
-        const mprev = rsp == null ? null : (rspPrev == null ? rsp : rsp - rspPrev);
-        if (rsp != null && mprev != null) prev = { rs: rsp, mom: mprev };
-      }
-      return { s, rs, mom, prev };
-    }).filter((p) => p.rs != null && p.mom != null);
-    if (points.length === 0) return { points: [], maxAbs: 1 };
-    const maxAbs = Math.max(1e-9, ...points.map((p) => Math.max(Math.abs(p.rs!), Math.abs(p.mom!), p.prev ? Math.abs(p.prev.rs) : 0, p.prev ? Math.abs(p.prev.mom) : 0)));
-    return { points, maxAbs };
-  }, [sectors, ihsg, activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const ROT_QUAD: Record<string, { label: string; desc: string; cls: string }> = {
-    "++": { label: "Leading", desc: "Unggul + akselerasi", cls: "text-emerald-400 border-emerald-400/40" },
-    "-+": { label: "Improving", desc: "Tertekuk tapi membaik", cls: "text-sky-400 border-sky-400/40" },
-    "--": { label: "Lagging", desc: "Lemah + makin turun", cls: "text-red-400/80 border-red-400/30" },
-    "+-": { label: "Weakening", desc: "Masih unggul, momentum turun", cls: "text-amber-400 border-amber-400/40" },
-  };
-  const quadKey = (rs: number, mom: number) => `${rs >= 0 ? "+" : "-"}${mom >= 0 ? "+" : "-"}`;
 
   // Rolling net flow from history
   // Dynamic key levels from IHSG price data
@@ -753,153 +678,6 @@ export default function IHSGDashboard() {
           </div>
 
           <TopMoverPanel data={topMovers} live={live} />
-        </div>
-
-        {/* SECTOR ROTATION MAP (RRG 2x2) */}
-        <div className="card-luxury p-8">
-          <div className="flex items-center justify-between mb-2 flex-wrap gap-4">
-            <div>
-              <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
-                Rotasi <span className="text-gold-gradient font-medium">Sektor</span>
-              </h2>
-              <p className="text-[10px] text-[#B8AA96]/40 mt-1">
-                {live ? "Realtime dari TradingView" : "Offline — data terakhir/kosong"} · Relative Rotation Graph · vs IHSG
-              </p>
-            </div>
-            <div className="flex items-center gap-1">
-              {(["Day", "Week", "1M", "YTD"] as PerfTab[]).map((tab) => (
-                <button key={tab} onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-1.5 text-xs tracking-[0.15em] uppercase font-medium transition-all ${
-                    activeTab === tab ? "bg-[#C6A15B]/15 text-[#C6A15B] border border-[#C6A15B]/30" : "border border-[#2C261E] text-[#B8AA96]/50 hover:text-[#B8AA96]"
-                  }`}>{tab}</button>
-              ))}
-            </div>
-          </div>
-
-          {/* Legend quadrants */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
-            {(["++", "-+", "--", "+-"] as const).map((k) => {
-              const q = ROT_QUAD[k];
-              return (
-                <div key={k} className={`border px-2 py-1.5 text-[10px] ${q.cls} bg-[#0B0B0A]/40`}>
-                  <span className="font-medium tracking-wide uppercase">{q.label}</span>
-                  <span className="text-[#B8AA96]/50 ml-1">· {q.desc}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          {rotationMap.points.length === 0 ? (
-            <EmptyState title="Data sektor tidak tersedia" description="Rotasi sektor akan tampil saat data sektor berhasil dimuat." />
-          ) : (
-            <div className="grid lg:grid-cols-3 gap-6">
-              {/* RRG PLOT */}
-              <div className="lg:col-span-2">
-                <div className="relative aspect-[4/3] border border-[#2C261E] bg-[#0B0B0A]/60 overflow-hidden select-none" style={{ minHeight: 320 }}>
-                  {/* quadrant labels */}
-                  <div className="absolute top-2 left-3 text-[9px] uppercase tracking-[0.2em] text-sky-400/70">Improving</div>
-                  <div className="absolute top-2 right-3 text-[9px] uppercase tracking-[0.2em] text-emerald-400/70">Leading</div>
-                  <div className="absolute bottom-2 left-3 text-[9px] uppercase tracking-[0.2em] text-red-400/60">Lagging</div>
-                  <div className="absolute bottom-2 right-3 text-[9px] uppercase tracking-[0.2em] text-amber-400/70">Weakening</div>
-
-                  {/* axis lines */}
-                  <div className="absolute left-0 right-0 top-1/2 h-px bg-[#2C261E]" />
-                  <div className="absolute top-0 bottom-0 left-1/2 w-px bg-[#2C261E]" />
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#C6A15B]/50" />
-
-                  {/* tail arrows (arah pergerakan rotasi antar periode) */}
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <defs>
-                      <marker id="rotTailArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-                        <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(184,170,150,0.35)" />
-                      </marker>
-                    </defs>
-                    {rotationMap.points.map(({ s, rs, mom, prev }) => {
-                      if (!prev) return null;
-                      const cx = 50 + (rs! / rotationMap.maxAbs) * 41;
-                      const cy = 50 - (mom! / rotationMap.maxAbs) * 41;
-                      const px = 50 + (prev.rs / rotationMap.maxAbs) * 41;
-                      const py = 50 - (prev.mom / rotationMap.maxAbs) * 41;
-                      const dx = cx - px;
-                      const dy = cy - py;
-                      const len = Math.hypot(dx, dy);
-                      // sama titik? skip (pendekkan garis minimal biar tetep keliatan)
-                      if (len < 2) return null;
-                      // potong tail di ujung supaya tidak menabrak dot (mundur 6% basis koordinat, tidak terdistorsi aspek)
-                      const sx = cx - (dx / len) * 5;
-                      const sy = cy - (dy / len) * 5;
-                      // perpanjang ekor di titik asal biar keliatan mulai dari mana
-                      const ex = px + (dx / len) * 4;
-                      const ey = py + (dy / len) * 4;
-                      return (
-                        <line key={s.code} x1={ex} y1={ey} x2={sx} y2={sy}
-                          stroke="rgba(184,170,150,0.35)" strokeWidth="0.45" strokeDasharray="1.4 1.1" markerEnd="url(#rotTailArrow)" />
-                      );
-                    })}
-                  </svg>
-
-                  {/* dots */}
-                  {rotationMap.points.map(({ s, rs, mom }) => {
-                    const x = 50 + (rs! / rotationMap.maxAbs) * 41; // 50% ± 41% (keep 9% edge)
-                    const y = 50 - (mom! / rotationMap.maxAbs) * 41;
-                    return (
-                      <button key={s.code}
-                        onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: BASKET_TICKERS[s.code] ? "basket" : s.type, tickers: BASKET_TICKERS[s.code] })}
-                        className="absolute -translate-x-1/2 -translate-y-1/2 group flex flex-col items-center"
-                        style={{ left: `${x}%`, top: `${y}%` }}
-                        title={`${s.name} — RS ${rs! >= 0 ? "+" : ""}${rs!.toFixed(2)} · Mom ${mom! >= 0 ? "+" : ""}${mom!.toFixed(2)}`}>
-                        <span className={`w-2.5 h-2.5 rounded-full border ${quadKey(rs!, mom!) === "++" ? "bg-emerald-400 border-emerald-300/60 shadow-[0_0_8px_rgba(52,211,153,0.6)]" : quadKey(rs!, mom!) === "-+" ? "bg-sky-400 border-sky-300/60 shadow-[0_0_8px_rgba(56,189,248,0.5)]" : quadKey(rs!, mom!) === "--" ? "bg-red-400/80 border-red-300/50" : "bg-amber-400 border-amber-300/60"}`}
-                          style={{ backgroundColor: s.color }} />
-                        <span className={`mt-0.5 text-[9px] font-mono leading-none whitespace-nowrap group-hover:text-[#F4EFE6] ${quadKey(rs!, mom!) === "++" ? "text-emerald-400/80" : quadKey(rs!, mom!) === "-+" ? "text-sky-400/80" : quadKey(rs!, mom!) === "--" ? "text-red-400/70" : "text-amber-400/80"}`}>
-                          {s.name}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="flex items-center justify-between mt-2 text-[9px] text-[#B8AA96]/40 tracking-wider uppercase">
-                  <span>← Relative Strength lemah</span>
-                  <span className="text-[#B8AA96]/60">Motion relatif vs IHSG · {activeTab}</span>
-                  <span>Relative Strength kuat →</span>
-                </div>
-              </div>
-
-              {/* RANKED TABLE */}
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs">
-                  <thead>
-                    <tr className="border-b border-[#2C261E]">
-                      <th className="text-left text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Sektor</th>
-                      <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">RS</th>
-                      <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Mom</th>
-                      <th className="text-right text-[#B8AA96]/50 text-[10px] tracking-[0.15em] uppercase py-2 font-medium">Fase</th>
-                    </tr>
-                  </thead>
-                  <tbody className="font-mono">
-                    {[...rotationMap.points]
-                      .sort((a, b) => (b.rs ?? -999) - (a.rs ?? -999))
-                      .map(({ s, rs, mom }) => {
-                        const k = quadKey(rs!, mom!);
-                        const q = ROT_QUAD[k];
-                        return (
-                          <tr key={s.code} className="border-b border-[#2C261E]/30 cursor-pointer hover:bg-[#2C261E]/40 transition-colors"
-                            onClick={() => setSelectedSector({ code: s.code, name: s.name, color: s.color, type: BASKET_TICKERS[s.code] ? "basket" : s.type, tickers: BASKET_TICKERS[s.code] })}>
-                            <td className="py-2 text-[#F4EFE6] font-sans flex items-center gap-2">
-                              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
-                              {s.name}
-                              {s.type === "basket" && <span className="text-[8px] text-[#B8AA96]/40 uppercase">basket</span>}
-                            </td>
-                            <td className={`py-2 text-right ${(rs ?? 0) >= 0 ? "text-emerald-400" : "text-red-400"}`}>{rs! >= 0 ? "+" : ""}{rs!.toFixed(2)}%</td>
-                            <td className={`py-2 text-right ${(mom ?? 0) >= 0 ? "text-emerald-400" : "text-red-400"}`}>{mom! >= 0 ? "+" : ""}{mom!.toFixed(2)}%</td>
-                            <td className={`py-2 text-right ${q.cls.split(" ")[0]}`}>{q.label}</td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
         </div>
 
         <RotationMapPanel />

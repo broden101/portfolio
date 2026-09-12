@@ -80,6 +80,13 @@ export function RotationMapPanel() {
   const ns = (v: number) => 50 + (v / scale) * 40; // 50% ± 40%
 
   const [hover, setHover] = useState<string | null>(null);
+  const [filterQuad, setFilterQuad] = useState<string | null>(null); // null = all; "++" dst
+  const QUAD_GUIDE: { k: string; label: string; desc: string; cls: string; activeCls: string }[] = [
+    { k: "++", label: "Leading", desc: "Unggul + akselerasi", cls: "text-emerald-400", activeCls: "bg-emerald-400/15 border-emerald-400/50" },
+    { k: "-+", label: "Improving", desc: "Tertekuk tapi membaik", cls: "text-sky-400", activeCls: "bg-sky-400/15 border-sky-400/50" },
+    { k: "--", label: "Lagging", desc: "Lemah + makin turun", cls: "text-red-400/80", activeCls: "bg-red-400/15 border-red-400/40" },
+    { k: "+-", label: "Weakening", desc: "Masih unggul, momentum turun", cls: "text-amber-400", activeCls: "bg-amber-400/15 border-amber-400/50" },
+  ];
 
   const handleCapture = useCallback(() => {
     const el = document.getElementById("rotation-map-plot");
@@ -139,6 +146,24 @@ export function RotationMapPanel() {
             <span className="text-[#B8AA96]/60 font-mono">{tail} period{tail > 1 ? "s" : ""}</span>
           </div>
         </div>
+      </div>
+
+      {/* legend / filter kuadran */}
+      <div className="flex flex-wrap items-center gap-2 mb-3 text-[10px]">
+        <span className="text-[#B8AA96]/40 uppercase tracking-wider mr-1">Filter</span>
+        <button onClick={() => setFilterQuad(null)}
+          className={`px-2.5 py-1 border rounded-sm uppercase tracking-wider transition-all ${
+            filterQuad === null ? "bg-[#C6A15B]/15 border-[#C6A15B]/50 text-[#C6A15B]" : "border-[#2C261E] text-[#B8AA96]/50 hover:text-[#B8AA96]"
+          }`}>Semua</button>
+        {QUAD_GUIDE.map((q) => (
+          <button key={q.k} onClick={() => setFilterQuad(filterQuad === q.k ? null : q.k)}
+            className={`px-2.5 py-1 border rounded-sm transition-all ${
+              filterQuad === q.k ? q.activeCls : "border-[#2C261E] hover:border-[#B8AA96]/30"
+            }`}>
+            <span className={q.cls}>{q.label}</span>
+            <span className="text-[#B8AA96]/40 ml-1">· {q.desc}</span>
+          </button>
+        ))}
       </div>
 
       {err ? (
