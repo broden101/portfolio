@@ -1,0 +1,223 @@
+"use client";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { EmptyState } from "@/components/DataState";
+
+type Mode = "sectors" | "stocks";
+type Interval = "daily" | "weekly";
+
+type ApiItem = { ticker: string; name: string; perf: (number | null)[] };
+type ApiResp = {
+  benchmark: (number | null)[] | null;
+  windows: string[];
+  sectors: ApiItem[];
+  stocks: ApiItem[];
+};
+
+// Deret window per interval (short → long). Daily pakai Day base, weekly skip Day.
+const INTERVAL_WINDOWS: Record<Interval, number[]> = {
+  daily: [0, 1, 2, 3],   // Day, 1W, 1M, 3M
+  weekly: [1, 2, 3, 4],  // 1W, 1M, 3M, 6M
+};
+
+function quadInfo(rs: number, mom: number) {
+  if (rs >= 0 && mom >= 0) return { label: "Leading", cls: "text-emerald-400", dot: "rgba(52,211,153,0.9)", bd: "rgba(52,211,153,0.6)" };
+  if (rs < 0 && mom >= 0) return { label: "Improving", cls: "text-sky-400", dot: "rgba(56,189,248,0.9)", bd: "rgba(56,189,248,0.6)" };
+  if (rs < 0 && mom < 0) return { label: "Lagging", cls: "text-red-400/80", dot: "rgba(248,113,113,0.75)", bd: "rgba(248,113,113,0.5)" };
+  return { label: "Weakening", cls: "text-amber-400", dot: "rgba(251,191,36,0.85)", bd: "rgba(251,191,36,0.6)" };
+}
+
+export function RotationMapPanel() {
+  const [data, setData] = useState<ApiResp | null>(null);
+  const [mode, setMode] = useState<Mode>("sectors");
+  const [interval, setInterval] = useState<Interval>("daily");
+  const [tail, setTail] = useState(3);
+  const [err, setErr] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    fetch("/api/rotation")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => { if (alive) setData(d); })
+      .catch(() => { if (alive) setErr(true); });
+    return () => { alive = false; };
+  }, []);
+
+  const items = mode === "sectors" ? (data?.sectors ?? []) : (data?.stocks ?? []);
+  const bench = data?.benchmark ?? null;
+  const winIdx = INTERVAL_WINDOWS[interval];
+  const maxTail = winIdx.length; // max 4
+
+  // Hitung deret posisi (rs, mom) per item atas window trail
+  const series = useMemo(() => {
+    if (!bench) return [];
+    return items.map((it) => {
+      const pts: { rs: number; mom: number }[] = [];
+      winIdx.forEach((wi, i) => {
+        const v = it.perf[wi];
+        const b = bench[wi];
+        if (v == null || b == null || !Number.isFinite(v) || !Number.isFinite(b)) return;
+        const rs = v - b;
+        // momentum = perubahan RS vs window sebelumnya
+        let mom = rs;
+        if (i > 0) {
+          const pv = it.perf[winIdx[i - 1]];
+          const pb = bench[winIdx[i - 1]];
+          if (pv != null && pb != null) mom = rs - (pv - pb);
+        }
+        pts.push({ rs, mom });
+      });
+      return { it, pts };
+    }).filter((x) => x.pts.length > 0);
+  }, [items, bench, interval]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // normalisasi skala pakai semua titik trail + semua item
+  const scale = useMemo(() => {
+    let m = 1e-9;
+    for (const s of series) for (const p of s.pts) m = Math.max(m, Math.abs(p.rs), Math.abs(p.mom));
+    return m;
+  }, [series]);
+  const ns = (v: number) => 50 + (v / scale) * 40; // 50% ± 40%
+
+  const [hover, setHover] = useState<string | null>(null);
+
+  const handleCapture = useCallback(() => {
+    const el = document.getElementById("rotation-map-plot");
+    if (!el) return;
+    // fallback: sarankan screenshot manual (klien tanpa canvas utk SVG inline)
+    setHover(null);
+    // no-op capture; user pakai screenshot bawaan
+  }, []);
+
+  return (
+    <div className="card-luxury p-8">
+      {/* header + toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+        <div>
+          <h2 className="font-heading text-xl text-[#F4EFE6] font-medium">
+            IDX <span className="text-gold-gradient font-medium">Rotation</span>
+          </h2>
+          <p className="text-[10px] text-[#B8AA96]/40 mt-1">
+            Where money is rotating — relative strength (x) vs momentum (y). Benchmark = IHSG di crosshair.
+          </p>
+        </div>
+
+        {/* toolbar */}
+        <div className="flex flex-wrap items-center gap-4 text-[10px]">
+          {/* mode toggle */}
+          <div className="flex items-center gap-2">
+            <span className="text-[#B8AA96]/40 uppercase tracking-wider">Mode</span>
+            <div className="flex border border-[#2C261E]">
+              {(["sectors", "stocks"] as Mode[]).map((m) => (
+                <button key={m} onClick={() => setMode(m)}
+                  className={`px-3 py-1.5 uppercase tracking-wider transition-all ${
+                    mode === m ? "bg-[#C6A15B]/20 text-[#C6A15B]" : "text-[#B8AA96]/50 hover:text-[#B8AA96]"
+                  }`}>{m === "sectors" ? "Sectors" : "Stocks"}</button>
+              ))}
+            </div>
+          </div>
+
+          {/* interval toggle */}
+          <div className="flex items-center gap-2">
+            <span className="text-[#B8AA96]/40 uppercase tracking-wider">Interval</span>
+            <div className="flex border border-[#2C261E]">
+              {(["daily", "weekly"] as Interval[]).map((iv) => (
+                <button key={iv} onClick={() => setInterval(iv)}
+                  className={`px-3 py-1.5 uppercase tracking-wider transition-all ${
+                    interval === iv ? "bg-[#C6A15B]/20 text-[#C6A15B]" : "text-[#B8AA96]/50 hover:text-[#B8AA96]"
+                  }`}>{iv === "daily" ? "Daily" : "Weekly"}</button>
+              ))}
+            </div>
+          </div>
+
+          {/* tail slider */}
+          <div className="flex items-center gap-2">
+            <span className="text-[#B8AA96]/40 uppercase tracking-wider">Tail</span>
+            <input type="range" min={1} max={maxTail} value={tail}
+              onChange={(e) => setTail(Number(e.target.value))}
+              className="w-24 accent-[#C6A15B]" />
+            <span className="text-[#B8AA96]/60 font-mono">{tail} period{tail > 1 ? "s" : ""}</span>
+          </div>
+        </div>
+      </div>
+
+      {err ? (
+        <EmptyState title="Gagal memuat" description="Tidak dapat mengambil data TradingView EOD. Coba lagi." />
+      ) : !data ? (
+        <div className="py-10 text-center text-[#B8AA96]/40 text-xs">Memuat data…</div>
+      ) : series.length === 0 ? (
+        <EmptyState title="Tidak ada data" description="Belum ada data performa." />
+      ) : (
+        <div id="rotation-map-plot">
+          {/* chart */}
+          <div className="relative aspect-[16/9] border border-[#2C261E] bg-[#0B0B0A]/70 overflow-hidden select-none" style={{ minHeight: 420 }}>
+            {/* axis labels */}
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-[0.2em] text-[#B8AA96]/40">↑ Relative Momentum</div>
+            <div className="absolute top-1/2 right-2 -translate-y-1/2 text-[9px] uppercase tracking-[0.2em] text-[#B8AA96]/40">Relative Strength →</div>
+            {/* quadrant labels */}
+            <div className="absolute top-2 left-3 text-[9px] uppercase tracking-[0.2em] text-sky-400/60">Improving</div>
+            <div className="absolute top-2 right-3 text-[9px] uppercase tracking-[0.2em] text-emerald-400/60">Leading</div>
+            <div className="absolute bottom-2 left-3 text-[9px] uppercase tracking-[0.2em] text-red-400/50">Lagging</div>
+            <div className="absolute bottom-2 right-3 text-[9px] uppercase tracking-[0.2em] text-amber-400/60">Weakening</div>
+            {/* crosshair */}
+            <div className="absolute left-0 right-0 top-1/2 h-px bg-[#2C261E]" />
+            <div className="absolute top-0 bottom-0 left-1/2 w-px bg-[#2C261E]" />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#C6A15B]/60" />
+            <div className="absolute left-1/2 top-[calc(50%+6px)] -translate-x-1/2 text-[8px] uppercase tracking-wider text-[#B8AA96]/40 font-mono">IHSG</div>
+
+            {/* tails SVG (under dots) */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+              {series.map(({ it, pts }) => {
+                // ambil N titik terakhir (head + tail)
+                const trail = pts.slice(Math.max(0, pts.length - tail));
+                if (trail.length < 2) return null;
+                const color = quadInfo(trail[trail.length - 1].rs, trail[trail.length - 1].mom).dot;
+                const path = trail.map((p, i) => `${i === 0 ? "M" : "L"}${ns(p.rs).toFixed(2)},${(100 - ns(p.mom)).toFixed(2)}`).join(" ");
+                return <path key={it.ticker} d={path} fill="none" stroke={color} strokeOpacity={0.5} strokeWidth="0.5" strokeLinejoin="round" strokeLinecap="round" />;
+              })}
+            </svg>
+
+            {/* dots */}
+            {series.map(({ it, pts }) => {
+              const head = pts[pts.length - 1];
+              const q = quadInfo(head.rs, head.mom);
+              const x = ns(head.rs);
+              const y = 100 - ns(head.mom);
+              const isHover = hover === it.ticker;
+              return (
+                <button key={it.ticker}
+                  onMouseEnter={() => setHover(it.ticker)}
+                  onMouseLeave={() => setHover(null)}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 group z-10"
+                  style={{ left: `${x}%`, top: `${y}%`, zIndex: isHover ? 20 : 10 }}
+                  title={`${it.ticker} — RS ${head.rs >= 0 ? "+" : ""}${head.rs.toFixed(2)} · Mom ${head.mom >= 0 ? "+" : ""}${head.mom.toFixed(2)}`}>
+                  <span className={`block w-2 h-2 rounded-full border ${isHover ? "scale-150 transition-transform" : ""}`}
+                    style={{ backgroundColor: q.dot, borderColor: q.bd }} />
+                  <span className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[8px] font-mono whitespace-nowrap ${isHover ? q.cls : "text-[#B8AA96]/60"}`}>
+                    {it.ticker}
+                  </span>
+                </button>
+              );
+            })}
+
+            {/* hover tooltip */}
+            {hover && (() => {
+              const hit = series.find((s) => s.it.ticker === hover);
+              if (!hit) return null;
+              const head = hit.pts[hit.pts.length - 1];
+              const q = quadInfo(head.rs, head.mom);
+              return (
+                <div className="absolute pointer-events-none z-30 bg-[#16130E]/95 border border-[#2C261E] px-3 py-2 text-[10px] font-mono" style={{ left: "50%", top: 8, transform: "translateX(-50%)" }}>
+                  <div className={`font-sans font-medium ${q.cls}`}>{hit.it.ticker} <span className="text-[#B8AA96]/40">· {hit.it.name}</span></div>
+                  <div className="text-[#B8AA96]/60">RS <span className="text-[#F4EFE6]">{head.rs >= 0 ? "+" : ""}{head.rs.toFixed(2)}%</span></div>
+                  <div className="text-[#B8AA96]/60">Momentum <span className="text-[#F4EFE6]">{head.mom >= 0 ? "+" : ""}{head.mom.toFixed(2)}%</span></div>
+                  <div className="text-[#B8AA96]/60">Fase <span className={q.cls}>{q.label}</span></div>
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
