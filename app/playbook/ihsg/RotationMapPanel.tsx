@@ -135,9 +135,9 @@ export function RotationMapPanel() {
     g.lineWidth = 2;
     g.lineJoin = "round"; g.lineCap = "round";
     for (const { pts } of series) {
-      const trail = pts.slice(Math.max(0, pts.length - tail));
+      const trail = pts.slice(0, tail);
       if (trail.length < 2) continue;
-      const head = trail[trail.length - 1];
+      const head = trail[0];
       const q = quadInfo(head.rs, head.mom);
       g.strokeStyle = q.dot;
       g.globalAlpha = 0.5;
@@ -150,7 +150,7 @@ export function RotationMapPanel() {
     const showLabel = mode === "sectors";
     g.font = "600 10px mono";
     for (const { it, pts } of series) {
-      const head = pts[pts.length - 1];
+      const head = pts[0];
       const q = quadInfo(head.rs, head.mom);
       const x = px(head.rs), y = py(head.mom);
       g.fillStyle = q.dot;
@@ -185,7 +185,7 @@ export function RotationMapPanel() {
   const quadBuckets = useMemo(() => {
     const map: Record<string, typeof series> = { "++": [], "-+": [], "--": [], "+-": [] };
     for (const s of series) {
-      const h = s.pts[s.pts.length - 1];
+      const h = s.pts[0];
       const k = (h.rs >= 0 ? "+" : "-") + (h.mom >= 0 ? "+" : "-");
       if (map[k]) map[k].push(s);
     }
@@ -298,9 +298,13 @@ export function RotationMapPanel() {
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
               {series.map(({ it, pts }) => {
                 // ambil N titik terakhir (head + tail)
-                const trail = pts.slice(Math.max(0, pts.length - tail));
+                const trail = pts.slice(0, tail);
                 if (trail.length < 2) return null;
-                const color = quadInfo(trail[trail.length - 1].rs, trail[trail.length - 1].mom).dot;
+                const head = trail[0];
+                // filter kuadran aktif → cuma kuadran itu
+                const k = (head.rs >= 0 ? "+" : "-") + (head.mom >= 0 ? "+" : "-");
+                if (filterQuad !== null && filterQuad !== k) return null;
+                const color = quadInfo(head.rs, head.mom).dot;
                 const path = trail.map((p, i) => `${i === 0 ? "M" : "L"}${ns(p.rs).toFixed(2)},${(100 - ns(p.mom)).toFixed(2)}`).join(" ");
                 return <path key={it.ticker} d={path} fill="none" stroke={color} strokeOpacity={0.5} strokeWidth="0.5" strokeLinejoin="round" strokeLinecap="round" />;
               })}
@@ -308,8 +312,11 @@ export function RotationMapPanel() {
 
             {/* dots */}
             {series.map(({ it, pts }) => {
-              const head = pts[pts.length - 1];
+              const head = pts[0];
               const q = quadInfo(head.rs, head.mom);
+              // filter kuadran aktif → cuma kuadran itu
+              const k = (head.rs >= 0 ? "+" : "-") + (head.mom >= 0 ? "+" : "-");
+              if (filterQuad !== null && filterQuad !== k) return null;
               const x = ns(head.rs);
               const y = 100 - ns(head.mom);
               const isHover = hover === it.ticker;
@@ -333,7 +340,7 @@ export function RotationMapPanel() {
             {hover && (() => {
               const hit = series.find((s) => s.it.ticker === hover);
               if (!hit) return null;
-              const head = hit.pts[hit.pts.length - 1];
+              const head = hit.pts[0];
               const q = quadInfo(head.rs, head.mom);
               return (
                 <div className="absolute pointer-events-none z-30 bg-[#16130E]/95 border border-[#242929] px-3 py-2 text-[10px] font-mono" style={{ left: "50%", top: 8, transform: "translateX(-50%)" }}>
@@ -366,10 +373,10 @@ export function RotationMapPanel() {
                 {QUAD_ORDER.flatMap((qu) => {
                   const list = quadBuckets[qu.k]
                     .slice()
-                    .sort((a, b) => { const ha = a.pts[a.pts.length - 1], hb = b.pts[b.pts.length - 1]; return hb.rs - ha.rs; });
+                    .sort((a, b) => { const ha = a.pts[0], hb = b.pts[0]; return hb.rs - ha.rs; });
                   if (list.length === 0) return null;
                   return list.map((s) => {
-                    const h = s.pts[s.pts.length - 1];
+                    const h = s.pts[0];
                     const isDim = filterQuad !== null && filterQuad !== qu.k;
                     const isHover = hover === s.it.ticker;
                     // perf windows ekses vs IHSG (sama basis dgn RS) — 0=Day, 1=1W, 2=1M
