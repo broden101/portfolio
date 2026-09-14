@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EmptyState } from "@/components/DataState";
 
 type Mode = "sectors" | "stocks";
@@ -35,6 +35,9 @@ const QUAD_META: QuadMeta[] = [
 const quadKey = (rs: number, mom: number): QuadKey =>
   ((rs >= 0 ? "+" : "-") + (mom >= 0 ? "+" : "-")) as QuadKey;
 const quadOf = (rs: number, mom: number): QuadMeta => QUAD_META.find((q) => q.k === quadKey(rs, mom))!;
+
+// Label pendek biar plot gak penuh — "IDXFINANCE" → "FINANCE".
+const shortLabel = (ticker: string, m: Mode) => (m === "sectors" ? ticker.replace(/^IDX/, "") : ticker);
 
 /* ── small UI atoms ─────────────────────────────────────────────── */
 
@@ -162,6 +165,51 @@ export function RotationMapPanel() {
 
   const visibleCount = filterQuad === null ? series.length : buckets[filterQuad].length;
 
+  // ukuran plot (buat penempatan label anti-tumpuk)
+  const plotRef = useRef<HTMLDivElement | null>(null);
+  const [plot, setPlot] = useState({ w: 0, h: 0 });
+  useEffect(() => {
+    const el = plotRef.current;
+    if (!el) return;
+    const measure = () => setPlot({ w: el.clientWidth, h: el.clientHeight });
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [data, mode, interval, err]);
+
+  // greedy label placement: tiap titik coba offset vertikal sampai gak nabrak label lain
+  const labelLayout = useMemo(() => {
+    const out: Record<string, { dy: number; text: string }> = {};
+    if (mode !== "sectors" || plot.w === 0) return out;
+    const placed: { x0: number; x1: number; y0: number; y1: number }[] = [];
+    const ordered = series
+      .filter((s) => filterQuad === null || quadKey(s.pts[0].rs, s.pts[0].mom) === filterQuad)
+      .sort((a, b) => b.pts[0].rs - a.pts[0].rs);
+    const LH = 10, PAD = 2;
+    const CANDS = [-10, 10, -20, 20, -30, 30, -40, 40];
+    for (const s of ordered) {
+      const h = s.pts[0];
+      const x = (ns(h.rs) / 100) * plot.w;
+      const y = ((100 - ns(h.mom)) / 100) * plot.h;
+      const text = shortLabel(s.it.ticker, mode);
+      const w = text.length * 4.8 + 6;
+      let chosen = CANDS[0];
+      for (const dy of CANDS) {
+        const cy = Math.min(plot.h - LH / 2, Math.max(LH / 2, y + dy));
+        const box = { x0: x - w / 2 - PAD, x1: x + w / 2 + PAD, y0: cy - LH / 2 - PAD, y1: cy + LH / 2 + PAD };
+        if (!placed.some((p) => box.x0 < p.x1 && box.x1 > p.x0 && box.y0 < p.y1 && box.y1 > p.y0)) {
+          chosen = dy;
+          placed.push(box);
+          break;
+        }
+        chosen = dy;
+      }
+      out[s.it.ticker] = { dy: chosen, text };
+    }
+    return out;
+  }, [series, plot, mode, filterQuad, scale]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handleCapture = useCallback(() => {
     // Re-draw the plot onto an offscreen canvas (deterministic, no DOM capture),
     // then trigger a PNG download.
@@ -195,6 +243,14 @@ export function RotationMapPanel() {
     g.fillStyle = "rgba(155,163,166,0.75)";
     g.font = "400 13px system-ui, sans-serif";
     g.fillText(`${interval === "daily" ? "Daily" : "Weekly"} · tail ${tail} · benchmark IHSG`, 28, 62);
+    g.fillStyle = "rgba(155,163,166,0.5)";
+    g.font = "400 11px ui-monospace, monospace";
+    g.textAlign = "right";
+    g.fillText(
+      new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta", dateStyle: "medium", timeStyle: "short" }) + " WIB",
+      W - 28, 40,
+    );
+    g.textAlign = "left";
     // axis captions
     g.fillStyle = "rgba(155,163,166,0.5)";
     g.font = "500 11px system-ui, sans-serif";
@@ -235,8 +291,9 @@ export function RotationMapPanel() {
       g.stroke();
     }
     g.globalAlpha = 1;
-    // head dots — label hanya di mode sectors biar gak numpuk
+    // head dots — label mengikuti layout anti-tumpuk yang sama dengan layar
     const showLabel = mode === "sectors";
+    const yScale = plot.h > 0 ? H / plot.h : 1;
     g.font = "600 11px ui-monospace, monospace";
     for (const { it, pts } of series) {
       const head = pts[0];
@@ -248,9 +305,13 @@ export function RotationMapPanel() {
       g.lineWidth = 1.5;
       g.beginPath(); g.arc(x, y, 5, 0, Math.PI * 2); g.fill(); g.stroke();
       if (showLabel) {
-        g.fillStyle = "rgba(237,241,242,0.85)";
+        const lay = labelLayout[it.ticker];
+        const ly = y + (lay ? lay.dy * yScale : 20);
         g.textAlign = "center";
-        g.fillText(it.ticker, x, y + 20);
+        g.fillStyle = "rgba(10,11,11,0.75)";
+        g.fillText(lay ? lay.text : it.ticker, x, ly + 1);
+        g.fillStyle = "rgba(237,241,242,0.85)";
+        g.fillText(lay ? lay.text : it.ticker, x, ly);
       }
     }
     c.toBlob((blob) => {
@@ -262,7 +323,7 @@ export function RotationMapPanel() {
       document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(url);
     }, "image/png");
-  }, [series, scale, tail, mode, interval, filterQuad]);
+  }, [series, scale, tail, mode, interval, filterQuad, labelLayout, plot.h]);
 
   const fmt = (v: number | null | undefined) => {
     if (v == null || !Number.isFinite(v)) return <span className="text-[#9ba3a6]/25">—</span>;
@@ -353,7 +414,7 @@ export function RotationMapPanel() {
       ) : (
         <>
           {/* ── plot ── */}
-          <div className="relative mt-4 h-[420px] overflow-hidden rounded-sm border border-[#242929] bg-[#0a0b0b] select-none sm:h-[500px]">
+          <div ref={plotRef} className="relative mt-4 h-[420px] overflow-hidden rounded-sm border border-[#242929] bg-[#0a0b0b] select-none sm:h-[500px]">
             {/* quadrant tints */}
             <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2">
               <div className="bg-sky-400/[0.035]" />
@@ -407,7 +468,6 @@ export function RotationMapPanel() {
               if (filterQuad !== null && quadKey(head.rs, head.mom) !== filterQuad) return null;
               const q = quadOf(head.rs, head.mom);
               const isHover = hover === it.ticker;
-              const showLabel = mode === "sectors" || isHover;
               return (
                 <button
                   key={it.ticker}
@@ -421,15 +481,36 @@ export function RotationMapPanel() {
                     className={`block rounded-full border transition-transform ${isHover ? "h-3 w-3" : "h-2 w-2"}`}
                     style={{ backgroundColor: q.dot, borderColor: q.bd }}
                   />
-                  {showLabel && (
-                    <span className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[8px] ${isHover ? q.cls : "text-[#9ba3a6]/45"}`}
-                      style={{ top: "-14px" }}>
-                      {it.ticker}
-                    </span>
-                  )}
                 </button>
               );
             })}
+
+            {/* label layer — posisi dihitung anti-tumpuk, gak nangkep klik */}
+            <div className="pointer-events-none absolute inset-0">
+              {series.map(({ it, pts }) => {
+                const head = pts[0];
+                if (filterQuad !== null && quadKey(head.rs, head.mom) !== filterQuad) return null;
+                const isHover = hover === it.ticker;
+                if (mode === "stocks" && !isHover) return null;
+                const lay = labelLayout[it.ticker];
+                if (mode === "sectors" && !lay) return null;
+                const q = quadOf(head.rs, head.mom);
+                return (
+                  <span
+                    key={it.ticker}
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap font-mono leading-none ${
+                      isHover ? `z-20 ${q.cls}` : "text-[#9ba3a6]/55"
+                    } ${mode === "stocks" ? "rounded-sm bg-[#0a0b0b]/80 px-1 text-[9px]" : "text-[8px]"}`}
+                    style={{
+                      left: `${ns(head.rs)}%`,
+                      top: `calc(${100 - ns(head.mom)}% + ${lay ? lay.dy : -10}px)`,
+                    }}
+                  >
+                    {lay ? lay.text : it.ticker}
+                  </span>
+                );
+              })}
+            </div>
 
             {/* scale readout */}
             <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[9px] text-[#9ba3a6]/30">
