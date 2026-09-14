@@ -178,17 +178,25 @@ export function RotationMapPanel() {
     return () => ro.disconnect();
   }, [data, mode, interval, err]);
 
-  // greedy label placement: tiap titik coba offset vertikal sampai gak nabrak label lain
+  // greedy label placement: hindari label lain DAN titik lain (ladder vertikal panjang)
   const labelLayout = useMemo(() => {
     const out: Record<string, { dy: number; text: string }> = {};
     if (mode !== "sectors" || plot.w === 0) return out;
     const placed: { x0: number; x1: number; y0: number; y1: number }[] = [];
-    const ordered = series
-      .filter((s) => filterQuad === null || quadKey(s.pts[0].rs, s.pts[0].mom) === filterQuad)
-      .sort((a, b) => b.pts[0].rs - a.pts[0].rs);
+    const visible = series.filter(
+      (s) => filterQuad === null || quadKey(s.pts[0].rs, s.pts[0].mom) === filterQuad,
+    );
+    // titik dulu — label gak boleh nimpa dot mana pun
+    for (const s of visible) {
+      const h = s.pts[0];
+      const dx = (ns(h.rs) / 100) * plot.w;
+      const dy = ((100 - ns(h.mom)) / 100) * plot.h;
+      placed.push({ x0: dx - 6, x1: dx + 6, y0: dy - 6, y1: dy + 6 });
+    }
     const LH = 10, PAD = 2;
-    const CANDS = [-10, 10, -20, 20, -30, 30, -40, 40];
-    for (const s of ordered) {
+    const CANDS: number[] = [];
+    for (let k = 1; k <= 8; k++) { CANDS.push(-10 * k); CANDS.push(10 * k); }
+    for (const s of [...visible].sort((a, b) => b.pts[0].rs - a.pts[0].rs)) {
       const h = s.pts[0];
       const x = (ns(h.rs) / 100) * plot.w;
       const y = ((100 - ns(h.mom)) / 100) * plot.h;
