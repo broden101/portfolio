@@ -181,7 +181,7 @@ export function RotationMapPanel() {
 
   // greedy label placement: kandidat 2D (kiri/kanan/atas/bawah) — hindari label lain & titik lain
   const labelLayout = useMemo(() => {
-    const out: Record<string, { dx: number; dy: number; align: Align; text: string }> = {};
+    const out: Record<string, { dx: number; dy: number; align: Align; text: string; x0: number; y0: number; lx: number; ly: number }> = {};
     if (mode !== "sectors" || plot.w === 0) return out;
     type Box = { x0: number; x1: number; y0: number; y1: number };
     const placed: Box[] = [];
@@ -221,7 +221,17 @@ export function RotationMapPanel() {
         pick = c;
         if (!hit(box)) { placed.push(box); break; }
       }
-      out[s.it.ticker] = { dx: pick.dx, dy: pick.dy, align: pick.align, text };
+      out[s.it.ticker] = {
+        dx: pick.dx,
+        dy: pick.dy,
+        align: pick.align,
+        text,
+        x0: x,
+        y0: y,
+        // titik tempel garis penghubung (tepi label yang menghadap titik)
+        lx: x + pick.dx,
+        ly: y + pick.dy,
+      };
     }
     return out;
   }, [series, plot, mode, filterQuad, scale]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -316,15 +326,21 @@ export function RotationMapPanel() {
       if (filterQuad !== null && quadKey(head.rs, head.mom) !== filterQuad) continue;
       const q = quadOf(head.rs, head.mom);
       const x = px(head.rs), y = py(head.mom);
+      const xScale = plot.w > 0 ? W / plot.w : 1;
+      const lay = labelLayout[it.ticker];
+      const lx = x + (lay ? lay.dx * xScale : 0);
+      const ly = y + (lay ? lay.dy * yScale : 20);
+      // leader line titik → label
+      if (lay && Math.hypot(lx - x, ly - y) >= 13) {
+        g.strokeStyle = "rgba(155,163,166,0.25)";
+        g.lineWidth = 1;
+        g.beginPath(); g.moveTo(x, y); g.lineTo(lx, ly); g.stroke();
+      }
       g.fillStyle = q.dot;
       g.strokeStyle = q.bd;
       g.lineWidth = 1.5;
       g.beginPath(); g.arc(x, y, 5, 0, Math.PI * 2); g.fill(); g.stroke();
       if (showLabel) {
-        const lay = labelLayout[it.ticker];
-        const xScale = plot.w > 0 ? W / plot.w : 1;
-        const lx = x + (lay ? lay.dx * xScale : 0);
-        const ly = y + (lay ? lay.dy * yScale : 20);
         g.textAlign = !lay || lay.align === "center" ? "center" : lay.align === "start" ? "left" : "right";
         g.fillStyle = "rgba(10,11,11,0.75)";
         g.fillText(lay ? lay.text : it.ticker, lx, ly + 1);
@@ -502,6 +518,32 @@ export function RotationMapPanel() {
                 </button>
               );
             })}
+
+            {/* leader lines — garis tipis titik → label, cuma kalau label agak jauh */}
+            <div className="pointer-events-none absolute inset-0">
+              {series.map(({ it }) => {
+                const lay = labelLayout[it.ticker];
+                if (!lay) return null;
+                const vx = lay.lx - lay.x0, vy = lay.ly - lay.y0;
+                const len = Math.hypot(vx, vy);
+                if (len < 13) return null;
+                return (
+                  <div
+                    key={it.ticker}
+                    className="absolute bg-[#9ba3a6]/25"
+                    style={{
+                      left: lay.x0,
+                      top: lay.y0,
+                      width: len - 5,
+                      height: 1,
+                      transform: `rotate(${Math.atan2(vy, vx)}rad)`,
+                      transformOrigin: "0 0",
+                      opacity: hover === null || hover === it.ticker ? 1 : 0.35,
+                    }}
+                  />
+                );
+              })}
+            </div>
 
             {/* label layer — posisi dihitung anti-tumpuk, gak nangkep klik */}
             <div className="pointer-events-none absolute inset-0">
