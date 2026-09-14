@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import { EmptyState } from "@/components/DataState";
 
 type Mode = "sectors" | "stocks";
@@ -21,12 +21,80 @@ const INTERVAL_WINDOWS: Record<Interval, number[]> = {
 };
 const WINDOW_LABEL: Record<number, string> = { 0: "Day", 1: "1W", 2: "1M", 3: "3M", 4: "6M" };
 
-function quadInfo(rs: number, mom: number) {
-  if (rs >= 0 && mom >= 0) return { label: "Leading", cls: "text-emerald-400", dot: "rgba(52,211,153,0.9)", bd: "rgba(52,211,153,0.6)" };
-  if (rs < 0 && mom >= 0) return { label: "Improving", cls: "text-sky-400", dot: "rgba(56,189,248,0.9)", bd: "rgba(56,189,248,0.6)" };
-  if (rs < 0 && mom < 0) return { label: "Lagging", cls: "text-red-400/80", dot: "rgba(248,113,113,0.75)", bd: "rgba(248,113,113,0.5)" };
-  return { label: "Weakening", cls: "text-amber-400", dot: "rgba(251,191,36,0.85)", bd: "rgba(251,191,36,0.6)" };
+// Satu sumber kebenaran buat kuadran — dipakai chips, tabel, plot, capture.
+type QuadKey = "++" | "-+" | "--" | "+-";
+type QuadMeta = { k: QuadKey; label: string; desc: string; cls: string; dot: string; bd: string };
+
+const QUAD_META: QuadMeta[] = [
+  { k: "++", label: "Leading",   desc: "Unggul + akselerasi",          cls: "text-emerald-400", dot: "rgba(52,211,153,0.9)",  bd: "rgba(52,211,153,0.6)" },
+  { k: "-+", label: "Improving", desc: "Tertekuk tapi membaik",        cls: "text-sky-400",     dot: "rgba(56,189,248,0.9)",  bd: "rgba(56,189,248,0.6)" },
+  { k: "--", label: "Lagging",   desc: "Lemah + makin turun",          cls: "text-red-400/80",  dot: "rgba(248,113,113,0.75)", bd: "rgba(248,113,113,0.5)" },
+  { k: "+-", label: "Weakening", desc: "Masih unggul, momentum turun", cls: "text-amber-400",   dot: "rgba(251,191,36,0.85)", bd: "rgba(251,191,36,0.6)" },
+];
+
+const quadKey = (rs: number, mom: number): QuadKey =>
+  ((rs >= 0 ? "+" : "-") + (mom >= 0 ? "+" : "-")) as QuadKey;
+const quadOf = (rs: number, mom: number): QuadMeta => QUAD_META.find((q) => q.k === quadKey(rs, mom))!;
+
+/* ── small UI atoms ─────────────────────────────────────────────── */
+
+function Segmented<T extends string>({
+  value, onChange, options,
+}: { value: T; onChange: (v: T) => void; options: { value: T; label: string }[] }) {
+  return (
+    <div className="flex items-center rounded-full border border-[#242929] bg-[#121414] p-0.5">
+      {options.map((o) => (
+        <button
+          key={o.value}
+          onClick={() => onChange(o.value)}
+          className={`rounded-full px-3 py-1 text-[10px] uppercase tracking-wider transition-colors ${
+            value === o.value
+              ? "bg-[#3f9e74]/20 text-[#3f9e74]"
+              : "text-[#9ba3a6]/55 hover:text-[#edf1f2]"
+          }`}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
 }
+
+function QuadChip({
+  meta, count, active, onClick,
+}: { meta: QuadMeta | null; count: number; active: boolean; onClick: () => void }) {
+  const base =
+    "group inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-wider transition-all";
+  if (!meta) {
+    return (
+      <button
+        onClick={onClick}
+        className={`${base} ${
+          active ? "border-[#3f9e74]/50 bg-[#3f9e74]/15 text-[#3f9e74]" : "border-[#242929] text-[#9ba3a6]/55 hover:text-[#edf1f2]"
+        }`}
+      >
+        Semua
+        <span className="font-mono text-[9px] opacity-60">{count}</span>
+      </button>
+    );
+  }
+  return (
+    <button
+      onClick={onClick}
+      title={meta.desc}
+      className={`${base} ${active ? "bg-[#121414]" : "hover:border-[#9ba3a6]/30"}`}
+      style={{ borderColor: active ? meta.bd : undefined }}
+    >
+      <span className="text-[8px] leading-none" style={{ color: meta.dot }}>
+        ●
+      </span>
+      <span className={meta.cls}>{meta.label}</span>
+      <span className="font-mono text-[9px] text-[#9ba3a6]/50">{count}</span>
+    </button>
+  );
+}
+
+/* ── panel ──────────────────────────────────────────────────────── */
 
 export function RotationMapPanel() {
   const [data, setData] = useState<ApiResp | null>(null);
@@ -34,6 +102,8 @@ export function RotationMapPanel() {
   const [interval, setInterval] = useState<Interval>("daily");
   const [tail, setTail] = useState(3);
   const [err, setErr] = useState(false);
+  const [hover, setHover] = useState<string | null>(null);
+  const [filterQuad, setFilterQuad] = useState<QuadKey | null>(null); // null = semua
 
   useEffect(() => {
     let alive = true;
@@ -47,7 +117,7 @@ export function RotationMapPanel() {
   const items = mode === "sectors" ? (data?.sectors ?? []) : (data?.stocks ?? []);
   const bench = data?.benchmark ?? null;
   const winIdx = INTERVAL_WINDOWS[interval];
-  const maxTail = winIdx.length; // max 4
+  const maxTail = winIdx.length;
 
   // Hitung deret posisi (rs, mom) per item atas window trail
   const series = useMemo(() => {
@@ -80,90 +150,109 @@ export function RotationMapPanel() {
   }, [series]);
   const ns = (v: number) => 50 + (v / scale) * 40; // 50% ± 40%
 
-  const [hover, setHover] = useState<string | null>(null);
-  const [filterQuad, setFilterQuad] = useState<string | null>(null); // null = all; "++" dst
-  const QUAD_GUIDE: { k: string; label: string; desc: string; cls: string; activeCls: string }[] = [
-    { k: "++", label: "Leading", desc: "Unggul + akselerasi", cls: "text-emerald-400", activeCls: "bg-emerald-400/15 border-emerald-400/50" },
-    { k: "-+", label: "Improving", desc: "Tertekuk tapi membaik", cls: "text-sky-400", activeCls: "bg-sky-400/15 border-sky-400/50" },
-    { k: "--", label: "Lagging", desc: "Lemah + makin turun", cls: "text-red-400/80", activeCls: "bg-red-400/15 border-red-400/40" },
-    { k: "+-", label: "Weakening", desc: "Masih unggul, momentum turun", cls: "text-amber-400", activeCls: "bg-amber-400/15 border-amber-400/50" },
-  ];
+  // kelompokkan per kuadran (posisi head) — dipakai chips + tabel
+  const buckets = useMemo(() => {
+    const map: Record<QuadKey, typeof series> = { "++": [], "-+": [], "--": [], "+-": [] };
+    for (const s of series) {
+      const h = s.pts[0];
+      map[quadKey(h.rs, h.mom)].push(s);
+    }
+    return map;
+  }, [series]);
+
+  const visibleCount = filterQuad === null ? series.length : buckets[filterQuad].length;
 
   const handleCapture = useCallback(() => {
     // Re-draw the plot onto an offscreen canvas (deterministic, no DOM capture),
     // then trigger a PNG download.
-    const W = 1000, H = 600;
+    const W = 1000, H = 620;
     const c = document.createElement("canvas");
-    c.width = W;
-    c.height = H;
+    c.width = W; c.height = H;
     const g = c.getContext("2d");
     if (!g) return;
-    // background
     g.fillStyle = "#0a0b0b";
     g.fillRect(0, 0, W, H);
-    // axis lines
+
     const mx = W / 2, my = H / 2;
+    const tint = (x: number, y: number, w: number, h: number, rgb: string) => {
+      g.fillStyle = rgb;
+      g.fillRect(x, y, w, h);
+    };
+    // quadrant tints (matching the on-screen grid)
+    tint(0, 0, mx, my, "rgba(56,189,248,0.035)");        // Improving
+    tint(mx, 0, mx, my, "rgba(52,211,153,0.035)");       // Leading
+    tint(0, my, mx, my, "rgba(248,113,113,0.03)");       // Lagging
+    tint(mx, my, mx, my, "rgba(251,191,36,0.03)");       // Weakening
+    // crosshair
     g.strokeStyle = "#242929";
     g.lineWidth = 1;
     g.beginPath(); g.moveTo(0, my); g.lineTo(W, my); g.moveTo(mx, 0); g.lineTo(mx, H); g.stroke();
+    // title
+    g.textAlign = "left";
+    g.fillStyle = "#edf1f2";
+    g.font = "600 20px system-ui, sans-serif";
+    g.fillText(`IDX Rotation · ${mode === "sectors" ? "Sectors" : "Stocks"}`, 28, 40);
+    g.fillStyle = "rgba(155,163,166,0.75)";
+    g.font = "400 13px system-ui, sans-serif";
+    g.fillText(`${interval === "daily" ? "Daily" : "Weekly"} · tail ${tail} · benchmark IHSG`, 28, 62);
     // axis captions
-    g.fillStyle = "rgba(184,170,150,0.55)";
-    g.font = "500 12px sans-serif";
+    g.fillStyle = "rgba(155,163,166,0.5)";
+    g.font = "500 11px system-ui, sans-serif";
     g.textAlign = "center";
-    g.fillText("↑ RELATIVE MOMENTUM", mx, 22);
-    g.textAlign = "right";
-    g.fillText("RELATIVE STRENGTH →", W - 14, my - 10);
+    g.fillText("RELATIVE MOMENTUM", mx, H - 18);
+    g.save();
+    g.translate(18, my);
+    g.rotate(-Math.PI / 2);
+    g.fillText("RELATIVE STRENGTH", 0, 0);
+    g.restore();
     // quadrant labels
-    g.font = "600 13px sans-serif";
-    g.textAlign = "left";
-    g.fillStyle = "rgba(56,189,248,0.8)"; g.fillText("Improving", 14, 24);
-    g.textAlign = "right";
-    g.fillStyle = "rgba(52,211,153,0.8)"; g.fillText("Leading", W - 14, 24);
-    g.textAlign = "left";
-    g.fillStyle = "rgba(248,113,113,0.7)"; g.fillText("Lagging", 14, H - 14);
-    g.textAlign = "right";
-    g.fillStyle = "rgba(251,191,36,0.8)"; g.fillText("Weakening", W - 14, H - 14);
-    // center + IHSG label
-    g.fillStyle = "rgba(198,161,91,0.6)";
-    g.beginPath(); g.arc(mx, my, 5, 0, Math.PI * 2); g.fill();
-    g.textAlign = "center"; g.font = "500 11px sans-serif";
-    g.fillText("IHSG", mx, my + 22);
-    // pixel mapper (keep 50% ± 40%, like ns above)
+    g.font = "600 13px system-ui, sans-serif";
+    g.textAlign = "left";  g.fillStyle = "rgba(56,189,248,0.85)";  g.fillText("IMPROVING", 20, 90);
+    g.textAlign = "right"; g.fillStyle = "rgba(52,211,153,0.85)";  g.fillText("LEADING", W - 20, 90);
+    g.textAlign = "left";  g.fillStyle = "rgba(248,113,113,0.7)";  g.fillText("LAGGING", 20, H - 60);
+    g.textAlign = "right"; g.fillStyle = "rgba(251,191,36,0.85)";  g.fillText("WEAKENING", W - 20, H - 60);
+    // IHSG origin
+    g.fillStyle = "rgba(63,158,116,0.75)";
+    g.beginPath(); g.arc(mx, my, 4, 0, Math.PI * 2); g.fill();
+    g.textAlign = "center"; g.font = "500 10px system-ui, sans-serif";
+    g.fillStyle = "rgba(155,163,166,0.6)";
+    g.fillText("IHSG", mx, my + 20);
+    // pixel mapper (same 50% ± 40% as on-screen)
     const px = (v: number) => mx + (v / scale) * (W * 0.40);
     const py = (v: number) => my - (v / scale) * (H * 0.40);
-    // tails
+    // tails (active filter only)
     g.lineWidth = 2;
     g.lineJoin = "round"; g.lineCap = "round";
     for (const { pts } of series) {
+      const head = pts[0];
+      if (filterQuad !== null && quadKey(head.rs, head.mom) !== filterQuad) continue;
       const trail = pts.slice(0, tail);
       if (trail.length < 2) continue;
-      const head = trail[0];
-      const q = quadInfo(head.rs, head.mom);
-      g.strokeStyle = q.dot;
+      g.strokeStyle = quadOf(head.rs, head.mom).dot;
       g.globalAlpha = 0.5;
       g.beginPath();
       trail.forEach((p, i) => i === 0 ? g.moveTo(px(p.rs), py(p.mom)) : g.lineTo(px(p.rs), py(p.mom)));
       g.stroke();
     }
     g.globalAlpha = 1;
-    // dots (head position only in capture — labels only in sectors mode for legibility)
+    // head dots — label hanya di mode sectors biar gak numpuk
     const showLabel = mode === "sectors";
-    g.font = "600 10px mono";
+    g.font = "600 11px ui-monospace, monospace";
     for (const { it, pts } of series) {
       const head = pts[0];
-      const q = quadInfo(head.rs, head.mom);
+      if (filterQuad !== null && quadKey(head.rs, head.mom) !== filterQuad) continue;
+      const q = quadOf(head.rs, head.mom);
       const x = px(head.rs), y = py(head.mom);
       g.fillStyle = q.dot;
-      g.beginPath(); g.arc(x, y, 5, 0, Math.PI * 2); g.fill();
+      g.strokeStyle = q.bd;
+      g.lineWidth = 1.5;
+      g.beginPath(); g.arc(x, y, 5, 0, Math.PI * 2); g.fill(); g.stroke();
       if (showLabel) {
-        g.globalAlpha = 0.9;
-        g.fillStyle = "#9ba3a6";
+        g.fillStyle = "rgba(237,241,242,0.85)";
         g.textAlign = "center";
-        g.fillText(it.ticker, x, y + 18);
-        g.globalAlpha = 1;
+        g.fillText(it.ticker, x, y + 20);
       }
     }
-    // download
     c.toBlob((blob) => {
       if (!blob) return;
       const url = URL.createObjectURL(blob);
@@ -173,256 +262,283 @@ export function RotationMapPanel() {
       document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(url);
     }, "image/png");
-  }, [series, scale, tail, mode, interval]);
+  }, [series, scale, tail, mode, interval, filterQuad]);
 
-  // kelompokkan item per kuadran (head position) untuk tabel kanan
-  const QUAD_ORDER: { k: string; label: string; cls: string }[] = [
-    { k: "++", label: "Leading", cls: "text-emerald-400" },
-    { k: "-+", label: "Improving", cls: "text-sky-400" },
-    { k: "--", label: "Lagging", cls: "text-red-400/80" },
-    { k: "+-", label: "Weakening", cls: "text-amber-400" },
-  ];
-  const quadBuckets = useMemo(() => {
-    const map: Record<string, typeof series> = { "++": [], "-+": [], "--": [], "+-": [] };
-    for (const s of series) {
-      const h = s.pts[0];
-      const k = (h.rs >= 0 ? "+" : "-") + (h.mom >= 0 ? "+" : "-");
-      if (map[k]) map[k].push(s);
-    }
-    return map;
-  }, [series]);
+  const fmt = (v: number | null | undefined) => {
+    if (v == null || !Number.isFinite(v)) return <span className="text-[#9ba3a6]/25">—</span>;
+    return (
+      <span className={v >= 0 ? "text-emerald-400/90" : "text-red-400/80"}>
+        {v >= 0 ? "+" : ""}{Math.abs(v) < 10 ? v.toFixed(1) : v.toFixed(0)}%
+      </span>
+    );
+  };
 
   return (
-    <div className="card-luxury p-8">
-      {/* header + toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-        <div>
-          <h2 className="font-heading text-xl text-[#edf1f2] font-medium">
+    <section className="card-luxury p-5 sm:p-7">
+      {/* ── header + toolbar ── */}
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+        <div className="min-w-0">
+          <h2 className="font-heading text-xl font-medium text-[#edf1f2]">
             IDX <span className="text-gold-gradient font-medium">Rotation</span>
           </h2>
-          <p className="text-[10px] text-[#9ba3a6]/40 mt-1">
-            Where money is rotating — relative strength (x) vs momentum (y). Benchmark = IHSG di crosshair.
+          <p className="mt-1 text-[11px] leading-relaxed text-[#9ba3a6]/50">
+            Rotasi uang antar sektor — relatif terhadap IHSG.
           </p>
         </div>
 
-        {/* toolbar */}
-        <div className="flex flex-wrap items-center gap-4 text-[10px]">
-          {/* mode toggle */}
-          <div className="flex items-center gap-2">
-            <span className="text-[#9ba3a6]/40 uppercase tracking-wider">Mode</span>
-            <div className="flex border border-[#242929]">
-              {(["sectors", "stocks"] as Mode[]).map((m) => (
-                <button key={m} onClick={() => setMode(m)}
-                  className={`px-3 py-1.5 uppercase tracking-wider transition-all ${
-                    mode === m ? "bg-[#3f9e74]/20 text-[#3f9e74]" : "text-[#9ba3a6]/50 hover:text-[#9ba3a6]"
-                  }`}>{m === "sectors" ? "Sectors" : "Stocks"}</button>
-              ))}
-            </div>
-          </div>
-
-          {/* interval toggle */}
-          <div className="flex items-center gap-2">
-            <span className="text-[#9ba3a6]/40 uppercase tracking-wider">Interval</span>
-            <div className="flex border border-[#242929]">
-              {(["daily", "weekly"] as Interval[]).map((iv) => (
-                <button key={iv} onClick={() => setInterval(iv)}
-                  className={`px-3 py-1.5 uppercase tracking-wider transition-all ${
-                    interval === iv ? "bg-[#3f9e74]/20 text-[#3f9e74]" : "text-[#9ba3a6]/50 hover:text-[#9ba3a6]"
-                  }`}>{iv === "daily" ? "Daily" : "Weekly"}</button>
-              ))}
-            </div>
-          </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <Segmented
+            value={mode}
+            onChange={(m) => { setMode(m); setHover(null); }}
+            options={[
+              { value: "sectors" as Mode, label: "Sector" },
+              { value: "stocks" as Mode, label: "Saham" },
+            ]}
+          />
+          <Segmented
+            value={interval}
+            onChange={(iv) => { setInterval(iv); setTail((t) => Math.min(t, INTERVAL_WINDOWS[iv].length)); }}
+            options={[
+              { value: "daily" as Interval, label: "Harian" },
+              { value: "weekly" as Interval, label: "Mingguan" },
+            ]}
+          />
 
           {/* tail slider */}
-          <div className="flex items-center gap-2">
-            <span className="text-[#9ba3a6]/40 uppercase tracking-wider">Tail</span>
-            <input type="range" min={1} max={maxTail} value={tail}
+          <div className="flex items-center gap-2 rounded-full border border-[#242929] bg-[#121414] px-3 py-1">
+            <span className="text-[10px] uppercase tracking-wider text-[#9ba3a6]/45">Tail</span>
+            <input
+              type="range" min={1} max={maxTail} value={tail}
               onChange={(e) => setTail(Number(e.target.value))}
-              className="w-24 accent-[#3f9e74]" />
-            <span className="text-[#9ba3a6]/60 font-mono">{tail} period{tail > 1 ? "s" : ""}</span>
+              className="h-1 w-20 cursor-pointer accent-[#3f9e74]"
+            />
+            <span className="w-3 font-mono text-[10px] text-[#9ba3a6]/70">{tail}</span>
           </div>
 
-          {/* capture button */}
-          <button onClick={handleCapture}
-            className="px-3 py-1.5 uppercase tracking-wider bg-[#3f9e74]/15 text-[#3f9e74] border border-[#3f9e74]/40 hover:bg-[#3f9e74]/25 transition-all">
-            Capture
+          <button
+            onClick={handleCapture}
+            title="Unduh plot sebagai PNG"
+            className="rounded-full border border-[#3f9e74]/40 bg-[#3f9e74]/15 px-3.5 py-1.5 text-[10px] uppercase tracking-wider text-[#3f9e74] transition-colors hover:bg-[#3f9e74]/25"
+          >
+            PNG
           </button>
         </div>
       </div>
 
-      {/* legend / filter kuadran */}
-      <div className="flex flex-wrap items-center gap-2 mb-3 text-[10px]">
-        <span className="text-[#9ba3a6]/40 uppercase tracking-wider mr-1">Filter</span>
-        <button onClick={() => setFilterQuad(null)}
-          className={`px-2.5 py-1 border rounded-sm uppercase tracking-wider transition-all ${
-            filterQuad === null ? "bg-[#3f9e74]/15 border-[#3f9e74]/50 text-[#3f9e74]" : "border-[#242929] text-[#9ba3a6]/50 hover:text-[#9ba3a6]"
-          }`}>Semua</button>
-        {QUAD_GUIDE.map((q) => (
-          <button key={q.k} onClick={() => setFilterQuad(filterQuad === q.k ? null : q.k)}
-            className={`px-2.5 py-1 border rounded-sm transition-all ${
-              filterQuad === q.k ? q.activeCls : "border-[#242929] hover:border-[#9ba3a6]/30"
-            }`}>
-            <span className={q.cls}>{q.label}</span>
-            <span className="text-[#9ba3a6]/40 ml-1">· {q.desc}</span>
-          </button>
+      {/* ── filter chips (sekalian legend) ── */}
+      <div className="mt-5 flex flex-wrap items-center gap-2">
+        <QuadChip meta={null} count={series.length} active={filterQuad === null} onClick={() => setFilterQuad(null)} />
+        {QUAD_META.map((q) => (
+          <QuadChip
+            key={q.k}
+            meta={q}
+            count={buckets[q.k].length}
+            active={filterQuad === q.k}
+            onClick={() => setFilterQuad(filterQuad === q.k ? null : q.k)}
+          />
         ))}
+        {filterQuad !== null && (
+          <span className="ml-1 font-mono text-[10px] text-[#9ba3a6]/45">
+            {visibleCount}/{series.length} tampil
+          </span>
+        )}
       </div>
 
       {err ? (
         <EmptyState title="Gagal memuat" description="Tidak dapat mengambil data TradingView EOD. Coba lagi." />
       ) : !data ? (
-        <div className="py-10 text-center text-[#9ba3a6]/40 text-xs">Memuat data…</div>
+        <div className="py-12 text-center text-xs text-[#9ba3a6]/40">Memuat data…</div>
       ) : series.length === 0 ? (
         <EmptyState title="Tidak ada data" description="Belum ada data performa." />
       ) : (
-        <div className="flex flex-col lg:flex-row gap-4">
-          {/* plot kiri */}
-          <div id="rotation-map-plot" className="flex-1 min-w-0">
-          {/* chart */}
-          <div className="relative aspect-[16/9] border border-[#242929] bg-[#0a0b0b]/70 overflow-hidden select-none" style={{ minHeight: 420 }}>
-            {/* axis labels */}
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[9px] uppercase tracking-[0.2em] text-[#9ba3a6]/40">↑ Relative Momentum</div>
-            <div className="absolute top-1/2 right-2 -translate-y-1/2 text-[9px] uppercase tracking-[0.2em] text-[#9ba3a6]/40">Relative Strength →</div>
-            {/* quadrant labels */}
-            <div className="absolute top-2 left-3 text-[9px] uppercase tracking-[0.2em] text-sky-400/60">Improving</div>
-            <div className="absolute top-2 right-3 text-[9px] uppercase tracking-[0.2em] text-emerald-400/60">Leading</div>
-            <div className="absolute bottom-2 left-3 text-[9px] uppercase tracking-[0.2em] text-red-400/50">Lagging</div>
-            <div className="absolute bottom-2 right-3 text-[9px] uppercase tracking-[0.2em] text-amber-400/60">Weakening</div>
+        <>
+          {/* ── plot ── */}
+          <div className="relative mt-4 h-[420px] overflow-hidden rounded-sm border border-[#242929] bg-[#0a0b0b] select-none sm:h-[500px]">
+            {/* quadrant tints */}
+            <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2">
+              <div className="bg-sky-400/[0.035]" />
+              <div className="bg-emerald-400/[0.035]" />
+              <div className="bg-red-400/[0.03]" />
+              <div className="bg-amber-400/[0.03]" />
+            </div>
             {/* crosshair */}
-            <div className="absolute left-0 right-0 top-1/2 h-px bg-[#242929]" />
-            <div className="absolute top-0 bottom-0 left-1/2 w-px bg-[#242929]" />
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#3f9e74]/60" />
-            <div className="absolute left-1/2 top-[calc(50%+6px)] -translate-x-1/2 text-[8px] uppercase tracking-wider text-[#9ba3a6]/40 font-mono">IHSG</div>
+            <div className="pointer-events-none absolute left-0 right-0 top-1/2 h-px bg-[#242929]" />
+            <div className="pointer-events-none absolute bottom-0 top-0 left-1/2 w-px bg-[#242929]" />
+            {/* corner labels */}
+            <div className="pointer-events-none absolute left-3 top-2 text-[9px] font-medium uppercase tracking-[0.18em] text-sky-400/50">Improving</div>
+            <div className="pointer-events-none absolute right-3 top-2 text-[9px] font-medium uppercase tracking-[0.18em] text-emerald-400/50">Leading</div>
+            <div className="pointer-events-none absolute bottom-2 left-3 text-[9px] font-medium uppercase tracking-[0.18em] text-red-400/40">Lagging</div>
+            <div className="pointer-events-none absolute bottom-2 right-3 text-[9px] font-medium uppercase tracking-[0.18em] text-amber-400/50">Weakening</div>
+            {/* axis captions */}
+            <div className="pointer-events-none absolute left-1/2 top-1 -translate-x-1/2 text-[8px] uppercase tracking-[0.2em] text-[#9ba3a6]/30">
+              momentum ↑
+            </div>
+            <div className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-[8px] uppercase tracking-[0.2em] text-[#9ba3a6]/30 [writing-mode:vertical-rl]">
+              kekuatan relatif →
+            </div>
+            {/* IHSG origin */}
+            <div className="pointer-events-none absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#3f9e74]/60" />
+            <div className="pointer-events-none absolute left-1/2 top-[calc(50%+7px)] -translate-x-1/2 font-mono text-[8px] uppercase tracking-wider text-[#9ba3a6]/35">
+              IHSG
+            </div>
 
-            {/* tails SVG (under dots) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+            {/* tails */}
+            <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
               {series.map(({ it, pts }) => {
-                // ambil N titik terakhir (head + tail)
+                const head = pts[0];
+                if (filterQuad !== null && quadKey(head.rs, head.mom) !== filterQuad) return null;
                 const trail = pts.slice(0, tail);
                 if (trail.length < 2) return null;
-                const head = trail[0];
-                // filter kuadran aktif → cuma kuadran itu
-                const k = (head.rs >= 0 ? "+" : "-") + (head.mom >= 0 ? "+" : "-");
-                if (filterQuad !== null && filterQuad !== k) return null;
-                const color = quadInfo(head.rs, head.mom).dot;
-                const path = trail.map((p, i) => `${i === 0 ? "M" : "L"}${ns(p.rs).toFixed(2)},${(100 - ns(p.mom)).toFixed(2)}`).join(" ");
-                return <path key={it.ticker} d={path} fill="none" stroke={color} strokeOpacity={0.5} strokeWidth="0.5" strokeLinejoin="round" strokeLinecap="round" />;
+                const d = trail.map((p, i) => `${i === 0 ? "M" : "L"}${ns(p.rs).toFixed(2)},${(100 - ns(p.mom)).toFixed(2)}`).join(" ");
+                return (
+                  <path
+                    key={it.ticker} d={d} fill="none"
+                    stroke={quadOf(head.rs, head.mom).dot}
+                    strokeOpacity={hover === null || hover === it.ticker ? 0.55 : 0.15}
+                    strokeWidth="0.5" strokeLinejoin="round" strokeLinecap="round"
+                  />
+                );
               })}
             </svg>
 
             {/* dots */}
             {series.map(({ it, pts }) => {
               const head = pts[0];
-              const q = quadInfo(head.rs, head.mom);
-              // filter kuadran aktif → cuma kuadran itu
-              const k = (head.rs >= 0 ? "+" : "-") + (head.mom >= 0 ? "+" : "-");
-              if (filterQuad !== null && filterQuad !== k) return null;
-              const x = ns(head.rs);
-              const y = 100 - ns(head.mom);
+              if (filterQuad !== null && quadKey(head.rs, head.mom) !== filterQuad) return null;
+              const q = quadOf(head.rs, head.mom);
               const isHover = hover === it.ticker;
+              const showLabel = mode === "sectors" || isHover;
               return (
-                <button key={it.ticker}
+                <button
+                  key={it.ticker}
                   onMouseEnter={() => setHover(it.ticker)}
                   onMouseLeave={() => setHover(null)}
-                  className="absolute -translate-x-1/2 -translate-y-1/2 group z-10"
-                  style={{ left: `${x}%`, top: `${y}%`, zIndex: isHover ? 20 : 10 }}
-                  title={`${it.ticker} — RS ${head.rs >= 0 ? "+" : ""}${head.rs.toFixed(2)} · Mom ${head.mom >= 0 ? "+" : ""}${head.mom.toFixed(2)}`}>
-                  <span className={`block w-2 h-2 rounded-full border ${isHover ? "scale-150 transition-transform" : ""}`}
-                    style={{ backgroundColor: q.dot, borderColor: q.bd }} />
-                  <span className={`absolute -top-4 left-1/2 -translate-x-1/2 text-[8px] font-mono whitespace-nowrap ${isHover ? q.cls : "text-[#9ba3a6]/60"}`}>
-                    {it.ticker}
-                  </span>
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${ns(head.rs)}%`, top: `${100 - ns(head.mom)}%`, zIndex: isHover ? 30 : 10 }}
+                  title={`${it.ticker} — RS ${head.rs >= 0 ? "+" : ""}${head.rs.toFixed(2)} · Mom ${head.mom >= 0 ? "+" : ""}${head.mom.toFixed(2)}`}
+                >
+                  <span
+                    className={`block rounded-full border transition-transform ${isHover ? "h-3 w-3" : "h-2 w-2"}`}
+                    style={{ backgroundColor: q.dot, borderColor: q.bd }}
+                  />
+                  {showLabel && (
+                    <span className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[8px] ${isHover ? q.cls : "text-[#9ba3a6]/45"}`}
+                      style={{ top: "-14px" }}>
+                      {it.ticker}
+                    </span>
+                  )}
                 </button>
               );
             })}
+
+            {/* scale readout */}
+            <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[9px] text-[#9ba3a6]/30">
+              skala ±{scale.toFixed(1)}%
+            </div>
 
             {/* hover tooltip */}
             {hover && (() => {
               const hit = series.find((s) => s.it.ticker === hover);
               if (!hit) return null;
               const head = hit.pts[0];
-              const q = quadInfo(head.rs, head.mom);
+              const q = quadOf(head.rs, head.mom);
               return (
-                <div className="absolute pointer-events-none z-30 bg-[#16130E]/95 border border-[#242929] px-3 py-2 text-[10px] font-mono" style={{ left: "50%", top: 8, transform: "translateX(-50%)" }}>
-                  <div className={`font-sans font-medium ${q.cls}`}>{hit.it.ticker} <span className="text-[#9ba3a6]/40">· {hit.it.name}</span></div>
-                  <div className="text-[#9ba3a6]/60">RS <span className="text-[#edf1f2]">{head.rs >= 0 ? "+" : ""}{head.rs.toFixed(2)}%</span></div>
-                  <div className="text-[#9ba3a6]/60">Momentum <span className="text-[#edf1f2]">{head.mom >= 0 ? "+" : ""}{head.mom.toFixed(2)}%</span></div>
-                  <div className="text-[#9ba3a6]/60">Fase <span className={q.cls}>{q.label}</span></div>
+                <div className="pointer-events-none absolute left-1/2 top-8 z-40 min-w-[170px] -translate-x-1/2 rounded-sm border border-[#242929] bg-[#121414]/95 px-3 py-2 font-mono text-[10px] backdrop-blur">
+                  <div className={`font-sans text-[11px] font-medium ${q.cls}`}>
+                    {hit.it.ticker} <span className="text-[#9ba3a6]/40">· {hit.it.name}</span>
+                  </div>
+                  <div className="mt-1 grid grid-cols-2 gap-x-3 gap-y-0.5">
+                    <span className="text-[#9ba3a6]/50">RS</span>
+                    <span className="text-right text-[#edf1f2]">{head.rs >= 0 ? "+" : ""}{head.rs.toFixed(2)}%</span>
+                    <span className="text-[#9ba3a6]/50">Momentum</span>
+                    <span className="text-right text-[#edf1f2]">{head.mom >= 0 ? "+" : ""}{head.mom.toFixed(2)}%</span>
+                    <span className="text-[#9ba3a6]/50">Fase</span>
+                    <span className={`text-right ${q.cls}`}>{q.label}</span>
+                  </div>
                 </div>
               );
             })()}
           </div>
-          {/* close plot flex-1 */}
-          </div>
 
-          {/* tabel detail — Fase | Sektor | Day | Week | Monthly | RS | Mom */}
-          <div className="mt-4 overflow-x-auto">
-            <table className="w-full min-w-[560px] border-collapse text-[11px] font-mono">
+          {/* ── tabel detail, dikelompokkan per kuadran ── */}
+          <div className="mt-4 overflow-x-auto rounded-sm border border-[#242929]">
+            <table className="w-full min-w-[540px] border-collapse font-mono text-[11px]">
               <thead>
-                <tr className="text-[9px] uppercase tracking-wider text-[#9ba3a6]/40 border-b border-[#242929]">
-                  <th className="text-left font-normal py-1.5 pl-1 pr-4 w-[12%]">Fase</th>
-                  <th className="text-left font-normal py-1.5 pr-4 w-[30%]">Sektor</th>
-                  <th className="text-right font-normal py-1.5 px-3">Day</th>
-                  <th className="text-right font-normal py-1.5 px-3">Week</th>
-                  <th className="text-right font-normal py-1.5 px-3">Monthly</th>
-                  <th className="text-right font-normal py-1.5 px-3">RS</th>
-                  <th className="text-right font-normal py-1.5 pr-1 pl-3">Mom</th>
+                <tr className="border-b border-[#242929] bg-[#121414] text-[9px] uppercase tracking-wider text-[#9ba3a6]/45">
+                  <th className="py-2 pl-3 pr-4 text-left font-normal">Sektor</th>
+                  <th className="px-3 py-2 text-right font-normal" title={`Excess return vs IHSG · ${WINDOW_LABEL[winIdx[0]]}`}>{WINDOW_LABEL[winIdx[0]]}</th>
+                  <th className="px-3 py-2 text-right font-normal" title={`Excess return vs IHSG · ${WINDOW_LABEL[winIdx[1]]}`}>{WINDOW_LABEL[winIdx[1]]}</th>
+                  <th className="px-3 py-2 text-right font-normal" title={`Excess return vs IHSG · ${WINDOW_LABEL[winIdx[2]]}`}>{WINDOW_LABEL[winIdx[2]]}</th>
+                  <th className="px-3 py-2 text-right font-normal">RS</th>
+                  <th className="py-2 pl-3 pr-3 text-right font-normal">Mom</th>
                 </tr>
               </thead>
               <tbody>
-                {QUAD_ORDER.flatMap((qu) => {
-                  const list = quadBuckets[qu.k]
-                    .slice()
-                    .sort((a, b) => { const ha = a.pts[0], hb = b.pts[0]; return hb.rs - ha.rs; });
+                {QUAD_META.map((qu) => {
+                  const list = buckets[qu.k].slice().sort((a, b) => b.pts[0].rs - a.pts[0].rs);
                   if (list.length === 0) return null;
-                  return list.map((s) => {
-                    const h = s.pts[0];
-                    const isDim = filterQuad !== null && filterQuad !== qu.k;
-                    const isHover = hover === s.it.ticker;
-                    // perf windows ekses vs IHSG (sama basis dgn RS) — 0=Day, 1=1W, 2=1M
-                    const excess = (wi: number): number | null => {
-                      const v = s.it.perf?.[wi];
-                      const b = bench?.[wi];
-                      if (v == null || b == null || !Number.isFinite(v) || !Number.isFinite(b)) return null;
-                      return v - b;
-                    };
-                    const txt = (v: number | null | undefined, bold = false) =>
-                      v == null || !Number.isFinite(v as number)
-                        ? <span className="text-[#9ba3a6]/20">—</span>
-                        : (
-                          <span className={`${bold && isHover ? "text-[#edf1f2]" : ""} ${(v as number) >= 0 ? "text-emerald-400/90" : "text-red-400/80"}`}>
-                            {(v as number) >= 0 ? "+" : ""}{(v as number).toFixed((v as number) >= 0 && (v as number) < 10 ? 1 : 0)}%
+                  const isDim = filterQuad !== null && filterQuad !== qu.k;
+                  const excess = (s: { it: ApiItem }, wi: number): number | null => {
+                    const v = s.it.perf?.[wi];
+                    const b = bench?.[wi];
+                    if (v == null || b == null || !Number.isFinite(v) || !Number.isFinite(b)) return null;
+                    return v - b;
+                  };
+                  return (
+                    <Fragment key={qu.k}>
+                      {/* header grup kuadran */}
+                      <tr className={`border-b border-[#242929]/70 ${isDim ? "opacity-35" : ""}`}>
+                        <td colSpan={6} className="bg-[#121414]/60 py-1.5 pl-3 pr-3">
+                          <span className="inline-flex items-center gap-1.5">
+                            <span className="text-[8px] leading-none" style={{ color: qu.dot }}>●</span>
+                            <span className={`text-[9px] uppercase tracking-[0.15em] ${qu.cls}`}>{qu.label}</span>
+                            <span className="ml-1 font-mono text-[9px] text-[#9ba3a6]/40">{list.length}</span>
+                            <span className="ml-2 hidden text-[9px] text-[#9ba3a6]/30 sm:inline">{qu.desc}</span>
                           </span>
-                        );
-                    return (
-                      <tr key={s.it.ticker}
-                        onMouseEnter={() => setHover(s.it.ticker)}
-                        onMouseLeave={() => setHover(null)}
-                        onClick={() => setFilterQuad(filterQuad === qu.k ? null : qu.k)}
-                        className={`border-b border-[#242929]/60 cursor-pointer transition-colors ${
-                          isDim ? "opacity-30" : "hover:bg-[#121414]"
-                        }`}>
-                        <td className="py-1.5 pl-1 pr-4 whitespace-nowrap">
-                          <span className={`uppercase text-[9px] tracking-wider ${qu.cls}`}>● {qu.label}</span>
                         </td>
-                        <td className="py-1.5 pr-4 whitespace-nowrap">
-                          <span className={`font-sans font-medium text-[12px] ${isHover ? "text-[#edf1f2]" : "text-[#edf1f2]/90"}`}>{s.it.ticker}</span>
-                          <span className="text-[#9ba3a6]/45 ml-2 font-sans">{s.it.name}</span>
-                        </td>
-                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(excess(0))}</td>
-                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(excess(1))}</td>
-                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(excess(2))}</td>
-                        <td className="py-1.5 px-3 text-right whitespace-nowrap">{txt(h.rs, true)}</td>
-                        <td className="py-1.5 pr-1 pl-3 text-right whitespace-nowrap">{txt(h.mom, true)}</td>
                       </tr>
-                    );
-                  });
+                      {list.map((s) => {
+                        const h = s.pts[0];
+                        const isHover = hover === s.it.ticker;
+                        return (
+                          <tr
+                            key={s.it.ticker}
+                            onMouseEnter={() => setHover(s.it.ticker)}
+                            onMouseLeave={() => setHover(null)}
+                            className={`border-b border-[#242929]/40 border-l-2 transition-colors ${
+                              isDim ? "opacity-35" : ""
+                            } ${isHover ? "bg-[#121414]" : "hover:bg-[#121414]/60"}`}
+                            style={{ borderLeftColor: qu.bd }}
+                          >
+                            <td className="py-1.5 pl-3 pr-4">
+                              <span className={`font-sans text-[12px] font-medium ${isHover ? "text-[#edf1f2]" : "text-[#edf1f2]/90"}`}>
+                                {s.it.ticker}
+                              </span>
+                              {s.it.name && s.it.name !== s.it.ticker && (
+                                <span className="ml-2 font-sans text-[10px] text-[#9ba3a6]/40">{s.it.name}</span>
+                              )}
+                            </td>
+                            <td className="px-3 py-1.5 text-right">{fmt(excess(s, winIdx[0]))}</td>
+                            <td className="px-3 py-1.5 text-right">{fmt(excess(s, winIdx[1]))}</td>
+                            <td className="px-3 py-1.5 text-right">{fmt(excess(s, winIdx[2]))}</td>
+                            <td className={`px-3 py-1.5 text-right ${isHover ? "text-[#edf1f2]" : ""}`}>{fmt(h.rs)}</td>
+                            <td className={`py-1.5 pl-3 pr-3 text-right ${isHover ? "text-[#edf1f2]" : ""}`}>{fmt(h.mom)}</td>
+                          </tr>
+                        );
+                      })}
+                    </Fragment>
+                  );
                 })}
               </tbody>
             </table>
           </div>
-        </div>
+
+          <p className="mt-3 text-[10px] leading-relaxed text-[#9ba3a6]/35">
+            RS = return {mode === "sectors" ? "sektor" : "saham"} − return IHSG pada window terbaru. Mom = perubahan RS vs window sebelumnya.
+            Kolom {WINDOW_LABEL[winIdx[0]]}/{WINDOW_LABEL[winIdx[1]]}/{WINDOW_LABEL[winIdx[2]]} = excess return vs IHSG. Kuadran & tabel saling tersinkron — hover untuk menyorot.
+          </p>
+        </>
       )}
-    </div>
+    </section>
   );
 }
