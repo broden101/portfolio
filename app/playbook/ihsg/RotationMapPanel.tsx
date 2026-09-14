@@ -4,6 +4,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { EmptyState } from "@/components/DataState";
 
 type Mode = "sectors" | "stocks";
+type Align = "center" | "start" | "end";
 type Interval = "daily" | "weekly";
 
 type ApiItem = { ticker: string; name: string; perf: (number | null)[] };
@@ -178,11 +179,12 @@ export function RotationMapPanel() {
     return () => ro.disconnect();
   }, [data, mode, interval, err]);
 
-  // greedy label placement: hindari label lain DAN titik lain (ladder vertikal panjang)
+  // greedy label placement: kandidat 2D (kiri/kanan/atas/bawah) — hindari label lain & titik lain
   const labelLayout = useMemo(() => {
-    const out: Record<string, { dy: number; text: string }> = {};
+    const out: Record<string, { dx: number; dy: number; align: Align; text: string }> = {};
     if (mode !== "sectors" || plot.w === 0) return out;
-    const placed: { x0: number; x1: number; y0: number; y1: number }[] = [];
+    type Box = { x0: number; x1: number; y0: number; y1: number };
+    const placed: Box[] = [];
     const visible = series.filter(
       (s) => filterQuad === null || quadKey(s.pts[0].rs, s.pts[0].mom) === filterQuad,
     );
@@ -194,26 +196,32 @@ export function RotationMapPanel() {
       placed.push({ x0: dx - 6, x1: dx + 6, y0: dy - 6, y1: dy + 6 });
     }
     const LH = 10, PAD = 2;
-    const CANDS: number[] = [];
-    for (let k = 1; k <= 8; k++) { CANDS.push(-10 * k); CANDS.push(10 * k); }
+    const hit = (b: Box) => placed.some((p) => b.x0 < p.x1 && b.x1 > p.x0 && b.y0 < p.y1 && b.y1 > p.y0);
     for (const s of [...visible].sort((a, b) => b.pts[0].rs - a.pts[0].rs)) {
       const h = s.pts[0];
       const x = (ns(h.rs) / 100) * plot.w;
       const y = ((100 - ns(h.mom)) / 100) * plot.h;
       const text = shortLabel(s.it.ticker, mode);
       const w = text.length * 4.8 + 6;
-      let chosen = CANDS[0];
-      for (const dy of CANDS) {
-        const cy = Math.min(plot.h - LH / 2, Math.max(LH / 2, y + dy));
-        const box = { x0: x - w / 2 - PAD, x1: x + w / 2 + PAD, y0: cy - LH / 2 - PAD, y1: cy + LH / 2 + PAD };
-        if (!placed.some((p) => box.x0 < p.x1 && box.x1 > p.x0 && box.y0 < p.y1 && box.y1 > p.y0)) {
-          chosen = dy;
-          placed.push(box);
-          break;
+      const off = w / 2 + 8;
+      const cands: { dx: number; dy: number; align: Align }[] = [];
+      for (let k = 0; k <= 7; k++) {
+        for (const dy of k === 0 ? [0] : [-10 * k, 10 * k]) {
+          cands.push({ dx: off, dy, align: "start" });
+          cands.push({ dx: -off, dy, align: "end" });
+          cands.push({ dx: 0, dy, align: "center" });
         }
-        chosen = dy;
       }
-      out[s.it.ticker] = { dy: chosen, text };
+      let pick = cands[0];
+      for (const c of cands) {
+        const cx = x + c.dx;
+        const cy = Math.min(plot.h - LH / 2, Math.max(LH / 2, y + c.dy));
+        const x0 = c.align === "center" ? cx - w / 2 : c.align === "start" ? cx : cx - w;
+        const box = { x0: x0 - PAD, x1: x0 + w + PAD, y0: cy - LH / 2 - PAD, y1: cy + LH / 2 + PAD };
+        pick = c;
+        if (!hit(box)) { placed.push(box); break; }
+      }
+      out[s.it.ticker] = { dx: pick.dx, dy: pick.dy, align: pick.align, text };
     }
     return out;
   }, [series, plot, mode, filterQuad, scale]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -314,12 +322,14 @@ export function RotationMapPanel() {
       g.beginPath(); g.arc(x, y, 5, 0, Math.PI * 2); g.fill(); g.stroke();
       if (showLabel) {
         const lay = labelLayout[it.ticker];
+        const xScale = plot.w > 0 ? W / plot.w : 1;
+        const lx = x + (lay ? lay.dx * xScale : 0);
         const ly = y + (lay ? lay.dy * yScale : 20);
-        g.textAlign = "center";
+        g.textAlign = !lay || lay.align === "center" ? "center" : lay.align === "start" ? "left" : "right";
         g.fillStyle = "rgba(10,11,11,0.75)";
-        g.fillText(lay ? lay.text : it.ticker, x, ly + 1);
+        g.fillText(lay ? lay.text : it.ticker, lx, ly + 1);
         g.fillStyle = "rgba(237,241,242,0.85)";
-        g.fillText(lay ? lay.text : it.ticker, x, ly);
+        g.fillText(lay ? lay.text : it.ticker, lx, ly);
       }
     }
     c.toBlob((blob) => {
@@ -503,15 +513,19 @@ export function RotationMapPanel() {
                 const lay = labelLayout[it.ticker];
                 if (mode === "sectors" && !lay) return null;
                 const q = quadOf(head.rs, head.mom);
+                const align: Align = lay ? lay.align : "center";
+                const dy = lay ? lay.dy : -12;
                 return (
                   <span
                     key={it.ticker}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap font-mono leading-none ${
+                    className={`absolute whitespace-nowrap font-mono leading-none ${
                       isHover ? `z-20 ${q.cls}` : "text-[#9ba3a6]/55"
                     } ${mode === "stocks" ? "rounded-sm bg-[#0a0b0b]/80 px-1 text-[9px]" : "text-[8px]"}`}
                     style={{
-                      left: `${ns(head.rs)}%`,
-                      top: `calc(${100 - ns(head.mom)}% + ${lay ? lay.dy : -10}px)`,
+                      left: `calc(${ns(head.rs)}% + ${lay ? lay.dx : 0}px)`,
+                      top: `calc(${100 - ns(head.mom)}% + ${dy}px)`,
+                      transform:
+                        align === "center" ? "translate(-50%, -50%)" : align === "start" ? "translate(0, -50%)" : "translate(-100%, -50%)",
                     }}
                   >
                     {lay ? lay.text : it.ticker}
