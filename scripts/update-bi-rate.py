@@ -16,7 +16,7 @@ from pathlib import Path
 import requests
 
 # Config
-REPO_DIR = Path("/tmp/portfolio")
+REPO_DIR = Path(__file__).resolve().parents[1]  # repo root, self-locating
 DATA_FILE = REPO_DIR / "data" / "manual-market.json"
 TRADING_ECONOMICS_URL = "https://tradingeconomics.com/indonesia/interest-rate"
 
@@ -30,11 +30,16 @@ def fetch_bi_rate():
         )
         resp.raise_for_status()
         
-        # Extract precise value
-        match = re.search(r'id="p"[^>]*>(\d+\.\d+)', resp.text)
+        # Extract precise value (metaDesc first — most reliable, applies to all TE pages)
+        match = re.search(
+            r'id="metaDesc"[^>]*name="description"[^>]*content="[^"]*?(\d+\.\d{1,2})\s*percent',
+            resp.text, re.IGNORECASE
+        )
+        if not match:
+            match = re.search(r'id="p"[^>]*>(\d+\.\d+)', resp.text)
         if not match:
             match = re.search(r'(\d+\.\d{1,2})\s*(?:%|percent)', resp.text[:10000], re.IGNORECASE)
-        
+
         if match:
             return float(match.group(1))
     except Exception as e:
