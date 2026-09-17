@@ -5,9 +5,9 @@
     "lastUpdated": "2026-08-19"
   },
   "tradeBalance": {
-    "value": -0.45,
-    "note": "Defisit Juni 2026",
-    "lastUpdated": "2026-08-08T00:21:12.425093+07:00",
+    "value": 0.13,
+    "note": "Surplus Juli 2026",
+    "lastUpdated": "2026-09-17T09:00:51.488248+07:00",
     "source": "tradingeconomics.com"
   },
   "foreignFlow": {
@@ -507,10 +507,10 @@
     "fetchedAt": "2026-09-16T11:01:04.745713+00:00"
   },
   "inflation": {
-    "value": 2.88,
+    "value": 3.19,
     "note": "yoy",
-    "month": "Juli",
-    "lastUpdated": "2026-08-08T00:21:12.425093+07:00",
+    "month": "Agustus",
+    "lastUpdated": "2026-09-17T09:00:51.488248+07:00",
     "source": "tradingeconomics.com"
   },
   "apbn": {
