@@ -122,11 +122,26 @@ def main():
     }
 
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
+
+    # Jangan churn updated_at kalau payload sama (biar git commit gak cuma timestamp)
+    changed = True
+    if os.path.exists(OUT_PATH):
+        try:
+            with open(OUT_PATH, encoding="utf-8") as f:
+                prev = json.load(f)
+            strip = lambda d: {k: v for k, v in d.items() if k != "updated_at"}
+            if strip(prev) == strip(out):
+                out["updated_at"] = prev.get("updated_at", out["updated_at"])
+                changed = False
+        except Exception:
+            pass
+
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
 
     print(f"OK: {len(data)} rekomendasi open -> {OUT_PATH}")
     print(f"Tracker updatedAt: {tracker.get('updatedAt')} | winrate: {tracker.get('winrate')}%")
+    print("CHANGED" if changed else "NO-CHANGE")
 
 
 if __name__ == "__main__":
